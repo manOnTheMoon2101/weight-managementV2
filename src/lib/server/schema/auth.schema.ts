@@ -1,4 +1,5 @@
 import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { supplements } from "./supplements";
 
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
@@ -8,6 +9,8 @@ export const user = pgTable("user", {
 	image: text("image"),
 	createdAt: timestamp("created_at").notNull(),
 	updatedAt: timestamp("updated_at").notNull(),
+	supplementsId: text("supplements_id")
+		.references(() => supplements.id, { onDelete: "set null" }),
 });
 
 export const session = pgTable("session", {
