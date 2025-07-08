@@ -35,6 +35,10 @@
 			<p>You are not signed in.</p>
 			<Button href="/signin" class="w-fit" size="lg">Sign in</Button>
 		</div>
+		<div class="flex flex-col gap-2">
+			<p>You are not signed in.</p>
+			<Button href="/signup" class="w-fit" size="lg">Sign Up</Button>
+		</div>
 	{/if}
 
 	<a
