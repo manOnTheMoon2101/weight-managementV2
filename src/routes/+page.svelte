@@ -12,10 +12,10 @@
 		<div class="flex flex-col gap-2">
 			<p>Welcome back, {$session?.data.user.name}!</p>
 			<Button href="/dashboard" class="w-fit" size="lg">Go to Dashboard</Button>
-			<div>
+			<!-- <div>
 				More data from auth client:
 				<pre>{JSON.stringify($session?.data.user, null, 2)}</pre>
-			</div>
+			</div> -->
 			<Button
 				type="button"
 				onclick={() => authClient.signOut()}
