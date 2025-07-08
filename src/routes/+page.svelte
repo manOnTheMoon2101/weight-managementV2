@@ -6,14 +6,6 @@
 </script>
 
 <div class="flex flex-col gap-4 p-6">
-	<h1 class="text-4xl font-bold">svelte-starter</h1>
-	<div class="flex items-center gap-2">
-		This is an unprotected page:
-		<div class="rounded-md border bg-card p-1 font-mono text-card-foreground">
-			routes/+page.svelte
-		</div>
-	</div>
-
 	{#if $session.data}
 		<div class="flex flex-col gap-2">
 			<p>Welcome back, {$session?.data.user.name}!</p>
@@ -40,13 +32,4 @@
 			<Button href="/signup" class="w-fit" size="lg">Sign Up</Button>
 		</div>
 	{/if}
-
-	<a
-		class="text-muted-foreground underline hover:text-foreground"
-		href="https://github.com/dotnize/svelte-starter"
-		target="_blank"
-		rel="noreferrer noopener"
-	>
-		dotnize/svelte-starter
-	</a>
 </div>

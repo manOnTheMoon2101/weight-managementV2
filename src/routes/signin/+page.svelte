@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { authClient } from "$lib/auth-client";
 	import { Button } from "$lib/components/ui/button";
+	import { goto } from "$app/navigation";
 	let email = "";
 	let password = "";
 	let error = "";
@@ -11,9 +12,8 @@
 			await authClient.signIn.email({
 				email,
 				password,
-				// callbackURL: data.redirectPath // Uncomment if you want to redirect after sign-in
 			});
-			// Optionally redirect or show success
+			await goto("/dashboard");
 		} catch (e) {
 			error = "Sign in failed. Please check your credentials.";
 		}

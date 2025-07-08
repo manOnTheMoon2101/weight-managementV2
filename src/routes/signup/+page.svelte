@@ -13,6 +13,7 @@
 				name,
 				email,
 				password,
+                callbackURL:'/dashboard'
 			});
 			// Optionally redirect or show success
 		} catch (e) {
