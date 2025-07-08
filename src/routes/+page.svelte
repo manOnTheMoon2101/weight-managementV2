@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { authClient } from "$lib/auth-client";
 	import { Button } from "$lib/components/ui/button";
+	import Toggler from "./components/theme-toggler/toggler.svelte"
 
 	const session = authClient.useSession();
 </script>
 
 <div class="flex flex-col gap-4 p-6">
+<Toggler/>
 	{#if $session.data}
 		<div class="flex flex-col gap-2">
 			<p>Welcome back, {$session?.data.user.name}!</p>
