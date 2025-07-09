@@ -2,7 +2,8 @@
 import { createAuthClient } from "better-auth/svelte";
 import { PUBLIC_BETTER_AUTH_URL } from "$env/static/public";
 
-if (!PUBLIC_BETTER_AUTH_URL) throw new Error("BETTER_AUTH_URL is not set");
+const PROD_URL = "https://weight-management-v2.vercel.app";
+
 export const authClient = createAuthClient({
-	baseURL: PUBLIC_BETTER_AUTH_URL || "https://weight-management-v2.vercel.app",
+  baseURL: PUBLIC_BETTER_AUTH_URL || PROD_URL,
 });
