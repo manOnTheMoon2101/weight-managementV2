@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { authClient } from "$lib/auth-client";
 	import { Button } from "$lib/components/ui/button";
-	import Navbar from "./components/navbar/Navbar.svelte"
 
 	const session = authClient.useSession();
 </script>
 
 <div class="flex flex-col gap-4 p-6">
-<Navbar/>
+
 	{#if $session.data}
 		<div class="flex flex-col gap-2">
 			<p>Welcome back, {$session?.data.user.name}!</p>
