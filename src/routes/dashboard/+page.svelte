@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-1">
 	Dashboard index page
 	<div class="rounded-md border bg-card p-1 font-mono text-card-foreground">
-		
+		<Chart/>
 		<Button href="/" class="w-fit" size="lg">Back to Home</Button>
 		<Table columnDefs={columns} rowData={rows} />
 	</div>
@@ -11,6 +11,7 @@
 <script lang="ts">
 import { Button } from "$lib/components/ui/button";
 import Table from "./components/table/table.svelte"
+import Chart from "./components/charts/chart.svelte"
 
 const columns = [
         { headerName: 'Course', field: 'course' },
