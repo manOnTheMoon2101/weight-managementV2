@@ -28,17 +28,19 @@
 
     onMount(() => {
         const gridOptions: GridOptions<any> = {
-            theme: darkTheme, // Apply custom dark theme
+            theme: darkTheme,
             columnDefs,
             rowData,
             defaultColDef: {
                 sortable: true,
-                filter: true
+                filter: true,
+                flex:1
+                
             }
         };
 
         if (gridDiv) {
-            createGrid(gridDiv, gridOptions); // Create the grid with custom options
+            createGrid(gridDiv, gridOptions);
         }
     });
 </script>
