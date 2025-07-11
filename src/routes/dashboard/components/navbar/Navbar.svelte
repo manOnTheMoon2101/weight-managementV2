@@ -13,10 +13,10 @@
 	$: firstLetter = user?.name?.charAt(0);
 </script>
 
-<div>
+<div class="border-b border-b-orange-300">
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger>
-			<div class="flex flex-row items-center">
+			<div class="flex flex-row items-center my-1">
 				<Avatar.Root class="mr-2">
 					<Avatar.Fallback class="bg-amber-600">{firstLetter ?? "?"}</Avatar.Fallback>
 				</Avatar.Root>
