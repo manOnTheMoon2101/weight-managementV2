@@ -3,6 +3,7 @@
   import * as Avatar from "$lib/components/ui/avatar/index.js";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import LogoutDialog from "./components/logout-dialog.svelte";
+  import EditDialog from "./components/profile-edit.svelte"
   import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
   import { Button } from "$lib/components/ui/button";
   import { onMount } from "svelte";
@@ -24,7 +25,7 @@
          <DropdownMenu.Group>
           <DropdownMenu.Label>My Account</DropdownMenu.Label>
           <DropdownMenu.Separator />
-          <DropdownMenu.Item>Edit Profile</DropdownMenu.Item>
+          <DropdownMenu.Item closeOnSelect={false}><EditDialog user={user}/></DropdownMenu.Item>
           <DropdownMenu.Item closeOnSelect={false}>  <LogoutDialog/></DropdownMenu.Item>
           <DropdownMenu.Item closeOnSelect={false} class="flex flex-row justify-center"><Toggler/></DropdownMenu.Item>
          </DropdownMenu.Group>
