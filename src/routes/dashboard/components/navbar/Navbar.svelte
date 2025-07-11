@@ -1,7 +1,10 @@
 <script lang="ts">
-  import Toggler from "./theme-toggler/toggler.svelte";
+  import Toggler from "./components/toggler.svelte";
   import * as Avatar from "$lib/components/ui/avatar/index.js";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+  import LogoutDialog from "./components/logout-dialog.svelte";
+  import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
+  import { Button } from "$lib/components/ui/button";
   import { onMount } from "svelte";
   export let user: any;
 
@@ -22,7 +25,7 @@
           <DropdownMenu.Label>My Account</DropdownMenu.Label>
           <DropdownMenu.Separator />
           <DropdownMenu.Item>Edit Profile</DropdownMenu.Item>
-          <DropdownMenu.Item>Logout</DropdownMenu.Item>
+          <DropdownMenu.Item closeOnSelect={false}>  <LogoutDialog/></DropdownMenu.Item>
           <DropdownMenu.Item closeOnSelect={false} class="flex flex-row justify-center"><Toggler/></DropdownMenu.Item>
          </DropdownMenu.Group>
         </DropdownMenu.Content>
