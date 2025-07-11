@@ -44,4 +44,4 @@
   });
 </script>
 
-<div bind:this={chartDiv} style="width: 100%; height: 300px;"></div>
+<div bind:this={chartDiv} style="width: 50%; height: 300px;" class="mx-1"></div>

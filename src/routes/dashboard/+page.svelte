@@ -1,7 +1,9 @@
 <div class="flex flex-col gap-1">
-	Dashboard index page
 	<div class="rounded-md border bg-card p-1 font-mono text-card-foreground">
-		<Chart/>
+		<div class="flex flex-row justify-around">
+        <Chart/>
+        <Chart/>
+        </div>
 		<Button href="/" class="w-fit" size="lg">Back to Home</Button>
 		<Table columnDefs={columns} rowData={rows} />
 	</div>
