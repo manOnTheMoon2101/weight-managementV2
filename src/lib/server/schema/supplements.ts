@@ -1,5 +1,5 @@
-import { boolean, pgTable, text, timestamp , serial } from "drizzle-orm/pg-core";
-
+import { boolean, pgTable,timestamp , serial , integer } from "drizzle-orm/pg-core";
+import { nutrients } from "./nutrients";
 
 export const supplements = pgTable("supplements", {
 	id: serial("id").primaryKey(),
@@ -11,5 +11,7 @@ export const supplements = pgTable("supplements", {
 	updatedAt: timestamp("updated_at").notNull(),
     isActive:  boolean("isActive").default(true),
     isDeleted:  boolean("isDeleted").default(false),
-    nutrientsId: text("nutrientsId")
+	nutrientsId: integer("nutrientsId")
+	.notNull()
+	.references(() => nutrients.id, { onDelete: "cascade" }),
 });

@@ -1,0 +1,1 @@
+ALTER TABLE "health_tracker" ALTER COLUMN "nutrientsId" SET DATA TYPE integer;

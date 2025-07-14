@@ -1,5 +1,5 @@
-import { boolean, pgTable, text, timestamp , time, integer,serial } from "drizzle-orm/pg-core";
-
+import { boolean, pgTable,timestamp , time, integer,serial } from "drizzle-orm/pg-core";
+import { nutrients } from "./nutrients";
 
 export const sleep_schedule = pgTable("sleep_schedule", {
 	id: serial("id").primaryKey(),
@@ -9,5 +9,7 @@ export const sleep_schedule = pgTable("sleep_schedule", {
 	updatedAt: timestamp("updated_at").notNull(),
     isActive:  boolean("isActive").default(true),
     isDeleted:  boolean("isDeleted").default(false),
-    nutrientsId: text("nutrientsId")
+    nutrientsId: integer("nutrientsId")
+		.notNull()
+		.references(() => nutrients.id, { onDelete: "cascade" }),
 });
