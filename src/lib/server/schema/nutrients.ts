@@ -7,6 +7,7 @@ export const nutrients = pgTable("nutrients", {
     carbs: integer("carbs").default(0),
     protein: integer("protein").default(0),
     sugar: integer("sugar").default(0),
+    calories: integer("calories").default(0),
 	createdAt: timestamp("created_at").notNull(),
 	updatedAt: timestamp("updated_at").notNull(),
     isActive:  boolean("isActive").default(true),

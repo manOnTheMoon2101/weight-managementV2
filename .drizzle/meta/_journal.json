@@ -36,6 +36,20 @@
       "when": 1752509572430,
       "tag": "0004_ancient_shotgun",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1752511193919,
+      "tag": "0005_famous_bromley",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1752511244619,
+      "tag": "0006_closed_midnight",
+      "breakpoints": true
     }
   ]
 }
