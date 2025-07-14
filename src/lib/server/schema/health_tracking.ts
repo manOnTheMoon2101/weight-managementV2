@@ -4,7 +4,6 @@ export const health_tracker = pgTable("health_tracker", {
 	id: serial("id").primaryKey(),
 	weight: integer("weight").default(0).notNull(),
     water: integer("water").default(0),
-    sugar: integer("sugar").default(0),
     caloriesBurned: integer("caloriesBurned").default(0),
 	createdAt: timestamp("created_at").notNull(),
 	updatedAt: timestamp("updated_at").notNull(),
