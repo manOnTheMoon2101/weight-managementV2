@@ -10,5 +10,5 @@ export const health_tracker = pgTable("health_tracker", {
 	updatedAt: timestamp("updated_at").notNull(),
     isActive:  boolean("isActive").default(true),
     isDeleted:  boolean("isDeleted").default(false),
-    userId: text("userId")
+    nutrientsId: text("nutrientsId")
 });

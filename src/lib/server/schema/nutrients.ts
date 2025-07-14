@@ -1,4 +1,5 @@
 import { boolean, pgTable, text, timestamp,integer } from "drizzle-orm/pg-core";
+import {user} from "./auth.schema"
 
 export const nutrients = pgTable("nutrients", {
 	id: text("id").primaryKey(),
@@ -11,4 +12,6 @@ export const nutrients = pgTable("nutrients", {
     isActive:  boolean("isActive").default(true),
     isDeleted:  boolean("isDeleted").default(false),
     userId: text("userId")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
 });

@@ -9,5 +9,5 @@ export const sleep_schedule = pgTable("sleep_schedule", {
 	updatedAt: timestamp("updated_at").notNull(),
     isActive:  boolean("isActive").default(true),
     isDeleted:  boolean("isDeleted").default(false),
-    userId: text("userId")
+    nutrientsId: text("nutrientsId")
 });
