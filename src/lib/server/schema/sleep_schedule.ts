@@ -1,8 +1,8 @@
-import { boolean, pgTable, text, timestamp , time, integer } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp , time, integer,serial } from "drizzle-orm/pg-core";
 
 
 export const sleep_schedule = pgTable("sleep_schedule", {
-	id: text("id").primaryKey(),
+	id: serial("id").primaryKey(),
 	time: time("sleep").default("08:00:00"),
 	score:  integer("score").default(0),
 	createdAt: timestamp("created_at").notNull(),

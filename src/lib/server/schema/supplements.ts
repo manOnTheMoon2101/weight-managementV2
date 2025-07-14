@@ -1,8 +1,8 @@
-import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp , serial } from "drizzle-orm/pg-core";
 
 
 export const supplements = pgTable("supplements", {
-	id: text("id").primaryKey(),
+	id: serial("id").primaryKey(),
 	fatburner: boolean("fatburner").default(false),
 	multiVitamin:  boolean("multiVitamin").default(false),
 	appleCider:  boolean("appleCider").default(false),

@@ -1,7 +1,7 @@
-import { boolean, pgTable, text, timestamp,integer } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp,integer ,serial} from "drizzle-orm/pg-core";
 
 export const health_tracker = pgTable("health_tracker", {
-	id: text("id").primaryKey(),
+	id: serial("id").primaryKey(),
 	weight: integer("weight").default(0).notNull(),
     water: integer("water").default(0),
     sugar: integer("sugar").default(0),

@@ -1,8 +1,8 @@
-import { boolean, pgTable, text, timestamp,integer } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp,integer,serial } from "drizzle-orm/pg-core";
 import {user} from "./auth.schema"
 
 export const nutrients = pgTable("nutrients", {
-	id: text("id").primaryKey(),
+	id: serial("id").primaryKey(),
 	fat: integer("fat").default(0),
     carbs: integer("carbs").default(0),
     protein: integer("protein").default(0),
