@@ -31,11 +31,9 @@
 <div class="flex flex-col gap-1">
 	<div class="bg-card text-card-foreground rounded-md border p-1 font-mono">
 		<div class="flex flex-row justify-around">
-			<Table columnDefs={columns} rowData={nutrients} />
-
 			<Chart />
 			<Chart />
 		</div>
-		<Button href="/" class="w-fit" size="lg">Back to Home</Button>
+		<Table columnDefs={columns} rowData={nutrients} />
 	</div>
 </div>
