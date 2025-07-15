@@ -11,30 +11,31 @@ export const load: PageServerLoad = async ({ request }) => {
     const session = await auth.api.getSession({
       headers: request.headers
     });
+    
     if (!session?.user?.id) {
       throw redirect(302, '/login');
     }
-    const userNutrients = await db
-      .select()
-      .from(nutrients)
-      .where(
-        and(
-          eq(nutrients.userId, session.user.id),
-          eq(nutrients.isActive, true),
-          eq(nutrients.isDeleted, false)
-        )
-      )
-      .orderBy(nutrients.createdAt);
-
+    
+    const userNutrients = await db.query.nutrients.findMany({
+      where: and(
+        eq(nutrients.userId, session.user.id),
+        eq(nutrients.isActive, true),
+        eq(nutrients.isDeleted, false)
+      ),
+      with: {
+        supplements:true
+      },
+      orderBy: nutrients.createdAt,
+    });
+    
     return {
       nutrients: userNutrients
     };
-
   } catch (error) {
     if (error instanceof Response) {
       throw error;
     }
-    
+   
     console.error('Error fetching nutrients:', error);
     return {
       nutrients: [],

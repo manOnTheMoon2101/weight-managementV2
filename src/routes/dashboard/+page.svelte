@@ -1,14 +1,14 @@
 <div class="flex flex-col gap-1">
 	<div class="rounded-md border bg-card p-1 font-mono text-card-foreground">
 		<div class="flex flex-row justify-around">
-            {#each nutrients as nutrient }
-                {nutrient.fat}
-            {/each}
+           
+            <Table columnDefs={columns} rowData={nutrients} />
+           
         <Chart/>
         <Chart/>
         </div>
 		<Button href="/" class="w-fit" size="lg">Back to Home</Button>
-		<Table columnDefs={columns} rowData={rows} />
+		
 	</div>
 </div>
 
@@ -20,38 +20,21 @@ import Chart from "./components/charts/chart.svelte"
 import type { PageData } from './$types';
   
   export let data: PageData;
+
+
   
   $: nutrients = data.nutrients;
 
+  console.log(nutrients)
+
 const columns = [
-        { headerName: 'Course', field: 'course' },
-        { headerName: 'Instructor', field: 'instructor' },
-        { headerName: 'Duration', field: 'duration' },
-        { headerName: 'Location', field: 'location' },
-        { headerName: 'Rating', field: 'rating' }
+        { headerName: 'Date', field: 'createdAt' },
+        { headerName: 'Calories', field: 'calories' },
+        { headerName: 'Protein', field: 'protein' },
+        { headerName: 'Fat', field: 'sugar' },
+        { headerName: 'Sugar', field: 'sugar' },
+        { headerName: 'Carbs', field: 'carbs' },
+       
     ];
 
-    const rows = [
-        {
-            course: 'JavaScript Basics',
-            instructor: 'John Doe',
-            duration: '5 hours',
-            location: 'Delhi',
-            rating: '3'
-        },
-        {
-            course: 'Svelte Fundamentals',
-            instructor: 'Jane Smith',
-            duration: '3 hours',
-            location: 'Delhi',
-            rating: '2'
-        },
-        {
-            course: 'Advanced React',
-            instructor: 'Jake White',
-            duration: '6 hours',
-            location: 'Delhi',
-            rating: '5'
-        }
-    ];
 </script>

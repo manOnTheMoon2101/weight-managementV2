@@ -1,5 +1,6 @@
 import { boolean, pgTable,timestamp , serial , integer } from "drizzle-orm/pg-core";
 import { nutrients } from "./nutrients";
+import { relations } from "drizzle-orm";
 
 export const supplements = pgTable("supplements", {
 	id: serial("id").primaryKey(),
@@ -15,3 +16,12 @@ export const supplements = pgTable("supplements", {
 	.notNull()
 	.references(() => nutrients.id, { onDelete: "cascade" }),
 });
+
+
+
+export const supplementsRelations = relations(supplements, ({ one }) => ({
+    nutrient: one(nutrients, {
+        fields: [supplements.nutrientsId],
+        references: [nutrients.id],
+    }),
+}));

@@ -1,5 +1,7 @@
 import { boolean, pgTable,timestamp , time, integer,serial } from "drizzle-orm/pg-core";
 import { nutrients } from "./nutrients";
+import { relations } from "drizzle-orm";
+
 
 export const sleep_schedule = pgTable("sleep_schedule", {
 	id: serial("id").primaryKey(),
@@ -13,3 +15,11 @@ export const sleep_schedule = pgTable("sleep_schedule", {
 		.notNull()
 		.references(() => nutrients.id, { onDelete: "cascade" }),
 });
+
+
+export const sleepScheudlueRelations = relations(sleep_schedule, ({ one }) => ({
+    nutrient: one(nutrients, {
+        fields: [sleep_schedule.nutrientsId],
+        references: [nutrients.id],
+    }),
+}));
