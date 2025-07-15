@@ -1,6 +1,9 @@
 <div class="flex flex-col gap-1">
 	<div class="rounded-md border bg-card p-1 font-mono text-card-foreground">
 		<div class="flex flex-row justify-around">
+            {#each nutrients as nutrient }
+                {nutrient.fat}
+            {/each}
         <Chart/>
         <Chart/>
         </div>
@@ -14,6 +17,11 @@
 import { Button } from "$lib/components/ui/button";
 import Table from "./components/table/table.svelte"
 import Chart from "./components/charts/chart.svelte"
+import type { PageData } from './$types';
+  
+  export let data: PageData;
+  
+  $: nutrients = data.nutrients;
 
 const columns = [
         { headerName: 'Course', field: 'course' },
