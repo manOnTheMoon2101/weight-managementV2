@@ -35,4 +35,6 @@
 			</DropdownMenu.Group>
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
+	<Button href="/dashboard">Dashboard</Button>
+	<Button href="/dashboard/table">Table</Button>
 </div>

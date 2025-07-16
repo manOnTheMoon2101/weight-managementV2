@@ -1,7 +1,17 @@
 <script lang="ts">
-	import Chart from "./components/charts/chart.svelte";
+	import Table from "./components/Table.svelte";
+
 	import type { PageData } from "./$types";
 
+	export let data: PageData;
+
+	$: nutrients = data.nutrients.map((row) => ({
+		...row,
+		cla: row.supplements?.map((x) => x.cla),
+		fatBurner: row.supplements?.map((x) => x.fatburner),
+		appleCider: row.supplements?.map((x) => x.appleCider),
+		multiVitamin: row.supplements?.map((x) => x.multiVitamin),
+	}));
 
 	const columns = [
 		{ headerName: "Date", field: "createdAt" },
@@ -17,12 +27,6 @@
 	];
 </script>
 
-<div class="flex flex-col gap-1">
-	<div class="bg-card text-card-foreground rounded-md border p-1 font-mono">
-		<div class="flex flex-row justify-around">
-			<Chart  />
-			<Chart />
-		</div>
-		
-	</div>
+<div>
+	<Table rowData={nutrients} columnDefs={columns} />
 </div>
