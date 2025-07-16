@@ -1,27 +1,12 @@
 <script lang="ts">
-	import Chart from "./components/charts/chart.svelte";
-	import type { PageData } from "./$types";
+	
 
-
-	const columns = [
-		{ headerName: "Date", field: "createdAt" },
-		{ headerName: "Calories", field: "calories" },
-		{ headerName: "Protein", field: "protein" },
-		{ headerName: "Fat", field: "sugar" },
-		{ headerName: "Sugar", field: "sugar" },
-		{ headerName: "Carbs", field: "carbs" },
-		{ headerName: "CLA", field: "cla" },
-		{ headerName: "Fat Burner", field: "fatBurner" },
-		{ headerName: "Apple Cider", field: "appleCider" },
-		{ headerName: "Multi Vitamin", field: "multiVitamin" },
-	];
 </script>
 
 <div class="flex flex-col gap-1">
 	<div class="bg-card text-card-foreground rounded-md border p-1 font-mono">
 		<div class="flex flex-row justify-around">
-			<Chart  />
-			<Chart />
+			charts
 		</div>
 		
 	</div>
