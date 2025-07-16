@@ -13,28 +13,34 @@
 	$: firstLetter = user?.name?.charAt(0);
 </script>
 
-<div class="border-b border-b-orange-300">
-	<DropdownMenu.Root>
-		<DropdownMenu.Trigger>
-			<div class="flex flex-row items-center my-1">
-				<Avatar.Root class="mr-2">
-					<Avatar.Fallback class="bg-amber-600">{firstLetter ?? "?"}</Avatar.Fallback>
-				</Avatar.Root>
-				<span>{user.name}</span>
-			</div></DropdownMenu.Trigger
-		>
-		<DropdownMenu.Content>
-			<DropdownMenu.Group>
-				<DropdownMenu.Label>My Account</DropdownMenu.Label>
-				<DropdownMenu.Separator />
-				<DropdownMenu.Item closeOnSelect={false}><EditDialog {user} /></DropdownMenu.Item>
-				<DropdownMenu.Item closeOnSelect={false}><LogoutDialog /></DropdownMenu.Item>
-				<DropdownMenu.Item closeOnSelect={false} class="flex flex-row justify-center"
-					><Toggler /></DropdownMenu.Item
+<div class="border-b border-b-orange-300 ">
+	<div class="flex flex-row justify-between items-center">
+		<div>
+			<DropdownMenu.Root>
+				<DropdownMenu.Trigger>
+					<div class="flex flex-row items-center my-1">
+						<Avatar.Root class="mr-2">
+							<Avatar.Fallback class="bg-amber-600">{firstLetter ?? "?"}</Avatar.Fallback>
+						</Avatar.Root>
+						<span>{user.name}</span>
+					</div></DropdownMenu.Trigger
 				>
-			</DropdownMenu.Group>
-		</DropdownMenu.Content>
-	</DropdownMenu.Root>
-	<Button href="/dashboard">Dashboard</Button>
-	<Button href="/dashboard/table">Table</Button>
+				<DropdownMenu.Content>
+					<DropdownMenu.Group>
+						<DropdownMenu.Label>My Account</DropdownMenu.Label>
+						<DropdownMenu.Separator />
+						<DropdownMenu.Item closeOnSelect={false}><EditDialog {user} /></DropdownMenu.Item>
+						<DropdownMenu.Item closeOnSelect={false}><LogoutDialog /></DropdownMenu.Item>
+						<DropdownMenu.Item closeOnSelect={false} class="flex flex-row justify-center"
+							><Toggler /></DropdownMenu.Item
+						>
+					</DropdownMenu.Group>
+				</DropdownMenu.Content>
+			</DropdownMenu.Root>
+		</div>
+		<div>
+			<Button href="/dashboard">Dashboard</Button>
+		<Button href="/dashboard/table">Table</Button>
+		</div>
+	</div>
 </div>

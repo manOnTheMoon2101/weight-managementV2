@@ -9,13 +9,10 @@
         colorSchemeDarkBlue
     } from 'ag-grid-community';
 
-    // Register AG Grid Modules
     ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
     export let columnDefs: Array<any> = [];
     export let rowData: Array<any> = [];
-
-    // Create a custom dark theme using Theming API
     const darkTheme = themeQuartz.withPart(colorSchemeDarkBlue).withParams({
         backgroundColor: '#212121',
         foregroundColor: '#ffffff',
