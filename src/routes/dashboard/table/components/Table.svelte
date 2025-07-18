@@ -9,13 +9,10 @@
         colorSchemeDarkBlue
     } from 'ag-grid-community';
 
-    // Register AG Grid Modules
     ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
     export let columnDefs: Array<any> = [];
     export let rowData: Array<any> = [];
-
-    // Create a custom dark theme using Theming API
     const darkTheme = themeQuartz.withPart(colorSchemeDarkBlue).withParams({
         backgroundColor: '#212121',
         foregroundColor: '#ffffff',
@@ -28,17 +25,19 @@
 
     onMount(() => {
         const gridOptions: GridOptions<any> = {
-            theme: darkTheme, // Apply custom dark theme
+            theme: darkTheme,
             columnDefs,
             rowData,
             defaultColDef: {
                 sortable: true,
-                filter: true
+                filter: true,
+                flex:1
+                
             }
         };
 
         if (gridDiv) {
-            createGrid(gridDiv, gridOptions); // Create the grid with custom options
+            createGrid(gridDiv, gridOptions);
         }
     });
 </script>

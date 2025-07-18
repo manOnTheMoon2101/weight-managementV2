@@ -25,7 +25,7 @@
 		</div>
 	{:else}
 		<div class="flex flex-col gap-2">
-			<p>You are not signed in.</p>
+			<p class="bg-red-900">You are not signed in.</p>
 			<Button href="/signin" class="w-fit" size="lg">Sign in</Button>
 		</div>
 		<div class="flex flex-col gap-2">

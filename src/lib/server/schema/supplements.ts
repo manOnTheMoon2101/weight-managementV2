@@ -1,8 +1,9 @@
-import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-
+import { boolean, pgTable,timestamp , serial , integer } from "drizzle-orm/pg-core";
+import { nutrients } from "./nutrients";
+import { relations } from "drizzle-orm";
 
 export const supplements = pgTable("supplements", {
-	id: text("id").primaryKey(),
+	id: serial("id").primaryKey(),
 	fatburner: boolean("fatburner").default(false),
 	multiVitamin:  boolean("multiVitamin").default(false),
 	appleCider:  boolean("appleCider").default(false),
@@ -11,5 +12,16 @@ export const supplements = pgTable("supplements", {
 	updatedAt: timestamp("updated_at").notNull(),
     isActive:  boolean("isActive").default(true),
     isDeleted:  boolean("isDeleted").default(false),
-    userId: text("userId")
+	nutrientsId: integer("nutrientsId")
+	.notNull()
+	.references(() => nutrients.id, { onDelete: "cascade" }),
 });
+
+
+
+export const supplementsRelations = relations(supplements, ({ one }) => ({
+    nutrient: one(nutrients, {
+        fields: [supplements.nutrientsId],
+        references: [nutrients.id],
+    }),
+}));

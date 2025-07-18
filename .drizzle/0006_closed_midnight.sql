@@ -1,0 +1,1 @@
+ALTER TABLE "nutrients" ADD COLUMN "calories" integer DEFAULT 0;
