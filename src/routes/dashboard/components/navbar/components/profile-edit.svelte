@@ -12,7 +12,7 @@
 		<Dialog.Header>
 			<Dialog.Title>Edit Profile</Dialog.Title>
 			<Dialog.Description>
-				<form method="POST" action="?/update">
+				<form method="POST" action="?/updateUser">
 					<Label for="name">Name</Label>
 					<Input name="name" placeholder="Name" value={user.name} />
 					<Label for="email">Email</Label>

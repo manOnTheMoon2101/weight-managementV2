@@ -7,7 +7,7 @@ import { auth } from "$lib/server/auth";
 import { redirect } from "@sveltejs/kit";
 
 export const actions = {
-	update: async ({ request }: { request: Request }) => {
+	updateUser: async ({ request }: { request: Request }) => {
 		const session = await auth.api.getSession({ headers: request.headers });
 		if (!session) {
 			redirect(302, "/signin");
