@@ -12,14 +12,14 @@
 		<Dialog.Header>
 			<Dialog.Title>Edit Profile</Dialog.Title>
 			<Dialog.Description>
-				<form>
+				<form method="POST" action="?/update">
 					<Label for="name">Name</Label>
-					<Input placeholder="Name" value={user.name} />
+					<Input name="name" placeholder="Name" value={user.name} />
 					<Label for="email">Email</Label>
-					<Input placeholder="Email" type="email" value={user.email} />
+					<Input name="email" placeholder="Email" type="email" value={user.email} />
 
 					<div class="flex flex-row justify-center">
-						<Button>Save</Button>
+						<Button type="submit">Save</Button>
 					</div>
 				</form>
 			</Dialog.Description>

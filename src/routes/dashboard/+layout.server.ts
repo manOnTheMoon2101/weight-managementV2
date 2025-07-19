@@ -15,3 +15,4 @@ export const load: LayoutServerLoad = async ({ request }) => {
 		user: session.user,
 	};
 };
+
