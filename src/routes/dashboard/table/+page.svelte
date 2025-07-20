@@ -11,6 +11,7 @@
 		fatBurner: row.supplements?.map((x) => x.fatburner),
 		appleCider: row.supplements?.map((x) => x.appleCider),
 		multiVitamin: row.supplements?.map((x) => x.multiVitamin),
+		magnesium: row.supplements?.map((x) => x.magnesium),
 	}));
 
 	const columns = [
@@ -24,6 +25,7 @@
 		{ headerName: "Fat Burner", field: "fatBurner" },
 		{ headerName: "Apple Cider", field: "appleCider" },
 		{ headerName: "Multi Vitamin", field: "multiVitamin" },
+		{ headerName: "Magnesium", field: "magnesium" },
 	];
 </script>
 

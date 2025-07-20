@@ -7,8 +7,8 @@ export const health_tracker = pgTable("health_tracker", {
 	weight: integer("weight").default(0).notNull(),
     water: integer("water").default(0),
     caloriesBurned: integer("caloriesBurned").default(0),
-	createdAt: timestamp("created_at").notNull(),
-	updatedAt: timestamp("updated_at").notNull(),
+	createdAt: timestamp("created_at").notNull().defaultNow(),
+	updatedAt: timestamp("updated_at").notNull().defaultNow(),
     isActive:  boolean("isActive").default(true),
     isDeleted:  boolean("isDeleted").default(false),
     nutrientsId: integer("nutrientsId")

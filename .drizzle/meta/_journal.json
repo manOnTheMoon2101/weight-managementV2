@@ -71,6 +71,13 @@
       "when": 1752512941660,
       "tag": "0009_same_silver_centurion",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1752917352340,
+      "tag": "0010_redundant_havok",
+      "breakpoints": true
     }
   ]
 }
