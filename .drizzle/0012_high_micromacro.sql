@@ -1,0 +1,1 @@
+ALTER TABLE "health_tracker" ALTER COLUMN "userId" SET DATA TYPE text;

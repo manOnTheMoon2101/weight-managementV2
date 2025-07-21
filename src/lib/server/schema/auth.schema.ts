@@ -1,4 +1,6 @@
 import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
+import {health_tracker} from "./health_tracking"
 // import { supplements } from "./supplements";
 
 export const user = pgTable("user", {
@@ -51,3 +53,9 @@ export const verification = pgTable("verification", {
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 	updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
+
+
+
+export const userRelations = relations(user, ({ many }) => ({
+    health_tracker: many(health_tracker),
+}));
