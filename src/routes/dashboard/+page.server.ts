@@ -34,9 +34,26 @@ export const load: PageServerLoad = async ({ request }) => {
         limit: 1,
       });
       const currentWeight = latestWeightEntries[0] || null;
+
+
+	  const waterIntake = await db.query.health_tracker.findMany({
+        where: and(
+          eq(health_tracker.userId, session.user.id),
+          eq(health_tracker.isActive, true),
+          eq(health_tracker.isDeleted, false)
+        ),
+        columns: {
+          water: true,
+        },
+      });
+	  const waterValues = waterIntake.map(entry => entry.water).filter(w => typeof w === 'number');
+	  const averageWaterIntake = waterValues.length > 0
+		? waterValues.reduce((sum, val) => sum + val, 0) / waterValues.length
+		: null;
 	  
 	  return {
-		currentWeight: currentWeight
+		currentWeight: currentWeight,
+		averageWaterIntake: averageWaterIntake
 	  };
 	} catch (error) {
 	  if (error instanceof Response) {
