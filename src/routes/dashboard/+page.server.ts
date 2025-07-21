@@ -21,14 +21,19 @@ export const load: PageServerLoad = async ({ request }) => {
 		throw redirect(302, '/login');
 	  }
 	  
-	  const currentWeight = await db.query.health_tracker.findFirst({
-		where: and(
-		eq(health_tracker.userId, session.user.id),
-		  eq(health_tracker.isActive, true),
-		  eq(health_tracker.isDeleted, false)
-		),
-		orderBy: health_tracker.createdAt,
-	  });
+	  const latestWeightEntries = await db.query.health_tracker.findMany({
+        where: and(
+          eq(health_tracker.userId, session.user.id),
+          eq(health_tracker.isActive, true),
+          eq(health_tracker.isDeleted, false)
+        ),
+        columns: {
+          weight: true,
+        },
+        orderBy: (health_tracker, { desc }) => desc(health_tracker.createdAt),
+        limit: 1,
+      });
+      const currentWeight = latestWeightEntries[0] || null;
 	  
 	  return {
 		currentWeight: currentWeight
