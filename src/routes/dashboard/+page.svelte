@@ -1,15 +1,10 @@
 <script lang="ts">
-
-import type { PageData } from "./$types";
+	import type { PageData } from "./$types";
 
 	export let data: PageData;
 
-
-	
-
-	$: currentWeight = data.currentWeight
-	$: averageWaterIntake = data.averageWaterIntake
-
+	$: currentWeight = data.currentWeight;
+	$: averageWaterIntake = data.averageWaterIntake;
 </script>
 
 <div class="flex flex-col gap-1">
@@ -18,6 +13,5 @@ import type { PageData } from "./$types";
 			Current Weight {currentWeight?.weight}
 			Average Water Intake(ml) {averageWaterIntake}
 		</div>
-		
 	</div>
 </div>
