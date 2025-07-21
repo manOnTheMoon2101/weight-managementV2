@@ -78,6 +78,20 @@
       "when": 1752917352340,
       "tag": "0010_redundant_havok",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1753122199463,
+      "tag": "0011_nosy_psylocke",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1753122479062,
+      "tag": "0012_high_micromacro",
+      "breakpoints": true
     }
   ]
 }

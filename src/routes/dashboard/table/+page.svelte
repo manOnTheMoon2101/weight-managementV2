@@ -18,7 +18,7 @@
 		{ headerName: "Date", field: "createdAt" },
 		{ headerName: "Calories", field: "calories" },
 		{ headerName: "Protein", field: "protein" },
-		{ headerName: "Fat", field: "sugar" },
+		{ headerName: "Fat", field: "fat" },
 		{ headerName: "Sugar", field: "sugar" },
 		{ headerName: "Carbs", field: "carbs" },
 		{ headerName: "CLA", field: "cla" },

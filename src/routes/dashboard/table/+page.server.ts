@@ -1,4 +1,3 @@
-// src/routes/nutrients/+page.server.ts
 import type { PageServerLoad } from './$types';
 import { db } from '../../../lib/server/db';
 import { nutrients } from '../../../lib/server/schema/index';
