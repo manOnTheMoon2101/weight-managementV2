@@ -1,0 +1,1 @@
+ALTER TABLE "health_tracker" RENAME COLUMN "caloriesBurned" TO "steps";

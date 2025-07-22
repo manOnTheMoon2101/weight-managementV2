@@ -12,10 +12,14 @@
 		appleCider: row.supplements?.map((x) => x.appleCider),
 		multiVitamin: row.supplements?.map((x) => x.multiVitamin),
 		magnesium: row.supplements?.map((x) => x.magnesium),
+		weight:row.health_tracker?.map((x) => x.weight),
+		water:row.health_tracker?.map((x) => x.water),
 	}));
 
 	const columns = [
 		{ headerName: "Date", field: "createdAt" },
+		{ headerName: "Weight", field: "weight" },
+		{ headerName: "Water", field: "water" },
 		{ headerName: "Calories", field: "calories" },
 		{ headerName: "Protein", field: "protein" },
 		{ headerName: "Fat", field: "fat" },

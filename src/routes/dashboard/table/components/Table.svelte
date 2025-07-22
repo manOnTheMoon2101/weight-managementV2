@@ -43,4 +43,4 @@
 </script>
 
 <!-- Grid Container -->
-<div bind:this={gridDiv} style="height: 400px; width: 100%;"></div>
+<div bind:this={gridDiv} style="height: 80vh; width: 100%;"></div>

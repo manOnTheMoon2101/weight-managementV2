@@ -22,7 +22,8 @@ export const load: PageServerLoad = async ({ request }) => {
         eq(nutrients.isDeleted, false)
       ),
       with: {
-        supplements:true
+        supplements:true,
+        health_tracker:true
       },
       orderBy: nutrients.createdAt,
     });
