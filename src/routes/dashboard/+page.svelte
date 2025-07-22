@@ -5,6 +5,7 @@
 
 	$: currentWeight = data.currentWeight;
 	$: averageWaterIntake = data.averageWaterIntake;
+	$: averageStepsIntake = data.averageStepsIntake
 </script>
 
 <div class="flex flex-col gap-1">
@@ -12,6 +13,7 @@
 		<div class="flex flex-row justify-around">
 			Current Weight {currentWeight?.weight}
 			Average Water Intake(ml) {averageWaterIntake}
+			Average Steps {Math.round(Number(averageStepsIntake))}
 		</div>
 	</div>
 </div>

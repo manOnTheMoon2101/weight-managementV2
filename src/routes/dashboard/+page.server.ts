@@ -47,9 +47,26 @@ export const load: PageServerLoad = async ({ request }) => {
 				? waterValues.reduce((sum, val) => sum + val, 0) / waterValues.length
 				: null;
 
+		const totalSteps = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false)
+			),
+			columns: {
+				steps: true,
+			},
+		});
+		const stepsValues = totalSteps.map((entry) => entry.steps).filter((w) => typeof w === "number");
+		const averageStepsIntake =
+			stepsValues.length > 0
+				? stepsValues.reduce((sum, val) => sum + val, 0) / stepsValues.length
+				: null;
+
 		return {
 			currentWeight: currentWeight,
 			averageWaterIntake: averageWaterIntake,
+			averageStepsIntake: averageStepsIntake,
 		};
 	} catch (error) {
 		if (error instanceof Response) {
