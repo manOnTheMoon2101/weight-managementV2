@@ -17,8 +17,9 @@
 	}));
 
 	const columns = [
+		{ headerName: "Actions"},
 		{ headerName: "Date", field: "createdAt" },
-		{ headerName: "Weight", field: "weight" },
+		{ headerName: "Weight", field: "weight", },
 		{ headerName: "Water", field: "water" },
 		{ headerName: "Calories", field: "calories" },
 		{ headerName: "Protein", field: "protein" },
