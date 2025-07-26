@@ -14,6 +14,8 @@
 		magnesium: row.supplements?.map((x) => x.magnesium),
 		weight: row.health_tracker?.map((x) => x.weight),
 		water: row.health_tracker?.map((x) => x.water),
+		steps: row.health_tracker?.map((x) => x.steps),
+		score: row.sleep_schedule?.map((x) => x.score)
 	}));
 
 	const columns = [
