@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount, onDestroy } from "svelte";
 	import * as Dialog from "$lib/components/ui/dialog/index.js";
+	import * as Card from "$lib/components/ui/card/index.js";
+	import DialogModal from "./view_dialog/Dialog.svelte";
 	import {
 		createGrid,
 		ModuleRegistry,
@@ -14,6 +16,7 @@
 	} from "ag-grid-community";
 	import { writable } from "svelte/store";
 	import Input from "$lib/components/ui/input/input.svelte";
+	import Label from "$lib/components/ui/label/label.svelte";
 
 	ModuleRegistry.registerModules([
 		ClientSideRowModelModule,
@@ -81,18 +84,6 @@
 	});
 </script>
 
-<Dialog.Root bind:open={dialogOpen}>
-	<Dialog.Content>
-		<Dialog.Header>
-			<Dialog.Title>{rowToEdit ? formatDMY(rowToEdit.createdAt) : ""}</Dialog.Title>
-			<Dialog.Description>
-				<form>
-					<Input name="weight" placeholder="Weight" value={rowToEdit?.weight || ""} />
-				</form>
-			</Dialog.Description>
-		</Dialog.Header>
-		<button on:click={() => (dialogOpen = false)}>Cancel</button>
-	</Dialog.Content>
-</Dialog.Root>
 
+<DialogModal bind:dialogOpen bind:rowToEdit />
 <div bind:this={gridDiv} style="height: 80vh; width: 100%;"></div>

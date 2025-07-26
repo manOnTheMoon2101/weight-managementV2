@@ -1,0 +1,51 @@
+<script lang="ts">
+    import * as Dialog from "$lib/components/ui/dialog/index.js";
+    import * as Card from "$lib/components/ui/card/index.js";
+    import Input from "$lib/components/ui/input/input.svelte";
+    import Label from "$lib/components/ui/label/label.svelte";
+    
+    export let dialogOpen: boolean;
+    export let rowToEdit: any;
+    
+    function formatDMY(dateString: string): string {
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const year = date.getFullYear();
+        return `${year}-${month}-${day}`;
+    }
+</script>
+
+<Dialog.Root bind:open={dialogOpen}>
+    <Dialog.Content>
+        <Dialog.Header>
+            <Dialog.Title>{rowToEdit ? formatDMY(rowToEdit.createdAt) : ""}</Dialog.Title>
+            <Dialog.Description>
+                <form>
+                    <div class="flex flex-row">
+                        <Card.Root class="bg-card">
+                            <Card.Header>
+                                <Card.Title>Health</Card.Title>
+                            </Card.Header>
+                            <Card.Content>
+                                <Label for="weight">Weight</Label>
+                                <Input name="weight" placeholder="Weight" value={rowToEdit?.weight || ""} />
+                            </Card.Content>
+                        </Card.Root>
+
+                        <Card.Root class="bg-card">
+                            <Card.Header>
+                                <Card.Title>Nutrients</Card.Title>
+                            </Card.Header>
+                            <Card.Content>
+                                <Label for="protein">Protein</Label>
+                                <Input name="protein" placeholder="Protein" value={rowToEdit?.protein || ""} />
+                            </Card.Content>
+                        </Card.Root>
+                    </div>
+                </form>
+            </Dialog.Description>
+        </Dialog.Header>
+        <button on:click={() => (dialogOpen = false)}>Cancel</button>
+    </Dialog.Content>
+</Dialog.Root>
