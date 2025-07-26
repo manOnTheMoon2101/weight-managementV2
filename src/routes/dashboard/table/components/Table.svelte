@@ -13,6 +13,7 @@
 		colorSchemeDarkBlue,
 	} from "ag-grid-community";
 	import { writable } from "svelte/store";
+	import Input from "$lib/components/ui/input/input.svelte";
 
 	ModuleRegistry.registerModules([
 		ClientSideRowModelModule,
@@ -33,16 +34,17 @@
 	});
 
 	let gridDiv: HTMLDivElement;
-
 	let dialogOpen = false;
 	let rowToEdit: any = null;
 
 	function handleClick(event: MouseEvent) {
 		const target = event.target as HTMLElement;
 		if (target.classList.contains("edit-btn")) {
-			const data = target.getAttribute("data-id");
-			rowToEdit = rowData.find((row) => row.data == data);
-			dialogOpen = true;
+			const rowIndex = target.getAttribute("data-row-index");
+			if (rowIndex !== null) {
+				rowToEdit = rowData[parseInt(rowIndex)];
+				dialogOpen = true;
+			}
 		}
 	}
 
@@ -84,13 +86,13 @@
 		<Dialog.Header>
 			<Dialog.Title>{rowToEdit ? formatDMY(rowToEdit.createdAt) : ""}</Dialog.Title>
 			<Dialog.Description>
-				This action cannot be undone. This will permanently delete the entry for:
-				<br />
-				<strong>{rowToEdit ? rowToEdit.createdAt : ""}</strong>
+				<form>
+					<Input name="weight" placeholder="Weight" value={rowToEdit?.weight || ""} />
+				</form>
 			</Dialog.Description>
 		</Dialog.Header>
-
 		<button on:click={() => (dialogOpen = false)}>Cancel</button>
 	</Dialog.Content>
 </Dialog.Root>
+
 <div bind:this={gridDiv} style="height: 80vh; width: 100%;"></div>

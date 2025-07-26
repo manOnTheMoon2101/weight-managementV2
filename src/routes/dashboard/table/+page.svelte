@@ -2,7 +2,7 @@
 	import Table from "./components/Table.svelte";
 
 	import type { PageData } from "./$types";
-import Button from "$lib/components/ui/button/button.svelte";
+	import Button from "$lib/components/ui/button/button.svelte";
 	export let data: PageData;
 
 	$: nutrients = data.nutrients.map((row) => ({
@@ -21,8 +21,7 @@ import Button from "$lib/components/ui/button/button.svelte";
 			headerName: "Actions",
 			field: "actions",
 			cellRenderer: (params: any) => {
-				return `
-					<button class="edit-btn bg-red-900" data-data="${params.data}">Edit</button>
+				return `     <button class="edit-btn" data-row-index="${params.node.rowIndex}">Edit</button>
 				`;
 			},
 		},
