@@ -3,6 +3,7 @@
     import * as Card from "$lib/components/ui/card/index.js";
     import Input from "$lib/components/ui/input/input.svelte";
     import Label from "$lib/components/ui/label/label.svelte";
+	import Button from "$lib/components/ui/button/button.svelte";
     
     export let dialogOpen: boolean;
     export let rowToEdit: any;
@@ -46,6 +47,6 @@
                 </form>
             </Dialog.Description>
         </Dialog.Header>
-        <button on:click={() => (dialogOpen = false)}>Cancel</button>
+        <Button class="bg-accent" onclick={() => (dialogOpen = false)}>Save</Button>
     </Dialog.Content>
 </Dialog.Root>
