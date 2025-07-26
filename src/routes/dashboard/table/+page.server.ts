@@ -23,7 +23,8 @@ export const load: PageServerLoad = async ({ request }) => {
       ),
       with: {
         supplements:true,
-        health_tracker:true
+        health_tracker:true,
+        sleep_schedule:true
       },
       orderBy: nutrients.createdAt,
     });

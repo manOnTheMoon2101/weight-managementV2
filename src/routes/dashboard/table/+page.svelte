@@ -2,7 +2,7 @@
 	import Table from "./components/Table.svelte";
 
 	import type { PageData } from "./$types";
-
+	import Button from "$lib/components/ui/button/button.svelte";
 	export let data: PageData;
 
 	$: nutrients = data.nutrients.map((row) => ({
@@ -12,14 +12,23 @@
 		appleCider: row.supplements?.map((x) => x.appleCider),
 		multiVitamin: row.supplements?.map((x) => x.multiVitamin),
 		magnesium: row.supplements?.map((x) => x.magnesium),
-		weight:row.health_tracker?.map((x) => x.weight),
-		water:row.health_tracker?.map((x) => x.water),
+		weight: row.health_tracker?.map((x) => x.weight),
+		water: row.health_tracker?.map((x) => x.water),
+		steps: row.health_tracker?.map((x) => x.steps),
+		score: row.sleep_schedule?.map((x) => x.score)
 	}));
 
 	const columns = [
-		{ headerName: "Actions"},
+		{
+			headerName: "Actions",
+			field: "actions",
+			cellRenderer: (params: any) => {
+				return `     <button class="edit-btn" data-row-index="${params.node.rowIndex}">Edit</button>
+				`;
+			},
+		},
 		{ headerName: "Date", field: "createdAt" },
-		{ headerName: "Weight", field: "weight", },
+		{ headerName: "Weight", field: "weight" },
 		{ headerName: "Water", field: "water" },
 		{ headerName: "Calories", field: "calories" },
 		{ headerName: "Protein", field: "protein" },
