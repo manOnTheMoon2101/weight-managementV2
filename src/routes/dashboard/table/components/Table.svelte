@@ -33,7 +33,7 @@
 		foregroundColor: `var(--foreground)`,
 		headerBackgroundColor: `var(--accent)`,
 		headerTextColor: "#cfd8dc",
-		oddRowBackgroundColor: "#263299",
+		// oddRowBackgroundColor: "#263299",
 	});
 
 	let gridDiv: HTMLDivElement;
