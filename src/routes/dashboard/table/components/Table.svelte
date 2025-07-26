@@ -84,6 +84,9 @@
 	});
 </script>
 
-
 <DialogModal bind:dialogOpen bind:rowToEdit />
+<div class="flex flex-row justify-between">
+	<div></div>
+	<div class="my-2"><Input placeholder="Search" /></div>
+</div>
 <div bind:this={gridDiv} style="height: 80vh; width: 100%;"></div>
