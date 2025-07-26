@@ -48,8 +48,10 @@
 								<Card.Title>Nutrients</Card.Title>
 							</Card.Header>
 							<Card.Content>
-								<Label for="protein">Protein</Label>
-								<Input name="protein" placeholder="Protein" value={rowToEdit?.protein || ""} />
+								<Checkbox  id="cla" checked={rowToEdit?.cla == 'true' ? true : false} />
+								<Label for="cla">CLA</Label>
+								<Checkbox  id="fatBurner" checked={rowToEdit?.fatBurner == 'true' ? true : false} />
+								<Label for="fatBurner">Fat Burner</Label>
 							</Card.Content>
 						</Card.Root>
 					</div>
@@ -57,15 +59,12 @@
 					<div>
 						<Card.Root class="bg-card">
 							<Card.Header>
-								<Card.Title>Nutrients</Card.Title>
+								<Card.Title>Health</Card.Title>
 							</Card.Header>
 							<Card.Content>
-                                <Checkbox id="cla" checked={rowToEdit?.cla || false}  />
-                                <Label for="cla">CLA</Label>
-
-                                <Checkbox id="fatBurner" checked={rowToEdit?.fatBurner || false} />
-                                <Label for="fatBurner">Fat Burner</Label>
-                            </Card.Content>
+								<Label for="weight">Weight</Label>
+								<Input name="weight" placeholder="Weight" value={rowToEdit?.weight || ""} />
+							</Card.Content>
 						</Card.Root>
 					</div>
 				</form>
