@@ -44,6 +44,9 @@
 								<Card.Title>Nutrients</Card.Title>
 							</Card.Header>
 							<Card.Content>
+                                <Label for="calories">Calories</Label>
+								<Input name="calories" placeholder="Calories" value={rowToEdit?.calories || ""} />
+
 								<Label for="protein">Protein</Label>
 								<Input name="protein" placeholder="Protein" value={rowToEdit?.protein || ""} />
 								<Label for="fat">Fat</Label>
