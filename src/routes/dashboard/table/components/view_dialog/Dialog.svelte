@@ -93,7 +93,7 @@
 
 									<div class="my-2">
 										<Checkbox
-											id="magneisum"
+											id="magnesium"
 											checked={rowToEdit?.magneisum == "true" ? true : false}
 										/>
 										<Label for="magnesium">Magnesium</Label>
