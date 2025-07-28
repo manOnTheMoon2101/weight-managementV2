@@ -115,7 +115,7 @@
 		{ value: 0, label: "Today" },
 		{ value: 1, label: "Tomorrow" },
 		{ value: 3, label: "In 3 days" },
-		{ value: 7, label: "In a week" },
+		{ value: -7, label: "Past week" },
 		{ value: -30, label: "Past 30 Days" },
 	];
 </script>
