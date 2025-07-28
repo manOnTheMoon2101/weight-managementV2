@@ -19,18 +19,25 @@
 	import Input from "$lib/components/ui/input/input.svelte";
 	import Label from "$lib/components/ui/label/label.svelte";
 
+	import CalendarIcon from "@lucide/svelte/icons/calendar";
+	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
+	import { cn } from "$lib/utils.js";
+	import { buttonVariants } from "$lib/components/ui/button/index.js";
+	import { Calendar } from "$lib/components/ui/calendar/index.js";
+	import * as Popover from "$lib/components/ui/popover/index.js";
+	import * as Select from "$lib/components/ui/select/index.js";
+
 	ModuleRegistry.registerModules([
 		ClientSideRowModelModule,
 		TextFilterModule,
 		NumberFilterModule,
 		DateFilterModule,
 	]);
+	let value: DateValue | undefined = $state();
 
-	export let columnDefs: Array<any> = [];
-	export let rowData: Array<any> = [];
+	const { columnDefs = [], rowData = [] } = $props();
 
 	let gridApi: GridApi | null = null;
-	let filterValue = "";
 
 	const darkTheme = themeQuartz.withPart(colorSchemeDarkBlue).withParams({
 		backgroundColor: `var(--background)`,
@@ -41,8 +48,9 @@
 	});
 
 	let gridDiv: HTMLDivElement;
-	let dialogOpen = false;
-	let rowToEdit: any = null;
+	let filterValue = $state("");
+	let dialogOpen = $state(false);
+	let rowToEdit: any = $state(null);
 
 	function handleClick(event: MouseEvent) {
 		const target = event.target as HTMLElement;
@@ -60,7 +68,7 @@
 		filterValue = event.currentTarget.value;
 
 		if (gridApi) {
-			gridApi.setGridOption("quickFilterText",filterValue);
+			gridApi.setGridOption("quickFilterText", filterValue);
 		}
 	}
 	function formatDMY(dateString: string): string {
@@ -97,11 +105,63 @@
 			gridDiv.removeEventListener("click", handleClick);
 		}
 	});
+	const df = new DateFormatter("en-US", {
+		dateStyle: "long",
+	});
+
+	const valueString = $derived(value ? df.format(value.toDate(getLocalTimeZone())) : "");
+
+	const items = [
+		{ value: 0, label: "Today" },
+		{ value: 1, label: "Tomorrow" },
+		{ value: 3, label: "In 3 days" },
+		{ value: 7, label: "In a week" },
+		{ value: -30, label: "Past 30 Days" },
+	];
 </script>
 
 <DialogModal bind:dialogOpen bind:rowToEdit />
 <div class="flex flex-row justify-between">
-	<div></div>
+	<div>
+		<Popover.Root>
+			<Popover.Trigger
+				class={cn(
+					buttonVariants({
+						variant: "outline",
+						class: "w-[280px] justify-start text-left font-normal",
+					}),
+					!value && "text-muted-foreground"
+				)}
+			>
+				<CalendarIcon class="mr-2 size-4" />
+				{value ? df.format(value.toDate(getLocalTimeZone())) : "Pick a date"}
+			</Popover.Trigger>
+			<Popover.Content class="flex w-auto flex-col space-y-2 p-2">
+				<Select.Root
+					type="single"
+					bind:value={
+						() => valueString,
+						(v) => {
+							if (!v) return;
+							value = today(getLocalTimeZone()).add({ days: Number.parseInt(v) });
+						}
+					}
+				>
+					<Select.Trigger>
+						{valueString}
+					</Select.Trigger>
+					<Select.Content>
+						{#each items as item (item.value)}
+							<Select.Item value={`${item.value}`}>{item.label}</Select.Item>
+						{/each}
+					</Select.Content>
+				</Select.Root>
+				<div class="rounded-md border">
+					<Calendar type="single" bind:value />
+				</div>
+			</Popover.Content>
+		</Popover.Root>
+	</div>
 	<div class="my-2">
 		<Input
 			type="text"
