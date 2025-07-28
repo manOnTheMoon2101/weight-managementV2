@@ -12,7 +12,7 @@
 	<div class="bg-card text-card-foreground rounded-md border p-1 font-mono">
 		<div class="flex flex-row justify-around">
 			Current Weight {currentWeight?.weight}
-			Average Water Intake(ml) {averageWaterIntake}
+			Average Water Intake(ml) {Math.round(Number(averageWaterIntake))}
 			Average Steps {Math.round(Number(averageStepsIntake))}
 		</div>
 	</div>
