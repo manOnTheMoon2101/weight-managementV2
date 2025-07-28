@@ -17,7 +17,7 @@
 	}
 </script>
 
-<Dialog.Root bind:open={dialogOpen}>
+<Dialog.Root bind:open={dialogOpen} >
 	<Dialog.Content>
 		<Dialog.Header>
 			<Dialog.Title>{rowToEdit ? formatDMY(rowToEdit.createdAt) : ""}</Dialog.Title>
@@ -94,7 +94,7 @@
 									<div class="my-2">
 										<Checkbox
 											id="magnesium"
-											checked={rowToEdit?.magneisum == "true" ? true : false}
+											checked={rowToEdit?.magnesium == "true" ? true : false}
 										/>
 										<Label for="magnesium">Magnesium</Label>
 									</div>
