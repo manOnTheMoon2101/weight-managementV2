@@ -103,7 +103,7 @@
 <div class="flex flex-row justify-between">
 	<div></div>
 	<div class="my-2">
-		{filterValue}<Input
+		<Input
 			type="text"
 			class="bg-background placeholder:text-foreground text-foreground pl-8"
 			placeholder="Search"
