@@ -23,7 +23,7 @@
 	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
 	import { cn } from "$lib/utils.js";
 	import { buttonVariants } from "$lib/components/ui/button/index.js";
-	import { Calendar } from "$lib/components/ui/calendar/index.js";
+	import { RangeCalendar } from "$lib/components/ui/range-calendar/index.js";
 	import * as Popover from "$lib/components/ui/popover/index.js";
 	import * as Select from "$lib/components/ui/select/index.js";
 
@@ -33,7 +33,8 @@
 		NumberFilterModule,
 		DateFilterModule,
 	]);
-	let value: DateValue | undefined = $state();
+
+	let value: { start: DateValue | undefined; end: DateValue | undefined } | undefined = $state();
 
 	const { columnDefs = [], rowData = [] } = $props();
 
@@ -62,6 +63,7 @@
 			}
 		}
 	}
+
 	function onFilterTextBoxChanged(
 		event: Event & { currentTarget: EventTarget & HTMLInputElement }
 	) {
@@ -71,6 +73,7 @@
 			gridApi.setGridOption("quickFilterText", filterValue);
 		}
 	}
+
 	function formatDMY(dateString: string): string {
 		const date = new Date(dateString);
 		const day = date.getDate().toString().padStart(2, "0");
@@ -105,19 +108,46 @@
 			gridDiv.removeEventListener("click", handleClick);
 		}
 	});
+
 	const df = new DateFormatter("en-US", {
-		dateStyle: "long",
+		dateStyle: "medium",
 	});
 
-	const valueString = $derived(value ? df.format(value.toDate(getLocalTimeZone())) : "");
+	const valueString = $derived.by(() => {
+		if (!value) return "";
+		
+		if (value.start && value.end) {
+			return `${df.format(value.start.toDate(getLocalTimeZone()))} - ${df.format(value.end.toDate(getLocalTimeZone()))}`;
+		} else if (value.start) {
+			return df.format(value.start.toDate(getLocalTimeZone()));
+		}
+		
+		return "";
+	});
 
 	const items = [
-		{ value: 0, label: "Today" },
-		{ value: 1, label: "Tomorrow" },
-		{ value: 3, label: "In 3 days" },
-		{ value: -7, label: "Past week" },
-		{ value: -30, label: "Past 30 Days" },
+		{ value: "today", label: "Today", start: 0, end: 0 },
+		{ value: "yesterday", label: "Yesterday", start: -1, end: -1 },
+		{ value: "last7days", label: "Last 7 days", start: -7, end: 0 },
+		{ value: "last30days", label: "Last 30 days", start: -30, end: 0 },
+		{ value: "thisweek", label: "This week", start: -7, end: 0 },
+		{ value: "thismonth", label: "This month", start: -30, end: 0 },
 	];
+
+	let selectedPreset = $state("");
+
+	function handlePresetSelect(selectedValue: string | string[]) {
+		const valueToUse = Array.isArray(selectedValue) ? selectedValue[0] : selectedValue;
+		const item = items.find(i => i.value === valueToUse);
+		if (item) {
+			selectedPreset = item.label;
+			const todayDate = today(getLocalTimeZone());
+			value = {
+				start: todayDate.add({ days: item.start }),
+				end: todayDate.add({ days: item.end })
+			};
+		}
+	}
 </script>
 
 <DialogModal bind:dialogOpen bind:rowToEdit />
@@ -128,36 +158,27 @@
 				class={cn(
 					buttonVariants({
 						variant: "outline",
-						class: "w-[280px] justify-start text-left font-normal",
+						class: "w-[300px] justify-start text-left font-normal",
 					}),
 					!value && "text-muted-foreground"
 				)}
 			>
 				<CalendarIcon class="mr-2 size-4" />
-				{value ? df.format(value.toDate(getLocalTimeZone())) : "Pick a date"}
+				{value && (value.start || value.end) ? valueString : "Pick a date range"}
 			</Popover.Trigger>
 			<Popover.Content class="flex w-auto flex-col space-y-2 p-2">
-				<Select.Root
-					type="single"
-					bind:value={
-						() => valueString,
-						(v) => {
-							if (!v) return;
-							value = today(getLocalTimeZone()).add({ days: Number.parseInt(v) });
-						}
-					}
-				>
+				<Select.Root type="single" onValueChange={handlePresetSelect}>
 					<Select.Trigger>
-						{valueString}
+						{selectedPreset || "Select a preset range"}
 					</Select.Trigger>
 					<Select.Content>
 						{#each items as item (item.value)}
-							<Select.Item value={`${item.value}`}>{item.label}</Select.Item>
+							<Select.Item value={item.value}>{item.label}</Select.Item>
 						{/each}
 					</Select.Content>
 				</Select.Root>
 				<div class="rounded-md border">
-					<Calendar type="single" bind:value />
+					<RangeCalendar bind:value />
 				</div>
 			</Popover.Content>
 		</Popover.Root>
