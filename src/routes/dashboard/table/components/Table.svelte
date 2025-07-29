@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from "svelte";
+	import { goto } from "$app/navigation";
+	import { page } from "$app/stores";
 	import * as Dialog from "$lib/components/ui/dialog/index.js";
 	import * as Card from "$lib/components/ui/card/index.js";
 	import DialogModal from "./view_dialog/Dialog.svelte";
@@ -20,7 +22,13 @@
 	import Label from "$lib/components/ui/label/label.svelte";
 
 	import CalendarIcon from "@lucide/svelte/icons/calendar";
-	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
+	import {
+		DateFormatter,
+		type DateValue,
+		getLocalTimeZone,
+		today,
+		parseDate,
+	} from "@internationalized/date";
 	import { cn } from "$lib/utils.js";
 	import { buttonVariants } from "$lib/components/ui/button/index.js";
 	import { RangeCalendar } from "$lib/components/ui/range-calendar/index.js";
@@ -52,6 +60,54 @@
 	let filterValue = $state("");
 	let dialogOpen = $state(false);
 	let rowToEdit: any = $state(null);
+
+	// Initialize date range from URL params on mount or set default to last 7 days
+	onMount(() => {
+		const urlParams = new URLSearchParams($page.url.search);
+		const startDate = urlParams.get("startDate");
+		const endDate = urlParams.get("endDate");
+
+		if (startDate && endDate) {
+			try {
+				value = {
+					start: parseDate(startDate),
+					end: parseDate(endDate),
+				};
+			} catch (error) {
+				console.error("Error parsing dates from URL:", error);
+				setDefaultDates();
+			}
+		} else {
+			setDefaultDates();
+		}
+	});
+
+	function setDefaultDates() {
+		const todayDate = today(getLocalTimeZone());
+		value = {
+			start: todayDate.add({ days: -7 }),
+			end: todayDate,
+		};
+		selectedPreset = "Last 7 days";
+		updateDateRange();
+	}
+
+	async function updateDateRange() {
+		if (value?.start && value?.end) {
+			const startDateStr = value.start.toString();
+			const endDateStr = value.end.toString();
+
+			const url = new URL($page.url);
+			url.searchParams.set("startDate", startDateStr);
+			url.searchParams.set("endDate", endDateStr);
+
+			await goto(url.toString(), {
+				replaceState: false,
+				invalidateAll: true,
+				noScroll: true,
+			});
+		}
+	}
 
 	function handleClick(event: MouseEvent) {
 		const target = event.target as HTMLElement;
@@ -115,13 +171,13 @@
 
 	const valueString = $derived.by(() => {
 		if (!value) return "";
-		
+
 		if (value.start && value.end) {
 			return `${df.format(value.start.toDate(getLocalTimeZone()))} - ${df.format(value.end.toDate(getLocalTimeZone()))}`;
 		} else if (value.start) {
 			return df.format(value.start.toDate(getLocalTimeZone()));
 		}
-		
+
 		return "";
 	});
 
@@ -138,16 +194,22 @@
 
 	function handlePresetSelect(selectedValue: string | string[]) {
 		const valueToUse = Array.isArray(selectedValue) ? selectedValue[0] : selectedValue;
-		const item = items.find(i => i.value === valueToUse);
+		const item = items.find((i) => i.value === valueToUse);
 		if (item) {
 			selectedPreset = item.label;
 			const todayDate = today(getLocalTimeZone());
 			value = {
 				start: todayDate.add({ days: item.start }),
-				end: todayDate.add({ days: item.end })
+				end: todayDate.add({ days: item.end }),
 			};
+			updateDateRange();
 		}
 	}
+	$effect(() => {
+		if (value?.start && value?.end) {
+			updateDateRange();
+		}
+	});
 </script>
 
 <DialogModal bind:dialogOpen bind:rowToEdit />
