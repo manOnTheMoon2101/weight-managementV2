@@ -142,6 +142,13 @@
 		{ value: "thisweek", label: "This week", start: -7, end: 0 },
 		{ value: "thismonth", label: "This month", start: -30, end: 0 },
 	];
+
+	function handleCalendarChange(newValue: typeof value) {
+    value = newValue;
+    if (newValue?.start && newValue?.end) {
+        updateDateRange();
+    }
+}
 </script>
 
 <div>
@@ -170,7 +177,7 @@
 				</Select.Content>
 			</Select.Root>
 			<div class="rounded-md border">
-				<RangeCalendar bind:value />
+				<RangeCalendar bind:value onValueChange={handleCalendarChange} />
 			</div>
 		</Popover.Content>
 	</Popover.Root>
