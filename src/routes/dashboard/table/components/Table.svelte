@@ -2,8 +2,6 @@
 	import { onMount, onDestroy } from "svelte";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
-	import * as Dialog from "$lib/components/ui/dialog/index.js";
-	import * as Card from "$lib/components/ui/card/index.js";
 	import DialogModal from "./view_dialog/Dialog.svelte";
 	import {
 		createGrid,
@@ -16,11 +14,8 @@
 		themeQuartz,
 		colorSchemeDarkBlue,
 	} from "ag-grid-community";
-	import { writable } from "svelte/store";
 	import type { GridApi } from "ag-grid-community";
 	import Input from "$lib/components/ui/input/input.svelte";
-	import Label from "$lib/components/ui/label/label.svelte";
-
 	import CalendarIcon from "@lucide/svelte/icons/calendar";
 	import {
 		DateFormatter,
