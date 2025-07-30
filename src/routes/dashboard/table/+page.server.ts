@@ -40,6 +40,10 @@ export const load: PageServerLoad = async ({ request, url }) => {
       try {
         const start = new Date(actualStartDate);
         const end = new Date(actualEndDate);
+
+
+        console.log(start)
+        console.log(end)
         
         end.setHours(23, 59, 59, 999);
         
