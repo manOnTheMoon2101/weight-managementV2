@@ -8,13 +8,12 @@
 	import * as Select from "$lib/components/ui/select/index.js";
 	import CalendarIcon from "@lucide/svelte/icons/calendar";
 	import { goto } from "$app/navigation";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import {
 		DateFormatter,
 		type DateValue,
 		getLocalTimeZone,
 		today,
-		parseDate,
 	} from "@internationalized/date";
 
 	const { data } = $props<{ data: PageData }>();
@@ -102,21 +101,21 @@
 	});
 
 	async function updateDateRange() {
-		if (value?.start && value?.end) {
-			const startDateStr = value.start.toString();
-			const endDateStr = value.end.toString();
-
-			const url = new URL($page.url);
-			url.searchParams.set("startDate", startDateStr);
-			url.searchParams.set("endDate", endDateStr);
-
-			await goto(url.toString(), {
-				replaceState: false,
-				invalidateAll: true,
-				noScroll: true,
-			});
-		}
-	}
+    if (value?.start && value?.end) {
+        const startDateStr = value.start.toString();
+        const endDateStr = value.end.toString();
+        
+        const url = new URL(page.url);
+        url.searchParams.set("startDate", startDateStr);
+        url.searchParams.set("endDate", endDateStr);
+        
+        await goto(url.toString(), {
+            replaceState: false,
+            invalidateAll: true,
+            noScroll: true,
+        });
+    }
+}
 
 	let selectedPreset = $state("");
 	function handlePresetSelect(selectedValue: string | string[]) {
@@ -133,7 +132,6 @@
 		}
 	}
 
-
 	const items = [
 		{ value: "today", label: "Today", start: 0, end: 0 },
 		{ value: "yesterday", label: "Yesterday", start: -1, end: -1 },
@@ -144,11 +142,11 @@
 	];
 
 	function handleCalendarChange(newValue: typeof value) {
-    value = newValue;
-    if (newValue?.start && newValue?.end) {
-        updateDateRange();
-    }
-}
+		value = newValue;
+		if (newValue?.start && newValue?.end) {
+			updateDateRange();
+		}
+	}
 </script>
 
 <div>
