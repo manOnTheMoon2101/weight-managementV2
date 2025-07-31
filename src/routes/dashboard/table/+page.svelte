@@ -9,6 +9,8 @@
 	import CalendarIcon from "@lucide/svelte/icons/calendar";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
+	import Button from "./components/cellRenderers/Button.svelte";
+	import { makeSvelteCellRenderer } from "ag-grid-svelte5-extended";
 	import {
 		DateFormatter,
 		type DateValue,
@@ -75,11 +77,18 @@
 		{ headerName: "Fat", field: "fat" },
 		{ headerName: "Sugar", field: "sugar" },
 		{ headerName: "Carbs", field: "carbs" },
-		{ headerName: "CLA", field: "cla" },
-		{ headerName: "Fat Burner", field: "fatBurner" },
-		{ headerName: "Apple Cider", field: "appleCider" },
-		{ headerName: "Multi Vitamin", field: "multiVitamin" },
-		{ headerName: "Magnesium", field: "magnesium" },
+		{
+        headerName: "Supplements",
+        cellRenderer: makeSvelteCellRenderer(Button),
+        cellRendererParams: {
+            supplementFields: ['fatBurner', 'appleCider', 'multiVitamin', 'magnesium',"cla"]
+        }
+    },
+	// { headerName: "CLA", field: "cla" },
+		// { headerName: "Fat Burner", field: "fatBurner" },
+		// { headerName: "Apple Cider", field: "appleCider" },
+		// { headerName: "Multi Vitamin", field: "multiVitamin" },
+		// { headerName: "Magnesium", field: "magnesium" },
 	];
 
 	let value: { start: DateValue | undefined; end: DateValue | undefined } | undefined = $state();
