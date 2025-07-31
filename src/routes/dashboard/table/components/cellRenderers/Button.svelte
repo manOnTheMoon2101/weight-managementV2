@@ -7,7 +7,7 @@
 		data,
 		supplementFields,
 	}: ICellRendererParams & {
-		supplementFields: string[];
+		supplementFields: any[];
 	} = $props();
 
 	let supplements = $derived(

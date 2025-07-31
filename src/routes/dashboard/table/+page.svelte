@@ -77,7 +77,6 @@
 		{ headerName: "Fat", field: "fat" },
 		{ headerName: "Sugar", field: "sugar" },
 		{ headerName: "Carbs", field: "carbs" },
-		{ headerName: "CLA", field: "cla" },
 		{
         headerName: "Supplements",
         cellRenderer: makeSvelteCellRenderer(Button),
@@ -85,10 +84,11 @@
             supplementFields: ['fatBurner', 'appleCider', 'multiVitamin', 'magnesium',"cla"]
         }
     },
-		{ headerName: "Fat Burner", field: "fatBurner" },
-		{ headerName: "Apple Cider", field: "appleCider" },
-		{ headerName: "Multi Vitamin", field: "multiVitamin" },
-		{ headerName: "Magnesium", field: "magnesium" },
+	// { headerName: "CLA", field: "cla" },
+		// { headerName: "Fat Burner", field: "fatBurner" },
+		// { headerName: "Apple Cider", field: "appleCider" },
+		// { headerName: "Multi Vitamin", field: "multiVitamin" },
+		// { headerName: "Magnesium", field: "magnesium" },
 	];
 
 	let value: { start: DateValue | undefined; end: DateValue | undefined } | undefined = $state();
