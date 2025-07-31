@@ -25,9 +25,11 @@ export const load: PageServerLoad = async ({ request }) => {
 				weight: true,
 			},
 			orderBy: (health_tracker, { desc }) => desc(health_tracker.createdAt),
-			limit: 1,
+			limit: 2, // Get the two most recent entries
 		});
+		
 		const currentWeight = latestWeightEntries[0] || null;
+		const previousWeight = latestWeightEntries[1] || null;
 
 		const waterIntake = await db.query.health_tracker.findMany({
 			where: and(
@@ -65,6 +67,7 @@ export const load: PageServerLoad = async ({ request }) => {
 
 		return {
 			currentWeight: currentWeight,
+			previousWeight: previousWeight,
 			averageWaterIntake: averageWaterIntake,
 			averageStepsIntake: averageStepsIntake,
 		};
