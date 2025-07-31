@@ -5,6 +5,7 @@
 	import ChevronRight from "@lucide/svelte/icons/chevron-right";
 	export let data: PageData;
 
+	$: user = data.user;
 	$: currentWeight = data.currentWeight;
 	$: previousWeight = data.previousWeight;
 	$: averageWaterIntake = data.averageWaterIntake;
@@ -26,7 +27,9 @@
 	<div class="bg-card text-card-foreground rounded-md border p-1 font-mono">
 		<div class="flex flex-row justify-around">
 			<span>
-				{greet("user")}
+				{#if user}
+				{greet(user.name)}
+				{/if}
 				Current Weight
 				<span
 					class={!currentWeight?.weight || !previousWeight?.weight

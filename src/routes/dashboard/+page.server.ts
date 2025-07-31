@@ -66,6 +66,7 @@ export const load: PageServerLoad = async ({ request }) => {
 				: null;
 
 		return {
+			user:session.user,
 			currentWeight: currentWeight,
 			previousWeight: previousWeight,
 			averageWaterIntake: averageWaterIntake,
