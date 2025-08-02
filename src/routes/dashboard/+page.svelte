@@ -31,11 +31,11 @@
 </script>
 
 <div class="flex flex-col gap-1">
-	<div class="bg-card text-card-foreground rounded-md border p-1 font-mono">
+	<div>
 		<div class="flex flex-row items-center justify-between">
 			<div>
 				{#if user}
-					<h2 class="text-4xl">{greet(user.name)}</h2>
+					<h1 class="text-4xl">{greet(user.name)}</h1>
 				{/if}
 			</div>
 			<div
@@ -95,7 +95,7 @@
 			</div>
 		</div>
 
-		<div class="flex flex-row justify-around">
+		<div>
 			Average Water Intake(ml) {Math.round(Number(averageWaterIntake))}
 			Average Steps {Math.round(Number(averageStepsIntake))}
 		</div>

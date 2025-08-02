@@ -9,7 +9,7 @@
 	import CalendarIcon from "@lucide/svelte/icons/calendar";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
-	import Button from "./components/cellRenderers/Button.svelte";
+	import Supplements from "./components/cellRenderers/Supplements.svelte";
 	import { makeSvelteCellRenderer } from "ag-grid-svelte5-extended";
 	import {
 		DateFormatter,
@@ -79,7 +79,7 @@
 		{ headerName: "Carbs", field: "carbs" },
 		{
         headerName: "Supplements",
-        cellRenderer: makeSvelteCellRenderer(Button),
+        cellRenderer: makeSvelteCellRenderer(Supplements),
         cellRendererParams: {
             supplementFields: ['fatBurner', 'appleCider', 'multiVitamin', 'magnesium',"cla"]
         }
