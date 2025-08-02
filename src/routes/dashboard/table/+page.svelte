@@ -12,12 +12,8 @@
 	import Supplements from "./components/cellRenderers/Supplements.svelte";
 	import Dialog from "./components/view_dialog/Dialog.svelte";
 	import { makeSvelteCellRenderer } from "ag-grid-svelte5-extended";
-	import {
-		DateFormatter,
-		type DateValue,
-		getLocalTimeZone,
-		today,
-	} from "@internationalized/date";
+	import Limits from "./components/cellRenderers/Limits.svelte";
+	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
 
 	const { data } = $props<{ data: PageData }>();
 
@@ -68,9 +64,9 @@
 			filter: false,
 			sortable: false,
 			suppressMovable: true,
-			headerClass: "bg-background text-white bg-opacity-50 text-center",
+			headerClass: "bg-background",
 			cellRenderer: makeSvelteCellRenderer(Dialog),
-			cellRendererParams: (params : any) => ({
+			cellRendererParams: (params: any) => ({
 				dialogOpen: false,
 				rowToEdit: params.data,
 			}),
@@ -78,19 +74,51 @@
 		{ headerName: "Date", field: "createdAt" },
 		{ headerName: "Weight", field: "weight" },
 		{ headerName: "Water", field: "water" },
-		{ headerName: "Calories", field: "calories" },
-		{ headerName: "Protein", field: "protein" },
-		{ headerName: "Fat", field: "fat" },
-		{ headerName: "Sugar", field: "sugar" },
-		{ headerName: "Carbs", field: "carbs" },
 		{
-        headerName: "Supplements",
-        cellRenderer: makeSvelteCellRenderer(Supplements),
-        cellRendererParams: {
-            supplementFields: ['fatBurner', 'appleCider', 'multiVitamin', 'magnesium',"cla"]
-        }
-    },
-	// { headerName: "CLA", field: "cla" },
+			headerName: "Calories",
+			field: "calories",
+			cellRenderer: makeSvelteCellRenderer(Limits),
+			cellRendererParams: (params: any) => ({
+				data: params.data.calories,
+				limit: 2000,
+			}),
+		},
+		{ headerName: "Protein", field: "protein" },
+		{
+			headerName: "Fat",
+			field: "fat",
+			cellRenderer: makeSvelteCellRenderer(Limits),
+			cellRendererParams: (params: any) => ({
+				data: params.data.fat,
+				limit: 78,
+			}),
+		},
+		{
+			headerName: "Sugar",
+			field: "sugar",
+			cellRenderer: makeSvelteCellRenderer(Limits),
+			cellRendererParams: (params: any) => ({
+				data: params.data.sugar,
+				limit: 60,
+			}),
+		},
+		{
+			headerName: "Carbs",
+			field: "carbs",
+			cellRenderer: makeSvelteCellRenderer(Limits),
+			cellRendererParams: (params: any) => ({
+				data: params.data.carbs,
+				limit: 120,
+			}),
+		},
+		{
+			headerName: "Supplements",
+			cellRenderer: makeSvelteCellRenderer(Supplements),
+			cellRendererParams: {
+				supplementFields: ["fatBurner", "appleCider", "multiVitamin", "magnesium", "cla"],
+			},
+		},
+		// { headerName: "CLA", field: "cla" },
 		// { headerName: "Fat Burner", field: "fatBurner" },
 		// { headerName: "Apple Cider", field: "appleCider" },
 		// { headerName: "Multi Vitamin", field: "multiVitamin" },
@@ -116,21 +144,21 @@
 	});
 
 	async function updateDateRange() {
-    if (value?.start && value?.end) {
-        const startDateStr = value.start.toString();
-        const endDateStr = value.end.toString();
-        
-        const url = new URL(page.url);
-        url.searchParams.set("startDate", startDateStr);
-        url.searchParams.set("endDate", endDateStr);
-        
-        await goto(url.toString(), {
-            replaceState: false,
-            invalidateAll: true,
-            noScroll: true,
-        });
-    }
-}
+		if (value?.start && value?.end) {
+			const startDateStr = value.start.toString();
+			const endDateStr = value.end.toString();
+
+			const url = new URL(page.url);
+			url.searchParams.set("startDate", startDateStr);
+			url.searchParams.set("endDate", endDateStr);
+
+			await goto(url.toString(), {
+				replaceState: false,
+				invalidateAll: true,
+				noScroll: true,
+			});
+		}
+	}
 
 	let selectedPreset = $state("");
 	function handlePresetSelect(selectedValue: string | string[]) {
