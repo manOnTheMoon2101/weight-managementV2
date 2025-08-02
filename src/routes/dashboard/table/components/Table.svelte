@@ -2,7 +2,6 @@
 	import { onMount, onDestroy } from "svelte";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
-	import DialogModal from "./view_dialog/Dialog.svelte";
 	import {
 		createGrid,
 		ModuleRegistry,
@@ -51,16 +50,6 @@
 	let dialogOpen = $state(false);
 	let rowToEdit: any = $state(null);
 
-	function handleClick(event: MouseEvent) {
-		const target = event.target as HTMLElement;
-		if (target.classList.contains("edit-btn")) {
-			const rowIndex = target.getAttribute("data-row-index");
-			if (rowIndex !== null) {
-				rowToEdit = rowData[parseInt(rowIndex)];
-				dialogOpen = true;
-			}
-		}
-	}
 
 	function onFilterTextBoxChanged(
 		event: Event & { currentTarget: EventTarget & HTMLInputElement }
@@ -88,7 +77,6 @@
 
 		if (gridDiv) {
 			createGrid(gridDiv, gridOptions);
-			gridDiv.addEventListener("click", handleClick);
 		}
 	});
 
@@ -98,8 +86,6 @@
 
 
 </script>
-
-<DialogModal bind:dialogOpen bind:rowToEdit />
 <div class="flex flex-row justify-between">
 
 	<div class="my-2">

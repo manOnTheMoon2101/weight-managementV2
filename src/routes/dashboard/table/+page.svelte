@@ -10,6 +10,7 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
 	import Supplements from "./components/cellRenderers/Supplements.svelte";
+	import Dialog from "./components/view_dialog/Dialog.svelte";
 	import { makeSvelteCellRenderer } from "ag-grid-svelte5-extended";
 	import {
 		DateFormatter,
@@ -64,10 +65,15 @@
 		{
 			headerName: "Actions",
 			field: "actions",
-			cellRenderer: (params: any) => {
-				return `     <button class="edit-btn" data-row-index="${params.node.rowIndex}">Edit</button>
-				`;
-			},
+			filter: false,
+			sortable: false,
+			suppressMovable: true,
+			headerClass: "bg-background text-white bg-opacity-50 text-center",
+			cellRenderer: makeSvelteCellRenderer(Dialog),
+			cellRendererParams: (params : any) => ({
+				dialogOpen: false,
+				rowToEdit: params.data,
+			}),
 		},
 		{ headerName: "Date", field: "createdAt" },
 		{ headerName: "Weight", field: "weight" },

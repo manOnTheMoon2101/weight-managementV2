@@ -5,6 +5,7 @@
 	import Label from "$lib/components/ui/label/label.svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import { Checkbox } from "$lib/components/ui/checkbox/index.js";
+    import SettingsIcon from "@lucide/svelte/icons/settings-2";
 	export let dialogOpen: boolean;
 	export let rowToEdit: any;
 
@@ -18,6 +19,9 @@
 </script>
 
 <Dialog.Root bind:open={dialogOpen} >
+    <Dialog.Trigger class="w-full">
+        <Button size={'sm'} variant={'ghost'}><SettingsIcon class="size-4" />Edit</Button>
+    </Dialog.Trigger>
     <Dialog.Content class="max-h-[80vh] overflow-y-auto">
         <Dialog.Header>
             <Dialog.Title>{rowToEdit ? formatDMY(rowToEdit.createdAt) : ""}</Dialog.Title>
