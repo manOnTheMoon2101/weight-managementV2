@@ -5,9 +5,13 @@
 	import Label from "$lib/components/ui/label/label.svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import { Checkbox } from "$lib/components/ui/checkbox/index.js";
+    import type { ICellRendererParams } from 'ag-grid-community';
     import SettingsIcon from "@lucide/svelte/icons/settings-2";
-	export let dialogOpen: boolean;
-	export let rowToEdit: any;
+
+    let { dialogOpen = $bindable(), rowToEdit } = $props<{ dialogOpen: boolean; rowToEdit: any }>();
+
+
+
 
 	function formatDMY(dateString: string): string {
 		const date = new Date(dateString);
