@@ -30,6 +30,7 @@
 						<DropdownMenu.Label>My Account</DropdownMenu.Label>
 						<DropdownMenu.Separator />
 						<DropdownMenu.Item closeOnSelect={false}><EditDialog {user} /></DropdownMenu.Item>
+						<DropdownMenu.Item disabled closeOnSelect={false}>Edit Nutrient Limits</DropdownMenu.Item>
 						<DropdownMenu.Item closeOnSelect={false}><LogoutDialog /></DropdownMenu.Item>
 						<DropdownMenu.Item closeOnSelect={false} class="flex flex-row justify-center"
 							><Toggler /></DropdownMenu.Item

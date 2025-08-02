@@ -23,9 +23,10 @@ export const load: PageServerLoad = async ({ request }) => {
 			),
 			columns: {
 				weight: true,
+				createdAt: true,
 			},
 			orderBy: (health_tracker, { desc }) => desc(health_tracker.createdAt),
-			limit: 2, // Get the two most recent entries
+			limit: 2,
 		});
 		
 		const currentWeight = latestWeightEntries[0] || null;
