@@ -11,7 +11,7 @@
 	} = $props();
 </script>
 
-<div class={data > limit ? "text-destructive" : ""}>
+<div class={data > limit ? "text-red-500" : ""}>
 	<Tooltip.Provider delayDuration={100}>
 		<Tooltip.Root>
 			<Tooltip.Trigger>
