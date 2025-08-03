@@ -114,7 +114,7 @@ export const actions = {
 		const carbsLimit = form.get("carbsLimit") as unknown as number;
 		const proteinLimit = form.get("proteinLimit") as unknown as number;
 		const sugarLimit = form.get("sugarLimit") as unknown as number;
-		if (!caloriesLimit) {
+		if (!caloriesLimit || !carbsLimit || !proteinLimit || !sugarLimit) {
 			return { success: false, error: "Limits Required." };
 		}
 		await db
