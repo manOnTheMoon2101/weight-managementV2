@@ -17,6 +17,7 @@
                 <form method="POST" action="/dashboard?/updateUser">
                     <div>
                         <Label for="color">Colour</Label>
+						{hex}
                         <ColorPicker bind:hex components={ChromeVariant} sliderDirection="horizontal" />
                         <input type="hidden" name="userColour" bind:value={hex} />
                     </div>
