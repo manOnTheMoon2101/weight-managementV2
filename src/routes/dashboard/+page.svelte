@@ -40,12 +40,12 @@
 			</div>
 			<div
 				class={!currentWeight || !previousWeight
-					? "flex flex-row items-center text-white"
+					? "flex flex-row items-center"
 					: Number(currentWeight) > Number(previousWeight)
-						? "flex flex-row items-center text-red-500"
+						? "flex flex-row items-center "
 						: Number(currentWeight) < Number(previousWeight)
-							? "flex flex-row items-center text-green-500"
-							: "flex flex-row items-center text-white"}
+							? "flex flex-row items-center "
+							: "flex flex-row items-center"}
 			>
 				<Tooltip.Provider delayDuration={100}>
 					<Tooltip.Root>
