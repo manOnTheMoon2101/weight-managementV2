@@ -57,6 +57,8 @@
 		}))
 	);
 
+	const limits = $derived.by(() => data.limits);
+
 	const columns = [
 		{
 			headerName: "Actions",
@@ -80,7 +82,7 @@
 			cellRenderer: makeSvelteCellRenderer(Limits),
 			cellRendererParams: (params: any) => ({
 				data: params.data.calories,
-				limit: 2000,
+				limit: limits.caloriesLimit,
 			}),
 		},
 		{ headerName: "Protein", field: "protein" },
@@ -90,7 +92,7 @@
 			cellRenderer: makeSvelteCellRenderer(Limits),
 			cellRendererParams: (params: any) => ({
 				data: params.data.fat,
-				limit: 78,
+				limit: limits.fatLimit,
 			}),
 		},
 		{
@@ -99,7 +101,7 @@
 			cellRenderer: makeSvelteCellRenderer(Limits),
 			cellRendererParams: (params: any) => ({
 				data: params.data.sugar,
-				limit: 60,
+				limit: limits.sugarLimit,
 			}),
 		},
 		{
@@ -108,7 +110,7 @@
 			cellRenderer: makeSvelteCellRenderer(Limits),
 			cellRendererParams: (params: any) => ({
 				data: params.data.carbs,
-				limit: 120,
+				limit: limits.carbsLimit,
 			}),
 		},
 		{
