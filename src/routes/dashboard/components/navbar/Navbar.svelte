@@ -6,27 +6,34 @@
 	import EditDialog from "./components/profile-edit.svelte";
 	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
 	import { Button } from "$lib/components/ui/button";
-	import LimitsDialog from "./components/nutrients-dialog.svelte"
+	import LimitsDialog from "./components/nutrients-dialog.svelte";
+
 	import { onMount } from "svelte";
-	export let user: any;
-	export let limits: any
 
-	$: user = typeof user === "string" ? JSON.parse(user) : user;
-	$: firstLetter = user?.name?.charAt(0);
+	let {
+		user,
+		limits,
+	}: {
+		user: any[];
+		limits: any[];
+	} = $props();
 
+	const parsedUser = $derived(typeof user === "string" ? JSON.parse(user) : user);
+	const firstLetter = $derived(parsedUser?.name?.charAt(0));
 
+	$inspect(user);
 </script>
 
-<div class="border-b border-b-orange-300 ">
-	<div class="flex flex-row justify-between items-center">
+<div class="border-b border-b-orange-300">
+	<div class="flex flex-row items-center justify-between">
 		<div>
 			<DropdownMenu.Root>
 				<DropdownMenu.Trigger>
-					<div class="flex flex-row items-center my-1">
+					<div class="my-1 flex flex-row items-center">
 						<Avatar.Root class="mr-2">
-							<Avatar.Fallback class="bg-amber-600">{firstLetter ?? "?"}</Avatar.Fallback>
+							<Avatar.Fallback class="bg-[#34d399]">{firstLetter ?? "?"}</Avatar.Fallback>
 						</Avatar.Root>
-						<span>{user.name}</span>
+						<span>{parsedUser.name}</span>
 					</div></DropdownMenu.Trigger
 				>
 				<DropdownMenu.Content>
@@ -34,7 +41,7 @@
 						<DropdownMenu.Label>My Account</DropdownMenu.Label>
 						<DropdownMenu.Separator />
 						<DropdownMenu.Item closeOnSelect={false}><EditDialog {user} /></DropdownMenu.Item>
-						<DropdownMenu.Item  closeOnSelect={false}><LimitsDialog {limits} /></DropdownMenu.Item>
+						<DropdownMenu.Item closeOnSelect={false}><LimitsDialog {limits} /></DropdownMenu.Item>
 						<DropdownMenu.Item closeOnSelect={false}><LogoutDialog /></DropdownMenu.Item>
 						<DropdownMenu.Item closeOnSelect={false} class="flex flex-row justify-center"
 							><Toggler /></DropdownMenu.Item
@@ -45,7 +52,7 @@
 		</div>
 		<div>
 			<Button href="/dashboard">Dashboard</Button>
-		<Button href="/dashboard/table">Table</Button>
+			<Button href="/dashboard/table">Table</Button>
 		</div>
 	</div>
 </div>
