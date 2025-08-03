@@ -95,10 +95,13 @@ export const actions = {
 		const form = await request.formData();
 		const name = form.get("name") as string;
 		const email = form.get("email") as string;
+		const colour = form.get("userColour") as string; // Now matches the form field name
+		
 		if (!name || !email) {
 			return { success: false, error: "Name and email are required." };
 		}
-		await db.update(user).set({ name, email }).where(eq(user.id, session.user.id));
+		
+		await db.update(user).set({ name, email, colour }).where(eq(user.id, session.user.id));
 		return { success: true };
 	},
 

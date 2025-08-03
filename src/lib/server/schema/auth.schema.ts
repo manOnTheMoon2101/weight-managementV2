@@ -2,11 +2,11 @@ import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import {health_tracker} from "./health_tracking"
 import { limits } from "./limits";
-// import { supplements } from "./supplements";
 
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
+	colour: text("colour").notNull().default("#fbbf24"),
 	email: text("email").notNull().unique(),
 	emailVerified: boolean("email_verified").notNull(),
 	image: text("image"),
