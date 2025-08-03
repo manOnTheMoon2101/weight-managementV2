@@ -4,13 +4,28 @@
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	let {
 		data,
-        limit,
+		limit,
 	}: ICellRendererParams & {
 		data: any[];
-        limit: number
+		limit: number;
 	} = $props();
 </script>
 
 <div class={data > limit ? "text-destructive" : ""}>
-	{data}
+	<Tooltip.Provider delayDuration={100}>
+		<Tooltip.Root>
+			<Tooltip.Trigger>
+				{data}
+			</Tooltip.Trigger>
+			{#if data > limit}
+				<Tooltip.Content class="bg-red-500">
+					<p>Limits Exceted</p>
+				</Tooltip.Content>
+			{:else}
+				<Tooltip.Content>
+					<p>{data}</p>
+				</Tooltip.Content>
+			{/if}
+		</Tooltip.Root>
+	</Tooltip.Provider>
 </div>
