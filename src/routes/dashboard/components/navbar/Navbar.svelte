@@ -6,11 +6,15 @@
 	import EditDialog from "./components/profile-edit.svelte";
 	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
 	import { Button } from "$lib/components/ui/button";
+	import LimitsDialog from "./components/nutrients-dialog.svelte"
 	import { onMount } from "svelte";
 	export let user: any;
+	export let limits: any
 
 	$: user = typeof user === "string" ? JSON.parse(user) : user;
 	$: firstLetter = user?.name?.charAt(0);
+
+
 </script>
 
 <div class="border-b border-b-orange-300 ">
@@ -30,7 +34,7 @@
 						<DropdownMenu.Label>My Account</DropdownMenu.Label>
 						<DropdownMenu.Separator />
 						<DropdownMenu.Item closeOnSelect={false}><EditDialog {user} /></DropdownMenu.Item>
-						<DropdownMenu.Item disabled closeOnSelect={false}>Edit Nutrient Limits</DropdownMenu.Item>
+						<DropdownMenu.Item  closeOnSelect={false}><LimitsDialog {limits} /></DropdownMenu.Item>
 						<DropdownMenu.Item closeOnSelect={false}><LogoutDialog /></DropdownMenu.Item>
 						<DropdownMenu.Item closeOnSelect={false} class="flex flex-row justify-center"
 							><Toggler /></DropdownMenu.Item

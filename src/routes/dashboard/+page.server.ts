@@ -1,6 +1,6 @@
 import { auth } from "$lib/server/auth";
 import { db } from "$lib/server/db";
-import { health_tracker, user } from "$lib/server/schema/index";
+import { health_tracker, limits, user } from "$lib/server/schema/index";
 import { redirect } from "@sveltejs/kit";
 import { and, eq } from "drizzle-orm";
 import type { PageServerLoad } from "./$types";
@@ -28,7 +28,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			orderBy: (health_tracker, { desc }) => desc(health_tracker.createdAt),
 			limit: 2,
 		});
-		
+
 		const currentWeight = latestWeightEntries[0] || null;
 		const previousWeight = latestWeightEntries[1] || null;
 
@@ -67,7 +67,7 @@ export const load: PageServerLoad = async ({ request }) => {
 				: null;
 
 		return {
-			user:session.user,
+			user: session.user,
 			currentWeight: currentWeight,
 			previousWeight: previousWeight,
 			averageWaterIntake: averageWaterIntake,
@@ -99,6 +99,28 @@ export const actions = {
 			return { success: false, error: "Name and email are required." };
 		}
 		await db.update(user).set({ name, email }).where(eq(user.id, session.user.id));
+		return { success: true };
+	},
+
+	updateLimits: async ({ request }: { request: Request }) => {
+		const session = await auth.api.getSession({ headers: request.headers });
+		if (!session) {
+			redirect(302, "/signin");
+		}
+		const form = await request.formData();
+		const caloriesLimit = form.get("caloriesLimit") as unknown as number;
+
+		const fatLimit = form.get("fatLimit") as unknown as number;
+		const carbsLimit = form.get("carbsLimit") as unknown as number;
+		const proteinLimit = form.get("proteinLimit") as unknown as number;
+		const sugarLimit = form.get("sugarLimit") as unknown as number;
+		if (!caloriesLimit || !carbsLimit || !proteinLimit || !sugarLimit) {
+			return { success: false, error: "Limits Required." };
+		}
+		await db
+			.update(limits)
+			.set({ caloriesLimit, fatLimit, carbsLimit, proteinLimit, sugarLimit })
+			.where(eq(limits.userId, session.user.id));
 		return { success: true };
 	},
 };

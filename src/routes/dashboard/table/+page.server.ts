@@ -1,6 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { db } from '../../../lib/server/db';
 import { nutrients } from '../../../lib/server/schema/index';
+import { limits } from '../../../lib/server/schema/index';
 import { eq, and, gte, lte } from 'drizzle-orm';
 import { auth } from '../../../lib/server/auth';
 import { redirect } from '@sveltejs/kit';
@@ -66,9 +67,18 @@ export const load: PageServerLoad = async ({ request, url }) => {
       },
       orderBy: nutrients.createdAt,
     });
+
+    const userLimits = await db.query.limits.findFirst({
+      where: and(
+        eq(limits.userId, session.user.id),
+        eq(limits.isActive, true),
+        eq(limits.isDeleted, false)
+      ),
+    });
    
     return {
       nutrients: userNutrients,
+      limits:userLimits,
       dateRange: {
         startDate: actualStartDate,
         endDate: actualEndDate
