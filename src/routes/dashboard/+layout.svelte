@@ -6,6 +6,6 @@
 </script>
 
 <div class="flex flex-col gap-4 p-4">
-	<Navbar user={data.user} limits={data.limits} />
+	<Navbar user={data.user} limits={data.limits} userColour={data.userColour.colour} />
 	{@render children()}
 </div>

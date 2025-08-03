@@ -12,9 +12,11 @@
 
 	let {
 		user,
+		userColour,
 		limits,
 	}: {
 		user: any[];
+		userColour:any
 		limits: any[];
 	} = $props();
 
@@ -31,7 +33,7 @@
 				<DropdownMenu.Trigger>
 					<div class="my-1 flex flex-row items-center">
 						<Avatar.Root class="mr-2">
-							<Avatar.Fallback class="bg-[#34d399]">{firstLetter ?? "?"}</Avatar.Fallback>
+							<Avatar.Fallback  style="background-color: {userColour}">{firstLetter ?? "?"}</Avatar.Fallback>
 						</Avatar.Root>
 						<span>{parsedUser.name}</span>
 					</div></DropdownMenu.Trigger
@@ -40,7 +42,7 @@
 					<DropdownMenu.Group>
 						<DropdownMenu.Label>My Account</DropdownMenu.Label>
 						<DropdownMenu.Separator />
-						<DropdownMenu.Item closeOnSelect={false}><EditDialog {user} /></DropdownMenu.Item>
+						<DropdownMenu.Item closeOnSelect={false}><EditDialog {user} {userColour} /></DropdownMenu.Item>
 						<DropdownMenu.Item closeOnSelect={false}><LimitsDialog {limits} /></DropdownMenu.Item>
 						<DropdownMenu.Item closeOnSelect={false}><LogoutDialog /></DropdownMenu.Item>
 						<DropdownMenu.Item closeOnSelect={false} class="flex flex-row justify-center"
