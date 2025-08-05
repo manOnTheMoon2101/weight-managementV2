@@ -1,0 +1,1 @@
+ALTER TABLE "limits" ADD COLUMN "waterLimit" integer DEFAULT 0;

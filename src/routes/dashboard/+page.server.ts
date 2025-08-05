@@ -117,12 +117,14 @@ export const actions = {
 		const carbsLimit = form.get("carbsLimit") as unknown as number;
 		const proteinLimit = form.get("proteinLimit") as unknown as number;
 		const sugarLimit = form.get("sugarLimit") as unknown as number;
-		if (!caloriesLimit || !carbsLimit || !proteinLimit || !sugarLimit) {
+		const stepsLimit = form.get("stepsLimit") as unknown as number;
+		const waterLimit = form.get("waterLimit") as unknown as number;
+		if (!caloriesLimit || !carbsLimit || !proteinLimit || !sugarLimit || !stepsLimit || !waterLimit) {
 			return { success: false, error: "Limits Required." };
 		}
 		await db
 			.update(limits)
-			.set({ caloriesLimit, fatLimit, carbsLimit, proteinLimit, sugarLimit })
+			.set({ caloriesLimit, fatLimit, carbsLimit, proteinLimit, sugarLimit , stepsLimit , waterLimit})
 			.where(eq(limits.userId, session.user.id));
 		return { success: true };
 	},

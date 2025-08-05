@@ -9,6 +9,8 @@ export const limits = pgTable("limits", {
     proteinLimit: integer("proteinLimit").default(0),
     sugarLimit: integer("sugarLimit").default(0),
     caloriesLimit: integer("caloriesLimit").default(0),
+    stepsLimit: integer("stepsLimit").default(0),
+    waterLimit: integer("waterLimit").default(0),
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 	updatedAt: timestamp("updated_at").notNull().defaultNow(),
     isActive:  boolean("isActive").default(true),
