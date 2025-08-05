@@ -74,22 +74,25 @@
 			}),
 		},
 		{ headerName: "Date", field: "createdAt" },
-		{ headerName: "Weight", field: "weight" },
-		{ headerName: "Steps", field: "steps" },
-		{ headerName: "Water", field: "water" },
+		{ headerName: "Weight", field: "weight",filter: 'agNumberColumnFilter', },
+		{ headerName: "Steps", field: "steps",filter: 'agNumberColumnFilter', },
+		{ headerName: "Water", field: "water",filter: 'agNumberColumnFilter', },
 		{
 			headerName: "Calories",
 			field: "calories",
+			filter: 'agNumberColumnFilter',
 			cellRenderer: makeSvelteCellRenderer(Limits),
 			cellRendererParams: (params: any) => ({
 				data: params.data.calories,
 				limit: limits.caloriesLimit,
 			}),
 		},
-		{ headerName: "Protein", field: "protein" },
+		{ headerName: "Protein", field: "protein",filter: 'agNumberColumnFilter', },
 		{
 			headerName: "Fat",
 			field: "fat",
+
+			filter: 'agNumberColumnFilter',
 			cellRenderer: makeSvelteCellRenderer(Limits),
 			cellRendererParams: (params: any) => ({
 				data: params.data.fat,
@@ -99,6 +102,7 @@
 		{
 			headerName: "Sugar",
 			field: "sugar",
+			filter: 'agNumberColumnFilter',
 			cellRenderer: makeSvelteCellRenderer(Limits),
 			cellRendererParams: (params: any) => ({
 				data: params.data.sugar,
@@ -108,6 +112,7 @@
 		{
 			headerName: "Carbs",
 			field: "carbs",
+			filter: 'agNumberColumnFilter',
 			cellRenderer: makeSvelteCellRenderer(Limits),
 			cellRendererParams: (params: any) => ({
 				data: params.data.carbs,
