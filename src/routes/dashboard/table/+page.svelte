@@ -50,7 +50,7 @@
 			appleCider: row.supplements?.map((x: Supplement) => x.appleCider),
 			multiVitamin: row.supplements?.map((x: Supplement) => x.multiVitamin),
 			magnesium: row.supplements?.map((x: Supplement) => x.magnesium),
-			weight: row.health_tracker?.map((x: HealthTracker) => x.weight),
+			weight: row.health_tracker?.[0]?.weight,
 			water: row.health_tracker?.[0]?.water,
 			steps: row.health_tracker?.[0]?.steps,
 		}))
