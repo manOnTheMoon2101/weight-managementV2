@@ -22,8 +22,6 @@
 
 	const parsedUser = $derived(typeof user === "string" ? JSON.parse(user) : user);
 	const firstLetter = $derived(parsedUser?.name?.charAt(0));
-
-	$inspect(user);
 </script>
 
 <div class="border-b border-b-orange-300">

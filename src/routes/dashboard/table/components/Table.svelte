@@ -88,7 +88,7 @@
 </script>
 <div class="flex flex-row justify-between">
 
-	<div class="my-2">
+	<!-- <div class="my-2">
 		<Input
 			type="text"
 			class="bg-background placeholder:text-foreground text-foreground pl-8"
@@ -96,6 +96,6 @@
 			bind:value={filterValue}
 			oninput={onFilterTextBoxChanged}
 		/>
-	</div>
+	</div> -->
 </div>
 <div bind:this={gridDiv} style="height: 80vh; width: 100%;"></div>

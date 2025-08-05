@@ -51,14 +51,13 @@
 			multiVitamin: row.supplements?.map((x: Supplement) => x.multiVitamin),
 			magnesium: row.supplements?.map((x: Supplement) => x.magnesium),
 			weight: row.health_tracker?.map((x: HealthTracker) => x.weight),
-			water: row.health_tracker?.map((x: HealthTracker) => x.water),
-			steps: row.health_tracker?.map((x: HealthTracker) => x.steps),
-			score: row.sleep_schedule?.map((x: SleepSchedule) => x.score),
+			water: row.health_tracker?.[0]?.water,
+			steps: row.health_tracker?.[0]?.steps,
 		}))
 	);
 
 	const limits = $derived.by(() => data.limits);
-
+$inspect(limits)
 	const columns = [
 		{
 			headerName: "Actions",
@@ -74,42 +73,71 @@
 			}),
 		},
 		{ headerName: "Date", field: "createdAt" },
-		{ headerName: "Weight", field: "weight" },
-		{ headerName: "Water", field: "water" },
+		{ headerName: "Weight", field: "weight", filter: "agNumberColumnFilter" },
+		{
+			headerName: "Steps",
+			field: "steps",
+			filter: "agNumberColumnFilter",
+			cellRenderer: makeSvelteCellRenderer(Limits),
+			cellRendererParams: (params: any) => ({
+				data: params.data.steps,
+				type: "Less",
+				limit: limits.stepsLimit,
+			}),
+		},
+		{
+			headerName: "Water",
+			field: "water",
+			filter: "agNumberColumnFilter",
+			cellRenderer: makeSvelteCellRenderer(Limits),
+			cellRendererParams: (params: any) => ({
+				data: params.data.water,
+				type: "Less",
+				limit: limits.waterLimit,
+			}),
+		},
 		{
 			headerName: "Calories",
 			field: "calories",
+			filter: "agNumberColumnFilter",
 			cellRenderer: makeSvelteCellRenderer(Limits),
 			cellRendererParams: (params: any) => ({
 				data: params.data.calories,
+				type: "More",
 				limit: limits.caloriesLimit,
 			}),
 		},
-		{ headerName: "Protein", field: "protein" },
+		{ headerName: "Protein", field: "protein", filter: "agNumberColumnFilter" },
 		{
 			headerName: "Fat",
 			field: "fat",
+			filter: "agNumberColumnFilter",
 			cellRenderer: makeSvelteCellRenderer(Limits),
 			cellRendererParams: (params: any) => ({
 				data: params.data.fat,
+				type: "More",
 				limit: limits.fatLimit,
 			}),
 		},
 		{
 			headerName: "Sugar",
 			field: "sugar",
+			filter: "agNumberColumnFilter",
 			cellRenderer: makeSvelteCellRenderer(Limits),
 			cellRendererParams: (params: any) => ({
 				data: params.data.sugar,
+				type: "More",
 				limit: limits.sugarLimit,
 			}),
 		},
 		{
 			headerName: "Carbs",
 			field: "carbs",
+			filter: "agNumberColumnFilter",
 			cellRenderer: makeSvelteCellRenderer(Limits),
 			cellRendererParams: (params: any) => ({
 				data: params.data.carbs,
+				type: "More",
 				limit: limits.carbsLimit,
 			}),
 		},

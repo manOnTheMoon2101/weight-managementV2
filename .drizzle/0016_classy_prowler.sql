@@ -1,0 +1,1 @@
+ALTER TABLE "limits" ADD COLUMN "stepsLimit" integer DEFAULT 0;

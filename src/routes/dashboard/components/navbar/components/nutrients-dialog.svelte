@@ -39,6 +39,11 @@
 					<Label for="sugarLimit">Sugar</Label>
 					<Input name="sugarLimit" placeholder="Carbs" type={"number"} value={limits.sugarLimit} />
 
+					<Label for="waterLimit">Water</Label>
+					<Input name="waterLimit" placeholder="Water" type={"number"} value={limits.waterLimit} />
+
+					<Label for="stepsLimit">Steps</Label>
+					<Input name="stepsLimit" placeholder="Steps" type={"number"} value={limits.stepsLimit} />
 					<div class="flex flex-row justify-center">
 						<Button type="submit">Save</Button>
 					</div>
