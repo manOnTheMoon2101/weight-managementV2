@@ -57,7 +57,6 @@
 	);
 
 	const limits = $derived.by(() => data.limits);
-$inspect(limits)
 	const columns = [
 		{
 			headerName: "Actions",
