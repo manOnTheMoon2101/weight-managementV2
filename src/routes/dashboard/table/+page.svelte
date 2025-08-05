@@ -75,6 +75,7 @@
 		},
 		{ headerName: "Date", field: "createdAt" },
 		{ headerName: "Weight", field: "weight" },
+		{ headerName: "Steps", field: "steps" },
 		{ headerName: "Water", field: "water" },
 		{
 			headerName: "Calories",
