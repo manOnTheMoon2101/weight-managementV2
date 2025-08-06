@@ -3,7 +3,7 @@
 	import ChevronDown from "@lucide/svelte/icons/chevron-down";
 	import ChevronUp from "@lucide/svelte/icons/chevron-up";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
-	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
+	import { DateFormatter} from "@internationalized/date";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
