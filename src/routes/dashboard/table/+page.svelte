@@ -12,6 +12,8 @@
 	import Supplements from "./components/cellRenderers/Supplements.svelte";
 	import Dialog from "./components/view_dialog/Dialog.svelte";
 	import { makeSvelteCellRenderer } from "ag-grid-svelte5-extended";
+	import Button from "$lib/components/ui/button/button.svelte";
+	import AddDialog from "../components/navbar/components/add_dialog/AddDialog.svelte";
 	import Limits from "./components/cellRenderers/Limits.svelte";
 	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
 
@@ -147,11 +149,6 @@
 				supplementFields: ["fatBurner", "appleCider", "multiVitamin", "magnesium", "cla"],
 			},
 		},
-		// { headerName: "CLA", field: "cla" },
-		// { headerName: "Fat Burner", field: "fatBurner" },
-		// { headerName: "Apple Cider", field: "appleCider" },
-		// { headerName: "Multi Vitamin", field: "multiVitamin" },
-		// { headerName: "Magnesium", field: "magnesium" },
 	];
 
 	let value: { start: DateValue | undefined; end: DateValue | undefined } | undefined = $state();
@@ -173,21 +170,16 @@
 	});
 
 	async function updateDateRange() {
-		if (value?.start && value?.end) {
-			const startDateStr = value.start.toString();
-			const endDateStr = value.end.toString();
-
-			const url = new URL(page.url);
-			url.searchParams.set("startDate", startDateStr);
-			url.searchParams.set("endDate", endDateStr);
-
-			await goto(url.toString(), {
-				replaceState: false,
-				invalidateAll: true,
-				noScroll: true,
-			});
-		}
-	}
+    if (value?.start && value?.end) {
+        const startDateStr = value.start.toString();
+        const endDateStr = value.end.toString();
+        const url = new URL(page.url);
+        url.searchParams.set("startDate", startDateStr);
+        url.searchParams.set("endDate", endDateStr);
+ 
+        window.location.href = url.toString();
+    }
+}
 
 	let selectedPreset = $state("");
 	function handlePresetSelect(selectedValue: string | string[]) {
@@ -221,7 +213,7 @@
 	}
 </script>
 
-<div>
+<div class="flex flex-row items-center">
 	<Popover.Root>
 		<Popover.Trigger
 			class={cn(
@@ -251,6 +243,9 @@
 			</div>
 		</Popover.Content>
 	</Popover.Root>
+
+
+<AddDialog dialogOpen/>
 </div>
 
 <div>

@@ -3,16 +3,16 @@
 	import ChevronDown from "@lucide/svelte/icons/chevron-down";
 	import ChevronUp from "@lucide/svelte/icons/chevron-up";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
-	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
-	export let data: PageData;
+	import { DateFormatter} from "@internationalized/date";
+	let { data }: { data: PageData } = $props();
 
-	$: user = data.user;
-	$: currentWeight = data.currentWeight?.weight;
-	$: currentWeightDate = data.currentWeight?.createdAt;
-	$: previousWeight = data.previousWeight?.weight;
-	$: previousWeightDate = data.previousWeight?.createdAt;
-	$: averageWaterIntake = data.averageWaterIntake;
-	$: averageStepsIntake = data.averageStepsIntake;
+	let user = $derived(data.user);
+	let currentWeight = $derived(data.currentWeight?.weight);
+	let currentWeightDate = $derived(data.currentWeight?.createdAt);
+	let previousWeight = $derived(data.previousWeight?.weight);
+	let previousWeightDate = $derived(data.previousWeight?.createdAt);
+	let averageWaterIntake = $derived(data.averageWaterIntake);
+	let averageStepsIntake = $derived(data.averageStepsIntake);
 
 	function greet(name: string): string {
 		const hour = new Date().getHours();

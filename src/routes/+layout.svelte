@@ -2,8 +2,9 @@
 	import "../app.css";
 	let { children } = $props();
 	import { ModeWatcher } from "mode-watcher";
-	// import { injectAnalytics } from '@vercel/analytics/sveltekit'
-	// injectAnalytics();
+	import { dev } from "$app/environment";
+	import { injectAnalytics } from '@vercel/analytics/sveltekit';
+	injectAnalytics({ mode: dev ? "development" : "production" });
 </script>
 
 <svelte:head>

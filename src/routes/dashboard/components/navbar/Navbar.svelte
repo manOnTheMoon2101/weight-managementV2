@@ -6,7 +6,7 @@
 	import EditDialog from "./components/profile-edit.svelte";
 	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
 	import { Button } from "$lib/components/ui/button";
-	import LimitsDialog from "./components/nutrients-dialog.svelte";
+	import LimitsDialog from "./components/limits-dialog.svelte";
 
 	import { onMount } from "svelte";
 

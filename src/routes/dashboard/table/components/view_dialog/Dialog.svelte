@@ -7,7 +7,7 @@
 	import { Checkbox } from "$lib/components/ui/checkbox/index.js";
     import type { ICellRendererParams } from 'ag-grid-community';
     import SettingsIcon from "@lucide/svelte/icons/settings-2";
-
+    import * as Sheet from "$lib/components/ui/sheet/index.js";
     let { dialogOpen = $bindable(), rowToEdit } = $props<{ dialogOpen: boolean; rowToEdit: any }>();
 
 
@@ -22,15 +22,20 @@
 	}
 </script>
 
-<Dialog.Root bind:open={dialogOpen} >
-    <Dialog.Trigger class="w-full">
+
+
+
+
+
+<Sheet.Root >
+    <Sheet.Trigger class="w-full">
         <Button size={'sm'} variant={'ghost'}><SettingsIcon class="size-4" />Edit</Button>
-    </Dialog.Trigger>
-    <Dialog.Content class="max-h-[80vh] overflow-y-auto">
-        <Dialog.Header>
-            <Dialog.Title>{rowToEdit ? formatDMY(rowToEdit.createdAt) : ""}</Dialog.Title>
-            <Dialog.Description>
-                <form class="space-y-3">
+    </Sheet.Trigger>
+    <Sheet.Content class="max-h-[100vh] ">
+        <Sheet.Header>
+            <Sheet.Title>{rowToEdit ? formatDMY(rowToEdit.createdAt) : ""}</Sheet.Title>
+            <Sheet.Description>
+                <form class="space-y-3 overflow-y-auto">
                     <Card.Root class="bg-card">
                         <Card.Header class="pb-3">
                             <Card.Title class="text-base">Health</Card.Title>
@@ -132,8 +137,8 @@
                         </Card.Content>
                     </Card.Root>
                 </form>
-            </Dialog.Description>
-        </Dialog.Header>
+            </Sheet.Description>
+        </Sheet.Header>
         <Button class="bg-accent mt-4" onclick={() => (dialogOpen = false)}>Save</Button>
-    </Dialog.Content>
-</Dialog.Root>
+    </Sheet.Content>
+</Sheet.Root>
