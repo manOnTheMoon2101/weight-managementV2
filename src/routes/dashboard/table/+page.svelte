@@ -12,6 +12,8 @@
 	import Supplements from "./components/cellRenderers/Supplements.svelte";
 	import Dialog from "./components/view_dialog/Dialog.svelte";
 	import { makeSvelteCellRenderer } from "ag-grid-svelte5-extended";
+	import Button from "$lib/components/ui/button/button.svelte";
+	import AddDialog from "../components/navbar/components/add_dialog/AddDialog.svelte";
 	import Limits from "./components/cellRenderers/Limits.svelte";
 	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
 
@@ -221,7 +223,7 @@
 	}
 </script>
 
-<div>
+<div class="flex flex-row items-center">
 	<Popover.Root>
 		<Popover.Trigger
 			class={cn(
@@ -251,6 +253,9 @@
 			</div>
 		</Popover.Content>
 	</Popover.Root>
+
+
+<AddDialog dialogOpen/>
 </div>
 
 <div>
