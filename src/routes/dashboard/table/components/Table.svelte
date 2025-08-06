@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy } from "svelte";
-	import { goto } from "$app/navigation";
-	import { page } from "$app/stores";
+	import { onMount } from "svelte";
 	import {
 		createGrid,
 		ModuleRegistry,
@@ -14,15 +12,6 @@
 		colorSchemeDarkBlue,
 	} from "ag-grid-community";
 	import type { GridApi } from "ag-grid-community";
-	import Input from "$lib/components/ui/input/input.svelte";
-	import CalendarIcon from "@lucide/svelte/icons/calendar";
-	import {
-		DateFormatter,
-		type DateValue,
-		getLocalTimeZone,
-		today,
-		parseDate,
-	} from "@internationalized/date";
 
 	ModuleRegistry.registerModules([
 		ClientSideRowModelModule,
@@ -30,8 +19,6 @@
 		NumberFilterModule,
 		DateFilterModule,
 	]);
-
-	let value: { start: DateValue | undefined; end: DateValue | undefined } | undefined = $state();
 
 	const { columnDefs = [], rowData = [] } = $props();
 
@@ -47,8 +34,6 @@
 
 	let gridDiv: HTMLDivElement;
 	let filterValue = $state("");
-	let dialogOpen = $state(false);
-	let rowToEdit: any = $state(null);
 
 
 	function onFilterTextBoxChanged(
@@ -87,15 +72,5 @@
 
 </script>
 <div class="flex flex-row justify-between">
-
-	<!-- <div class="my-2">
-		<Input
-			type="text"
-			class="bg-background placeholder:text-foreground text-foreground pl-8"
-			placeholder="Search"
-			bind:value={filterValue}
-			oninput={onFilterTextBoxChanged}
-		/>
-	</div> -->
 </div>
 <div bind:this={gridDiv} style="height: 80vh; width: 100%;"></div>
