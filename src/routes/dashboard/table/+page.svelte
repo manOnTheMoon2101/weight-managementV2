@@ -149,11 +149,6 @@
 				supplementFields: ["fatBurner", "appleCider", "multiVitamin", "magnesium", "cla"],
 			},
 		},
-		// { headerName: "CLA", field: "cla" },
-		// { headerName: "Fat Burner", field: "fatBurner" },
-		// { headerName: "Apple Cider", field: "appleCider" },
-		// { headerName: "Multi Vitamin", field: "multiVitamin" },
-		// { headerName: "Magnesium", field: "magnesium" },
 	];
 
 	let value: { start: DateValue | undefined; end: DateValue | undefined } | undefined = $state();
@@ -175,21 +170,16 @@
 	});
 
 	async function updateDateRange() {
-		if (value?.start && value?.end) {
-			const startDateStr = value.start.toString();
-			const endDateStr = value.end.toString();
-
-			const url = new URL(page.url);
-			url.searchParams.set("startDate", startDateStr);
-			url.searchParams.set("endDate", endDateStr);
-
-			await goto(url.toString(), {
-				replaceState: false,
-				invalidateAll: true,
-				noScroll: true,
-			});
-		}
-	}
+    if (value?.start && value?.end) {
+        const startDateStr = value.start.toString();
+        const endDateStr = value.end.toString();
+        const url = new URL(page.url);
+        url.searchParams.set("startDate", startDateStr);
+        url.searchParams.set("endDate", endDateStr);
+ 
+        window.location.href = url.toString();
+    }
+}
 
 	let selectedPreset = $state("");
 	function handlePresetSelect(selectedValue: string | string[]) {
