@@ -3,10 +3,16 @@
 	import ChevronDown from "@lucide/svelte/icons/chevron-down";
 	import ChevronUp from "@lucide/svelte/icons/chevron-up";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
-	import { DateFormatter} from "@internationalized/date";
+	import FootPrint from "@lucide/svelte/icons/footprints";
+	import Droplet from "@lucide/svelte/icons/droplet";
+	import { DateFormatter } from "@internationalized/date";
+	import Weight from "./components/charts/Weight.svelte";
+	import Supplements from "./components/charts/Supplements.svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
+	let weightCharts = $derived(data.weightCharts);
+	let supplementCharts = $derived(data.supplementChart);
 	let currentWeight = $derived(data.currentWeight?.weight);
 	let currentWeightDate = $derived(data.currentWeight?.createdAt);
 	let previousWeight = $derived(data.previousWeight?.weight);
@@ -95,9 +101,27 @@
 			</div>
 		</div>
 
+		<div class="flex flex-row items-center justify-evenly">
+			<Weight dateSeriesData={weightCharts} />
+			<div class="flex flex-col items-center justify-center">
+				<span class="flex flex-row items-center text-8xl"
+					>{Math.round(Number(averageStepsIntake))} <FootPrint /></span
+				>
+
+				<h3 class="text-muted">Average Steps</h3>
+			</div>
+			<div class="flex flex-col items-center justify-center">
+				<span class="flex flex-row items-center text-8xl"
+					>{Math.round(Number(averageWaterIntake))} <Droplet class="text-blue-400" /></span
+				>
+
+				<h3 class="text-muted">Average Water</h3>
+			</div>
+		</div>
+
+
 		<div>
-			Average Water Intake(ml) {Math.round(Number(averageWaterIntake))}
-			Average Steps {Math.round(Number(averageStepsIntake))}
+			<Supplements/>
 		</div>
 	</div>
 </div>
