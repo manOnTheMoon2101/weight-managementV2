@@ -121,7 +121,7 @@
 
 
 		<div>
-			<Supplements data={supplementCharts}/>
+			<Supplements/>
 		</div>
 	</div>
 </div>
