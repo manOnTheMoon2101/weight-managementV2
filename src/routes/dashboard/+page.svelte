@@ -102,6 +102,6 @@ import Weight from "./components/charts/Weight.svelte";
 			Average Steps {Math.round(Number(averageStepsIntake))}
 		</div>
 
-		<Weight rowData={weightCharts}/>
+		<Weight dateSeriesData={weightCharts}/>
 	</div>
 </div>
