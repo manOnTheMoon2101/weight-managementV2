@@ -17,7 +17,7 @@
     padding={{ left: 60, bottom: 40, top: 20, right: 20 }}
   >
     <Svg>
-      <Axis placement="left" rule class="text-slate-300 stroke-slate-300" title="Weight (kg)"/>
+      <Axis placement="left" rule class=" fill-white"/>
       <!-- <Axis placement="bottom" rule class="text-slate-300 stroke-white" title="Date" /> -->
       <Spline class="stroke-2 stroke-accent" />
     </Svg>
