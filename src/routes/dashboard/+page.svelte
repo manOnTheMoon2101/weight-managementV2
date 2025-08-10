@@ -7,6 +7,7 @@
 	import Droplet from "@lucide/svelte/icons/droplet";
 	import { DateFormatter } from "@internationalized/date";
 	import Weight from "./components/charts/Weight.svelte";
+	import Supplements from "./components/charts/Supplements.svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
@@ -115,6 +116,11 @@
 
 				<h3 class="text-muted">Average Water</h3>
 			</div>
+		</div>
+
+
+		<div>
+			<Supplements/>
 		</div>
 	</div>
 </div>
