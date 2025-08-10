@@ -13,7 +13,8 @@
     const colors = ["#FF6B6B", "#FFD93D", "#FF8C42", "#9B59B6", "#E74C3C", "#F39C12"];
 </script>
 
-<div class="h-[300px] resize overflow-auto rounded-sm border p-4">
+<div class="bg-background h-[300px] w-1/2">
+	<h2 class="text-2xl font-bold">Supplements</h2>
     <PieChart 
         {data} 
         key="fruit" 
