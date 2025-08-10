@@ -40,8 +40,9 @@ export const load: PageServerLoad = async ({ request }) => {
 				weight: true,
 				createdAt: true
 			},
-			// orderBy:(asc(health_tracker.createdAt))
 		});
+
+		
 
 		const weightCharts = allWeights || null
 		const currentWeight = latestWeightEntries[0] || null;
