@@ -1,6 +1,6 @@
 import { auth } from "$lib/server/auth";
 import { db } from "$lib/server/db";
-import { health_tracker, limits, user } from "$lib/server/schema/index";
+import { health_tracker, limits, user , supplements } from "$lib/server/schema/index";
 import { redirect } from "@sveltejs/kit";
 import { and,eq } from "drizzle-orm";
 import type { PageServerLoad } from "./$types";
@@ -42,8 +42,22 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 		});
 
-		
 
+		// const allSupplements = await db.query.supplements.findMany({
+		// 	where: and(
+		// 		eq(supplements.userId, session.user.id),
+		// 		eq(supplements.isActive, true),
+		// 		eq(supplements.isDeleted, false)
+		// 	),
+		// 	columns: {
+		// 		fatburner:true,
+		// 		multiVitamin:true,
+		// 		magnesium:true
+			
+		// 	},
+		// });
+		
+		// const supplementChart = allSupplements || null
 		const weightCharts = allWeights || null
 		const currentWeight = latestWeightEntries[0] || null;
 		const previousWeight = latestWeightEntries[1] || null;
@@ -84,6 +98,7 @@ export const load: PageServerLoad = async ({ request }) => {
 
 		return {
 			user: session.user,
+			// supplementChart: supplementChart,
 			currentWeight: currentWeight,
 			weightCharts: weightCharts,
 			previousWeight: previousWeight,

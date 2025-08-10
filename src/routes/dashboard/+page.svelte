@@ -12,6 +12,7 @@
 
 	let user = $derived(data.user);
 	let weightCharts = $derived(data.weightCharts);
+	let supplementCharts = $derived(data.supplementChart);
 	let currentWeight = $derived(data.currentWeight?.weight);
 	let currentWeightDate = $derived(data.currentWeight?.createdAt);
 	let previousWeight = $derived(data.previousWeight?.weight);
@@ -120,7 +121,7 @@
 
 
 		<div>
-			<Supplements/>
+			<Supplements data={supplementCharts}/>
 		</div>
 	</div>
 </div>

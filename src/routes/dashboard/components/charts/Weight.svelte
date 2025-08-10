@@ -3,7 +3,6 @@
 
 	let { dateSeriesData } = $props();
 
-	$inspect(dateSeriesData);
 </script>
 
 <div class="bg-background h-[300px] w-1/2">
