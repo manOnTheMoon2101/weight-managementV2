@@ -2,7 +2,7 @@ import { auth } from "$lib/server/auth";
 import { db } from "$lib/server/db";
 import { health_tracker, limits, user } from "$lib/server/schema/index";
 import { redirect } from "@sveltejs/kit";
-import { and, eq } from "drizzle-orm";
+import { and,eq } from "drizzle-orm";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ request }) => {
@@ -40,6 +40,7 @@ export const load: PageServerLoad = async ({ request }) => {
 				weight: true,
 				createdAt: true
 			},
+			// orderBy:(asc(health_tracker.createdAt))
 		});
 
 		const weightCharts = allWeights || null
