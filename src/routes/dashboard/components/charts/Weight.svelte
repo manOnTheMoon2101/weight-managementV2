@@ -15,6 +15,52 @@
   const options = {
     container: undefined as HTMLDivElement | undefined,
     data: rowData,
+    theme: {
+      palette: {
+        fills: ['#2563eb', '#3b82f6', '#60a5fa'],
+        strokes: ['#2563eb', '#3b82f6', '#60a5fa'],
+      },
+      overrides: {
+        common: {
+          background: {
+            fill: 'var(--background)',
+          },
+          title: {
+            color: 'var(--foreground)',
+          },
+        },
+        line: {
+          series: {
+            strokeWidth: 2,
+            marker: {
+              fill: '#2563eb',
+              stroke: '#2563eb',
+              strokeWidth: 2,
+            },
+          },
+        },
+        axes: {
+          label: {
+            color: 'var(--foreground)',
+          },
+          title: {
+            color: 'var(--foreground)',
+          },
+          line: {
+            color: 'var(--accent)',
+          },
+          tick: {
+            color: 'var(--accent)',
+          },
+          gridLine: {
+            style: [{
+              stroke: 'var(--accent)',
+              strokeOpacity: 0.1,
+            }],
+          },
+        },
+      },
+    },
     series: [
       {
         type: "line",
@@ -69,4 +115,4 @@
   });
 </script>
 
-<div bind:this={chartDiv} style="width: 50%; height: 300px;" class="mx-1"></div>
+<div bind:this={chartDiv} style="width: 100%; height: 300px;" class="mx-1"></div>
