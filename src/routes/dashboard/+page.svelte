@@ -3,6 +3,7 @@
 	import ChevronDown from "@lucide/svelte/icons/chevron-down";
 	import ChevronUp from "@lucide/svelte/icons/chevron-up";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
+	import FootPrint from "@lucide/svelte/icons/footprints";
 	import { DateFormatter} from "@internationalized/date";
 import Weight from "./components/charts/Weight.svelte";
 	let { data }: { data: PageData } = $props();
@@ -99,9 +100,16 @@ import Weight from "./components/charts/Weight.svelte";
 
 		<div>
 			Average Water Intake(ml) {Math.round(Number(averageWaterIntake))}
-			Average Steps {Math.round(Number(averageStepsIntake))}
+			
 		</div>
 
-		<Weight dateSeriesData={weightCharts}/>
+		<div class="flex flex-row items-center justify-evenly">
+			<Weight dateSeriesData={weightCharts}/>
+			<div class="flex flex-col justify-center items-center">
+				<span class="text-8xl flex flex-row items-center">{Math.round(Number(averageStepsIntake))} <FootPrint/></span>
+
+				<h3 class="text-muted">Average Steps </h3>
+			</div>
+		</div>
 	</div>
 </div>

@@ -6,7 +6,8 @@
 	$inspect(dateSeriesData);
 </script>
 
-<div class="bg-background h-[300px] w-1/2 rounded-sm border p-4">
+<div class="bg-background h-[300px] w-1/2">
+	<h2 class="text-2xl font-bold">Weight</h2>
 	<LineChart
 		data={dateSeriesData}
 		x="createdAt"
