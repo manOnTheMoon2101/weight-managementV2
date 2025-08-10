@@ -29,6 +29,20 @@ export const load: PageServerLoad = async ({ request }) => {
 			limit: 2,
 		});
 
+		
+		const allWeights = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false)
+			),
+			columns: {
+				weight: true,
+				createdAt: true
+			},
+		});
+
+		const weightCharts = allWeights || null
 		const currentWeight = latestWeightEntries[0] || null;
 		const previousWeight = latestWeightEntries[1] || null;
 
@@ -69,6 +83,7 @@ export const load: PageServerLoad = async ({ request }) => {
 		return {
 			user: session.user,
 			currentWeight: currentWeight,
+			weightCharts: weightCharts,
 			previousWeight: previousWeight,
 			averageWaterIntake: averageWaterIntake,
 			averageStepsIntake: averageStepsIntake,

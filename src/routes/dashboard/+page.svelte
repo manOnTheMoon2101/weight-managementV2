@@ -4,9 +4,11 @@
 	import ChevronUp from "@lucide/svelte/icons/chevron-up";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import { DateFormatter} from "@internationalized/date";
+import Weight from "./components/charts/Weight.svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
+	let weightCharts = $derived(data.weightCharts)
 	let currentWeight = $derived(data.currentWeight?.weight);
 	let currentWeightDate = $derived(data.currentWeight?.createdAt);
 	let previousWeight = $derived(data.previousWeight?.weight);
@@ -99,5 +101,7 @@
 			Average Water Intake(ml) {Math.round(Number(averageWaterIntake))}
 			Average Steps {Math.round(Number(averageStepsIntake))}
 		</div>
+
+		<Weight rowData={weightCharts}/>
 	</div>
 </div>
