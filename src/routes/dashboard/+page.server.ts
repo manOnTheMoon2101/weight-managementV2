@@ -1,6 +1,6 @@
 import { auth } from "$lib/server/auth";
 import { db } from "$lib/server/db";
-import { health_tracker, limits, user , supplements } from "$lib/server/schema/index";
+import { health_tracker, limits, user , supplements , sleep_schedule } from "$lib/server/schema/index";
 import { redirect } from "@sveltejs/kit";
 import { and,eq } from "drizzle-orm";
 import { count, sql } from 'drizzle-orm';
@@ -50,8 +50,6 @@ export const load: PageServerLoad = async ({ request }) => {
 				month: '2-digit',
 				year: 'numeric'
 			}),
-			// Or using manual formatting for more control:
-			// createdAt: formatDateToDDMMYYYY(entry.createdAt)
 		}));
 
 
@@ -91,6 +89,30 @@ export const load: PageServerLoad = async ({ request }) => {
 				? waterValues.reduce((sum, val) => sum + val, 0) / waterValues.length
 				: null;
 
+
+
+
+
+
+
+
+
+
+
+		
+				  const averageTimeResult = await db
+					  .select({
+						  avgTime: sql<string>`AVG(${sleep_schedule.time}::time)::time`
+					  })
+					  .from(sleep_schedule)
+					  .where(and(
+						  eq(sleep_schedule.userId, session.user.id),
+						  eq(sleep_schedule.isActive, true),
+						  eq(sleep_schedule.isDeleted, false)
+					  ));
+				  
+				  const averageTimeFromSQL = averageTimeResult[0]?.avgTime || null;
+
 		const totalSteps = await db.query.health_tracker.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
@@ -109,6 +131,7 @@ export const load: PageServerLoad = async ({ request }) => {
 
 		return {
 			user: session.user,
+			averageSleepIntake : averageTimeFromSQL,
 			supplementsChart : supplementsChart,
 			currentWeight: currentWeight,
 			weightCharts: weightCharts,

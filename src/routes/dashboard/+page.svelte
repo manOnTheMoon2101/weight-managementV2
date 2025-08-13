@@ -4,6 +4,7 @@
 	import ChevronUp from "@lucide/svelte/icons/chevron-up";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import FootPrint from "@lucide/svelte/icons/footprints";
+	import Timer from "@lucide/svelte/icons/timer";
 	import Droplet from "@lucide/svelte/icons/droplet";
 	import { DateFormatter } from "@internationalized/date";
 	import Weight from "./components/charts/Weight.svelte";
@@ -20,6 +21,8 @@
 	let previousWeightDate = $derived(data.previousWeight?.createdAt);
 	let averageWaterIntake = $derived(data.averageWaterIntake);
 	let averageStepsIntake = $derived(data.averageStepsIntake);
+	let averageSleepIntake = $derived(data.averageSleepIntake);
+
 
 	function greet(name: string): string {
 		const hour = new Date().getHours();
@@ -119,12 +122,24 @@
 
 				<h3 class="text-accent text-2xl">Average Water</h3>
 			</div>
+
+			
 		</div>
 
 
-		<div>
+		<div class="flex flex-row items-center justify-evenly mt-24">
 			<Supplements data={supplementCharts}/>
+		
+
+		<div class="flex flex-col items-center justify-center">
+			<span class="flex flex-row items-center text-8xl"
+				>{averageSleepIntake}  <Timer class="text-accent "/></span
+			>
+
+			<h3 class="text-accent text-2xl">Average Sleep Time</h3>
 		</div>
+
+	</div>
 	</div>
 </div>
 

@@ -1,0 +1,1 @@
+ALTER TABLE "sleep_schedule" RENAME COLUMN "sleep" TO "time";
