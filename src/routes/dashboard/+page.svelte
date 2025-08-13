@@ -12,7 +12,7 @@
 
 	let user = $derived(data.user);
 	let weightCharts = $derived(data.weightCharts);
-	let supplementCharts = $derived(data.supplementChart);
+	// let supplementCharts = $derived(data.supplementChart);
 	let currentWeight = $derived(data.currentWeight?.weight);
 	let currentWeightDate = $derived(data.currentWeight?.createdAt);
 	let previousWeight = $derived(data.previousWeight?.weight);
@@ -36,12 +36,12 @@
 	});
 </script>
 
-<div class="flex flex-col gap-1">
+<div class="flex flex-col gap-1 my-24">
 	<div>
 		<div class="flex flex-row items-center justify-between">
 			<div>
 				{#if user}
-					<h1 class="text-4xl">{greet(user.name)}</h1>
+					<h1 class="text-6xl font-bold">{greet(user.name)}</h1>
 				{/if}
 			</div>
 			<div
@@ -78,7 +78,7 @@
 										-
 									{/if}
 								</span>
-								<h4 class="text-muted">Current Weight</h4>
+								<h4 class="text-accent text-2xl">Current Weight</h4>
 							</div>
 						</Tooltip.Trigger>
 						<Tooltip.Content side="left">
@@ -93,7 +93,7 @@
 										-
 									{/if}
 								</span>
-								<h4 class="text-muted">Previous Weight</h4>
+								<h4 class="text-accent">Previous Weight</h4>
 							</div>
 						</Tooltip.Content>
 					</Tooltip.Root>
@@ -108,14 +108,14 @@
 					>{Math.round(Number(averageStepsIntake))} <FootPrint /></span
 				>
 
-				<h3 class="text-muted">Average Steps</h3>
+				<h3 class="text-accent  text-2xl">Average Steps</h3>
 			</div>
 			<div class="flex flex-col items-center justify-center">
 				<span class="flex flex-row items-center text-8xl"
 					>{Math.round(Number(averageWaterIntake))} <Droplet class="text-blue-400" /></span
 				>
 
-				<h3 class="text-muted">Average Water</h3>
+				<h3 class="text-accent text-2xl">Average Water</h3>
 			</div>
 		</div>
 

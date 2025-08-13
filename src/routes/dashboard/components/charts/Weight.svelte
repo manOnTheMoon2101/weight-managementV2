@@ -5,8 +5,8 @@
 
 </script>
 
-<div class="bg-background h-[300px] w-1/2">
-	<h2 class="text-2xl font-bold">Weight</h2>
+<div class="bg-background h-[300px] w-1/2 border border-accent rounded-2xl">
+	<!-- <h2 class="text-2xl font-bold">Weight</h2> -->
 	<LineChart
 		data={dateSeriesData}
 		x="createdAt"
@@ -17,7 +17,7 @@
 		padding={{ left: 60, bottom: 40, top: 20, right: 20 }}
 	>
 		<Svg>
-			<Axis placement="left" rule class=" fill-white" />
+			<Axis placement="left" rule class=" fill-foreground" />
 			<!-- <Axis placement="bottom" rule class="text-slate-300 stroke-white" title="Date" /> -->
 			<Spline class="stroke-accent stroke-2" />
 			<Points class="fill-accent" />
