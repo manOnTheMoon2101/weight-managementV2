@@ -51,6 +51,9 @@
 		"vite": "^6.1.1"
 	},
 	"dependencies": {
+		"@fontsource/balsamiq-sans": "^5.2.6",
+		"@fontsource/lilita-one": "^5.2.6",
+		"@fontsource/open-sans": "^5.2.6",
 		"@vercel/analytics": "^1.5.0",
 		"ag-charts-community": "^12.0.1",
 		"ag-grid-community": "^34.0.1",

@@ -8,11 +8,12 @@
 	import { DateFormatter } from "@internationalized/date";
 	import Weight from "./components/charts/Weight.svelte";
 	import Supplements from "./components/charts/Supplements.svelte";
+	import '@fontsource/balsamiq-sans';
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
 	let weightCharts = $derived(data.weightCharts);
-	// let supplementCharts = $derived(data.supplementChart);
+	let supplementCharts = $derived(data.supplementsChart);
 	let currentWeight = $derived(data.currentWeight?.weight);
 	let currentWeightDate = $derived(data.currentWeight?.createdAt);
 	let previousWeight = $derived(data.previousWeight?.weight);
@@ -35,6 +36,7 @@
 		dateStyle: "medium",
 	});
 </script>
+
 
 <div class="flex flex-col gap-1 my-24">
 	<div>
@@ -101,7 +103,7 @@
 			</div>
 		</div>
 
-		<div class="flex flex-row items-center justify-evenly">
+		<div class="flex flex-row items-center justify-evenly mt-24">
 			<Weight dateSeriesData={weightCharts} />
 			<div class="flex flex-col items-center justify-center">
 				<span class="flex flex-row items-center text-8xl"
@@ -112,7 +114,7 @@
 			</div>
 			<div class="flex flex-col items-center justify-center">
 				<span class="flex flex-row items-center text-8xl"
-					>{Math.round(Number(averageWaterIntake))} <Droplet class="text-blue-400" /></span
+					>{Math.round(Number(averageWaterIntake))} <Droplet class="text-blue-400 fill-blue-400" /></span
 				>
 
 				<h3 class="text-accent text-2xl">Average Water</h3>
@@ -121,7 +123,14 @@
 
 
 		<div>
-			<Supplements/>
+			<Supplements data={supplementCharts}/>
 		</div>
 	</div>
 </div>
+
+
+<style>
+	:global(body) {
+		font-family: 'Balsamiq Sans', system-ui;
+	}
+  </style>

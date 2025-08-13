@@ -6,7 +6,7 @@
 </script>
 
 <div class="bg-background h-[300px] w-1/2 border border-accent rounded-2xl">
-	<!-- <h2 class="text-2xl font-bold">Weight</h2> -->
+	<h2 class="text-2xl font-bold text-center">Weight(kg)</h2>
 	<LineChart
 		data={dateSeriesData}
 		x="createdAt"

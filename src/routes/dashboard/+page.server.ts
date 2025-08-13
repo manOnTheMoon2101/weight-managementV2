@@ -3,6 +3,7 @@ import { db } from "$lib/server/db";
 import { health_tracker, limits, user , supplements } from "$lib/server/schema/index";
 import { redirect } from "@sveltejs/kit";
 import { and,eq } from "drizzle-orm";
+import { count, sql } from 'drizzle-orm';
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ request }) => {
@@ -42,23 +43,33 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 		});
 
+		const formattedWeightEntries = allWeights.map(entry => ({
+			weight: entry.weight,
+			createdAt: new Date(entry.createdAt).toLocaleDateString('en-GB', {
+				day: '2-digit',
+				month: '2-digit',
+				year: 'numeric'
+			}),
+			// Or using manual formatting for more control:
+			// createdAt: formatDateToDDMMYYYY(entry.createdAt)
+		}));
 
-		// const allSupplements = await db.query.supplements.findMany({
-		// 	where: and(
-		// 		eq(supplements.userId, session.user.id),
-		// 		eq(supplements.isActive, true),
-		// 		eq(supplements.isDeleted, false)
-		// 	),
-		// 	columns: {
-		// 		fatburner:true,
-		// 		multiVitamin:true,
-		// 		magnesium:true
-			
-		// 	},
-		// });
+
+		const supplementCounts = await db
+		.select({
+		  fatburnerCount: count(sql`case when ${supplements.fatburner} = true then 1 end`),
+		  multiVitaminCount: count(sql`case when ${supplements.multiVitamin} = true then 1 end`),
+		  magnesiumCount: count(sql`case when ${supplements.magnesium} = true then 1 end`)
+		})
+		.from(supplements)
+		.where(and(
+		  eq(supplements.userId, session.user.id),
+		  eq(supplements.isActive, true),
+		  eq(supplements.isDeleted, false)
+		));
 		
-		// const supplementChart = allSupplements || null
-		const weightCharts = allWeights || null
+	const supplementsChart = supplementCounts || null;
+		const weightCharts = formattedWeightEntries || null;
 		const currentWeight = latestWeightEntries[0] || null;
 		const previousWeight = latestWeightEntries[1] || null;
 
@@ -98,7 +109,7 @@ export const load: PageServerLoad = async ({ request }) => {
 
 		return {
 			user: session.user,
-			// supplementChart: supplementChart,
+			supplementsChart : supplementsChart,
 			currentWeight: currentWeight,
 			weightCharts: weightCharts,
 			previousWeight: previousWeight,
