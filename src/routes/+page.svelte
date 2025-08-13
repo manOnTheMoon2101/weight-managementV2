@@ -24,13 +24,21 @@
 			>
 		</div>
 	{:else}
-		<div class="flex flex-col gap-2">
-			<p class="bg-red-900">You are not signed in.</p>
-			<Button href="/signin" class="w-fit" size="lg">Sign in</Button>
-		</div>
-		<div class="flex flex-col gap-2">
-			<p>You are not signed in.</p>
-			<Button href="/signup" class="w-fit" size="lg">Sign Up</Button>
-		</div>
+	<div class="min-h-screen flex items-center justify-center">
+        <div class="flex flex-col items-center space-y-4 p-8 rounded-lg shadow-lg">
+            <p class="text-6xl">Welcome</p>
+            <Button>
+				<a href="/signin" >
+					Sign in
+				</a>
+			</Button>
+            
+			<Button>
+            <a href="/signup" >
+                Sign Up
+            </a>
+		</Button>
+        </div>
+    </div>
 	{/if}
 </div>
