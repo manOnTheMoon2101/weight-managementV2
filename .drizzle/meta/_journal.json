@@ -134,6 +134,20 @@
       "when": 1754834975543,
       "tag": "0018_glorious_the_stranger",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1755095303637,
+      "tag": "0019_nifty_epoch",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1755095706366,
+      "tag": "0020_wandering_cannonball",
+      "breakpoints": true
     }
   ]
 }

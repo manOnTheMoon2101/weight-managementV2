@@ -1,25 +1,23 @@
 <script lang="ts">
     import { PieChart } from "layerchart";
+    let { data } = $props();
     
-    const data = [
-        { fruit: "Apple", value: 35, color: "#FF6B6B" },        
-        { fruit: "Banana", value: 28, color: "#FFD93D" },       
-        { fruit: "Orange", value: 22, color: "#FF8C42" },       
-        { fruit: "Grape", value: 15, color: "#9B59B6" },        
-        { fruit: "Strawberry", value: 12, color: "#E74C3C" },   
-        { fruit: "Mango", value: 49, color: "#F39C12" },       
-    ];
-
-    const colors = ["#FF6B6B", "#FFD93D", "#FF8C42", "#9B59B6", "#E74C3C", "#F39C12"];
+    const colors = ["#FF6B6B", "#FFD93D", "#FF8C42", "#9B59B6", "#F39C12"];
+    
+    const pieData = data[0] ? [
+        { fruit: "Fat Burner", value: data[0].fatburnerCount, color: colors[0] },
+        { fruit: "Multi Vitamin", value: data[0].multiVitaminCount, color: colors[1] },
+        { fruit: "Magnesium", value: data[0].magnesiumCount, color: colors[2] }
+    ] : [];
 </script>
 
-<div class="bg-background h-[300px] w-1/2">
-	<h2 class="text-2xl font-bold">Supplements</h2>
-    <PieChart 
-        {data} 
-        key="fruit" 
-        value="value" 
+<div class="bg-background h-[300px] w-1/2 my-2">
+    <h2 class="text-2xl font-bold text-center">Supplements</h2>
+    <PieChart
+        data={pieData}
+        key="fruit"
+        value="value"
         c="color"
-        legend 
+        legend
     />
 </div>
