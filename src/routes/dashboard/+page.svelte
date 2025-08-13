@@ -127,7 +127,7 @@
 		</div>
 
 
-		<div class="flex flex-row items-center justify-evenly mt-24">
+		<div class="flex flex-row items-center justify-around  mt-24">
 			<Supplements data={supplementCharts}/>
 		
 

@@ -144,6 +144,8 @@
 		},
 		{
 			headerName: "Supplements",
+			filter:false,
+			sortable:false,
 			cellRenderer: makeSvelteCellRenderer(Supplements),
 			cellRendererParams: {
 				supplementFields: ["fatBurner", "appleCider", "multiVitamin", "magnesium", "cla"],
