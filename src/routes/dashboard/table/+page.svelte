@@ -35,6 +35,7 @@
 
 	type SleepSchedule = {
 		score?: number;
+		time?:any;
 	};
 
 	type NutrientRow = {
