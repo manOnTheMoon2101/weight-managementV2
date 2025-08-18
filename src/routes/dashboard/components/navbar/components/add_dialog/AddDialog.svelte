@@ -107,6 +107,11 @@
 								<Label for="score" class="text-sm">Score</Label>
 								<Input name="score" placeholder="Sleep Score" class="h-8" />
 							</div>
+
+							<div>
+                                <Label for="time" class="text-sm">Time</Label>
+                                <Input name="time" type='time' placeholder="Time" class="h-8" />
+                            </div>
 						</Card.Content>
 					</Card.Root>
 				</form>
