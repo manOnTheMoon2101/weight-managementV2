@@ -11,8 +11,6 @@
     let { dialogOpen = $bindable(), rowToEdit } = $props<{ dialogOpen: boolean; rowToEdit: any }>();
 
 
-
-
 	function formatDMY(dateString: string): string {
 		const date = new Date(dateString);
 		const day = date.getDate().toString().padStart(2, "0");
@@ -132,7 +130,12 @@
                         <Card.Content>
                             <div>
                                 <Label for="score" class="text-sm">Score</Label>
-                                <Input name="score" placeholder="Sleep Score" value={rowToEdit?.score || ""} class="h-8" />
+                                <Input name="score" placeholder="Sleep Score" value={rowToEdit?.sleep_schedule[0]?.score || ""} class="h-8" />
+                            </div>
+
+                            <div>
+                                <Label for="time" class="text-sm">Time</Label>
+                                <Input name="time" type='time' placeholder="Time" value={rowToEdit?.sleep_schedule[0]?.time || ""} class="h-8" />
                             </div>
                         </Card.Content>
                     </Card.Root>
