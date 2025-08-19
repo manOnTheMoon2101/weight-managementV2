@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { db } from '../../../lib/server/db';
-import { nutrients } from '../../../lib/server/schema/index';
+import { health_tracker, nutrients } from '../../../lib/server/schema/index';
 import { limits } from '../../../lib/server/schema/index';
 import { eq, and, gte, lte } from 'drizzle-orm';
 import { auth } from '../../../lib/server/auth';
@@ -99,4 +99,31 @@ export const load: PageServerLoad = async ({ request, url }) => {
       error: 'Failed to load nutrients'
     };
   }
+};
+
+
+export const actions = {
+	updateNutrients: async ({ request }: { request: Request }) => {
+		const session = await auth.api.getSession({ headers: request.headers });
+		if (!session) {
+			redirect(302, "/signin");
+		}
+		const form = await request.formData();
+    const id = Number(form.get("id")) || 0;
+    const weight = Number(form.get("weight")) || 0;
+    const steps = Number(form.get("steps")) || 0;
+    const water = Number(form.get("water")) || 0;
+    const calories = Number(form.get("calories")) || 0;
+		const protein = Number(form.get("protein")) || 0;
+    const fat = Number(form.get("fat")) || 0;
+    const sugar = Number(form.get("sugar")) || 0;
+    const carbs = Number(form.get("carbs")) || 0;
+
+
+    await db.update(nutrients).set({ protein, fat, sugar, carbs, calories }).where(eq(nutrients.id, id));
+    
+    await db.update(health_tracker).set({ weight, steps, water }).where(eq(health_tracker.nutrientsId, id));
+    
+    return { success: true };
+	},
 };

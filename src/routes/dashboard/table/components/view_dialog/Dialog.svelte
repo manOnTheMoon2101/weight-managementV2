@@ -29,11 +29,12 @@
     <Sheet.Trigger class="w-full">
         <Button size={'sm'} variant={'ghost'}><SettingsIcon class="size-4" />Edit</Button>
     </Sheet.Trigger>
-    <Sheet.Content class="max-h-[100vh] ">
+    <Sheet.Content class="max-h-[100vh] overflow-y-auto">
         <Sheet.Header>
             <Sheet.Title>{rowToEdit ? formatDMY(rowToEdit.createdAt) : ""}</Sheet.Title>
             <Sheet.Description>
-                <form class="space-y-3 overflow-y-auto">
+                <form class="space-y-3 overflow-y-auto"  method="POST" action="?/updateNutrients">
+                    <input type="hidden" name="id" value={rowToEdit?.id || ""} />
                     <Card.Root class="bg-card">
                         <Card.Header class="pb-3">
                             <Card.Title class="text-base">Health</Card.Title>
@@ -139,9 +140,10 @@
                             </div>
                         </Card.Content>
                     </Card.Root>
+                    <Button class="bg-accent mt-4" type="submit">Save</Button>
                 </form>
             </Sheet.Description>
         </Sheet.Header>
-        <Button class="bg-accent mt-4" onclick={() => (dialogOpen = false)}>Save</Button>
+     
     </Sheet.Content>
 </Sheet.Root>
