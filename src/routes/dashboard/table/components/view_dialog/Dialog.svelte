@@ -91,12 +91,13 @@
                             <Card.Content>
                                 <div class="flex flex-col space-y-1">
                                     <div class="flex items-center space-x-2">
-                                        <Checkbox id="cla" checked={rowToEdit?.cla == "true" ? true : false} />
+                                        <Checkbox id="cla" name="cla" checked={rowToEdit?.cla == "true" ? true : false} />
                                         <Label for="cla" class="text-sm">CLA</Label>
                                     </div>
                                     <div class="flex items-center space-x-2">
                                         <Checkbox
                                             id="fatBurner"
+                                            name="fatBurner"
                                             checked={rowToEdit?.fatBurner == "true" ? true : false}
                                         />
                                         <Label for="fatBurner" class="text-sm">Fat Burner</Label>
@@ -104,17 +105,19 @@
                                     <div class="flex items-center space-x-2">
                                         <Checkbox
                                             id="vitamin"
+                                            name="vitamin"
                                             checked={rowToEdit?.multiVitamin == "true" ? true : false}
                                         />
                                         <Label for="vitamin" class="text-sm">Vitamin</Label>
                                     </div>
                                     <div class="flex items-center space-x-2">
-                                        <Checkbox id="apple" checked={rowToEdit?.appleCider == "true" ? true : false} />
+                                        <Checkbox id="apple" name="apple" checked={rowToEdit?.appleCider == "true" ? true : false} />
                                         <Label for="apple" class="text-sm">Apple Cider</Label>
                                     </div>
                                     <div class="flex items-center space-x-2">
                                         <Checkbox
                                             id="magnesium"
+                                            name="magnesium"
                                             checked={rowToEdit?.magnesium == "true" ? true : false}
                                         />
                                         <Label for="magnesium" class="text-sm">Magnesium</Label>

@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { db } from '../../../lib/server/db';
-import { health_tracker, nutrients } from '../../../lib/server/schema/index';
+import { health_tracker, nutrients, supplements } from '../../../lib/server/schema/index';
 import { limits } from '../../../lib/server/schema/index';
 import { eq, and, gte, lte } from 'drizzle-orm';
 import { auth } from '../../../lib/server/auth';
@@ -120,9 +120,17 @@ export const actions = {
     const carbs = Number(form.get("carbs")) || 0;
 
 
+    const fatburner = Boolean(form.get("fatBurner")) || false;
+    const multiVitamin = Boolean(form.get("vitamin")) || false;
+    const magnesium = Boolean(form.get("magnesium")) || false;
+    const cla = Boolean(form.get("cla")) || false;
+    const appleCider = Boolean(form.get("apple")) || false;
+    
     await db.update(nutrients).set({ protein, fat, sugar, carbs, calories }).where(eq(nutrients.id, id));
     
     await db.update(health_tracker).set({ weight, steps, water }).where(eq(health_tracker.nutrientsId, id));
+
+    await db.update(supplements).set({ fatburner, multiVitamin, magnesium, cla, appleCider }).where(eq(supplements.nutrientsId, id));
     
     return { success: true };
 	},
