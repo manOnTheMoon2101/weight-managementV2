@@ -102,7 +102,7 @@ export const load: PageServerLoad = async ({ request }) => {
 		
 				  const averageTimeResult = await db
 					  .select({
-						  avgTime: sql<string>`AVG(${sleep_schedule.time}::time)::time`
+						  avgTime: sql<string>`AVG(${sleep_schedule.time}::time)::time(2)`
 					  })
 					  .from(sleep_schedule)
 					  .where(and(
