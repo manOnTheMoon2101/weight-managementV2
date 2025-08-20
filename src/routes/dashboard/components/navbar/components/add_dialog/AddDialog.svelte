@@ -103,10 +103,10 @@
 							<Card.Title class="text-base">Sleep</Card.Title>
 						</Card.Header>
 						<Card.Content>
-							<div>
+							<!-- <div>
 								<Label for="score" class="text-sm">Score</Label>
 								<Input name="score" placeholder="Sleep Score" class="h-8" />
-							</div>
+							</div> -->
 
 							<div>
                                 <Label for="time" class="text-sm">Time</Label>
