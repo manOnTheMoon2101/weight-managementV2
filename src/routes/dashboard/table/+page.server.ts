@@ -2,7 +2,7 @@ import { redirect } from "@sveltejs/kit";
 import { and, eq, gte, lte } from "drizzle-orm";
 import { auth } from "../../../lib/server/auth";
 import { db } from "../../../lib/server/db";
-import { health_tracker, limits, nutrients, supplements } from "../../../lib/server/schema/index";
+import { health_tracker, limits, nutrients, sleep_schedule, supplements } from "../../../lib/server/schema/index";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ request, url }) => {
@@ -122,6 +122,8 @@ export const actions = {
 		const cla = Boolean(form.get("cla")) || false;
 		const appleCider = Boolean(form.get("apple")) || false;
 
+		const time = form.get("time") as string;
+
 		await db
 			.update(nutrients)
 			.set({ protein, fat, sugar, carbs, calories })
@@ -136,6 +138,14 @@ export const actions = {
 			.update(supplements)
 			.set({ fatburner, multiVitamin, magnesium, cla, appleCider })
 			.where(eq(supplements.nutrientsId, id));
+
+			await db
+			.update(sleep_schedule)
+			.set({time})
+			.where(and(
+				eq(sleep_schedule.userId, session.user.id),
+				eq(sleep_schedule.nutrientsId, id)
+			));
 
 		return { success: true };
 	},
