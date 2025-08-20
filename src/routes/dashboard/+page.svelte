@@ -43,13 +43,17 @@
 
 <div class="flex flex-col gap-1">
 	<div>
-		<div class="flex flex-row items-center justify-between">
+		<div class="flex flex-row items-start justify-between">
 			<!-- <div>
 				{#if user}
 					<h1 class="text-6xl font-bold">{greet(user.name)}</h1>
 				{/if}
 			</div> -->
 			<Supplements data={supplementCharts}/>
+
+			<div class=" my-2 border border-accent rounded-2xl p-4 flex flex-col justify-center items-center">
+				<h4 class="text-accent text-2xl">Weekly Analysis</h4>
+			</div>
 
 			<div class="flex flex-col">
 
