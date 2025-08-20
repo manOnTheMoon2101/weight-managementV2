@@ -11,8 +11,8 @@
     ] : [];
 </script>
 
-<div class="bg-background h-[300px] w-1/2 my-2">
-    <h2 class="text-2xl font-bold text-center">Supplements</h2>
+<div class="h-[400px] w-1/2 my-2 border border-accent rounded-2xl p-4 flex flex-col justify-center items-center">
+    <h4 class="text-accent  text-2xl text-center">Supplements</h4>
     <PieChart
         data={pieData}
         key="fruit"

@@ -53,15 +53,15 @@
 
 			<div class="flex flex-col">
 
-				<div class="flex flex-row">
+				<div class="flex flex-row items-center">
 					<div
 				class={!currentWeight || !previousWeight
-					? "flex flex-row items-center"
+					? "flex flex-row items-center  p-4 my-2"
 					: Number(currentWeight) > Number(previousWeight)
-						? "flex flex-row items-center "
+						? "flex flex-row items-center  p-4 my-2 "
 						: Number(currentWeight) < Number(previousWeight)
-							? "flex flex-row items-center "
-							: "flex flex-row items-center"}
+							? "flex flex-row items-center  p-4 my-2 "
+							: "flex flex-row items-center  p-4 my-2"}
 			>
 				<Tooltip.Provider delayDuration={100}>
 					<Tooltip.Root>
@@ -110,11 +110,15 @@
 					</Tooltip.Root>
 				</Tooltip.Provider>
 			</div>
-				<div class="flex flex-col items-center justify-center  border border-accent rounded-2xl p-4 my-2">
+				<div class="flex flex-col items-center justify-center  border border-accent rounded-2xl p-4">
 					<h4 class="text-accent  text-2xl">Average Steps</h4>
 					<span class="flex flex-row items-center text-8xl"
 						>{Math.round(Number(averageStepsIntake))} <FootPrint /></span
 					>
+
+					<span>
+						2025
+					</span>
 	
 					
 				</div>
@@ -142,7 +146,7 @@
 			
 		
 
-		<div class="flex flex-col items-center justify-center">
+		<div class="flex flex-col items-center justify-center  border border-accent rounded-2xl p-4">
 			<span class="flex flex-row items-center text-8xl"
 				>{averageSleepIntake}  <Timer class="text-accent "/></span
 			>
