@@ -1,5 +1,5 @@
 <script>
-	import { Chart, Svg, Axis, Spline, LineChart, Points } from "layerchart";
+	import { Chart, Svg, Axis, Spline, LineChart, Points , Tooltip } from "layerchart";
 
 	let { dateSeriesData } = $props();
 
@@ -22,5 +22,18 @@
 			<Spline class="stroke-accent stroke-2" />
 			<Points class="fill-accent" />
 		</Svg>
+
+		<Tooltip.Root class="bg-accent">
+			{#snippet children({ data })}
+			  <!-- <Tooltip.Header value={data.createdAt} format="day" /> -->
+			  <Tooltip.List>
+				<Tooltip.Item label={'Date'} value={data.createdAt} />
+				<Tooltip.Item label={'Weight'} value={data.weight} />
+			  </Tooltip.List>
+			{/snippet}
+		  </Tooltip.Root>
 	</LineChart>
+
+
+	
 </div>
