@@ -41,29 +41,35 @@
 </script>
 
 
-<div class="flex flex-col gap-1 my-24">
+<div class="flex flex-col gap-1">
 	<div>
 		<div class="flex flex-row items-center justify-between">
-			<div>
+			<!-- <div>
 				{#if user}
 					<h1 class="text-6xl font-bold">{greet(user.name)}</h1>
 				{/if}
-			</div>
-			<div
+			</div> -->
+			<Supplements data={supplementCharts}/>
+
+			<div class="flex flex-col">
+
+				<div class="flex flex-row items-center">
+					<div
 				class={!currentWeight || !previousWeight
-					? "flex flex-row items-center"
+					? "flex flex-row items-center  p-4 my-2"
 					: Number(currentWeight) > Number(previousWeight)
-						? "flex flex-row items-center "
+						? "flex flex-row items-center  p-4 my-2 "
 						: Number(currentWeight) < Number(previousWeight)
-							? "flex flex-row items-center "
-							: "flex flex-row items-center"}
+							? "flex flex-row items-center  p-4 my-2 "
+							: "flex flex-row items-center  p-4 my-2"}
 			>
 				<Tooltip.Provider delayDuration={100}>
 					<Tooltip.Root>
 						<Tooltip.Trigger>
-							<div class="mx-4 flex flex-col items-start">
+							<div class="mx-4 flex flex-col items-start border border-accent rounded-2xl p-4">
+								<h4 class="text-accent text-2xl">Current Weight</h4>
 								<div class="flex flex-row items-center">
-									<h2 class="text-4xl">{currentWeight}</h2>
+									<h2 class="text-8xl">{currentWeight}</h2>
 									<span>
 										{#if currentWeight && previousWeight}
 											{#if Number(currentWeight) > Number(previousWeight)}
@@ -83,7 +89,7 @@
 										-
 									{/if}
 								</span>
-								<h4 class="text-accent text-2xl">Current Weight</h4>
+								
 							</div>
 						</Tooltip.Trigger>
 						<Tooltip.Content side="left">
@@ -104,34 +110,43 @@
 					</Tooltip.Root>
 				</Tooltip.Provider>
 			</div>
+				<div class="flex flex-col items-center justify-center  border border-accent rounded-2xl p-4">
+					<h4 class="text-accent  text-2xl">Average Steps</h4>
+					<span class="flex flex-row items-center text-8xl"
+						>{Math.round(Number(averageStepsIntake))} <FootPrint /></span
+					>
+
+					<span>
+						2025
+					</span>
+	
+					
+				</div>
+				</div>
+				<div class="flex flex-col items-center justify-center  border border-accent rounded-2xl p-4 my-2">
+					<h4 class="text-accent text-2xl">Average Water</h4>
+					<span class="flex flex-row items-center text-8xl"
+						>{Math.round(Number(averageWaterIntake))} <Droplet class="text-blue-400 fill-blue-400" /></span
+					>
+	
+					
+				</div>
+			</div>
 		</div>
 
-		<div class="flex flex-row items-center justify-evenly mt-24">
+		<div class="flex flex-row items-center justify-evenly mt-24 ">
 			<Weight dateSeriesData={weightCharts} />
-			<div class="flex flex-col items-center justify-center">
-				<span class="flex flex-row items-center text-8xl"
-					>{Math.round(Number(averageStepsIntake))} <FootPrint /></span
-				>
-
-				<h3 class="text-accent  text-2xl">Average Steps</h3>
-			</div>
-			<div class="flex flex-col items-center justify-center">
-				<span class="flex flex-row items-center text-8xl"
-					>{Math.round(Number(averageWaterIntake))} <Droplet class="text-blue-400 fill-blue-400" /></span
-				>
-
-				<h3 class="text-accent text-2xl">Average Water</h3>
-			</div>
+		
 
 			
 		</div>
 
 
-		<div class="flex flex-row items-center justify-around  mt-24">
-			<Supplements data={supplementCharts}/>
+		<div class="flex flex-row items-center justify-start  mt-24">
+			
 		
 
-		<div class="flex flex-col items-center justify-center">
+		<div class="flex flex-col items-center justify-center  border border-accent rounded-2xl p-4">
 			<span class="flex flex-row items-center text-8xl"
 				>{averageSleepIntake}  <Timer class="text-accent "/></span
 			>
@@ -144,8 +159,8 @@
 </div>
 
 
-<style>
+<!-- <style>
 	:global(body) {
 		font-family: 'Balsamiq Sans', system-ui;
 	}
-  </style>
+  </style> -->
