@@ -18,11 +18,11 @@
 	);
 
 	const supplementColors: any = {
-		fatBurner: "text-red-500",
+		fatBurner: "text-[#E8DBC9]",
 		appleCider: "text-green-500",
-		multiVitamin: "text-blue-500",
-		magnesium: "text-purple-500",
-		cla: "text-orange-500",
+		multiVitamin: "text-[#A89072]",
+		magnesium: "text-[#C7B89F]",
+		cla: "text-[#F2E8DB]",
 	};
 </script>
 
