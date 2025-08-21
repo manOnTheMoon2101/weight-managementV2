@@ -59,15 +59,15 @@
 					<div>
 						<div class="my-4">
 							<h6>Nutrient Limits Reaced</h6>
-							<Badge>None</Badge>
+							<Badge variant={'weekly'}>None</Badge>
 						</div>
 						<div class="my-4">
 							<h6>Steps not reached</h6>
-							<Badge>2</Badge>
+							<Badge  variant={'weekly'}>2</Badge>
 						</div>
 						<div class="my-4">
 							<h6>Minimum Water not dranked</h6>
-							<Badge>4</Badge>
+							<Badge  variant={'weekly'}>4</Badge>
 						</div>
 					</div>
 				</div>
