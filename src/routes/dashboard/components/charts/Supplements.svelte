@@ -2,7 +2,7 @@
     import { PieChart } from "layerchart";
     let { data } = $props();
     
-    const colors = ["#FF6B6B", "#FFD93D", "#FF8C42", "#9B59B6", "#F39C12"];
+    const colors = ["#E8DBC9", "#A89072", "#C7B89F", "#F2E8DB", "#F39C12"];
     
     const pieData = data[0] ? [
         { fruit: "Fat Burner", value: data[0].fatburnerCount, color: colors[0] },
@@ -11,8 +11,8 @@
     ] : [];
 </script>
 
-<div class="h-[400px] w-1/2 my-2 border border-accent rounded-2xl p-4 flex flex-col justify-center items-center shadow-2xl">
-    <h4 class="text-accent  text-2xl text-center">Supplements</h4>
+<div class="h-[400px] w-1/2 my-2 border border-accent rounded-2xl p-4 flex flex-col justify-center items-center shadow-2xl bg-primary">
+    <h4 class="text-accent font-bold  text-2xl text-center">Supplements</h4>
     <PieChart
         data={pieData}
         key="fruit"

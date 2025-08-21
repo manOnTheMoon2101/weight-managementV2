@@ -51,9 +51,9 @@
 			<Supplements data={supplementCharts} />
 
 			<div
-				class=" border-accent my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
+				class=" border-accent my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl bg-primary"
 			>
-				<h4 class="text-accent text-2xl">Weekly Analysis</h4>
+				<h4 class="text-accent font-bold text-2xl">Weekly Analysis</h4>
 
 				<div>
 					<div>
@@ -87,8 +87,8 @@
 						<Tooltip.Provider delayDuration={100}>
 							<Tooltip.Root>
 								<Tooltip.Trigger>
-									<div class="border-accent mx-4 flex flex-col items-start rounded-2xl border p-4 shadow-2xl">
-										<h4 class="text-accent text-2xl">Current Weight</h4>
+									<div class="border-accent mx-4 flex flex-col items-start rounded-2xl border p-4 shadow-2xl bg-primary">
+										<h4 class="text-accent font-bold text-2xl">Current Weight</h4>
 										<div class="flex flex-row items-center">
 											<h2 class="text-8xl">{currentWeight}</h2>
 											<span>
@@ -124,16 +124,16 @@
 												-
 											{/if}
 										</span>
-										<h4 class="text-accent">Previous Weight</h4>
+										<h4 class="text-accent font-bold">Previous Weight</h4>
 									</div>
 								</Tooltip.Content>
 							</Tooltip.Root>
 						</Tooltip.Provider>
 					</div>
 					<div
-						class="border-accent flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
+						class="border-accent flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl bg-primary"
 					>
-						<h4 class="text-accent text-2xl">Average Steps</h4>
+						<h4 class="text-accent font-bold text-2xl">Average Steps</h4>
 						<span class="flex flex-row items-center text-8xl"
 							>{Math.round(Number(averageStepsIntake))} <FootPrint /></span
 						>
@@ -142,9 +142,9 @@
 					</div>
 				</div>
 				<div
-					class="border-accent my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
+					class="border-accent my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl bg-primary"
 				>
-					<h4 class="text-accent text-2xl">Average Water</h4>
+					<h4 class="text-accent font-bold text-2xl">Average Water</h4>
 					<span class="flex flex-row items-center text-8xl"
 						>{Math.round(Number(averageWaterIntake))}
 						<Droplet class="fill-blue-400 text-blue-400" /></span
@@ -158,12 +158,13 @@
 		</div>
 
 		<div class="mt-24 flex flex-row items-center justify-start">
-			<div class="border-accent flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl">
+			<div class="border-accent flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl bg-primary">
+				<h4 class="text-accent font-bold text-2xl">Average Sleep Time</h4>
 				<span class="flex flex-row items-center text-8xl"
 					>{averageSleepIntake} <Timer class="text-accent " /></span
 				>
 
-				<h3 class="text-accent text-2xl">Average Sleep Time</h3>
+				
 			</div>
 		</div>
 	</div>
