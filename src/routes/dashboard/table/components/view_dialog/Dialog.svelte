@@ -29,7 +29,7 @@
 			<Sheet.Description>
 				<form class="space-y-3 overflow-y-auto" method="POST" action="?/updateNutrients">
 					<input type="hidden" name="id" value={rowToEdit?.id || ""} />
-					<Card.Root class="bg-card">
+					<Card.Root class="bg-primary">
 						<Card.Header class="pb-3">
 							<Card.Title class="text-base">Health</Card.Title>
 						</Card.Header>
@@ -65,7 +65,7 @@
 					</Card.Root>
 
 					<div class="flex flex-row gap-3">
-						<Card.Root class="bg-card flex-1">
+						<Card.Root class="bg-primary flex-1">
 							<Card.Header class="pb-3">
 								<Card.Title class="text-base">Nutrients</Card.Title>
 							</Card.Header>
@@ -113,7 +113,7 @@
 							</Card.Content>
 						</Card.Root>
 
-						<Card.Root class="bg-card flex-1">
+						<Card.Root class="bg-primary flex-1">
 							<Card.Header class="pb-3">
 								<Card.Title class="text-base">Supplements</Card.Title>
 							</Card.Header>
@@ -164,7 +164,7 @@
 						</Card.Root>
 					</div>
 
-					<Card.Root class="bg-card">
+					<Card.Root class="bg-primary">
 						<Card.Header class="pb-3">
 							<Card.Title class="text-base">Sleep</Card.Title>
 						</Card.Header>

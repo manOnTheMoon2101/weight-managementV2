@@ -51,7 +51,7 @@
 			<Supplements data={supplementCharts} />
 
 			<div
-				class=" border-accent my-2 flex flex-col items-center justify-center rounded-2xl border p-4"
+				class=" border-accent my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
 			>
 				<h4 class="text-accent text-2xl">Weekly Analysis</h4>
 
@@ -87,7 +87,7 @@
 						<Tooltip.Provider delayDuration={100}>
 							<Tooltip.Root>
 								<Tooltip.Trigger>
-									<div class="border-accent mx-4 flex flex-col items-start rounded-2xl border p-4">
+									<div class="border-accent mx-4 flex flex-col items-start rounded-2xl border p-4 shadow-2xl">
 										<h4 class="text-accent text-2xl">Current Weight</h4>
 										<div class="flex flex-row items-center">
 											<h2 class="text-8xl">{currentWeight}</h2>
@@ -131,7 +131,7 @@
 						</Tooltip.Provider>
 					</div>
 					<div
-						class="border-accent flex flex-col items-center justify-center rounded-2xl border p-4"
+						class="border-accent flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
 					>
 						<h4 class="text-accent text-2xl">Average Steps</h4>
 						<span class="flex flex-row items-center text-8xl"
@@ -142,7 +142,7 @@
 					</div>
 				</div>
 				<div
-					class="border-accent my-2 flex flex-col items-center justify-center rounded-2xl border p-4"
+					class="border-accent my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
 				>
 					<h4 class="text-accent text-2xl">Average Water</h4>
 					<span class="flex flex-row items-center text-8xl"
@@ -158,7 +158,7 @@
 		</div>
 
 		<div class="mt-24 flex flex-row items-center justify-start">
-			<div class="border-accent flex flex-col items-center justify-center rounded-2xl border p-4">
+			<div class="border-accent flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl">
 				<span class="flex flex-row items-center text-8xl"
 					>{averageSleepIntake} <Timer class="text-accent " /></span
 				>
