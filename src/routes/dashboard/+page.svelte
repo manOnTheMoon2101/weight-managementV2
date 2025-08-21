@@ -170,8 +170,8 @@
 	</div>
 </div>
 
-<!-- <style>
+<style>
 	:global(body) {
 		font-family: 'Balsamiq Sans', system-ui;
 	}
-  </style> -->
+  </style>
