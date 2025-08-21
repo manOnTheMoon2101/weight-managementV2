@@ -51,8 +51,8 @@
 			</DropdownMenu.Root>
 		</div>
 		<div>
-			<Button href="/dashboard" class="bg-accent">Dashboard</Button>
-			<Button href="/dashboard/table" class="bg-accent">Table</Button>
+			<Button href="/dashboard" variant={'navbar'}>Dashboard</Button>
+			<Button href="/dashboard/table" variant={'navbar'}>Table</Button>
 		</div>
 	</div>
 </div>
