@@ -7,6 +7,8 @@
 			variant: {
 				default:
 					"bg-primary text-primary-foreground hover:bg-primary/80 border-transparent",
+					weekly:
+					"bg-accent text-primary hover:bg-accent/80 border-transparent",
 				secondary:
 					"bg-secondary text-secondary-foreground hover:bg-secondary/80 border-transparent",
 				destructive:
