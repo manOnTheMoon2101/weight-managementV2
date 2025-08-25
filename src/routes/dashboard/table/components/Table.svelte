@@ -27,7 +27,7 @@
 	const darkTheme = themeQuartz.withPart(colorSchemeDarkBlue).withParams({
 		backgroundColor: `var(--background)`,
 		foregroundColor: `var(--foreground)`,
-		headerBackgroundColor: `var(--accent)`,
+		headerBackgroundColor: `var(--secondary)`,
 		headerTextColor: "var(--foreground)",
 		// oddRowBackgroundColor: "#263299",
 	});

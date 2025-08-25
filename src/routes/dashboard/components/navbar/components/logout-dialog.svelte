@@ -1,7 +1,19 @@
 <script lang="ts">
     import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
     import { Button } from "$lib/components/ui/button";
-   import X from "@lucide/svelte/icons/x"
+   import X from "@lucide/svelte/icons/x";
+   import { goto } from "$app/navigation";
+   import { authClient } from "$lib/auth-client";
+
+
+   async function handleSignOut() {
+		try {
+			authClient.signOut()
+			await goto("/");
+		} catch (e) {
+			console.log(e)
+		}
+	}
    </script>
     
    <AlertDialog.Root>
@@ -19,7 +31,15 @@
      </AlertDialog.Header>
      <div class="flex flex-row justify-center">
         <AlertDialog.Footer>
-            <Button href="/" class="w-fit" size="lg">Logout</Button>
+       
+
+            <Button
+            type="button"
+            onclick={() =>  handleSignOut()}
+            class="w-fit"
+            variant="destructive"
+            size="lg">Sign out</Button
+          >
            </AlertDialog.Footer>
      </div>
     </AlertDialog.Content>
