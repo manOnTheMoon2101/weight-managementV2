@@ -7,12 +7,10 @@
 	import * as Popover from "$lib/components/ui/popover/index.js";
 	import * as Select from "$lib/components/ui/select/index.js";
 	import CalendarIcon from "@lucide/svelte/icons/calendar";
-	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
 	import Supplements from "./components/cellRenderers/Supplements.svelte";
 	import Dialog from "./components/view_dialog/Dialog.svelte";
 	import { makeSvelteCellRenderer } from "ag-grid-svelte5-extended";
-	import Button from "$lib/components/ui/button/button.svelte";
 	import AddDialog from "../components/navbar/components/add_dialog/AddDialog.svelte";
 	import Limits from "./components/cellRenderers/Limits.svelte";
 	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
