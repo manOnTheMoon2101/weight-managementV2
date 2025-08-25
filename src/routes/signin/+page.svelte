@@ -6,10 +6,12 @@
 	let email = "";
 	let password = "";
 	let error = "";
+	let loading = false;
 
 	async function handleSignIn() {
 		error = "";
 		try {
+			loading = true;
 			await authClient.signIn.email({
 				email,
 				password,
@@ -18,6 +20,7 @@
 		} catch (e) {
 			error = "Sign in failed. Please check your credentials.";
 		}
+		loading = false;
 	}
 </script>
 
@@ -29,7 +32,11 @@
 			{#if error}
 				<div class="text-red-500">{error}</div>
 			{/if}
-			<Button variant={"secondary"} type="submit" size="lg">Sign in</Button>
+			{#if !loading}
+				<Button variant={"secondary"} type="submit" size="lg">Sign in</Button>
+			{:else}
+				<span>Loading</span>
+			{/if}
 		</form>
 	</div>
 </div>
