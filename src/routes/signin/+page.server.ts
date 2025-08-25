@@ -10,8 +10,6 @@ export const load: PageServerLoad = async (event) => {
 	if (session) {
 		redirect(302, redirectPath);
 	}
-
-	// Also used on client signin page as callbackURL
 	return {
 		redirectPath,
 	};

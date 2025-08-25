@@ -27,13 +27,13 @@
 	<div class="min-h-screen flex items-center justify-center">
         <div class="flex flex-col items-center space-y-4 p-8 rounded-lg shadow-lg">
             <p class="text-6xl">Welcome</p>
-            <Button>
+            <Button variant={'secondary'}>
 				<a href="/signin" >
 					Sign in
 				</a>
 			</Button>
             
-			<Button>
+			<Button variant={'secondary'}>
             <a href="/signup" >
                 Sign Up
             </a>
