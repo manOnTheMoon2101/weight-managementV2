@@ -7,7 +7,8 @@
     const pieData = data[0] ? [
         { fruit: "Fat Burner", value: data[0].fatburnerCount, color: colors[0] },
         { fruit: "Multi Vitamin", value: data[0].multiVitaminCount, color: colors[1] },
-        { fruit: "Magnesium", value: data[0].magnesiumCount, color: colors[2] }
+        { fruit: "Magnesium", value: data[0].magnesiumCount, color: colors[2] },
+        { fruit: "CLA", value: data[0].claCount, color: colors[3] }
     ] : [];
 </script>
 
