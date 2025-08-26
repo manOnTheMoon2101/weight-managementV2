@@ -11,6 +11,6 @@ export const load: PageServerLoad = async (event) => {
 		redirect(302, redirectPath);
 	}
 	return {
-		redirectPath,
+		
 	};
 };
