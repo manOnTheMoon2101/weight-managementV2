@@ -149,4 +149,68 @@ export const actions = {
 
 		return { success: true };
 	},
+
+
+	createNutrients: async ({ request }: { request: Request }) => {
+		const session = await auth.api.getSession({ headers: request.headers });
+		if (!session) {
+			redirect(302, "/signin");
+		}
+		const form = await request.formData();
+
+
+		const protein = Number(form.get("protein")) || 0;
+		const weight = Number(form.get("weight")) || 0;
+		const steps = Number(form.get("steps")) || 0;
+		const water = Number(form.get("water")) || 0;
+		const calories = Number(form.get("calories")) || 0;
+		const fat = Number(form.get("fat")) || 0;
+		const sugar = Number(form.get("sugar")) || 0;
+		const carbs = Number(form.get("carbs")) || 0;
+
+		const fatburner = Boolean(form.get("fatBurner")) || false;
+		const multiVitamin = Boolean(form.get("vitamin")) || false;
+		const magnesium = Boolean(form.get("magnesium")) || false;
+		const cla = Boolean(form.get("cla")) || false;
+		const appleCider = Boolean(form.get("apple")) || false;
+
+		// const time = form.get("time") as string;
+
+
+		
+
+		const nutrientsData = await db
+		.insert(nutrients)
+		.values({ userId:session.user.id,protein,fat,sugar,calories,carbs })
+		.returning();
+
+		const sleepData = await db.insert(sleep_schedule).values({
+			nutrientsId: nutrientsData[0].id,
+			userId: session.user.id,
+			
+		}).returning();
+
+		const supplementData = await db.insert(supplements).values({
+			nutrientsId: nutrientsData[0].id,
+			userId: session.user.id,
+			cla,appleCider,multiVitamin,magnesium,fatburner
+		}).returning();
+
+		const healthData = await db.insert(health_tracker).values({
+			nutrientsId: nutrientsData[0].id,
+			userId: session.user.id,
+			weight,water,steps
+		}).returning();
+
+
+		return { 
+			success: true,
+			data: {
+				nutrients: nutrientsData[0],
+				sleep: sleepData[0],
+				supplements: supplementData[0],
+				health: healthData[0]
+			}
+		};
+	},
 };

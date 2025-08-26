@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-	<title>svelte-starter</title>
+	<title>Weight Tracker</title>
 </svelte:head>
 
 <ModeWatcher />
