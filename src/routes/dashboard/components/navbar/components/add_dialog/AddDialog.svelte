@@ -15,7 +15,7 @@
 
 <Sheet.Root>
 	<Sheet.Trigger>
-		<Button>Add</Button>
+		<Button variant={'secondary'}>Add</Button>
 	</Sheet.Trigger>
 	<Sheet.Content class="max-h-[100vh] ">
 		<Sheet.Header>
