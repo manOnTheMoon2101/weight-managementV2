@@ -15,7 +15,6 @@
 				password,
                 callbackURL:'/dashboard'
 			});
-			// Optionally redirect or show success
 		} catch (e) {
 			error = "Sign up failed. Please try again.";
 		}
