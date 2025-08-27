@@ -33,7 +33,7 @@
 				<div class="text-red-500">{error}</div>
 			{/if}
 			{#if !loading}
-				<Button variant={"secondary"} type="submit" size="lg">Sign in</Button>
+				<Button variant='sign' type="submit" size="lg">Sign in</Button>
 			{:else}
 				<span>Loading</span>
 			{/if}
