@@ -11,6 +11,7 @@
 	import Supplements from "./components/charts/Supplements.svelte";
 	import "@fontsource/balsamiq-sans";
 	import { Badge } from "$lib/components/ui/badge/index.js";
+	import Button from "$lib/components/ui/button/button.svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
@@ -53,8 +54,12 @@
 			<div
 				class=" border-accent my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl bg-primary"
 			>
-				<h4 class="text-accent font-bold text-2xl">Weekly Analysis</h4>
+				<h4 class="text-accent font-bold text-2xl">Weekly Analysis(BETA)</h4>
 
+				<div class="flex flex-row justify-between">
+					<Button variant={'secondary'} size='sm' class='mx-1'>Last 7 Days</Button>
+					<Button  variant={'secondary'} size='sm'  class='mx-1'>Last Month</Button>
+				</div>
 				<div>
 					<div>
 						<div class="my-4">
