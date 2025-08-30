@@ -25,6 +25,11 @@
 	let averageWaterIntake = $derived(data.averageWaterIntake);
 	let averageStepsIntake = $derived(data.averageStepsIntake);
 	let averageSleepIntake = $derived(data.averageSleepIntake);
+	let last7DaysSteps = $derived(data.last7DaysSteps);
+	let lastMonthSteps = $derived(data.lastMonthSteps);
+	let userStepLimit = $derived(data.userStepLimit);
+	
+	let viewMode = $state('7days');
 
 	function greet(name: string): string {
 		const hour = new Date().getHours();
@@ -55,28 +60,60 @@
 			<Card
 				class=" border-accent bg-primary/50 my-2 flex flex-col items-center justify-center rounded-2xl border p-4 opacity-60 shadow-2xl"
 			>
-				<h4 class="text-accent text-2xl font-bold">Weekly Analysis(BETA)</h4>
+				<h4 class="text-accent text-2xl font-bold">Steps Analysis</h4>
 
-				<div class="flex flex-row justify-between">
-					<Button variant={"secondary"} size="sm" class="mx-1">Last 7 Days</Button>
-					<Button variant={"secondary"} size="sm" class="mx-1">Last Month</Button>
+				<div class="flex flex-row justify-between mb-4">
+					<Button 
+						variant='secondary'
+						onclick={() => viewMode = '7days'}
+					>
+						Last 7 Days
+					</Button>
+					<Button 
+						variant='secondary'
+						onclick={() => viewMode = 'month'}
+					>
+						Last Month
+					</Button>
 				</div>
-				<div>
-					<div>
-						<div class="my-4">
-							<h6>Limits(Days) Breaced</h6>
-							<Badge variant={"weekly"}>None</Badge>
-						</div>
-						<div class="my-4">
-							<h6>Steps(Days) not reached</h6>
-							<Badge variant={"weekly"}>2</Badge>
-						</div>
-						<div class="my-4">
-							<h6>Water(Days) not dranked</h6>
-							<Badge variant={"weekly"}>4</Badge>
+				
+				{#if viewMode === '7days'}
+					<div class="text-center">
+						<h6 class="text-lg font-semibold mb-2">Days with Steps ≤ {userStepLimit}</h6>
+						<Badge variant={"weekly"} class="text-xl px-4 py-2">
+							{last7DaysSteps?.length || 0} days
+						</Badge>
+						{#if last7DaysSteps && last7DaysSteps.length > 0}
+							<div class="mt-3 text-sm text-muted-foreground">
+								{last7DaysSteps.map(entry => 
+									new Date(entry.createdAt).toLocaleDateString('en-US', { 
+										month: 'short', 
+										day: 'numeric' 
+									})
+								).join(', ')}
+							</div>
+						{/if}
+					</div>
+				{:else}
+					<div class="text-center">
+						<div class="text-center">
+							<h6 class="text-lg font-semibold mb-2">Days with Steps ≤ {userStepLimit}</h6>
+							<Badge variant={"weekly"} class="text-xl px-4 py-2">
+								{lastMonthSteps?.length || 0} days
+							</Badge>
+							{#if lastMonthSteps && lastMonthSteps.length > 0}
+								<div class="mt-3 text-sm text-muted-foreground">
+									{lastMonthSteps.map(entry => 
+										new Date(entry.createdAt).toLocaleDateString('en-US', { 
+											month: 'short', 
+											day: 'numeric' 
+										})
+									).join(', ')}
+								</div>
+							{/if}
 						</div>
 					</div>
-				</div>
+				{/if}
 			</Card>
 
 			<div class="flex flex-col">
