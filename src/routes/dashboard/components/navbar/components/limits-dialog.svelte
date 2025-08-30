@@ -45,7 +45,7 @@
 					<Label for="stepsLimit">Steps</Label>
 					<Input name="stepsLimit" placeholder="Steps" type={"number"} value={limits.stepsLimit} />
 					<div class="flex flex-row justify-center">
-						<Button type="submit">Save</Button>
+						<Button type="submit" variant='sign'>Save</Button>
 					</div>
 				</form>
 			</Dialog.Description>

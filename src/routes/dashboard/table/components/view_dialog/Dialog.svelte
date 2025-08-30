@@ -191,7 +191,7 @@
 							</div>
 						</Card.Content>
 					</Card.Root>
-					<Button class="bg-accent mt-4" type="submit">Save</Button>
+					<Button class="mt-4" variant='sign' type="submit">Save</Button>
 				</form>
 			</Sheet.Description>
 		</Sheet.Header>

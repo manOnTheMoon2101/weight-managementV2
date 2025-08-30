@@ -26,7 +26,7 @@
                     <Label for="email">Email</Label>
                     <Input name="email" placeholder="Email" type="email" value={user.email} />
                     <div class="flex flex-row justify-center">
-                        <Button type="submit">Save</Button>
+                        <Button type="submit" variant={'sign'}>Save</Button>
                     </div>
                 </form>
             </Dialog.Description>
