@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-	--background: hsl(0 0% 100%) /* <- Wrap in HSL */;
+	--background: hsl(0 0% 100%) ;
 	--foreground: hsl(240 10% 3.9%);
 	--muted: hsl(240 4.8% 95.9%);
 	--muted-foreground: hsl(240 3.8% 46.1%);
@@ -15,11 +15,11 @@
 	--card-foreground: hsl(240 10% 3.9%);
 	--border: hsl(240 5.9% 90%);
 	--input: hsl(240 5.9% 90%);
-	--primary: hsl(240 5.9% 10%);
+	--primary: hsl(0 0% 100%) ;
 	--primary-foreground: hsl(0 0% 98%);
-	--secondary: hsl(240 4.8% 95.9%);
+	--secondary: hsl(36, 11%, 53%);
 	--secondary-foreground: hsl(240 5.9% 10%);
-	--accent: hsl(0, 100%, 77%);
+	--accent: hsl(37, 38%, 80%);
 	--accent-foreground: hsl(240 5.9% 10%);
 	--destructive: hsl(0 72.2% 50.6%);
 	--destructive-foreground: hsl(0 0% 98%);
@@ -39,7 +39,6 @@
 
 .dark {
 	--sign: hsl(140, 100%, 38%);
-
 	--background: hsl(216, 18%, 16%);
 	--foreground: hsl(0 0% 98%);
 	--muted: hsl(240 3.7% 15.9%);
