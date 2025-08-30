@@ -125,7 +125,7 @@
 					</Card.Root>
 					 -->
 					<div class="flex gap-2 mt-4">
-						<Button type="submit"class="bg-accent">
+						<Button type="submit" variant='sign'>
 							Save
 						</Button>
 						

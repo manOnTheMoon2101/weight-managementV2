@@ -18,7 +18,7 @@
 		<Svg>
 			<Axis placement="left" rule class="fill-foreground" />
 			<Axis placement="bottom" rule class="fill-foreground"  />
-			<Spline class="stroke-foreground stroke-2" />
+			<Spline class="stroke-secondary stroke-2" />
 			<Points class="fill-accent" />
 			<Highlight points lines />
 		</Svg>

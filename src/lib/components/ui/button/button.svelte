@@ -14,6 +14,7 @@
 				secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
 				ghost: "hover:bg-accent hover:text-accent-foreground",
 				sign:"bg-sign text-secondary-foreground hover:bg-sign/80",
+				logout:"bg-destructive text-secondary-foreground hover:bg-destructive/80",
 				link: "text-primary underline-offset-4 hover:underline",
 			},
 			size: {

@@ -12,6 +12,7 @@
 	import "@fontsource/balsamiq-sans";
 	import { Badge } from "$lib/components/ui/badge/index.js";
 	import Button from "$lib/components/ui/button/button.svelte";
+	import Card from "$lib/components/ui/card/card.svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
@@ -51,32 +52,32 @@
 			</div> -->
 			<Supplements data={supplementCharts} />
 
-			<div
-				class=" border-accent my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl bg-primary"
+			<Card
+				class=" border-accent bg-primary/50 my-2 flex flex-col items-center justify-center rounded-2xl border p-4 opacity-60 shadow-2xl"
 			>
-				<h4 class="text-accent font-bold text-2xl">Weekly Analysis(BETA)</h4>
+				<h4 class="text-accent text-2xl font-bold">Weekly Analysis(BETA)</h4>
 
 				<div class="flex flex-row justify-between">
-					<Button variant={'secondary'} size='sm' class='mx-1'>Last 7 Days</Button>
-					<Button  variant={'secondary'} size='sm'  class='mx-1'>Last Month</Button>
+					<Button variant={"secondary"} size="sm" class="mx-1">Last 7 Days</Button>
+					<Button variant={"secondary"} size="sm" class="mx-1">Last Month</Button>
 				</div>
 				<div>
 					<div>
 						<div class="my-4">
 							<h6>Limits(Days) Breaced</h6>
-							<Badge variant={'weekly'}>None</Badge>
+							<Badge variant={"weekly"}>None</Badge>
 						</div>
 						<div class="my-4">
 							<h6>Steps(Days) not reached</h6>
-							<Badge  variant={'weekly'}>2</Badge>
+							<Badge variant={"weekly"}>2</Badge>
 						</div>
 						<div class="my-4">
 							<h6>Water(Days) not dranked</h6>
-							<Badge  variant={'weekly'}>4</Badge>
+							<Badge variant={"weekly"}>4</Badge>
 						</div>
 					</div>
 				</div>
-			</div>
+			</Card>
 
 			<div class="flex flex-col">
 				<div class="flex flex-row items-center">
@@ -92,8 +93,10 @@
 						<Tooltip.Provider delayDuration={100}>
 							<Tooltip.Root>
 								<Tooltip.Trigger>
-									<div class="border-accent mx-4 flex flex-col items-start rounded-2xl border p-4 shadow-2xl bg-primary">
-										<h4 class="text-accent font-bold text-2xl">Current Weight</h4>
+									<div
+										class="border-accent bg-primary mx-4 flex flex-col items-start rounded-2xl border p-4 shadow-2xl"
+									>
+										<h4 class="text-accent text-2xl font-bold">Current Weight</h4>
 										<div class="flex flex-row items-center">
 											<h2 class="text-8xl">{currentWeight}</h2>
 											<span>
@@ -136,9 +139,9 @@
 						</Tooltip.Provider>
 					</div>
 					<div
-						class="border-accent flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl bg-primary"
+						class="border-accent bg-primary flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
 					>
-						<h4 class="text-accent font-bold text-2xl">Average Steps</h4>
+						<h4 class="text-accent text-2xl font-bold">Average Steps</h4>
 						<span class="flex flex-row items-center text-8xl"
 							>{Math.round(Number(averageStepsIntake))} <FootPrint /></span
 						>
@@ -147,9 +150,9 @@
 					</div>
 				</div>
 				<div
-					class="border-accent my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl bg-primary"
+					class="border-accent bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
 				>
-					<h4 class="text-accent font-bold text-2xl">Average Water</h4>
+					<h4 class="text-accent text-2xl font-bold">Average Water</h4>
 					<span class="flex flex-row items-center text-8xl"
 						>{Math.round(Number(averageWaterIntake))}
 						<Droplet class="fill-blue-400 text-blue-400" /></span
@@ -163,13 +166,13 @@
 		</div>
 
 		<div class="mt-24 flex flex-row items-center justify-start">
-			<div class="border-accent flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl bg-primary">
-				<h4 class="text-accent font-bold text-2xl">Average Sleep Time</h4>
+			<div
+				class="border-accent bg-primary flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
+			>
+				<h4 class="text-accent text-2xl font-bold">Average Sleep Time</h4>
 				<span class="flex flex-row items-center text-8xl"
 					>{averageSleepIntake} <Timer class="text-accent " /></span
 				>
-
-				
 			</div>
 		</div>
 	</div>
@@ -177,6 +180,6 @@
 
 <style>
 	:global(body) {
-		font-family: 'Balsamiq Sans', system-ui;
+		font-family: "Balsamiq Sans", system-ui;
 	}
-  </style>
+</style>
