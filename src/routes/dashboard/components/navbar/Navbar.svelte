@@ -24,7 +24,7 @@
 	const firstLetter = $derived(parsedUser?.name?.charAt(0));
 </script>
 
-<div class="border-b border-b-orange-300">
+<div class="border-b border-b-accent">
 	<div class="flex flex-row items-center justify-between">
 		<div>
 			<DropdownMenu.Root>
