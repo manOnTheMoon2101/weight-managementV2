@@ -25,12 +25,12 @@
 	}
 </script>
 
-<div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 p-4">
-	<div class="bg-white flex flex-col items-center gap-8 rounded-2xl border shadow-xl p-10 max-w-md w-full">
+<div class="flex min-h-screen items-center justify-center bg-background p-4">
+	<div class="bg-primary flex flex-col items-center gap-8 rounded-2xl border shadow-xl p-10 max-w-md w-full">
 		<!-- Welcome Header -->
 		<div class="text-center space-y-2">
-			<h1 class="text-3xl font-bold text-gray-900">Join Us</h1>
-			<p class="text-gray-600">Create your account to get started</p>
+			<h1 class="text-3xl font-bold text-foreground">Join Us</h1>
+			<p class="text-foreground">Create your account to get started</p>
 		</div>
 
 		<!-- Sign Up Form -->
@@ -80,7 +80,7 @@
 			{/if}
 
 			{#if !loading}
-				<Button type="submit" size="lg" class="w-full">
+				<Button type="submit" size="lg" class="w-full" variant='sign'>
 					Create Account
 				</Button>
 			{:else}
@@ -92,9 +92,9 @@
 		</form>
 
 		<!-- Footer -->
-		<div class="text-center text-sm text-gray-500">
+		<div class="text-center text-sm text-foreground">
 			<p>Already have an account? 
-				<a href="/signin" class="text-green-600 hover:text-green-800 font-medium">Sign in</a>
+				<a href="/signin" class="text-accent hover:text-accent/80 font-medium">Sign in</a>
 			</p>
 		</div>
 	</div>
