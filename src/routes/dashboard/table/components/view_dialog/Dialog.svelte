@@ -27,6 +27,13 @@
 		<Sheet.Header>
 			<Sheet.Title>{rowToEdit ? formatDMY(rowToEdit.createdAt) : ""}</Sheet.Title>
 			<Sheet.Description>
+				
+				<form method="POST" action="?/removeNutrients" class="mt-2">
+					<input type="hidden" name="id" value={rowToEdit?.id || ""} />
+					<div class="flex flex-row justify-start">
+						<Button class="mt-4" variant="destructive" type="submit">Delete</Button>
+					</div>
+				</form>
 				<form class="space-y-3 overflow-y-auto" method="POST" action="?/updateNutrients">
 					<input type="hidden" name="id" value={rowToEdit?.id || ""} />
 					<Card.Root class="bg-primary">
@@ -191,8 +198,9 @@
 							</div>
 						</Card.Content>
 					</Card.Root>
-					<Button class="mt-4" variant='sign' type="submit">Save</Button>
+					<Button class="mt-4" variant="sign" type="submit">Save</Button>
 				</form>
+
 			</Sheet.Description>
 		</Sheet.Header>
 	</Sheet.Content>

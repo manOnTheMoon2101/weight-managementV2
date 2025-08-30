@@ -28,7 +28,7 @@
 		backgroundColor: `var(--background)`,
 		foregroundColor: `var(--foreground)`,
 		headerBackgroundColor: `var(--secondary)`,
-		headerTextColor: "var(--accent)",
+		headerTextColor: "var(--foreground)",
 		// oddRowBackgroundColor: "#263299",
 	});
 
@@ -71,6 +71,4 @@
 
 
 </script>
-<div class="flex flex-row justify-between">
-</div>
 <div bind:this={gridDiv} style="height: 80vh; width: 100%;"></div>

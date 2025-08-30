@@ -2,7 +2,13 @@ import { redirect } from "@sveltejs/kit";
 import { and, eq, gte, lte } from "drizzle-orm";
 import { auth } from "../../../lib/server/auth";
 import { db } from "../../../lib/server/db";
-import { health_tracker, limits, nutrients, sleep_schedule, supplements } from "../../../lib/server/schema/index";
+import {
+	health_tracker,
+	limits,
+	nutrients,
+	sleep_schedule,
+	supplements,
+} from "../../../lib/server/schema/index";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ request, url }) => {
@@ -139,17 +145,44 @@ export const actions = {
 			.set({ fatburner, multiVitamin, magnesium, cla, appleCider })
 			.where(eq(supplements.nutrientsId, id));
 
-			await db
+		await db
 			.update(sleep_schedule)
-			.set({time})
-			.where(and(
-				eq(sleep_schedule.userId, session.user.id),
-				eq(sleep_schedule.nutrientsId, id)
-			));
+			.set({ time })
+			.where(and(eq(sleep_schedule.userId, session.user.id), eq(sleep_schedule.nutrientsId, id)));
 
 		return { success: true };
 	},
 
+	removeNutrients: async ({ request }: { request: Request }) => {
+		const session = await auth.api.getSession({ headers: request.headers });
+		if (!session) {
+			redirect(302, "/signin");
+		}
+		const form = await request.formData();
+		const id = Number(form.get("id")) || 0;
+
+		await db
+			.update(nutrients)
+			.set({ isActive: false, isDeleted: true })
+			.where(eq(nutrients.id, id));
+
+		await db
+			.update(health_tracker)
+			.set({ isActive: false, isDeleted: true })
+			.where(eq(health_tracker.nutrientsId, id));
+
+		await db
+			.update(supplements)
+			.set({ isActive: false, isDeleted: true })
+			.where(eq(supplements.nutrientsId, id));
+
+		await db
+			.update(sleep_schedule)
+			.set({ isActive: false, isDeleted: true })
+			.where(and(eq(sleep_schedule.userId, session.user.id), eq(sleep_schedule.nutrientsId, id)));
+
+		return { success: true };
+	},
 
 	createNutrients: async ({ request }: { request: Request }) => {
 		const session = await auth.api.getSession({ headers: request.headers });
@@ -157,7 +190,6 @@ export const actions = {
 			redirect(302, "/signin");
 		}
 		const form = await request.formData();
-
 
 		const protein = Number(form.get("protein")) || 0;
 		const weight = Number(form.get("weight")) || 0;
@@ -176,41 +208,51 @@ export const actions = {
 
 		// const time = form.get("time") as string;
 
-
-		
-
 		const nutrientsData = await db
-		.insert(nutrients)
-		.values({ userId:session.user.id,protein,fat,sugar,calories,carbs })
-		.returning();
+			.insert(nutrients)
+			.values({ userId: session.user.id, protein, fat, sugar, calories, carbs })
+			.returning();
 
-		const sleepData = await db.insert(sleep_schedule).values({
-			nutrientsId: nutrientsData[0].id,
-			userId: session.user.id,
-			
-		}).returning();
+		const sleepData = await db
+			.insert(sleep_schedule)
+			.values({
+				nutrientsId: nutrientsData[0].id,
+				userId: session.user.id,
+			})
+			.returning();
 
-		const supplementData = await db.insert(supplements).values({
-			nutrientsId: nutrientsData[0].id,
-			userId: session.user.id,
-			cla,appleCider,multiVitamin,magnesium,fatburner
-		}).returning();
+		const supplementData = await db
+			.insert(supplements)
+			.values({
+				nutrientsId: nutrientsData[0].id,
+				userId: session.user.id,
+				cla,
+				appleCider,
+				multiVitamin,
+				magnesium,
+				fatburner,
+			})
+			.returning();
 
-		const healthData = await db.insert(health_tracker).values({
-			nutrientsId: nutrientsData[0].id,
-			userId: session.user.id,
-			weight,water,steps
-		}).returning();
+		const healthData = await db
+			.insert(health_tracker)
+			.values({
+				nutrientsId: nutrientsData[0].id,
+				userId: session.user.id,
+				weight,
+				water,
+				steps,
+			})
+			.returning();
 
-
-		return { 
+		return {
 			success: true,
 			data: {
 				nutrients: nutrientsData[0],
 				sleep: sleepData[0],
 				supplements: supplementData[0],
-				health: healthData[0]
-			}
+				health: healthData[0],
+			},
 		};
 	},
 };
