@@ -30,7 +30,7 @@
 	>
 		<!-- Welcome Header -->
 		<div class="space-y-2 text-center">
-			<h1 class="text-foreground text-3xl font-bold">Welcome Back</h1>
+			<h1 class="text-foreground text-3xl font-bold">Welcome</h1>
 			<p class="text-foreground">Sign in to your account to continue</p>
 		</div>
 
