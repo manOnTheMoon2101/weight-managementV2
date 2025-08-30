@@ -7,7 +7,7 @@
 	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
 	import { Button } from "$lib/components/ui/button";
 	import LimitsDialog from "./components/limits-dialog.svelte";
-
+import Pallete from "@lucide/svelte/icons/palette"
 	import { onMount } from "svelte";
 
 	let {
@@ -43,6 +43,17 @@
 						<DropdownMenu.Item closeOnSelect={false}><EditDialog {user} {userColour} /></DropdownMenu.Item>
 						<DropdownMenu.Item closeOnSelect={false}><LimitsDialog {limits} /></DropdownMenu.Item>
 						<DropdownMenu.Item closeOnSelect={false}><LogoutDialog /></DropdownMenu.Item>
+						<DropdownMenu.Item closeOnSelect={false} disabled>
+							<div>
+							Change Theme(BETA)
+							<div class="flex flex-row justify-around">
+								<Pallete class='text-red-600'   />
+								<Pallete class='text-purple-600'   />
+								<Pallete class='text-accent'   />
+								<Pallete class='text-green-600'   />
+								<Pallete class='text-blue-600t'   />
+							</div>
+						</div></DropdownMenu.Item>
 						<DropdownMenu.Item closeOnSelect={false} class="flex flex-row justify-center"
 							><Toggler /></DropdownMenu.Item
 						>
