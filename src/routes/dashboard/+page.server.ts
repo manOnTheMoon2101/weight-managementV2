@@ -47,12 +47,9 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 		});
 
-		// Get current date and calculate date ranges
 		const now = new Date();
 		const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 		const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-
-		// Get user's step limit
 		const stepLimit = await db.query.limits.findFirst({
 			where: and(
 				eq(limits.userId, session.user.id),
@@ -64,9 +61,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			}
 		});
 
-		const userStepLimit = stepLimit?.stepsLimit || 7000; // Default to 7000 if no limit set
-
-		// Get steps data for last 7 days where steps <= user's step limit
+		const userStepLimit = stepLimit?.stepsLimit || 7000;
 		const last7DaysSteps = await db.query.health_tracker.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
@@ -96,6 +91,62 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 			orderBy: (health_tracker, { desc }) => desc(health_tracker.createdAt),
 		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+		const waterLimit = await db.query.limits.findFirst({
+			where: and(
+				eq(limits.userId, session.user.id),
+				eq(limits.isActive, true),
+				eq(limits.isDeleted, false)
+			),
+			columns: {
+				waterLimit: true
+			}
+		});
+
+		const userWaterLimit = waterLimit?.waterLimit || 3000;
+		const last7DaysWater = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				sql`${health_tracker.water} <= ${userWaterLimit}`,
+				sql`${health_tracker.createdAt} >= ${sevenDaysAgo.toISOString()}`
+			),
+			columns: {
+				water: true,
+				createdAt: true,
+			},
+			orderBy: (health_tracker, { desc }) => desc(health_tracker.createdAt),
+		});
+	
+		const lastMonthWater = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				sql`${health_tracker.water} <= ${userWaterLimit}`,
+				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
+			),
+			columns: {
+				water: true,
+				createdAt: true,
+			},
+			orderBy: (health_tracker, { desc }) => desc(health_tracker.createdAt),
+		});
+
+
 
 		const formattedWeightEntries = allWeights
 			.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
@@ -190,6 +241,10 @@ export const load: PageServerLoad = async ({ request }) => {
 			last7DaysSteps: last7DaysSteps,
 			lastMonthSteps: lastMonthSteps,
 			userStepLimit: userStepLimit,
+
+			last7DaysWater: last7DaysWater,
+			lastMonthWater: lastMonthWater,
+			waterLimit: userWaterLimit,
 		};
 	} catch (error) {
 		if (error instanceof Response) {
