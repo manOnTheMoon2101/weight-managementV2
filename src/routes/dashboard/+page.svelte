@@ -69,7 +69,7 @@
 	</div>
 
 	<Card
-		class=" border-accent bg-primary/50 my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
+		class=" border-accent bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
 	>
 		<h4 class="text-accent text-2xl font-bold">Steps Analysis (BETA)</h4>
 
@@ -113,7 +113,7 @@
 	</Card>
 
 	<Card
-		class=" border-accent bg-primary/50 my-2 flex flex-col items-center justify-center rounded-2xl border p-4  shadow-2xl"
+		class=" border-accent bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border p-4  shadow-2xl"
 	>
 		<h4 class="text-accent text-2xl font-bold">Water Analysis (BETA)</h4>
 
