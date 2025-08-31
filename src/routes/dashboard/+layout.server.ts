@@ -33,7 +33,7 @@ export const load: LayoutServerLoad = async ({ request }) => {
     });
 
     return {
-        limits: userLimits,
+        limits: userLimits || null,
         userColour: userColour,
         user: session.user,
     };
