@@ -28,7 +28,7 @@
 		backgroundColor: `var(--background)`,
 		foregroundColor: `var(--foreground)`,
 		headerBackgroundColor: `var(--secondary)`,
-		headerTextColor: "var(--foreground)",
+		headerTextColor: "var(--accent)",
 		// oddRowBackgroundColor: "#263299",
 	});
 
