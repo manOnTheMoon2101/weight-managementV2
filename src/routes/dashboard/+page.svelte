@@ -63,10 +63,10 @@
 			<div class="border-accent bg-primary mx-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl">
 				<h4 class="text-accent text-2xl font-bold">Analysis</h4>
 				<div class="mb-4 flex flex-row justify-around">
-					<Button size="sm" variant="secondary" onclick={() => (viewMode = "7days")}
+					<Button size="sm" variant="secondary" class='mx-2' onclick={() => (viewMode = "7days")}
 						>Last 7 Days</Button
 					>
-					<Button size="sm" variant="secondary" onclick={() => (viewMode = "month")}
+					<Button size="sm" variant="secondary" class='mx-2' onclick={() => (viewMode = "month")}
 						>Last Month</Button
 					>
 				</div>
