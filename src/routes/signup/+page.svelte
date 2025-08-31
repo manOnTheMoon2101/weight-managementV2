@@ -2,7 +2,7 @@
 	import { authClient } from "$lib/auth-client";
 	import { Button } from "$lib/components/ui/button";
 	import { Input } from "$lib/components/ui/input";
-
+	import { goto } from "$app/navigation";
 	let email = "";
 	let password = "";
 	let name = "";
@@ -18,9 +18,9 @@
 				name,
 				email,
 				password,
-				callbackURL: "/dashboard",
+				
 			});
-
+			await goto("/dashboard");
 			if (result?.error) {
 				error = result.error.message || "Sign up failed. Please try again.";
 				return;
