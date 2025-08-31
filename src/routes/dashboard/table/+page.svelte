@@ -82,7 +82,7 @@
 			cellRendererParams: (params: any) => ({
 				data: params.data.steps,
 				type: "Less",
-				limit: limits.stepsLimit,
+				limit: limits?.stepsLimit,
 			}),
 		},
 		{
@@ -93,7 +93,7 @@
 			cellRendererParams: (params: any) => ({
 				data: params.data.water,
 				type: "Less",
-				limit: limits.waterLimit,
+				limit: limits?.waterLimit,
 			}),
 		},
 		{
@@ -104,7 +104,7 @@
 			cellRendererParams: (params: any) => ({
 				data: params.data.calories,
 				type: "More",
-				limit: limits.caloriesLimit,
+				limit: limits?.caloriesLimit,
 			}),
 		},
 		{ headerName: "Protein", field: "protein", filter: "agNumberColumnFilter" },
@@ -116,7 +116,7 @@
 			cellRendererParams: (params: any) => ({
 				data: params.data.fat,
 				type: "More",
-				limit: limits.fatLimit,
+				limit: limits?.fatLimit,
 			}),
 		},
 		{
@@ -127,7 +127,7 @@
 			cellRendererParams: (params: any) => ({
 				data: params.data.sugar,
 				type: "More",
-				limit: limits.sugarLimit,
+				limit: limits?.sugarLimit,
 			}),
 		},
 		{
@@ -138,7 +138,7 @@
 			cellRendererParams: (params: any) => ({
 				data: params.data.carbs,
 				type: "More",
-				limit: limits.carbsLimit,
+				limit: limits?.carbsLimit,
 			}),
 		},
 		{

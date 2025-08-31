@@ -82,7 +82,7 @@ export const load: PageServerLoad = async ({ request, url }) => {
 
 		return {
 			nutrients: userNutrients,
-			limits: userLimits,
+			limits: userLimits || null,
 			dateRange: {
 				startDate: actualStartDate,
 				endDate: actualEndDate,

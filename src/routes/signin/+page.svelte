@@ -71,7 +71,7 @@
 			{#if !loading}
 				<Button variant="sign" type="submit" size="lg" class="w-full">Sign In</Button>
 			{:else}
-				<div class="flex items-center justify-center space-x-2 text-gray-600">
+				<div class="flex items-center justify-center space-x-2 text-foreground">
 					<div class="h-5 w-5 animate-spin rounded-full border-b-2 border-accent"></div>
 					<span>Signing in...</span>
 				</div>

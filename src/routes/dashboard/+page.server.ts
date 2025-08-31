@@ -61,7 +61,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			}
 		});
 
-		const userStepLimit = stepLimit?.stepsLimit || 7000;
+		const userStepLimit = stepLimit?.stepsLimit || null;
 		const last7DaysSteps = await db.query.health_tracker.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
@@ -115,7 +115,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			}
 		});
 
-		const userWaterLimit = waterLimit?.waterLimit || 3000;
+		const userWaterLimit = waterLimit?.waterLimit || null;
 		const last7DaysWater = await db.query.health_tracker.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
@@ -244,7 +244,7 @@ export const load: PageServerLoad = async ({ request }) => {
 
 			last7DaysWater: last7DaysWater,
 			lastMonthWater: lastMonthWater,
-			waterLimit: userWaterLimit,
+			waterLimit: userWaterLimit || null,
 		};
 	} catch (error) {
 		if (error instanceof Response) {

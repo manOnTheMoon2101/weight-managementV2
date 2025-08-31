@@ -72,7 +72,7 @@
 				</div>
 
 				<Card
-					class=" border-accent bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
+					class="border-none bg-primary my-2 flex flex-col items-center justify-center rounded-2xl p-4"
 				>
 					<Tooltip.Provider delayDuration={100}>
 						<Tooltip.Root>
@@ -127,7 +127,7 @@
 				</Card>
 
 				<Card
-					class=" border-accent bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border p-4  shadow-2xl"
+					class="border-none bg-primary my-2 flex flex-col items-center justify-center rounded-2xl p-4"
 				>
 					<Tooltip.Provider delayDuration={100}>
 						<Tooltip.Root>
@@ -142,7 +142,7 @@
 								{:else}
 									<div class="text-center">
 										<div class="text-center">
-											<h6 class="mb-2 text-lg font-semibold">Days with Steps ≤ {waterLimit}</h6>
+											<h6 class="mb-2 text-lg font-semibold">Days with Water ≤ {waterLimit}</h6>
 											<Badge variant={"weekly"} class="px-4 py-2 text-xl">
 												{lastMonthWater?.length || 0} days
 											</Badge>
