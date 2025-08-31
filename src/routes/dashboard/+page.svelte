@@ -59,103 +59,128 @@
 			{/if}
 		</div>
 		<div class="flex flex-row items-start justify-between">
-			
 			<Supplements data={supplementCharts} />
-<div class="flex flex-col mx-2 ">
-	
-	<div class="mb-4 flex flex-row justify-around">
-		<Button size='sm' variant="secondary" onclick={() => (viewMode = "7days")}>Last 7 Days</Button>
-		<Button size='sm' variant="secondary" onclick={() => (viewMode = "month")}>Last Month</Button>
-	</div>
-
-	<Card
-		class=" border-accent bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
-	>
-		<h4 class="text-accent text-2xl font-bold">Steps Analysis (BETA)</h4>
-
-		{#if viewMode === "7days"}
-			<div class="text-center">
-				<h6 class="mb-2 text-lg font-semibold">Days with Steps ≤ {userStepLimit}</h6>
-				<Badge variant={"weekly"} class="px-4 py-2 text-xl">
-					{last7DaysSteps?.length || 0} days
-				</Badge>
-				{#if last7DaysSteps && last7DaysSteps.length > 0}
-					<div class="mt-3 text-sm text-muted-foreground">
-						{last7DaysSteps.map(entry => 
-							new Date(entry.createdAt).toLocaleDateString('en-US', { 
-								month: 'short', 
-								day: 'numeric' 
-							})
-						).join(', ')}
-					</div>
-				{/if}
-			</div>
-		{:else}
-			<div class="text-center">
-				<div class="text-center">
-					<h6 class="mb-2 text-lg font-semibold">Days with Steps ≤ {userStepLimit}</h6>
-					<Badge variant={"weekly"} class="px-4 py-2 text-xl">
-						{lastMonthSteps?.length || 0} days
-					</Badge>
-					{#if lastMonthSteps && lastMonthSteps.length > 0}
-						<div class="mt-3 text-sm text-muted-foreground">
-							{lastMonthSteps.map(entry => 
-								new Date(entry.createdAt).toLocaleDateString('en-US', { 
-									month: 'short', 
-									day: 'numeric' 
-								})
-							).join(', ')}
-						</div>
-					{/if}
+			<div class="border-accent bg-primary mx-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl">
+				<h4 class="text-accent text-2xl font-bold">Analysis</h4>
+				<div class="mb-4 flex flex-row justify-around">
+					<Button size="sm" variant="secondary" class='mx-2' onclick={() => (viewMode = "7days")}
+						>Last 7 Days</Button
+					>
+					<Button size="sm" variant="secondary" class='mx-2' onclick={() => (viewMode = "month")}
+						>Last Month</Button
+					>
 				</div>
-			</div>
-		{/if}
-	</Card>
 
-	<Card
-		class=" border-accent bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border p-4  shadow-2xl"
-	>
-		<h4 class="text-accent text-2xl font-bold">Water Analysis (BETA)</h4>
+				<Card
+					class=" border-accent bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
+				>
+					<Tooltip.Provider delayDuration={100}>
+						<Tooltip.Root>
+							<Tooltip.Trigger>
+								{#if viewMode === "7days"}
+									<div class="text-center">
+										<h6 class="mb-2 text-lg font-semibold">Days with Steps ≤ {userStepLimit}</h6>
+										<Badge variant={"weekly"} class="px-4 py-2 text-xl">
+											{last7DaysSteps?.length || 0} days
+										</Badge>
+									</div>
+								{:else}
+									<div class="text-center">
+										<div class="text-center">
+											<h6 class="mb-2 text-lg font-semibold">Days with Steps ≤ {userStepLimit}</h6>
+											<Badge variant={"weekly"} class="px-4 py-2 text-xl">
+												{lastMonthSteps?.length || 0} days
+											</Badge>
+										</div>
+									</div>
+								{/if}
+							</Tooltip.Trigger>
+							<Tooltip.Content side="left">
+								{#if last7DaysSteps && last7DaysSteps.length > 0}
+									<h4>Dates</h4>
+									<div class="text-muted-foreground mt-3 text-sm">
+										{last7DaysSteps
+											.map((entry) =>
+												new Date(entry.createdAt).toLocaleDateString("en-US", {
+													month: "short",
+													day: "numeric",
+												})
+											)
+											.join(", ")}
+									</div>
+								{:else if lastMonthSteps && lastMonthSteps.length > 0}
+									<h4>Dates</h4>
+									<div class="text-muted-foreground mt-3 text-sm">
+										{lastMonthSteps
+											.map((entry) =>
+												new Date(entry.createdAt).toLocaleDateString("en-US", {
+													month: "short",
+													day: "numeric",
+												})
+											)
+											.join(", ")}
+									</div>
+								{/if}
+							</Tooltip.Content>
+						</Tooltip.Root>
+					</Tooltip.Provider>
+				</Card>
 
-		{#if viewMode === "7days"}
-			<div class="text-center">
-				<h6 class="mb-2 text-lg font-semibold">Days with Water ≤ {waterLimit}</h6>
-				<Badge variant={"weekly"} class="px-4 py-2 text-xl">
-					{last7DaysWater?.length || 0} days
-				</Badge>
-				{#if last7DaysWater && last7DaysWater.length > 0}
-				<div class="mt-3 text-sm text-muted-foreground">
-					{last7DaysWater.map(entry => 
-						new Date(entry.createdAt).toLocaleDateString('en-US', { 
-							month: 'short', 
-							day: 'numeric' 
-						})
-					).join(', ')}
-				</div>
-			{/if}
+				<Card
+					class=" border-accent bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border p-4  shadow-2xl"
+				>
+					<Tooltip.Provider delayDuration={100}>
+						<Tooltip.Root>
+							<Tooltip.Trigger>
+								{#if viewMode === "7days"}
+									<div class="text-center">
+										<h6 class="mb-2 text-lg font-semibold">Days with Water ≤ {waterLimit}</h6>
+										<Badge variant={"weekly"} class="px-4 py-2 text-xl">
+											{last7DaysWater?.length || 0} days
+										</Badge>
+									</div>
+								{:else}
+									<div class="text-center">
+										<div class="text-center">
+											<h6 class="mb-2 text-lg font-semibold">Days with Steps ≤ {waterLimit}</h6>
+											<Badge variant={"weekly"} class="px-4 py-2 text-xl">
+												{lastMonthWater?.length || 0} days
+											</Badge>
+										</div>
+									</div>
+								{/if}
+							</Tooltip.Trigger>
+							<Tooltip.Content side="left">
+								{#if last7DaysWater && last7DaysWater.length > 0}
+									<h4>Dates</h4>
+									<div class="text-muted-foreground mt-3 text-sm">
+										{last7DaysWater
+											.map((entry) =>
+												new Date(entry.createdAt).toLocaleDateString("en-US", {
+													month: "short",
+													day: "numeric",
+												})
+											)
+											.join(", ")}
+									</div>
+								{:else if lastMonthWater && lastMonthWater.length > 0}
+									<h4>Dates</h4>
+									<div class="text-muted-foreground mt-3 text-sm">
+										{lastMonthWater
+											.map((entry) =>
+												new Date(entry.createdAt).toLocaleDateString("en-US", {
+													month: "short",
+													day: "numeric",
+												})
+											)
+											.join(", ")}
+									</div>
+								{/if}
+							</Tooltip.Content>
+						</Tooltip.Root>
+					</Tooltip.Provider>
+				</Card>
 			</div>
-		{:else}
-			<div class="text-center">
-				<div class="text-center">
-					<h6 class="mb-2 text-lg font-semibold">Days with Steps ≤ {waterLimit}</h6>
-					<Badge variant={"weekly"} class="px-4 py-2 text-xl">
-						{lastMonthWater?.length || 0} days
-					</Badge>
-					{#if lastMonthWater && lastMonthWater.length > 0}
-					<div class="mt-3 text-sm text-muted-foreground">
-						{lastMonthWater.map(entry => 
-							new Date(entry.createdAt).toLocaleDateString('en-US', { 
-								month: 'short', 
-								day: 'numeric' 
-							})
-						).join(', ')}
-					</div>
-				{/if}
-				</div>
-			</div>
-		{/if}
-	</Card>
-</div>
 
 			<div class="flex flex-col">
 				<div class="flex flex-row items-center">
