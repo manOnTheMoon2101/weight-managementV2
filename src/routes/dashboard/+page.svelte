@@ -72,7 +72,7 @@
 				</div>
 
 				<Card
-					class=" border-accent bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
+					class="border-none bg-primary my-2 flex flex-col items-center justify-center rounded-2xl p-4"
 				>
 					<Tooltip.Provider delayDuration={100}>
 						<Tooltip.Root>
@@ -127,7 +127,7 @@
 				</Card>
 
 				<Card
-					class=" border-accent bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border p-4  shadow-2xl"
+					class="border-none bg-primary my-2 flex flex-col items-center justify-center rounded-2xl p-4"
 				>
 					<Tooltip.Provider delayDuration={100}>
 						<Tooltip.Root>
