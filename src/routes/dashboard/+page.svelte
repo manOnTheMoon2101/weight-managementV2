@@ -142,7 +142,7 @@
 								{:else}
 									<div class="text-center">
 										<div class="text-center">
-											<h6 class="mb-2 text-lg font-semibold">Days with Steps ≤ {waterLimit}</h6>
+											<h6 class="mb-2 text-lg font-semibold">Days with Water ≤ {waterLimit}</h6>
 											<Badge variant={"weekly"} class="px-4 py-2 text-xl">
 												{lastMonthWater?.length || 0} days
 											</Badge>
