@@ -29,7 +29,7 @@
 		foregroundColor: `var(--foreground)`,
 		headerBackgroundColor: `var(--secondary)`,
 		headerTextColor: "var(--accent)",
-		// oddRowBackgroundColor: "#263299",
+		oddRowBackgroundColor: "var(--primary)",
 	});
 
 	let gridDiv: HTMLDivElement;
