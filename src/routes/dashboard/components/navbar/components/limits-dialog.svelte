@@ -5,6 +5,12 @@
 	import Button from "$lib/components/ui/button/button.svelte";
 
 	let { limits } = $props<{ limits: any }>();
+
+	let updateLoading = $state(false);
+
+	function handleUpdateSubmit() {
+		updateLoading = true;
+	}
 </script>
 
 <Dialog.Root>
@@ -13,7 +19,7 @@
 		<Dialog.Header>
 			<Dialog.Title>Edit Limits</Dialog.Title>
 			<Dialog.Description>
-				<form method="POST" action="/dashboard?/updateLimits">
+				<form method="POST" action="/dashboard?/updateLimits" onsubmit={handleUpdateSubmit}>
 					<Label for="caloriesLimit">Calories</Label>
 					<Input
 						name="caloriesLimit"
@@ -45,7 +51,16 @@
 					<Label for="stepsLimit">Steps</Label>
 					<Input name="stepsLimit" placeholder="Steps" type={"number"} value={limits?.stepsLimit} />
 					<div class="flex flex-row justify-center">
-						<Button type="submit" variant='sign'>Save</Button>
+						{#if !updateLoading}
+							<Button type="submit" variant='sign'>Save</Button>
+						{:else}
+							<Button type="submit" variant='sign' disabled>
+								<div class="flex items-center justify-center space-x-2">
+									<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
+									<span>Saving...</span>
+								</div>
+							</Button>
+						{/if}
 					</div>
 				</form>
 			</Dialog.Description>
