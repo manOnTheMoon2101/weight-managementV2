@@ -285,13 +285,13 @@ export const actions = {
 		}
 		const form = await request.formData();
 		const caloriesLimit = form.get("caloriesLimit") as unknown as number;
-
 		const fatLimit = form.get("fatLimit") as unknown as number;
 		const carbsLimit = form.get("carbsLimit") as unknown as number;
 		const proteinLimit = form.get("proteinLimit") as unknown as number;
 		const sugarLimit = form.get("sugarLimit") as unknown as number;
 		const stepsLimit = form.get("stepsLimit") as unknown as number;
 		const waterLimit = form.get("waterLimit") as unknown as number;
+		
 		if (
 			!caloriesLimit ||
 			!carbsLimit ||
@@ -300,11 +300,35 @@ export const actions = {
 			!stepsLimit ||
 			!waterLimit
 		) {
-			return { success: false, error: "Limits Required." };
+			return { success: false, error: "All Limits Required." };
 		}
-		await db
-			.update(limits)
-			.set({
+
+		
+		const existingLimits = await db.query.limits.findFirst({
+			where: and(
+				eq(limits.userId, session.user.id),
+				eq(limits.isActive, true),
+				eq(limits.isDeleted, false)
+			)
+		});
+
+		if (existingLimits) {
+			await db
+				.update(limits)
+				.set({
+					caloriesLimit,
+					fatLimit,
+					carbsLimit,
+					proteinLimit,
+					sugarLimit,
+					stepsLimit,
+					waterLimit,
+					updatedAt: new Date()
+				})
+				.where(eq(limits.userId, session.user.id));
+		} else {
+			await db.insert(limits).values({
+				userId: session.user.id,
 				caloriesLimit,
 				fatLimit,
 				carbsLimit,
@@ -312,8 +336,13 @@ export const actions = {
 				sugarLimit,
 				stepsLimit,
 				waterLimit,
-			})
-			.where(eq(limits.userId, session.user.id));
+				createdAt: new Date(),
+				updatedAt: new Date(),
+				isActive: true,
+				isDeleted: false
+			});
+		}
+		
 		return { success: true };
 	},
 };
