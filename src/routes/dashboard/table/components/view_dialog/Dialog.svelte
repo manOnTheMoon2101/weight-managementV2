@@ -10,6 +10,8 @@
 	import * as Sheet from "$lib/components/ui/sheet/index.js";
 	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
 	let { dialogOpen = $bindable(), rowToEdit } = $props<{ dialogOpen: boolean; rowToEdit: any }>();
+	
+	let deleteLoading = $state(false);
 
 	function formatDMY(dateString: string): string {
 		const date = new Date(dateString);
@@ -17,6 +19,10 @@
 		const month = (date.getMonth() + 1).toString().padStart(2, "0");
 		const year = date.getFullYear();
 		return `${year}-${month}-${day}`;
+	}
+
+	function handleDeleteSubmit() {
+		deleteLoading = true;
 	}
 </script>
 
@@ -46,9 +52,18 @@
 								This action cannot be undone. This will permanently delete the selected record.
 							</AlertDialog.Description>
 							<AlertDialog.Footer>
-								<form method="POST" action="?/removeNutrients">
+								<form method="POST" action="?/removeNutrients" onsubmit={handleDeleteSubmit}>
 									<input type="hidden" name="id" value={rowToEdit?.id || ""} />
-									<Button class="mt-4" variant="destructive" type="submit">Delete</Button>
+									{#if !deleteLoading}
+										<Button class="mt-4" variant="destructive" type="submit">Delete</Button>
+									{:else}
+										<Button class="mt-4" variant="destructive" type="button" disabled>
+											<div class="flex items-center justify-center space-x-2">
+												<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
+												<span>Deleting...</span>
+											</div>
+										</Button>
+									{/if}
 								</form>
 							</AlertDialog.Footer>
 						</AlertDialog.Content>
