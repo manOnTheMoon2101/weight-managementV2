@@ -12,6 +12,7 @@
 	let { dialogOpen = $bindable(), rowToEdit } = $props<{ dialogOpen: boolean; rowToEdit: any }>();
 	
 	let deleteLoading = $state(false);
+	let updateLoading = $state(false);
 
 	function formatDMY(dateString: string): string {
 		const date = new Date(dateString);
@@ -23,6 +24,9 @@
 
 	function handleDeleteSubmit() {
 		deleteLoading = true;
+	}
+	function handleUpdateSubmit() {
+		updateLoading = true;
 	}
 </script>
 
@@ -69,7 +73,7 @@
 						</AlertDialog.Content>
 					</AlertDialog.Root>
 				</div>
-				<form class="space-y-3 overflow-y-auto" method="POST" action="?/updateNutrients">
+				<form class="space-y-3 overflow-y-auto" method="POST" action="?/updateNutrients" onsubmit={handleUpdateSubmit}>
 					<input type="hidden" name="id" value={rowToEdit?.id || ""} />
 					<Card.Root class="bg-primary">
 						<Card.Header class="pb-3">
@@ -233,7 +237,18 @@
 							</div>
 						</Card.Content>
 					</Card.Root>
-					<Button class="mt-4" variant="sign" type="submit">Save</Button>
+					
+
+					{#if !updateLoading}
+					<Button class="mt-4" variant="sign" type="submit">Update</Button>
+									{:else}
+										<Button class="mt-4" variant="sign" type="button" disabled>
+											<div class="flex items-center justify-center space-x-2">
+												<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
+												<span>Updating...</span>
+											</div>
+										</Button>
+									{/if}
 				</form>
 			</Sheet.Description>
 		</Sheet.Header>
