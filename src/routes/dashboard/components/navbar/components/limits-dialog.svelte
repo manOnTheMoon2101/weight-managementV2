@@ -31,13 +31,13 @@
 					<Label for="proteinLimit">Protein</Label>
 					<Input
 						name="proteinLimit"
-						placeholder="Carbs"
+						placeholder="Protein"
 						type={"number"}
 						value={limits?.proteinLimit}
 					/>
 
 					<Label for="sugarLimit">Sugar</Label>
-					<Input name="sugarLimit" placeholder="Carbs" type={"number"} value={limits?.sugarLimit} />
+					<Input name="sugarLimit" placeholder="Sugar" type={"number"} value={limits?.sugarLimit} />
 
 					<Label for="waterLimit">Water</Label>
 					<Input name="waterLimit" placeholder="Water" type={"number"} value={limits?.waterLimit} />
