@@ -5,10 +5,14 @@
 	import Label from "$lib/components/ui/label/label.svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import { Checkbox } from "$lib/components/ui/checkbox/index.js";
-	import type { ICellRendererParams } from "ag-grid-community";
 	import SettingsIcon from "@lucide/svelte/icons/settings-2";
+	import X from "@lucide/svelte/icons/x";
 	import * as Sheet from "$lib/components/ui/sheet/index.js";
+	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
 	let { dialogOpen = $bindable(), rowToEdit } = $props<{ dialogOpen: boolean; rowToEdit: any }>();
+	
+	let deleteLoading = $state(false);
+	let updateLoading = $state(false);
 
 	function formatDMY(dateString: string): string {
 		const date = new Date(dateString);
@@ -16,6 +20,13 @@
 		const month = (date.getMonth() + 1).toString().padStart(2, "0");
 		const year = date.getFullYear();
 		return `${year}-${month}-${day}`;
+	}
+
+	function handleDeleteSubmit() {
+		deleteLoading = true;
+	}
+	function handleUpdateSubmit() {
+		updateLoading = true;
 	}
 </script>
 
@@ -27,14 +38,42 @@
 		<Sheet.Header>
 			<Sheet.Title>{rowToEdit ? formatDMY(rowToEdit.createdAt) : ""}</Sheet.Title>
 			<Sheet.Description>
-				
-				<form method="POST" action="?/removeNutrients" class="mt-2">
-					<input type="hidden" name="id" value={rowToEdit?.id || ""} />
-					<div class="flex flex-row justify-start">
-						<Button class="mt-4" variant="destructive" type="submit">Delete</Button>
-					</div>
-				</form>
-				<form class="space-y-3 overflow-y-auto" method="POST" action="?/updateNutrients">
+				<div class="flex flex-row justify-start">
+					<AlertDialog.Root>
+						<AlertDialog.Trigger>
+							<Button class="mt-4" variant="destructive">Delete</Button>
+						</AlertDialog.Trigger>
+						<AlertDialog.Content>
+							<AlertDialog.Header>
+								<div class="flex flex-row items-center justify-between">
+									<AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
+									<AlertDialog.Cancel class="text-red-800 hover:bg-red-800/40"
+										><X /></AlertDialog.Cancel
+									>
+								</div>
+							</AlertDialog.Header>
+							<AlertDialog.Description>
+								This action cannot be undone. This will permanently delete the selected record.
+							</AlertDialog.Description>
+							<AlertDialog.Footer>
+								<form method="POST" action="?/removeNutrients" onsubmit={handleDeleteSubmit}>
+									<input type="hidden" name="id" value={rowToEdit?.id || ""} />
+									{#if !deleteLoading}
+										<Button class="mt-4" variant="destructive" type="submit">Delete</Button>
+									{:else}
+										<Button class="mt-4" variant="destructive" type="button" disabled>
+											<div class="flex items-center justify-center space-x-2">
+												<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
+												<span>Deleting...</span>
+											</div>
+										</Button>
+									{/if}
+								</form>
+							</AlertDialog.Footer>
+						</AlertDialog.Content>
+					</AlertDialog.Root>
+				</div>
+				<form class="space-y-3 overflow-y-auto" method="POST" action="?/updateNutrients" onsubmit={handleUpdateSubmit}>
 					<input type="hidden" name="id" value={rowToEdit?.id || ""} />
 					<Card.Root class="bg-primary">
 						<Card.Header class="pb-3">
@@ -198,9 +237,19 @@
 							</div>
 						</Card.Content>
 					</Card.Root>
-					<Button class="mt-4" variant="sign" type="submit">Save</Button>
-				</form>
+					
 
+					{#if !updateLoading}
+					<Button class="mt-4" variant="sign" type="submit">Update</Button>
+									{:else}
+										<Button class="mt-4" variant="sign" type="button" disabled>
+											<div class="flex items-center justify-center space-x-2">
+												<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
+												<span>Updating...</span>
+											</div>
+										</Button>
+									{/if}
+				</form>
 			</Sheet.Description>
 		</Sheet.Header>
 	</Sheet.Content>

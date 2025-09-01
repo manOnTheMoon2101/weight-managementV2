@@ -9,7 +9,13 @@
 	import { enhance } from "$app/forms";
 	
 	let { dialogOpen = $bindable() } = $props<{ dialogOpen: boolean }>();
+
+	let createLoading = $state(false);
 	
+
+	function handleCreateSubmit() {
+		createLoading = true;
+	}
 
 </script>
 
@@ -26,6 +32,7 @@
 			method="POST" 
 			action="?/createNutrients" 
 			class="space-y-3 overflow-y-auto"
+			onsubmit={handleCreateSubmit}
 		>
 					<Card.Root class="bg-primary">
 						<Card.Header class="pb-3">
@@ -125,10 +132,18 @@
 					</Card.Root>
 					 -->
 					<div class="flex gap-2 mt-4">
+						{#if !createLoading}
 						<Button type="submit" variant='sign'>
-							Save
+							Create
 						</Button>
-						
+						{:else}
+						<Button type="submit" variant='sign' disabled>
+							<div class="flex items-center justify-center space-x-2">
+								<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
+								<span>Creating...</span>
+							</div>
+						</Button>
+						{/if}
 					</div>
 				</form>
 				
