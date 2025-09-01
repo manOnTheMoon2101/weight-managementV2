@@ -5,9 +5,10 @@
 	import Label from "$lib/components/ui/label/label.svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import { Checkbox } from "$lib/components/ui/checkbox/index.js";
-	import type { ICellRendererParams } from "ag-grid-community";
 	import SettingsIcon from "@lucide/svelte/icons/settings-2";
+	import X from "@lucide/svelte/icons/x";
 	import * as Sheet from "$lib/components/ui/sheet/index.js";
+	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
 	let { dialogOpen = $bindable(), rowToEdit } = $props<{ dialogOpen: boolean; rowToEdit: any }>();
 
 	function formatDMY(dateString: string): string {
@@ -27,13 +28,32 @@
 		<Sheet.Header>
 			<Sheet.Title>{rowToEdit ? formatDMY(rowToEdit.createdAt) : ""}</Sheet.Title>
 			<Sheet.Description>
-				
-				<form method="POST" action="?/removeNutrients" class="mt-2">
-					<input type="hidden" name="id" value={rowToEdit?.id || ""} />
-					<div class="flex flex-row justify-start">
-						<Button class="mt-4" variant="destructive" type="submit">Delete</Button>
-					</div>
-				</form>
+				<div class="flex flex-row justify-start">
+					<AlertDialog.Root>
+						<AlertDialog.Trigger>
+							<Button class="mt-4" variant="destructive">Delete</Button>
+						</AlertDialog.Trigger>
+						<AlertDialog.Content>
+							<AlertDialog.Header>
+								<div class="flex flex-row items-center justify-between">
+									<AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
+									<AlertDialog.Cancel class="text-red-800 hover:bg-red-800/40"
+										><X /></AlertDialog.Cancel
+									>
+								</div>
+							</AlertDialog.Header>
+							<AlertDialog.Description>
+								This action cannot be undone. This will permanently delete the selected record.
+							</AlertDialog.Description>
+							<AlertDialog.Footer>
+								<form method="POST" action="?/removeNutrients">
+									<input type="hidden" name="id" value={rowToEdit?.id || ""} />
+									<Button class="mt-4" variant="destructive" type="submit">Delete</Button>
+								</form>
+							</AlertDialog.Footer>
+						</AlertDialog.Content>
+					</AlertDialog.Root>
+				</div>
 				<form class="space-y-3 overflow-y-auto" method="POST" action="?/updateNutrients">
 					<input type="hidden" name="id" value={rowToEdit?.id || ""} />
 					<Card.Root class="bg-primary">
@@ -200,7 +220,6 @@
 					</Card.Root>
 					<Button class="mt-4" variant="sign" type="submit">Save</Button>
 				</form>
-
 			</Sheet.Description>
 		</Sheet.Header>
 	</Sheet.Content>
