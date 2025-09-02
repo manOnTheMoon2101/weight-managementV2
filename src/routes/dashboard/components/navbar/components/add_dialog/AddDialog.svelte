@@ -133,7 +133,7 @@
 					 -->
 					<div class="flex gap-2 mt-4">
 						{#if !createLoading}
-						<Button type="submit" variant='sign'>
+						<Button type="submit" class="w-full" variant='sign'>
 							Create
 						</Button>
 						{:else}
