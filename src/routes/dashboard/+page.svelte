@@ -6,6 +6,7 @@
 	import FootPrint from "@lucide/svelte/icons/footprints";
 	import Timer from "@lucide/svelte/icons/timer";
 	import Droplet from "@lucide/svelte/icons/droplet";
+	import WeightIcon from "@lucide/svelte/icons/weight";
 	import { DateFormatter } from "@internationalized/date";
 	import Weight from "./components/charts/Weight.svelte";
 	import Supplements from "./components/charts/Supplements.svelte";
@@ -201,7 +202,10 @@
 									>
 										<h4 class="text-accent text-2xl font-bold">Current Weight</h4>
 										<div class="flex flex-row items-center">
-											<h2 class="text-8xl">{currentWeight}</h2>
+											<span class="flex flex-row items-center text-8xl"
+						>{currentWeight}
+						<WeightIcon class="text-foreground" /></span
+					>
 											<span>
 												{#if currentWeight && previousWeight}
 													{#if Number(currentWeight) > Number(previousWeight)}
