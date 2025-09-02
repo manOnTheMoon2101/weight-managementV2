@@ -15,7 +15,7 @@
 				ghost: "hover:bg-accent cursor-pointer hover:text-accent-foreground",
 				sign:"bg-secondary cursor-pointer text-white hover:bg-secondary/80",
 				logout:"bg-destructive cursor-pointer text-secondary-foreground hover:bg-destructive/80",
-				link: "text-primary underline-offset-4 cursor-pointer hover:underline",
+				link: "text-secondary underline-offset-4 cursor-pointer hover:underline",
 			},
 			size: {
 				default: "h-10 px-4 py-2",

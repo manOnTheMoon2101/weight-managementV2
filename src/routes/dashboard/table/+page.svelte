@@ -3,10 +3,12 @@
 	import type { PageData } from "./$types";
 	import { cn } from "$lib/utils.js";
 	import { buttonVariants } from "$lib/components/ui/button/index.js";
+	import Button from "$lib/components/ui/button/button.svelte";
 	import { RangeCalendar } from "$lib/components/ui/range-calendar/index.js";
 	import * as Popover from "$lib/components/ui/popover/index.js";
 	import * as Select from "$lib/components/ui/select/index.js";
 	import CalendarIcon from "@lucide/svelte/icons/calendar";
+		import ArrowDownToLine from "@lucide/svelte/icons/arrow-down-to-line"
 	import { page } from "$app/state";
 	import Supplements from "./components/cellRenderers/Supplements.svelte";
 	import Dialog from "./components/view_dialog/Dialog.svelte";
@@ -183,6 +185,8 @@
 }
 
 	let selectedPreset = $state("");
+	let tableComponent: any = $state();
+	
 	function handlePresetSelect(selectedValue: string | string[]) {
 		const valueToUse = Array.isArray(selectedValue) ? selectedValue[0] : selectedValue;
 		const item = items.find((i) => i.value === valueToUse);
@@ -214,7 +218,8 @@
 	}
 </script>
 
-<div class="flex flex-row items-center">
+<div class="flex flex-row items-center justify-between">
+<div>
 	<Popover.Root>
 		<Popover.Trigger
 			class={cn(
@@ -248,7 +253,14 @@
 
 <AddDialog dialogOpen/>
 </div>
+<div>
+	<Button variant="link" onclick={() => tableComponent?.exportToCsv()}>
+		<ArrowDownToLine class="mr-2 size-4" />
+		Download CSV
+	</Button>
+</div>
+</div>
 
 <div>
-	<Table rowData={nutrients} columnDefs={columns} />
+	<Table bind:this={tableComponent} rowData={nutrients} columnDefs={columns} />
 </div>
