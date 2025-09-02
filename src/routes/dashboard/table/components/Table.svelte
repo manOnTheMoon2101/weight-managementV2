@@ -10,6 +10,7 @@
 		type GridOptions,
 		themeQuartz,
 		colorSchemeDarkBlue,
+		CsvExportModule,
 	} from "ag-grid-community";
 	import type { GridApi } from "ag-grid-community";
 
@@ -18,10 +19,10 @@
 		TextFilterModule,
 		NumberFilterModule,
 		DateFilterModule,
+		CsvExportModule,
 	]);
 
 	const { columnDefs = [], rowData = [] } = $props();
-
 	let gridApi: GridApi | null = null;
 
 	const darkTheme = themeQuartz.withPart(colorSchemeDarkBlue).withParams({
@@ -45,6 +46,15 @@
 			gridApi.setGridOption("quickFilterText", filterValue);
 		}
 	}
+
+	function exportToCsv() {
+		if (gridApi) {
+			gridApi.exportDataAsCsv({
+				fileName: `Weight-Tracker-${new Date().toISOString().split('T')[0]}.csv`,
+			});
+		}
+	}
+	export { exportToCsv };
 	onMount(() => {
 		const gridOptions: GridOptions<any> = {
 			theme: darkTheme,
@@ -71,4 +81,13 @@
 
 
 </script>
-<div bind:this={gridDiv} style="height: 80vh; width: 100%;"></div>
+
+<div class="flex flex-col gap-4">
+	<!-- <div class="flex flex-row items-center justify-end">
+		<ArrowDownToLine />
+		<Button variant="outline" onclick={exportToCsv}>
+			Download CSV
+		</Button>
+	</div> -->
+	<div bind:this={gridDiv} style="height: 80vh; width: 100%;"></div>
+</div>
