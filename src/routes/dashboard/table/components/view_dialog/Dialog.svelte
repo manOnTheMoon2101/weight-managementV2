@@ -32,47 +32,12 @@
 
 <Sheet.Root>
 	<Sheet.Trigger class="w-full">
-		<Button size={"sm"} variant={"ghost"}><SettingsIcon class="size-4" />Edit</Button>
+		<Button size={"sm"} variant={"sign"}><SettingsIcon class="size-4" />Edit</Button>
 	</Sheet.Trigger>
-	<Sheet.Content class="max-h-[100vh] overflow-y-auto">
+	<Sheet.Content class="max-h-[100vh] overflow-y-auto" side="left">
 		<Sheet.Header>
-			<Sheet.Title>{rowToEdit ? formatDMY(rowToEdit.createdAt) : ""}</Sheet.Title>
+			<Sheet.Title class="flex flex-row justify-center">{rowToEdit ? formatDMY(rowToEdit.createdAt) : ""}</Sheet.Title>
 			<Sheet.Description>
-				<div class="flex flex-row justify-start">
-					<AlertDialog.Root>
-						<AlertDialog.Trigger>
-							<Button class="mt-4" variant="destructive">Delete</Button>
-						</AlertDialog.Trigger>
-						<AlertDialog.Content>
-							<AlertDialog.Header>
-								<div class="flex flex-row items-center justify-between">
-									<AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
-									<AlertDialog.Cancel class="text-red-800 hover:bg-red-800/40"
-										><X /></AlertDialog.Cancel
-									>
-								</div>
-							</AlertDialog.Header>
-							<AlertDialog.Description>
-								This action cannot be undone. This will permanently delete the selected record.
-							</AlertDialog.Description>
-							<AlertDialog.Footer>
-								<form method="POST" action="?/removeNutrients" onsubmit={handleDeleteSubmit}>
-									<input type="hidden" name="id" value={rowToEdit?.id || ""} />
-									{#if !deleteLoading}
-										<Button class="mt-4" variant="destructive" type="submit">Delete</Button>
-									{:else}
-										<Button class="mt-4" variant="destructive" type="button" disabled>
-											<div class="flex items-center justify-center space-x-2">
-												<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
-												<span>Deleting...</span>
-											</div>
-										</Button>
-									{/if}
-								</form>
-							</AlertDialog.Footer>
-						</AlertDialog.Content>
-					</AlertDialog.Root>
-				</div>
 				<form class="space-y-3 overflow-y-auto" method="POST" action="?/updateNutrients" onsubmit={handleUpdateSubmit}>
 					<input type="hidden" name="id" value={rowToEdit?.id || ""} />
 					<Card.Root class="bg-primary">
@@ -240,7 +205,7 @@
 					
 
 					{#if !updateLoading}
-					<Button class="mt-4" variant="sign" type="submit">Update</Button>
+					<Button class="mt-4 w-full" variant="sign" type="submit">Update</Button>
 									{:else}
 										<Button class="mt-4" variant="sign" type="button" disabled>
 											<div class="flex items-center justify-center space-x-2">
@@ -249,6 +214,42 @@
 											</div>
 										</Button>
 									{/if}
+
+									<div >
+										<AlertDialog.Root>
+											<AlertDialog.Trigger class="w-full">
+												<Button class="mt-4 w-full" variant="destructive">Delete</Button>
+											</AlertDialog.Trigger>
+											<AlertDialog.Content>
+												<AlertDialog.Header>
+													<div class="flex flex-row items-center justify-between">
+														<AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
+														<AlertDialog.Cancel class="text-red-800 hover:bg-red-800/40"
+															><X /></AlertDialog.Cancel
+														>
+													</div>
+												</AlertDialog.Header>
+												<AlertDialog.Description>
+													This action cannot be undone. This will permanently delete the selected record.
+												</AlertDialog.Description>
+												<AlertDialog.Footer>
+													<form method="POST" action="?/removeNutrients" onsubmit={handleDeleteSubmit}>
+														<input type="hidden" name="id" value={rowToEdit?.id || ""} />
+														{#if !deleteLoading}
+															<Button class="mt-4" variant="destructive" type="submit">Delete</Button>
+														{:else}
+															<Button class="mt-4" variant="destructive" type="button" disabled>
+																<div class="flex items-center justify-center space-x-2">
+																	<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
+																	<span>Deleting...</span>
+																</div>
+															</Button>
+														{/if}
+													</form>
+												</AlertDialog.Footer>
+											</AlertDialog.Content>
+										</AlertDialog.Root>
+									</div>
 				</form>
 			</Sheet.Description>
 		</Sheet.Header>

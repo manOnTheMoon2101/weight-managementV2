@@ -6,6 +6,7 @@
 	import FootPrint from "@lucide/svelte/icons/footprints";
 	import Timer from "@lucide/svelte/icons/timer";
 	import Droplet from "@lucide/svelte/icons/droplet";
+	import WeightIcon from "@lucide/svelte/icons/weight";
 	import { DateFormatter } from "@internationalized/date";
 	import Weight from "./components/charts/Weight.svelte";
 	import Supplements from "./components/charts/Supplements.svelte";
@@ -60,19 +61,21 @@
 		</div>
 		<div class="flex flex-row items-start justify-between">
 			<Supplements data={supplementCharts} />
-			<div class="border-accent bg-primary mx-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl">
+			<div
+				class="border-accent bg-primary mx-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
+			>
 				<h4 class="text-accent text-2xl font-bold">Analysis</h4>
 				<div class="mb-4 flex flex-row justify-around">
-					<Button size="sm" variant="secondary" class='mx-2' onclick={() => (viewMode = "7days")}
+					<Button size="sm" variant="secondary" class="mx-2" onclick={() => (viewMode = "7days")}
 						>Last 7 Days</Button
 					>
-					<Button size="sm" variant="secondary" class='mx-2' onclick={() => (viewMode = "month")}
+					<Button size="sm" variant="secondary" class="mx-2" onclick={() => (viewMode = "month")}
 						>Last Month</Button
 					>
 				</div>
 
 				<Card
-					class="border-none bg-primary my-2 flex flex-col items-center justify-center rounded-2xl p-4"
+					class="bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border-none p-4"
 				>
 					<Tooltip.Provider delayDuration={100}>
 						<Tooltip.Root>
@@ -127,7 +130,7 @@
 				</Card>
 
 				<Card
-					class="border-none bg-primary my-2 flex flex-col items-center justify-center rounded-2xl p-4"
+					class="bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border-none p-4"
 				>
 					<Tooltip.Provider delayDuration={100}>
 						<Tooltip.Root>
@@ -201,7 +204,10 @@
 									>
 										<h4 class="text-accent text-2xl font-bold">Current Weight</h4>
 										<div class="flex flex-row items-center">
-											<h2 class="text-8xl">{currentWeight}</h2>
+											<span class="flex flex-row items-center text-8xl"
+												>{currentWeight}
+												<WeightIcon class="text-foreground" /></span
+											>
 											<span>
 												{#if currentWeight && previousWeight}
 													{#if Number(currentWeight) > Number(previousWeight)}

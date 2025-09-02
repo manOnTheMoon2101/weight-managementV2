@@ -23,7 +23,7 @@
 	<Sheet.Trigger>
 		<Button variant={'secondary'}>Add</Button>
 	</Sheet.Trigger>
-	<Sheet.Content class="max-h-[100vh] ">
+	<Sheet.Content class="max-h-[100vh] " side="left">
 		<Sheet.Header>
 			<Sheet.Title>Add New Data</Sheet.Title>
 		</Sheet.Header>
@@ -133,7 +133,7 @@
 					 -->
 					<div class="flex gap-2 mt-4">
 						{#if !createLoading}
-						<Button type="submit" variant='sign'>
+						<Button type="submit" class="w-full" variant='sign'>
 							Create
 						</Button>
 						{:else}
