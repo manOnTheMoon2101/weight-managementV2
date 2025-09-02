@@ -32,7 +32,7 @@
 
 <Sheet.Root>
 	<Sheet.Trigger class="w-full">
-		<Button size={"sm"} variant={"ghost"}><SettingsIcon class="size-4" />Edit</Button>
+		<Button size={"sm"} variant={"sign"}><SettingsIcon class="size-4" />Edit</Button>
 	</Sheet.Trigger>
 	<Sheet.Content class="max-h-[100vh] overflow-y-auto" side="left">
 		<Sheet.Header>
