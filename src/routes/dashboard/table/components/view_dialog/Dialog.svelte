@@ -207,7 +207,7 @@
 					{#if !updateLoading}
 					<Button class="mt-4 w-full" variant="sign" type="submit">Update</Button>
 									{:else}
-										<Button class="mt-4" variant="sign" type="button" disabled>
+										<Button class="mt-4  w-full" variant="sign" type="button" disabled>
 											<div class="flex items-center justify-center space-x-2">
 												<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
 												<span>Updating...</span>
