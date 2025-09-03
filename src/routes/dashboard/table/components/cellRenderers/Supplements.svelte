@@ -19,10 +19,18 @@
 
 	const supplementColors: any = {
 		fatBurner: "text-[#E8DBC9]",
-		appleCider: "text-green-500",
+		appleCider: "text-brown-500",
 		multiVitamin: "text-[#A89072]",
 		magnesium: "text-[#C7B89F]",
 		cla: "text-[#F2E8DB]",
+	};
+
+	const supplementDisplayNames: any = {
+		fatBurner: "L-Carnitine",
+		appleCider: "Apple Cider Vinegar",
+		multiVitamin: "Multi-Vitamin",
+		magnesium: "Magnesium",
+		cla: "CLA",
 	};
 </script>
 
@@ -34,7 +42,7 @@
                     <Pill class={supplementColors[supplement.name]} />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                    <p>{supplement.name}</p>
+                    <p>{supplementDisplayNames[supplement.name] || supplement.name}</p>
                 </Tooltip.Content>
             </Tooltip.Root>
         </Tooltip.Provider>

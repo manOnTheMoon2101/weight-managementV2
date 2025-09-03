@@ -137,7 +137,7 @@
 							Create
 						</Button>
 						{:else}
-						<Button type="submit" variant='sign' disabled>
+						<Button type="submit"  class="w-full" variant='sign' disabled>
 							<div class="flex items-center justify-center space-x-2">
 								<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
 								<span>Creating...</span>
