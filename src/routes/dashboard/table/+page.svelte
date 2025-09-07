@@ -53,6 +53,7 @@
 			appleCider: row.supplements?.map((x: Supplement) => x.appleCider),
 			multiVitamin: row.supplements?.map((x: Supplement) => x.multiVitamin),
 			magnesium: row.supplements?.map((x: Supplement) => x.magnesium),
+			sleepTime : row?.sleep_schedule?.[0]?.time,
 			weight: row.health_tracker?.[0]?.weight,
 			water: row.health_tracker?.[0]?.water,
 			steps: row.health_tracker?.[0]?.steps,
@@ -86,6 +87,10 @@
 				type: "Less",
 				limit: limits?.stepsLimit,
 			}),
+		},
+		{
+			headerName: "Sleep",
+			field: "sleepTime",
 		},
 		{
 			headerName: "Water",
@@ -231,7 +236,7 @@
 			)}
 		>
 			<CalendarIcon class="mr-2 size-4" />
-			{value && (value.start || value.end) ? valueString : "Pick a date range"}
+			{value && (value.start || value.end) ? valueString : "Last 7 Days"}
 		</Popover.Trigger>
 		<Popover.Content class="flex w-auto flex-col space-y-2 p-2">
 			<Select.Root type="single" onValueChange={handlePresetSelect}>
