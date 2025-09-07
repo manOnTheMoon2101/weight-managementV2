@@ -53,6 +53,7 @@
 			appleCider: row.supplements?.map((x: Supplement) => x.appleCider),
 			multiVitamin: row.supplements?.map((x: Supplement) => x.multiVitamin),
 			magnesium: row.supplements?.map((x: Supplement) => x.magnesium),
+			sleepTime : row?.sleep_schedule?.[0]?.time,
 			weight: row.health_tracker?.[0]?.weight,
 			water: row.health_tracker?.[0]?.water,
 			steps: row.health_tracker?.[0]?.steps,
@@ -86,6 +87,10 @@
 				type: "Less",
 				limit: limits?.stepsLimit,
 			}),
+		},
+		{
+			headerName: "Sleep",
+			field: "sleepTime",
 		},
 		{
 			headerName: "Water",
