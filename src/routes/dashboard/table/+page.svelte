@@ -236,7 +236,7 @@
 			)}
 		>
 			<CalendarIcon class="mr-2 size-4" />
-			{value && (value.start || value.end) ? valueString : "Last 7 Days"}
+			{value && (value.start || value.end) ? valueString : "Pick a Preset"}
 		</Popover.Trigger>
 		<Popover.Content class="flex w-auto flex-col space-y-2 p-2">
 			<Select.Root type="single" onValueChange={handlePresetSelect}>
