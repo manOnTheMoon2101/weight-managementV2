@@ -12,7 +12,7 @@
 		<Button onclick={() => setTheme("redTheme")} variant="secondary">Red</Button>
 		<Button onclick={() => setTheme("purpleTheme")} variant="secondary">Purple</Button>
 		<Button onclick={() => setTheme("greenTheme")} variant="secondary">Green</Button>
-		<Button onclick={() => setTheme("")} variant="outline">Reset</Button>
+		<Button onclick={() => setTheme("")} variant="outline">Beige</Button>
 		<Button onclick={toggleMode} variant="outline" size="icon">
 			<SunIcon
 				class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all! dark:scale-0 dark:-rotate-90"
