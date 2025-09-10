@@ -31,6 +31,7 @@
 		headerBackgroundColor: `var(--secondary)`,
 		headerTextColor: "var(--accent)",
 		oddRowBackgroundColor: "var(--primary)",
+		rowHoverColor:'var(--accent)'
 	});
 
 	let gridDiv: HTMLDivElement;
