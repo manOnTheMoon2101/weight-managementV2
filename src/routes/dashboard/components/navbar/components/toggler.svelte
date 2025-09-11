@@ -6,7 +6,7 @@
 	import { toggleMode, setTheme, resetMode } from "mode-watcher";
 	import { Button } from "$lib/components/ui/button/index.js";
 
-	const THEME_STORAGE_KEY = "beige";
+	const THEME_STORAGE_KEY = "selectedTheme";
 	function saveTheme(theme: string) {
 		if (typeof window !== "undefined") {
 			localStorage.setItem(THEME_STORAGE_KEY, theme);
