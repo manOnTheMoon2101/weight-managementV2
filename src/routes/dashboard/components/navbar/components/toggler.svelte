@@ -2,11 +2,11 @@
 	import SunIcon from "@lucide/svelte/icons/sun";
 	import MoonIcon from "@lucide/svelte/icons/moon";
 	import { onMount } from "svelte";
-
+	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import { toggleMode, setTheme, resetMode } from "mode-watcher";
 	import { Button } from "$lib/components/ui/button/index.js";
 
-	const THEME_STORAGE_KEY = "beige";
+	const THEME_STORAGE_KEY = "selectedTheme";
 	function saveTheme(theme: string) {
 		if (typeof window !== "undefined") {
 			localStorage.setItem(THEME_STORAGE_KEY, theme);
@@ -48,7 +48,7 @@
 </script>
 
 <div class="flex flex-col">
-	<div class="flex flex-row justify-center">Change Theme(BETA)</div>
+	<!-- <div class="flex flex-row justify-center">Change Theme(BETA)</div>
 	<div class="flex flex-row items-center gap-2">
 		<Button onclick={() => setThemeWithStorage("redTheme")} variant="secondary">Red</Button>
 		<Button onclick={() => setThemeWithStorage("purpleTheme")} variant="secondary">Purple</Button>
@@ -63,5 +63,23 @@
 			/>
 			<span class="sr-only">Toggle theme</span>
 		</Button>
-	</div>
+	</div> -->
+
+	<DropdownMenu.Root>
+		<DropdownMenu.Trigger class="cursor-pointer">Change Theme</DropdownMenu.Trigger>
+		<DropdownMenu.Content class="flex flex-row items-center gap-2 p-2">
+			<DropdownMenu.Item closeOnSelect={false}>
+				<Button onclick={() => setThemeWithStorage("")} variant='beigeButton'>Beige</Button>
+			</DropdownMenu.Item>
+			<DropdownMenu.Item closeOnSelect={false}>
+				<Button onclick={() => setThemeWithStorage("redTheme")} variant='redButton'>Red</Button>
+			</DropdownMenu.Item>
+			<DropdownMenu.Item closeOnSelect={false}>
+				<Button onclick={() => setThemeWithStorage("purpleTheme")} variant='purpleButton'>Purple</Button>
+			</DropdownMenu.Item>
+			<DropdownMenu.Item closeOnSelect={false}>
+				<Button onclick={() => setThemeWithStorage("greenTheme")} variant='greenButton'>Green</Button>
+			</DropdownMenu.Item>
+		</DropdownMenu.Content>
+	  </DropdownMenu.Root>
 </div>

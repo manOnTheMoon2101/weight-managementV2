@@ -14,7 +14,7 @@
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger>Edit Limits</Dialog.Trigger>
+	<Dialog.Trigger class="cursor-pointer">Edit Limits</Dialog.Trigger>
 	<Dialog.Content>
 		<Dialog.Header>
 			<Dialog.Title>Edit Limits</Dialog.Title>
