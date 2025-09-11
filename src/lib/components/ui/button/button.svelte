@@ -16,6 +16,11 @@
 				sign:"bg-secondary cursor-pointer text-white hover:bg-secondary/80",
 				logout:"bg-destructive cursor-pointer text-secondary-foreground hover:bg-destructive/80",
 				link: "text-secondary underline-offset-4 cursor-pointer hover:underline",
+
+				beigeButton: "bg-[hsl(37,38%,80%)] cursor-pointer text-white hover:bg-[hsl(37,38%,80%)]/80",
+				redButton: "bg-[hsl(0,100%,50%)] cursor-pointer text-white hover:bg-bg-[hsl(0,100%,50%)]/80",
+				greenButton: "bg-[hsl(153,60%,31%)] cursor-pointer text-white hover:bg-[hsl(153,60%,31%)]/80",
+				purpleButton: "bg-[hsl(330,37%,48%)] cursor-pointer text-white hover:bg-[hsl(330,37%,48%)]/80",
 			},
 			size: {
 				default: "h-10 px-4 py-2",

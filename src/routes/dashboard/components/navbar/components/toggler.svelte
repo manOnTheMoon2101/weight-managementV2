@@ -66,19 +66,19 @@
 	</div> -->
 
 	<DropdownMenu.Root>
-		<DropdownMenu.Trigger>Change Theme</DropdownMenu.Trigger>
+		<DropdownMenu.Trigger class="cursor-pointer">Change Theme</DropdownMenu.Trigger>
 		<DropdownMenu.Content class="flex flex-row items-center gap-2 p-2">
 			<DropdownMenu.Item closeOnSelect={false}>
-				<Button onclick={() => setThemeWithStorage("")} class='bg-[hsl(37,38%,80%)] text-white'>Beige</Button>
+				<Button onclick={() => setThemeWithStorage("")} variant='beigeButton'>Beige</Button>
 			</DropdownMenu.Item>
 			<DropdownMenu.Item closeOnSelect={false}>
-				<Button onclick={() => setThemeWithStorage("redTheme")} class='bg-[hsl(0,100%,50%)] text-white'>Red</Button>
+				<Button onclick={() => setThemeWithStorage("redTheme")} variant='redButton'>Red</Button>
 			</DropdownMenu.Item>
 			<DropdownMenu.Item closeOnSelect={false}>
-				<Button onclick={() => setThemeWithStorage("purpleTheme")} class='bg-[hsl(330,37%,48%)] text-white'>Purple</Button>
+				<Button onclick={() => setThemeWithStorage("purpleTheme")} variant='purpleButton'>Purple</Button>
 			</DropdownMenu.Item>
 			<DropdownMenu.Item closeOnSelect={false}>
-				<Button onclick={() => setThemeWithStorage("greenTheme")} class='bg-[hsl(153,60%,31%)] text-white'>Green</Button>
+				<Button onclick={() => setThemeWithStorage("greenTheme")} variant='greenButton'>Green</Button>
 			</DropdownMenu.Item>
 		</DropdownMenu.Content>
 	  </DropdownMenu.Root>

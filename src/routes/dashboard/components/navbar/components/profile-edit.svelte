@@ -9,7 +9,7 @@
 </script>
 
 <Dialog.Root>
-    <Dialog.Trigger>Edit Profile</Dialog.Trigger>
+    <Dialog.Trigger class="cursor-pointer">Edit Profile</Dialog.Trigger>
     <Dialog.Content>
         <Dialog.Header>
             <Dialog.Title>Edit Profile</Dialog.Title>
