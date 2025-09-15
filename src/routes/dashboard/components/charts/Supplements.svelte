@@ -2,7 +2,7 @@
     import { PieChart } from "layerchart";
     let { data } = $props();
     
-    const colors = ["#E8DBC9", "#A89072", "#C7B89F", "#F2E8DB", "#F39C12"];
+    const colors = ["var(--accent)", "white", "var(--secondary)", "var(--background)", "#F39C12"];
     
     const pieData = data[0] ? [
         { fruit: "Fat Burner", value: data[0].fatburnerCount, color: colors[0] },
