@@ -29,7 +29,7 @@
 		backgroundColor: `var(--background)`,
 		foregroundColor: `var(--foreground)`,
 		headerBackgroundColor: `var(--secondary)`,
-		headerTextColor: "var(--accent)",
+		headerTextColor: "white",
 		oddRowBackgroundColor: "var(--primary)",
 		rowHoverColor:'var(--accent)'
 	});
