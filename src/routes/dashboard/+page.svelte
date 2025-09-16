@@ -17,7 +17,10 @@
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
-	let weightCharts = $derived(data.weightCharts);
+	let weightMonthChart = $derived(data.weightMonthChart);
+	let weightWeekChart = $derived(data.weightWeekChart);
+	let weightViewMode = $state("7days");
+	let weightCharts = $derived(weightViewMode === "7days" ? weightWeekChart : weightMonthChart);
 	let supplementCharts = $derived(data.supplementsChart);
 	let currentWeight = $derived(data.currentWeight?.weight);
 	let currentWeightDate = $derived(data.currentWeight?.createdAt);
@@ -277,7 +280,13 @@
 		</div>
 
 		<div class="mt-24 flex flex-row items-center justify-evenly">
-			<Weight dateSeriesData={weightCharts} />
+			<div class="w-full">
+				<div class="mb-4 flex flex-row justify-center">
+					<Button size="sm" class={weightViewMode == '7days' ? 'bg-accent mx-2' : 'mx-2'} variant="secondary" onclick={() => (weightViewMode = '7days')}>Last 7 Days</Button>
+					<Button size="sm" class={weightViewMode == 'month' ? 'bg-accent mx-2' : 'mx-2'} variant="secondary" onclick={() => (weightViewMode = 'month')}>Last Month</Button>
+				</div>
+				<Weight dateSeriesData={weightCharts} />
+			</div>
 		</div>
 
 		<div class="mt-24 flex flex-row items-center justify-start">
