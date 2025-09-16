@@ -13,6 +13,9 @@ import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ request }) => {
 	try {
+		const now = new Date();
+		const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+		const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 		const session = await auth.api.getSession({
 			headers: request.headers,
 		});
@@ -35,11 +38,12 @@ export const load: PageServerLoad = async ({ request }) => {
 			limit: 2,
 		});
 
-		const allWeights = await db.query.health_tracker.findMany({
+		const WeightsMonthAgo = await db.query.health_tracker.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
 				eq(health_tracker.isActive, true),
-				eq(health_tracker.isDeleted, false)
+				eq(health_tracker.isDeleted, false),
+				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
 			),
 			columns: {
 				weight: true,
@@ -47,9 +51,19 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 		});
 
-		const now = new Date();
-		const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-		const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+		const WeightsWeekAgo = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				sql`${health_tracker.createdAt} >= ${sevenDaysAgo.toISOString()}`
+			),
+			columns: {
+				weight: true,
+				createdAt: true,
+			},
+		});
+
 		const stepLimit = await db.query.limits.findFirst({
 			where: and(
 				eq(limits.userId, session.user.id),
@@ -148,7 +162,18 @@ export const load: PageServerLoad = async ({ request }) => {
 
 
 
-		const formattedWeightEntries = allWeights
+		const formattedMonthWeightEntries = WeightsMonthAgo
+			.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+			.map((entry) => ({
+				weight: entry.weight,
+				createdAt: new Date(entry.createdAt).toLocaleDateString("en-GB", {
+					day: "2-digit",
+					month: "2-digit",
+					year: "numeric",
+				}),
+			}));
+
+			const formattedWeekWeightEntries = WeightsWeekAgo
 			.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
 			.map((entry) => ({
 				weight: entry.weight,
@@ -176,7 +201,8 @@ export const load: PageServerLoad = async ({ request }) => {
 			);
 
 		const supplementsChart = supplementCounts || null;
-		const weightCharts = formattedWeightEntries || null;
+		const weightMonthChart = formattedMonthWeightEntries || null;
+		const weightWeekChart = formattedWeekWeightEntries || null;
 		const currentWeight = latestWeightEntries[0] || null;
 		const previousWeight = latestWeightEntries[1] || null;
 
@@ -234,7 +260,8 @@ export const load: PageServerLoad = async ({ request }) => {
 			averageSleepIntake: averageTimeFromSQL,
 			supplementsChart: supplementsChart,
 			currentWeight: currentWeight,
-			weightCharts: weightCharts,
+			weightMonthChart: weightMonthChart,
+			weightWeekChart: weightWeekChart,
 			previousWeight: previousWeight,
 			averageWaterIntake: averageWaterIntake,
 			averageStepsIntake: averageStepsIntake,

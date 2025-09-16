@@ -17,7 +17,10 @@
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
-	let weightCharts = $derived(data.weightCharts);
+	let weightMonthChart = $derived(data.weightMonthChart);
+	let weightWeekChart = $derived(data.weightWeekChart);
+	let weightViewMode = $state("7days");
+	let weightCharts = $derived(weightViewMode === "7days" ? weightWeekChart : weightMonthChart);
 	let supplementCharts = $derived(data.supplementsChart);
 	let currentWeight = $derived(data.currentWeight?.weight);
 	let currentWeightDate = $derived(data.currentWeight?.createdAt);
@@ -54,6 +57,12 @@
 
 <div class="flex flex-col gap-1">
 	<div>
+		<div class="md:hidden mb-4">
+			<div class="flex items-center gap-2 rounded-md border border-yellow-300 bg-yellow-100 p-3 text-yellow-900 dark:border-yellow-700 dark:bg-yellow-950 dark:text-yellow-200">
+				<span>⚠️</span>
+				<span>This site doesn't support mobile yet. Please use a larger screen. Mobile support is coming soon :)</span>
+			</div>
+		</div>
 		<div class="my-4">
 			{#if user}
 				<h1 class="text-6xl font-bold">{greet(user.name)}</h1>
@@ -99,7 +108,7 @@
 								{/if}
 							</Tooltip.Trigger>
 							<Tooltip.Content side="left">
-								{#if last7DaysSteps && last7DaysSteps.length > 0}
+								{#if last7DaysSteps && last7DaysSteps.length > 0 && viewMode == '7days'}
 									<h4>Dates</h4>
 									<div class="text-muted-foreground mt-3 text-sm">
 										{last7DaysSteps
@@ -111,7 +120,7 @@
 											)
 											.join(", ")}
 									</div>
-								{:else if lastMonthSteps && lastMonthSteps.length > 0}
+								{:else if lastMonthSteps && lastMonthSteps.length > 0 && viewMode == 'month'}
 									<h4>Dates</h4>
 									<div class="text-muted-foreground mt-3 text-sm">
 										{lastMonthSteps
@@ -271,7 +280,13 @@
 		</div>
 
 		<div class="mt-24 flex flex-row items-center justify-evenly">
-			<Weight dateSeriesData={weightCharts} />
+			<div class="w-full">
+				<div class="mb-4 flex flex-row justify-center">
+					<Button size="sm" class={weightViewMode == '7days' ? 'bg-accent mx-2' : 'mx-2'} variant="secondary" onclick={() => (weightViewMode = '7days')}>Last 7 Days</Button>
+					<Button size="sm" class={weightViewMode == 'month' ? 'bg-accent mx-2' : 'mx-2'} variant="secondary" onclick={() => (weightViewMode = 'month')}>Last Month</Button>
+				</div>
+				<Weight dateSeriesData={weightCharts} />
+			</div>
 		</div>
 
 		<div class="mt-24 flex flex-row items-center justify-start">
