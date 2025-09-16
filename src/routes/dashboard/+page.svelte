@@ -54,6 +54,12 @@
 
 <div class="flex flex-col gap-1">
 	<div>
+		<div class="md:hidden mb-4">
+			<div class="flex items-center gap-2 rounded-md border border-yellow-300 bg-yellow-100 p-3 text-yellow-900 dark:border-yellow-700 dark:bg-yellow-950 dark:text-yellow-200">
+				<span>⚠️</span>
+				<span>This site doesn't support mobile yet. Please use a larger screen. Mobile support is coming soon :)</span>
+			</div>
+		</div>
 		<div class="my-4">
 			{#if user}
 				<h1 class="text-6xl font-bold">{greet(user.name)}</h1>
