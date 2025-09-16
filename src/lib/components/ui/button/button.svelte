@@ -8,7 +8,7 @@
 		variants: {
 			variant: {
 				default: "bg-primary cursor-pointer text-primary-foreground hover:bg-primary/90",
-				navbar: "bg-accent cursor-pointer text-primary hover:bg-accent/90",
+				navbar: "bg-accent cursor-pointer text-white hover:bg-accent/90",
 				destructive: "bg-destructive cursor-pointer text-destructive-foreground hover:bg-destructive/90",
 				outline: "border-input cursor-pointer bg-background hover:bg-accent hover:text-accent-foreground border",
 				secondary: "bg-secondary cursor-pointer text-white hover:bg-secondary/80",
