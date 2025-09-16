@@ -108,7 +108,7 @@
 								{/if}
 							</Tooltip.Trigger>
 							<Tooltip.Content side="left">
-								{#if last7DaysSteps && last7DaysSteps.length > 0}
+								{#if last7DaysSteps && last7DaysSteps.length > 0 && viewMode == '7days'}
 									<h4>Dates</h4>
 									<div class="text-muted-foreground mt-3 text-sm">
 										{last7DaysSteps
@@ -120,7 +120,7 @@
 											)
 											.join(", ")}
 									</div>
-								{:else if lastMonthSteps && lastMonthSteps.length > 0}
+								{:else if lastMonthSteps && lastMonthSteps.length > 0 && viewMode == 'month'}
 									<h4>Dates</h4>
 									<div class="text-muted-foreground mt-3 text-sm">
 										{lastMonthSteps
