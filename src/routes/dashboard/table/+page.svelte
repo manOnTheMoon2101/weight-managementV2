@@ -69,7 +69,7 @@
 			sortable: false,
 			suppressMovable: true,
 			headerClass: "bg-background",
-			cellRenderer: makeSvelteCellRenderer(Dialog),
+			cellRenderer: makeSvelteCellRenderer(Dialog as any),
 			cellRendererParams: (params: any) => ({
 				dialogOpen: false,
 				rowToEdit: params.data,
@@ -81,7 +81,7 @@
 			headerName: "Steps",
 			field: "steps",
 			filter: "agNumberColumnFilter",
-			cellRenderer: makeSvelteCellRenderer(Limits),
+			cellRenderer: makeSvelteCellRenderer(Limits as any),
 			cellRendererParams: (params: any) => ({
 				data: params.data.steps,
 				type: "Less",
@@ -96,7 +96,7 @@
 			headerName: "Water",
 			field: "water",
 			filter: "agNumberColumnFilter",
-			cellRenderer: makeSvelteCellRenderer(Limits),
+			cellRenderer: makeSvelteCellRenderer(Limits as any),
 			cellRendererParams: (params: any) => ({
 				data: params.data.water,
 				type: "Less",
@@ -107,7 +107,7 @@
 			headerName: "Calories",
 			field: "calories",
 			filter: "agNumberColumnFilter",
-			cellRenderer: makeSvelteCellRenderer(Limits),
+			cellRenderer: makeSvelteCellRenderer(Limits as any),
 			cellRendererParams: (params: any) => ({
 				data: params.data.calories,
 				type: "More",
@@ -119,7 +119,7 @@
 			headerName: "Fat",
 			field: "fat",
 			filter: "agNumberColumnFilter",
-			cellRenderer: makeSvelteCellRenderer(Limits),
+			cellRenderer: makeSvelteCellRenderer(Limits as any),
 			cellRendererParams: (params: any) => ({
 				data: params.data.fat,
 				type: "More",
@@ -130,7 +130,7 @@
 			headerName: "Sugar",
 			field: "sugar",
 			filter: "agNumberColumnFilter",
-			cellRenderer: makeSvelteCellRenderer(Limits),
+			cellRenderer: makeSvelteCellRenderer(Limits as any),
 			cellRendererParams: (params: any) => ({
 				data: params.data.sugar,
 				type: "More",
@@ -141,7 +141,7 @@
 			headerName: "Carbs",
 			field: "carbs",
 			filter: "agNumberColumnFilter",
-			cellRenderer: makeSvelteCellRenderer(Limits),
+			cellRenderer: makeSvelteCellRenderer(Limits as any),
 			cellRendererParams: (params: any) => ({
 				data: params.data.carbs,
 				type: "More",
@@ -152,7 +152,7 @@
 			headerName: "Supplements",
 			filter:false,
 			sortable:false,
-			cellRenderer: makeSvelteCellRenderer(Supplements),
+			cellRenderer: makeSvelteCellRenderer(Supplements as any),
 			cellRendererParams: {
 				supplementFields: ["fatBurner", "appleCider", "multiVitamin", "magnesium", "cla"],
 			},
