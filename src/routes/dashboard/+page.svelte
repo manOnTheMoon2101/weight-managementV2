@@ -144,14 +144,14 @@
 					<Tooltip.Provider delayDuration={100}>
 						<Tooltip.Root>
 							<Tooltip.Trigger>
-								{#if viewMode === "7days"}
+								{#if last7DaysWater && last7DaysWater.length > 0 && viewMode === "7days"}
 									<div class="text-center">
 										<h6 class="mb-2 text-lg font-semibold">Days with Water ≤ {waterLimit}</h6>
 										<Badge variant={"weekly"} class="px-4 py-2 text-xl">
 											{last7DaysWater?.length || 0} days
 										</Badge>
 									</div>
-								{:else}
+								{:else if last7DaysWater && last7DaysWater.length > 0 && viewMode === "month"}
 									<div class="text-center">
 										<div class="text-center">
 											<h6 class="mb-2 text-lg font-semibold">Days with Water ≤ {waterLimit}</h6>
@@ -163,7 +163,7 @@
 								{/if}
 							</Tooltip.Trigger>
 							<Tooltip.Content side="left">
-								{#if last7DaysWater && last7DaysWater.length > 0}
+								{#if last7DaysWater && last7DaysWater.length > 0 && viewMode === "7days"}
 									<h4>Dates</h4>
 									<div class="text-muted-foreground mt-3 text-sm">
 										{last7DaysWater
@@ -175,7 +175,7 @@
 											)
 											.join(", ")}
 									</div>
-								{:else if lastMonthWater && lastMonthWater.length > 0}
+								{:else if lastMonthWater && lastMonthWater.length > 0 && viewMode === "month"}
 									<h4>Dates</h4>
 									<div class="text-muted-foreground mt-3 text-sm">
 										{lastMonthWater
