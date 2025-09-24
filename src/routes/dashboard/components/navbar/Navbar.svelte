@@ -44,10 +44,11 @@ import Pallete from "@lucide/svelte/icons/palette"
 						<DropdownMenu.Item closeOnSelect={false}><LimitsDialog {limits} /></DropdownMenu.Item>
 					
 			
-						<DropdownMenu.Item closeOnSelect={false}><LogoutDialog /></DropdownMenu.Item>
+				
 						<DropdownMenu.Item closeOnSelect={false} 
 							><Toggler /></DropdownMenu.Item
 						>
+						<DropdownMenu.Item closeOnSelect={false}><LogoutDialog /></DropdownMenu.Item>
 					</DropdownMenu.Group>
 				</DropdownMenu.Content>
 			</DropdownMenu.Root>

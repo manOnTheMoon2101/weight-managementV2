@@ -264,7 +264,7 @@
 							>{Math.round(Number(averageStepsIntake))} <FootPrint /></span
 						>
 
-						<span> 2025 </span>
+				
 					</div>
 				</div>
 				<div
