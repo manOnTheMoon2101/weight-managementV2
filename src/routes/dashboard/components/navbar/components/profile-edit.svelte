@@ -4,6 +4,7 @@
     import { Label } from "$lib/components/ui/label/index.js";
     import Button from "$lib/components/ui/button/button.svelte";
     import ColorPicker, { ChromeVariant } from "svelte-awesome-color-picker";
+    import { enhance } from '$app/forms';
     let { user, userColour }: { user: any; userColour: string } = $props();
     let hex = $state(userColour || "#fbbf24");
 </script>
@@ -14,13 +15,16 @@
         <Dialog.Header>
             <Dialog.Title>Edit Profile</Dialog.Title>
             <Dialog.Description>
-                <form method="POST" action="/dashboard?/updateUser">
-                    <div>
+                <form   method="POST" action="?/updateUser" enctype="multipart/form-data">
+                    <!-- <div>
                         <Label for="color">Colour</Label>
 						{hex}
                         <ColorPicker bind:hex components={ChromeVariant} sliderDirection="horizontal" />
                         <input type="hidden" name="userColour" bind:value={hex} />
-                    </div>
+                    </div> -->
+                    <input type="file" name="file" required />
+
+                    <button>Upload</button>
                     <Label for="name">Name</Label>
                     <Input name="name" placeholder="Name" value={user.name} />
                     <Label for="email">Email</Label>

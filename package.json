@@ -55,6 +55,7 @@
 		"@fontsource/lilita-one": "^5.2.6",
 		"@fontsource/open-sans": "^5.2.6",
 		"@vercel/analytics": "^1.5.0",
+		"@vercel/blob": "^2.0.0",
 		"ag-charts-community": "^12.0.1",
 		"ag-grid-community": "^34.0.1",
 		"ag-grid-svelte5-extended": "^0.0.13",

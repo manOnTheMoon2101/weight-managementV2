@@ -31,6 +31,7 @@ import Pallete from "@lucide/svelte/icons/palette"
 				<DropdownMenu.Trigger>
 					<div class="my-1 flex flex-row items-center">
 						<Avatar.Root class="mr-2">
+							<Avatar.Image src={parsedUser.image} alt="User Image" />
 							<Avatar.Fallback  style="background-color: {userColour}">{firstLetter ?? "?"}</Avatar.Fallback>
 						</Avatar.Root>
 						<span>{parsedUser.name}</span>

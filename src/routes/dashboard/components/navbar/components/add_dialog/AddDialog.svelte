@@ -102,8 +102,8 @@
 										<Label for="vitamin" class="text-sm">Vitamin</Label>
 									</div>
 									<div class="flex items-center space-x-2">
-										<Checkbox id="apple" name="apple"  />
-										<Label for="apple" class="text-sm">Apple Cider</Label>
+										<Checkbox id="zen" name="zen"  />
+										<Label for="zen" class="text-sm">Zen</Label>
 									</div>
 									<div class="flex items-center space-x-2">
 										<Checkbox id="magnesium" name="magnesium"  />
