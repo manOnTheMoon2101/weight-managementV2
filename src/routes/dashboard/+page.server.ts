@@ -1,3 +1,4 @@
+import { env } from "$env/dynamic/private";
 import { auth } from "$lib/server/auth";
 import { db } from "$lib/server/db";
 import {
@@ -7,10 +8,10 @@ import {
 	supplements,
 	user,
 } from "$lib/server/schema/index";
-import { redirect } from "@sveltejs/kit";
+import { error, redirect } from "@sveltejs/kit";
+import { put } from "@vercel/blob";
 import { and, count, eq, sql } from "drizzle-orm";
 import type { PageServerLoad } from "./$types";
-
 export const load: PageServerLoad = async ({ request }) => {
 	try {
 		const now = new Date();
@@ -71,8 +72,8 @@ export const load: PageServerLoad = async ({ request }) => {
 				eq(limits.isDeleted, false)
 			),
 			columns: {
-				stepsLimit: true
-			}
+				stepsLimit: true,
+			},
 		});
 
 		const userStepLimit = stepLimit?.stepsLimit || null;
@@ -90,7 +91,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 			orderBy: (health_tracker, { desc }) => desc(health_tracker.createdAt),
 		});
-	
+
 		const lastMonthSteps = await db.query.health_tracker.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
@@ -106,18 +107,6 @@ export const load: PageServerLoad = async ({ request }) => {
 			orderBy: (health_tracker, { desc }) => desc(health_tracker.createdAt),
 		});
 
-
-
-
-
-
-
-
-
-
-
-
-
 		const waterLimit = await db.query.limits.findFirst({
 			where: and(
 				eq(limits.userId, session.user.id),
@@ -125,8 +114,8 @@ export const load: PageServerLoad = async ({ request }) => {
 				eq(limits.isDeleted, false)
 			),
 			columns: {
-				waterLimit: true
-			}
+				waterLimit: true,
+			},
 		});
 
 		const userWaterLimit = waterLimit?.waterLimit || null;
@@ -144,7 +133,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 			orderBy: (health_tracker, { desc }) => desc(health_tracker.createdAt),
 		});
-	
+
 		const lastMonthWater = await db.query.health_tracker.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
@@ -160,29 +149,27 @@ export const load: PageServerLoad = async ({ request }) => {
 			orderBy: (health_tracker, { desc }) => desc(health_tracker.createdAt),
 		});
 
+		const formattedMonthWeightEntries = WeightsMonthAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			weight: entry.weight,
+			createdAt: new Date(entry.createdAt).toLocaleDateString("en-GB", {
+				day: "2-digit",
+				month: "2-digit",
+				year: "numeric",
+			}),
+		}));
 
-
-		const formattedMonthWeightEntries = WeightsMonthAgo
-			.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
-			.map((entry) => ({
-				weight: entry.weight,
-				createdAt: new Date(entry.createdAt).toLocaleDateString("en-GB", {
-					day: "2-digit",
-					month: "2-digit",
-					year: "numeric",
-				}),
-			}));
-
-			const formattedWeekWeightEntries = WeightsWeekAgo
-			.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
-			.map((entry) => ({
-				weight: entry.weight,
-				createdAt: new Date(entry.createdAt).toLocaleDateString("en-GB", {
-					day: "2-digit",
-					month: "2-digit",
-					year: "numeric",
-				}),
-			}));
+		const formattedWeekWeightEntries = WeightsWeekAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			weight: entry.weight,
+			createdAt: new Date(entry.createdAt).toLocaleDateString("en-GB", {
+				day: "2-digit",
+				month: "2-digit",
+				year: "numeric",
+			}),
+		}));
 
 		const supplementCounts = await db
 			.select({
@@ -295,13 +282,29 @@ export const actions = {
 		const form = await request.formData();
 		const name = form.get("name") as string;
 		const email = form.get("email") as string;
-		const colour = form.get("userColour") as string; // Now matches the form field name
+		const colour = form.get("userColour") as string;
+		const file = form.get("file") as File;
 
 		if (!name || !email) {
 			return { success: false, error: "Name and email are required." };
 		}
 
-		await db.update(user).set({ name, email, colour }).where(eq(user.id, session.user.id));
+		if (!file) {
+			throw error(400, { message: "No file to upload." });
+		}
+
+	
+
+		const { url } = await put(file.name, file, {
+			access: "public",
+			token: env.MERDA_READ_WRITE_TOKEN,
+			allowOverwrite: true,
+		});
+
+		await db
+			.update(user)
+			.set({ name, email, colour: colour || "#fbbf24", image: url })
+			.where(eq(user.id, session.user.id));
 		return { success: true };
 	},
 
@@ -318,7 +321,7 @@ export const actions = {
 		const sugarLimit = form.get("sugarLimit") as unknown as number;
 		const stepsLimit = form.get("stepsLimit") as unknown as number;
 		const waterLimit = form.get("waterLimit") as unknown as number;
-		
+
 		if (
 			!caloriesLimit ||
 			!carbsLimit ||
@@ -330,13 +333,12 @@ export const actions = {
 			return { success: false, error: "All Limits Required." };
 		}
 
-		
 		const existingLimits = await db.query.limits.findFirst({
 			where: and(
 				eq(limits.userId, session.user.id),
 				eq(limits.isActive, true),
 				eq(limits.isDeleted, false)
-			)
+			),
 		});
 
 		if (existingLimits) {
@@ -350,7 +352,7 @@ export const actions = {
 					sugarLimit,
 					stepsLimit,
 					waterLimit,
-					updatedAt: new Date()
+					updatedAt: new Date(),
 				})
 				.where(eq(limits.userId, session.user.id));
 		} else {
@@ -366,10 +368,10 @@ export const actions = {
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				isActive: true,
-				isDeleted: false
+				isDeleted: false,
 			});
 		}
-		
+
 		return { success: true };
 	},
 };

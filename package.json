@@ -55,6 +55,7 @@
 		"@fontsource/lilita-one": "^5.2.6",
 		"@fontsource/open-sans": "^5.2.6",
 		"@vercel/analytics": "^1.5.0",
+		"@vercel/blob": "^2.0.0",
 		"ag-charts-community": "^12.0.1",
 		"ag-grid-community": "^34.0.1",
 		"ag-grid-svelte5-extended": "^0.0.13",
@@ -67,6 +68,8 @@
 		"paneforge": "^1.0.0-next.6",
 		"postgres": "^3.4.5",
 		"svelte-awesome-color-picker": "^4.0.2",
+		"cropperjs": "^1.6.2",
+		"svelte-cropperjs": "^1.0.1",
 		"svelte-sonner": "^1.0.5",
 		"vaul-svelte": "^1.0.0-next.7"
 	},
