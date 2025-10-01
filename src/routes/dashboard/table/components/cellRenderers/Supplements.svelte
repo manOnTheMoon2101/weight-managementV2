@@ -19,7 +19,7 @@
 
 	const supplementColors: any = {
 		fatBurner: "text-accent",
-		appleCider: "text-orange-900",
+		zen: "text-orange-900",
 		multiVitamin: "text-white",
 		magnesium: "text-secondary",
 		cla: "text-white",
@@ -27,7 +27,7 @@
 
 	const supplementDisplayNames: any = {
 		fatBurner: "L-Carnitine",
-		appleCider: "Apple Cider Vinegar",
+		zen: "Zen",
 		multiVitamin: "Multi-Vitamin",
 		magnesium: "Magnesium",
 		cla: "CLA",

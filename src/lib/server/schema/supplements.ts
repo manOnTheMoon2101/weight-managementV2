@@ -6,7 +6,7 @@ export const supplements = pgTable("supplements", {
 	id: serial("id").primaryKey(),
 	fatburner: boolean("fatburner").default(false),
 	multiVitamin:  boolean("multiVitamin").default(false),
-	appleCider:  boolean("appleCider").default(false),
+	zen:  boolean("zen").default(false),
 	cla:  boolean("cla").default(false),
 	magnesium:  boolean("magnesium").default(false),
 	createdAt: timestamp("created_at").notNull().defaultNow(),

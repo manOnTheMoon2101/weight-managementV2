@@ -156,11 +156,11 @@
 									</div>
 									<div class="flex items-center space-x-2">
 										<Checkbox
-											id="apple"
-											name="apple"
-											checked={rowToEdit?.appleCider == "true" ? true : false}
+											id="zen"
+											name="zen"
+											checked={rowToEdit?.zen == "true" ? true : false}
 										/>
-										<Label for="apple" class="text-sm">Apple Cider</Label>
+										<Label for="zen" class="text-sm">Zen</Label>
 									</div>
 									<div class="flex items-center space-x-2">
 										<Checkbox

@@ -126,7 +126,7 @@ export const actions = {
 		const multiVitamin = Boolean(form.get("vitamin")) || false;
 		const magnesium = Boolean(form.get("magnesium")) || false;
 		const cla = Boolean(form.get("cla")) || false;
-		const appleCider = Boolean(form.get("apple")) || false;
+		const zen = Boolean(form.get("zen")) || false;
 
 		const time = form.get("time") as string;
 
@@ -142,7 +142,7 @@ export const actions = {
 
 		await db
 			.update(supplements)
-			.set({ fatburner, multiVitamin, magnesium, cla, appleCider })
+			.set({ fatburner, multiVitamin, magnesium, cla, zen })
 			.where(eq(supplements.nutrientsId, id));
 
 		await db
@@ -204,7 +204,7 @@ export const actions = {
 		const multiVitamin = Boolean(form.get("vitamin")) || false;
 		const magnesium = Boolean(form.get("magnesium")) || false;
 		const cla = Boolean(form.get("cla")) || false;
-		const appleCider = Boolean(form.get("apple")) || false;
+		const zen = Boolean(form.get("zen")) || false;
 
 		// const time = form.get("time") as string;
 
@@ -227,7 +227,7 @@ export const actions = {
 				nutrientsId: nutrientsData[0].id,
 				userId: session.user.id,
 				cla,
-				appleCider,
+				zen,
 				multiVitamin,
 				magnesium,
 				fatburner,

@@ -22,7 +22,7 @@
 	type Supplement = {
 		cla?: number;
 		fatburner?: number;
-		appleCider?: number;
+		zen?: number;
 		multiVitamin?: number;
 		magnesium?: number;
 	};
@@ -50,7 +50,7 @@
 			...row,
 			cla: row.supplements?.map((x: Supplement) => x.cla),
 			fatBurner: row.supplements?.map((x: Supplement) => x.fatburner),
-			appleCider: row.supplements?.map((x: Supplement) => x.appleCider),
+			zen: row.supplements?.map((x: Supplement) => x.zen),
 			multiVitamin: row.supplements?.map((x: Supplement) => x.multiVitamin),
 			magnesium: row.supplements?.map((x: Supplement) => x.magnesium),
 			sleepTime : row?.sleep_schedule?.[0]?.time,
@@ -154,7 +154,7 @@
 			sortable:false,
 			cellRenderer: makeSvelteCellRenderer(Supplements as any),
 			cellRendererParams: {
-				supplementFields: ["fatBurner", "appleCider", "multiVitamin", "magnesium", "cla"],
+				supplementFields: ["fatBurner", "zen", "multiVitamin", "magnesium", "cla"],
 			},
 		},
 	];

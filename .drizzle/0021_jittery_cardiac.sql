@@ -1,0 +1,1 @@
+ALTER TABLE "supplements" RENAME COLUMN "appleCider" TO "zen";
