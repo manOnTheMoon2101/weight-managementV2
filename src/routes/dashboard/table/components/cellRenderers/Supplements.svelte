@@ -19,7 +19,7 @@
 
 	const supplementColors: any = {
 		fatBurner: "text-accent",
-		zen: "text-orange-900",
+		zen: "text-zen",
 		multiVitamin: "text-white",
 		magnesium: "text-secondary",
 		cla: "text-white",

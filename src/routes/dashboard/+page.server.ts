@@ -177,6 +177,7 @@ export const load: PageServerLoad = async ({ request }) => {
 				multiVitaminCount: count(sql`case when ${supplements.multiVitamin} = true then 1 end`),
 				magnesiumCount: count(sql`case when ${supplements.magnesium} = true then 1 end`),
 				claCount: count(sql`case when ${supplements.cla} = true then 1 end`),
+				zenCount: count(sql`case when ${supplements.zen} = true then 1 end`),
 			})
 			.from(supplements)
 			.where(
