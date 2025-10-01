@@ -22,9 +22,9 @@
                         <ColorPicker bind:hex components={ChromeVariant} sliderDirection="horizontal" />
                         <input type="hidden" name="userColour" bind:value={hex} />
                     </div> -->
-                    <input type="file" name="file" required />
-
-                    <button>Upload</button>
+                    <Label for="file">Upload Image</Label>
+                    <Input type="file" name="file" placeholder="Upload Image"/>
+                    <!-- <button>Upload</button> -->
                     <Label for="name">Name</Label>
                     <Input name="name" placeholder="Name" value={user.name} />
                     <Label for="email">Email</Label>
