@@ -6,7 +6,12 @@
     import ColorPicker, { ChromeVariant } from "svelte-awesome-color-picker";
     import { enhance } from '$app/forms';
     let { user, userColour }: { user: any; userColour: string } = $props();
+    let updateLoading = $state(false);
     let hex = $state(userColour || "#fbbf24");
+
+    function handleUpdateSubmit() {
+		updateLoading = true;
+	}
 </script>
 
 <Dialog.Root>
@@ -15,7 +20,7 @@
         <Dialog.Header>
             <Dialog.Title>Edit Profile</Dialog.Title>
             <Dialog.Description>
-                <form   method="POST" action="/dashboard?/updateUser" enctype="multipart/form-data">
+                <form   method="POST" action="/dashboard?/updateUser" enctype="multipart/form-data" onsubmit={handleUpdateSubmit}>
                     <!-- <div>
                         <Label for="color">Colour</Label>
 						{hex}
@@ -30,7 +35,16 @@
                     <Label for="email">Email</Label>
                     <Input name="email" placeholder="Email" type="email" value={user.email} />
                     <div class="flex flex-row justify-center">
-                        <Button type="submit" variant={'sign'}>Save</Button>
+                        {#if !updateLoading}
+                            <Button type="submit" variant={'sign'}>Save</Button>
+                        {:else}
+                            <Button type="submit" variant={'sign'} disabled>
+                                <div class="flex items-center justify-center space-x-2">
+                                    <div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
+                                    <span>Saving...</span>
+                                </div>
+                            </Button>
+                        {/if}
                     </div>
                 </form>
             </Dialog.Description>

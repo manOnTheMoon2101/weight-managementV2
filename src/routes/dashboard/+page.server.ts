@@ -8,7 +8,7 @@ import {
 	supplements,
 	user,
 } from "$lib/server/schema/index";
-import { error, redirect } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 import { put } from "@vercel/blob";
 import { and, count, eq, sql } from "drizzle-orm";
 import type { PageServerLoad } from "./$types";
@@ -284,27 +284,30 @@ export const actions = {
 		const name = form.get("name") as string;
 		const email = form.get("email") as string;
 		const colour = form.get("userColour") as string;
-		const file = form.get("file") as File;
+		const file = form.get("file") as File | null;
 
 		if (!name || !email) {
 			return { success: false, error: "Name and email are required." };
 		}
 
-		if (!file) {
-			throw error(400, { message: "No file to upload." });
+		let imageUrl: string | null = null;
+		if (file && typeof file.name === "string" && file.size > 0) {
+			const { url } = await put(file.name, file, {
+				access: "public",
+				token: env.MERDA_READ_WRITE_TOKEN,
+				allowOverwrite: true,
+			});
+			imageUrl = url;
 		}
-
-	
-
-		const { url } = await put(file.name, file, {
-			access: "public",
-			token: env.MERDA_READ_WRITE_TOKEN,
-			allowOverwrite: true,
-		});
 
 		await db
 			.update(user)
-			.set({ name, email, colour: colour || "#fbbf24", image: url })
+			.set({
+				name,
+				email,
+				colour: colour || "#fbbf24",
+				...(imageUrl ? { image: imageUrl } : {}),
+			})
 			.where(eq(user.id, session.user.id));
 		return { success: true };
 	},
