@@ -15,16 +15,16 @@
         <Dialog.Header>
             <Dialog.Title>Edit Profile</Dialog.Title>
             <Dialog.Description>
-                <form   method="POST" action="?/updateUser" enctype="multipart/form-data">
+                <form   method="POST" action="/dashboard?/updateUser" enctype="multipart/form-data">
                     <!-- <div>
                         <Label for="color">Colour</Label>
 						{hex}
                         <ColorPicker bind:hex components={ChromeVariant} sliderDirection="horizontal" />
                         <input type="hidden" name="userColour" bind:value={hex} />
                     </div> -->
-                    <input type="file" name="file" required />
-
-                    <button>Upload</button>
+                    <Label for="file">Upload Image</Label>
+                    <Input type="file" name="file" placeholder="Upload Image"/>
+                    <!-- <button>Upload</button> -->
                     <Label for="name">Name</Label>
                     <Input name="name" placeholder="Name" value={user.name} />
                     <Label for="email">Email</Label>

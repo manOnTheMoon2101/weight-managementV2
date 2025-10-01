@@ -33,7 +33,7 @@
 	--sidebar-border: hsl(220 13% 91%);
 	--sidebar-ring: hsl(217.2 91.2% 59.8%);
 	--sign: hsl(140, 100%, 38%);
-
+	--zen: hsl(34, 100%, 38%);
 	--radius: 0.5rem;
 }
 
@@ -198,6 +198,7 @@
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-ring: var(--sidebar-ring);
 	--color-sign: var(--sign);
+	--color-zen: var(--zen);
 }
 
 @layer base {
