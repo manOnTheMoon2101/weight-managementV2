@@ -15,7 +15,7 @@
         <Dialog.Header>
             <Dialog.Title>Edit Profile</Dialog.Title>
             <Dialog.Description>
-                <form   method="POST" action="?/updateUser" enctype="multipart/form-data">
+                <form   method="POST" action="/dashboard?/updateUser" enctype="multipart/form-data">
                     <!-- <div>
                         <Label for="color">Colour</Label>
 						{hex}
