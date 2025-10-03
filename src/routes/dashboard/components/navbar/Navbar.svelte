@@ -1,14 +1,10 @@
 <script lang="ts">
-	import Toggler from "./components/toggler.svelte";
 	import * as Avatar from "$lib/components/ui/avatar/index.js";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import LogoutDialog from "./components/logout-dialog.svelte";
 	import EditDialog from "./components/profile-edit.svelte";
-	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
 	import { Button } from "$lib/components/ui/button";
 	import LimitsDialog from "./components/limits-dialog.svelte";
-import Pallete from "@lucide/svelte/icons/palette"
-	import { onMount } from "svelte";
 
 	let {
 		user,
@@ -46,9 +42,7 @@ import Pallete from "@lucide/svelte/icons/palette"
 					
 			
 				
-						<DropdownMenu.Item closeOnSelect={false} 
-							><Toggler /></DropdownMenu.Item
-						>
+						
 						<DropdownMenu.Item closeOnSelect={false}><LogoutDialog /></DropdownMenu.Item>
 					</DropdownMenu.Group>
 				</DropdownMenu.Content>

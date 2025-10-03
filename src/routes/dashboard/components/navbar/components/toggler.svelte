@@ -5,7 +5,7 @@
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import { toggleMode, setTheme, resetMode } from "mode-watcher";
 	import { Button } from "$lib/components/ui/button/index.js";
-
+	import Palette from "@lucide/svelte/icons/palette";
 	const THEME_STORAGE_KEY = "selectedTheme";
 	function saveTheme(theme: string) {
 		if (typeof window !== "undefined") {
@@ -66,7 +66,7 @@
 	</div> -->
 
 	<DropdownMenu.Root>
-		<DropdownMenu.Trigger class="cursor-pointer">Change Theme</DropdownMenu.Trigger>
+		<DropdownMenu.Trigger class="cursor-pointer"><Button variant='screen'><Palette/></Button></DropdownMenu.Trigger>
 		<DropdownMenu.Content class="flex flex-row items-center gap-2 p-2">
 			<DropdownMenu.Item closeOnSelect={false}>
 				<Button onclick={() => setThemeWithStorage("")} variant='beigeButton'>Beige</Button>
