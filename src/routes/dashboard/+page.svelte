@@ -68,23 +68,17 @@
 				<h1 class="text-6xl font-bold">{greet(user.name)}</h1>
 			{/if}
 		</div>
-		<div class="flex flex-row items-start justify-between">
+		<div class="flex flex-row items-center justify-between ">
 			<div class="flex flex-col">
-				<div class="flex flex-row items-center">
+				<div class="flex flex-row items-center  justify-center">
 					<div
-						class={!currentWeight || !previousWeight
-							? "my-2 flex flex-row  items-center p-4"
-							: Number(currentWeight) > Number(previousWeight)
-								? "my-2 flex flex-row  items-center p-4 "
-								: Number(currentWeight) < Number(previousWeight)
-									? "my-2 flex flex-row  items-center p-4 "
-									: "my-2 flex flex-row  items-center p-4"}
+						class='mx-2'
 					>
 						<Tooltip.Provider delayDuration={100}>
 							<Tooltip.Root>
 								<Tooltip.Trigger>
 									<div
-										class="bg-secondary mx-2 flex flex-col items-start rounded-2xl border p-4 "
+										class="flex flex-col items-start p-2"
 									>
 										<h4 class="text-accent text-2xl font-bold">Current Weight</h4>
 										<div class="flex flex-row items-center">
@@ -142,6 +136,14 @@
 				
 					</div>
 				</div>
+				<div
+				class="bg-secondary my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
+			>
+				<h4 class="text-accent text-2xl font-bold">Average Sleep Time</h4>
+				<span class="flex flex-row items-center text-8xl"
+					>{averageSleepIntake} <Timer class="text-accent " /></span
+				>
+			</div>
 				<div
 					class="bg-secondary flex flex-col items-center justify-center rounded-2xl border p-4"
 				>
@@ -292,16 +294,7 @@
 			</div>
 		</div>
 
-		<div class="mt-24 flex flex-row items-center justify-start">
-			<div
-				class="border-accent bg-primary flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
-			>
-				<h4 class="text-accent text-2xl font-bold">Average Sleep Time</h4>
-				<span class="flex flex-row items-center text-8xl"
-					>{averageSleepIntake} <Timer class="text-accent " /></span
-				>
-			</div>
-		</div>
+	
 	</div>
 </div>
 
