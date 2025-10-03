@@ -6,6 +6,8 @@
 	import FootPrint from "@lucide/svelte/icons/footprints";
 	import Timer from "@lucide/svelte/icons/timer";
 	import Droplet from "@lucide/svelte/icons/droplet";
+	import Maximize from "@lucide/svelte/icons/maximize";
+	import Minimize from "@lucide/svelte/icons/minimize";
 	import WeightIcon from "@lucide/svelte/icons/weight";
 	import { DateFormatter } from "@internationalized/date";
 	import Weight from "./components/charts/Weight.svelte";
@@ -14,6 +16,9 @@
 	import { Badge } from "$lib/components/ui/badge/index.js";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import Card from "$lib/components/ui/card/card.svelte";
+	import { toggleMode, setTheme, resetMode } from "mode-watcher";
+	import Toggler from "./components/navbar/components/toggler.svelte";
+	import { onMount } from "svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
@@ -38,6 +43,7 @@
 	let waterLimit = $derived(data.waterLimit);
 
 	let viewMode = $state("7days");
+	let isFullscreen = $state(false);
 
 	function greet(name: string): string {
 		const hour = new Date().getHours();
@@ -53,34 +59,202 @@
 	const df = new DateFormatter("en-US", {
 		dateStyle: "medium",
 	});
+
+	function toggleFullscreen() {
+		if (isFullscreen) {
+			const doc = document as Document & {
+				webkitExitFullscreen?: () => Promise<void> | void;
+				msExitFullscreen?: () => Promise<void> | void;
+			};
+			if (doc.exitFullscreen) {
+				doc.exitFullscreen();
+			} else if (doc.webkitExitFullscreen) {
+				doc.webkitExitFullscreen();
+			} else if (doc.msExitFullscreen) {
+				doc.msExitFullscreen();
+			}
+		} else {
+			const element = document.documentElement as HTMLElement & {
+				webkitRequestFullscreen?: () => Promise<void> | void;
+				msRequestFullscreen?: () => Promise<void> | void;
+			};
+			if (element.requestFullscreen) {
+				element.requestFullscreen();
+			} else if (element.webkitRequestFullscreen) {
+				element.webkitRequestFullscreen();
+			} else if (element.msRequestFullscreen) {
+				element.msRequestFullscreen();
+			}
+		}
+	}
+	if (typeof document !== "undefined") {
+		document.addEventListener("fullscreenchange", () => {
+			isFullscreen = !!document.fullscreenElement;
+		});
+		document.addEventListener("webkitfullscreenchange", () => {
+			isFullscreen = !!(document as any).webkitFullscreenElement;
+		});
+		document.addEventListener("msfullscreenchange", () => {
+			isFullscreen = !!(document as any).msFullscreenElement;
+		});
+	}
 </script>
 
 <div class="flex flex-col gap-1">
 	<div>
-		<div class="md:hidden mb-4">
-			<div class="flex items-center gap-2 rounded-md border border-yellow-300 bg-yellow-100 p-3 text-yellow-900 dark:border-yellow-700 dark:bg-yellow-950 dark:text-yellow-200">
+		<div class="mb-4 md:hidden">
+			<div
+				class="flex items-center gap-2 rounded-md border border-yellow-300 bg-yellow-100 p-3 text-yellow-900 dark:border-yellow-700 dark:bg-yellow-950 dark:text-yellow-200"
+			>
 				<span>⚠️</span>
-				<span>This site doesn't support mobile yet. Please use a larger screen. Mobile support is coming soon :)</span>
+				<span
+					>This site doesn't support mobile yet. Please use a larger screen. Mobile support is
+					coming soon :)</span
+				>
 			</div>
 		</div>
-		<div class="my-4">
+		<div class="my-4 flex flex-row justify-between">
 			{#if user}
 				<h1 class="text-6xl font-bold">{greet(user.name)}</h1>
 			{/if}
+
+			<div class="flex flex-row">
+				<Toggler />
+				
+
+
+				<div>
+					<Tooltip.Provider delayDuration={100}>
+						<Tooltip.Root>
+							<Tooltip.Trigger>
+								<Button
+						variant="screen"
+						aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+						title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+						onclick={toggleFullscreen}
+					>
+						{#if isFullscreen}
+							<Minimize />
+						{:else}
+							<Maximize />
+						{/if}
+					</Button>
+				
+							</Tooltip.Trigger>
+							<Tooltip.Content side="top">
+								<span>{!isFullscreen ? 'Fullscreen' : 'Normal'}</span>
+							</Tooltip.Content>
+						</Tooltip.Root>
+					</Tooltip.Provider>
+				</div>
+			</div>
 		</div>
-		<div class="flex flex-row items-start justify-between">
-			<Supplements data={supplementCharts} />
+		<div class="flex flex-row items-center justify-between">
+			<div class="flex flex-col">
+				<div class="flex flex-row items-center justify-center">
+					<div class="mx-2">
+						<Tooltip.Provider delayDuration={100}>
+							<Tooltip.Root>
+								<Tooltip.Trigger>
+									<div class="flex flex-col items-start p-2">
+										<h4 class="text-accent text-2xl font-bold">Current Weight</h4>
+										<div class="flex flex-row items-center">
+											<span class="flex flex-row items-center text-8xl"
+												>{currentWeight}
+												<WeightIcon class="text-foreground" /></span
+											>
+											<span>
+												{#if currentWeight && previousWeight}
+													{#if Number(currentWeight) > Number(previousWeight)}
+														<ChevronUp class="text-red-500 " />
+													{:else if Number(currentWeight) < Number(previousWeight)}
+														<ChevronDown class="text-green-500 " />
+													{:else}
+														<div></div>
+													{/if}
+												{/if}
+											</span>
+										</div>
+										<span>
+											{#if currentWeightDate}
+												{df.format(currentWeightDate)}
+											{:else}
+												-
+											{/if}
+										</span>
+									</div>
+								</Tooltip.Trigger>
+								<Tooltip.Content side="left">
+									<div class="mx-4 flex flex-col items-start">
+										<div class="flex flex-row items-center">
+											<h2 class="text-4xl">{previousWeight}</h2>
+										</div>
+										<span>
+											{#if previousWeightDate}
+												{df.format(previousWeightDate)}
+											{:else}
+												-
+											{/if}
+										</span>
+										<h4 class="text-accent font-bold">Previous Weight</h4>
+									</div>
+								</Tooltip.Content>
+							</Tooltip.Root>
+						</Tooltip.Provider>
+					</div>
+					<div
+						class="bg-secondary flex flex-col items-center justify-center rounded-2xl border p-4"
+					>
+						<h4 class="text-accent text-2xl font-bold">Average Steps</h4>
+						<span class="flex flex-row items-center text-8xl"
+							>{Math.round(Number(averageStepsIntake))} <FootPrint /></span
+						>
+					</div>
+				</div>
+				<div
+					class="bg-secondary my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
+				>
+					<h4 class="text-accent text-2xl font-bold">Average Sleep Time</h4>
+					<span class="flex flex-row items-center text-8xl"
+						>{averageSleepIntake} <Timer class="text-accent " /></span
+					>
+				</div>
+				<div class="bg-secondary flex flex-col items-center justify-center rounded-2xl border p-4">
+					<h4 class="text-accent text-2xl font-bold">Average Water</h4>
+					<span class="flex flex-row items-center text-8xl"
+						>{Math.round(Number(averageWaterIntake))}
+						<Droplet class="fill-blue-400 text-blue-400" /></span
+					>
+				</div>
+			</div>
+
 			<div
-				class="border-accent bg-primary mx-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
+				class="bg-primary mx-2 flex flex-col items-center justify-center rounded-2xl p-4"
 			>
 				<h4 class="text-accent text-2xl font-bold">Analysis</h4>
 				<div class="mb-4 flex flex-row justify-around">
-					<Button size="sm" class={viewMode == '7days' ? 'bg-accent mx-2' : 'mx-2'} variant="secondary"  onclick={() => (viewMode = "7days")}
-						>Last 7 Days</Button
+					<div
+						class={viewMode == "7days" ? "bg-accent mx-2" : "mx-2"}
+						role="button"
+						tabindex="0"
+						onclick={() => (viewMode = "7days")}
+						onkeydown={(e) => {
+							if (e.key === "Enter" || e.key === " ") viewMode = "7days";
+						}}
 					>
-					<Button size="sm" variant="secondary" class={viewMode == 'month' ? 'bg-accent mx-2' : 'mx-2'} onclick={() => (viewMode = "month")}
-						>Last Month</Button
+						<Button size="sm" variant="secondary">Last 7 Days</Button>
+					</div>
+					<div
+						class={viewMode == "month" ? "bg-accent mx-2" : "mx-2"}
+						role="button"
+						tabindex="0"
+						onclick={() => (viewMode = "month")}
+						onkeydown={(e) => {
+							if (e.key === "Enter" || e.key === " ") viewMode = "month";
+						}}
 					>
+						<Button size="sm" variant="secondary">Last Month</Button>
+					</div>
 				</div>
 
 				<Card
@@ -108,7 +282,7 @@
 								{/if}
 							</Tooltip.Trigger>
 							<Tooltip.Content side="left">
-								{#if last7DaysSteps && last7DaysSteps.length > 0 && viewMode == '7days'}
+								{#if last7DaysSteps && last7DaysSteps.length > 0 && viewMode == "7days"}
 									<h4>Dates</h4>
 									<div class="text-muted-foreground mt-3 text-sm">
 										{last7DaysSteps
@@ -120,7 +294,7 @@
 											)
 											.join(", ")}
 									</div>
-								{:else if lastMonthSteps && lastMonthSteps.length > 0 && viewMode == 'month'}
+								{:else if lastMonthSteps && lastMonthSteps.length > 0 && viewMode == "month"}
 									<h4>Dates</h4>
 									<div class="text-muted-foreground mt-3 text-sm">
 										{lastMonthSteps
@@ -194,109 +368,36 @@
 				</Card>
 			</div>
 
-			<div class="flex flex-col">
-				<div class="flex flex-row items-center">
-					<div
-						class={!currentWeight || !previousWeight
-							? "my-2 flex flex-row  items-center p-4"
-							: Number(currentWeight) > Number(previousWeight)
-								? "my-2 flex flex-row  items-center p-4 "
-								: Number(currentWeight) < Number(previousWeight)
-									? "my-2 flex flex-row  items-center p-4 "
-									: "my-2 flex flex-row  items-center p-4"}
-					>
-						<Tooltip.Provider delayDuration={100}>
-							<Tooltip.Root>
-								<Tooltip.Trigger>
-									<div
-										class="border-accent bg-primary mx-4 flex flex-col items-start rounded-2xl border p-4 shadow-2xl"
-									>
-										<h4 class="text-accent text-2xl font-bold">Current Weight</h4>
-										<div class="flex flex-row items-center">
-											<span class="flex flex-row items-center text-8xl"
-												>{currentWeight}
-												<WeightIcon class="text-foreground" /></span
-											>
-											<span>
-												{#if currentWeight && previousWeight}
-													{#if Number(currentWeight) > Number(previousWeight)}
-														<ChevronUp class="text-red-500 " />
-													{:else if Number(currentWeight) < Number(previousWeight)}
-														<ChevronDown class="text-green-500 " />
-													{:else}
-														<div></div>
-													{/if}
-												{/if}
-											</span>
-										</div>
-										<span>
-											{#if currentWeightDate}
-												{df.format(currentWeightDate)}
-											{:else}
-												-
-											{/if}
-										</span>
-									</div>
-								</Tooltip.Trigger>
-								<Tooltip.Content side="left">
-									<div class="mx-4 flex flex-col items-start">
-										<div class="flex flex-row items-center">
-											<h2 class="text-4xl">{previousWeight}</h2>
-										</div>
-										<span>
-											{#if previousWeightDate}
-												{df.format(previousWeightDate)}
-											{:else}
-												-
-											{/if}
-										</span>
-										<h4 class="text-accent font-bold">Previous Weight</h4>
-									</div>
-								</Tooltip.Content>
-							</Tooltip.Root>
-						</Tooltip.Provider>
-					</div>
-					<div
-						class="border-accent bg-primary flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
-					>
-						<h4 class="text-accent text-2xl font-bold">Average Steps</h4>
-						<span class="flex flex-row items-center text-8xl"
-							>{Math.round(Number(averageStepsIntake))} <FootPrint /></span
-						>
-
-				
-					</div>
-				</div>
-				<div
-					class="border-accent bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
-				>
-					<h4 class="text-accent text-2xl font-bold">Average Water</h4>
-					<span class="flex flex-row items-center text-8xl"
-						>{Math.round(Number(averageWaterIntake))}
-						<Droplet class="fill-blue-400 text-blue-400" /></span
-					>
-				</div>
-			</div>
+			<Supplements data={supplementCharts} />
 		</div>
 
 		<div class="mt-24 flex flex-row items-center justify-evenly">
 			<div class="w-full">
 				<div class="mb-4 flex flex-row justify-center">
-					<Button size="sm" class={weightViewMode == '7days' ? 'bg-accent mx-2' : 'mx-2'} variant="secondary" onclick={() => (weightViewMode = '7days')}>Last 7 Days</Button>
-					<Button size="sm" class={weightViewMode == 'month' ? 'bg-accent mx-2' : 'mx-2'} variant="secondary" onclick={() => (weightViewMode = 'month')}>Last Month</Button>
+					<div
+						class={weightViewMode == "7days" ? "bg-accent mx-2" : "mx-2"}
+						role="button"
+						tabindex="0"
+						onclick={() => (weightViewMode = "7days")}
+						onkeydown={(e) => {
+							if (e.key === "Enter" || e.key === " ") weightViewMode = "7days";
+						}}
+					>
+						<Button size="sm" variant="secondary">Last 7 Days</Button>
+					</div>
+					<div
+						class={weightViewMode == "month" ? "bg-accent mx-2" : "mx-2"}
+						role="button"
+						tabindex="0"
+						onclick={() => (weightViewMode = "month")}
+						onkeydown={(e) => {
+							if (e.key === "Enter" || e.key === " ") weightViewMode = "month";
+						}}
+					>
+						<Button size="sm" variant="secondary">Last Month</Button>
+					</div>
 				</div>
 				<Weight dateSeriesData={weightCharts} />
-			</div>
-		</div>
-
-		<div class="mt-24 flex flex-row items-center justify-start">
-			<div
-				class="border-accent bg-primary flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
-			>
-				<h4 class="text-accent text-2xl font-bold">Average Sleep Time</h4>
-				<span class="flex flex-row items-center text-8xl"
-					>{averageSleepIntake} <Timer class="text-accent " /></span
-				>
 			</div>
 		</div>
 	</div>

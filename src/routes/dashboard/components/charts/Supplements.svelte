@@ -13,7 +13,7 @@
     ] : [];
 </script>
 
-<div class="h-[400px] w-1/2 my-2 border border-accent rounded-2xl p-4 flex flex-col justify-center items-center shadow-2xl bg-primary">
+<div class="h-[400px] w-1/2  bg-primary rounded-2xl p-4 flex flex-col justify-center items-center">
     <h4 class="text-accent font-bold  text-2xl text-center">Supplements</h4>
     <PieChart
         data={pieData}
