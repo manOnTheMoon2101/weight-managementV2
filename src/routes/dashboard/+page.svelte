@@ -119,6 +119,7 @@
 			{/if}
 
 			<div class="flex flex-row">
+				<Toggler />
 				<Button
 					variant="screen"
 					aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
@@ -131,8 +132,6 @@
 						<Maximize />
 					{/if}
 				</Button>
-
-				<Toggler />
 			</div>
 		</div>
 		<div class="flex flex-row items-center justify-between">
