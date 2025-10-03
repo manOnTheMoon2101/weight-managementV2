@@ -214,7 +214,7 @@
 			</div>
 
 			<div
-				class="border-accent bg-primary mx-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
+				class="bg-primary mx-2 flex flex-col items-center justify-center rounded-2xl p-4"
 			>
 				<h4 class="text-accent text-2xl font-bold">Analysis</h4>
 				<div class="mb-4 flex flex-row justify-around">
