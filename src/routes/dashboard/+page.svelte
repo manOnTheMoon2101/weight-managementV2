@@ -69,7 +69,91 @@
 			{/if}
 		</div>
 		<div class="flex flex-row items-start justify-between">
-			<Supplements data={supplementCharts} />
+			<div class="flex flex-col">
+				<div class="flex flex-row items-center">
+					<div
+						class={!currentWeight || !previousWeight
+							? "my-2 flex flex-row  items-center p-4"
+							: Number(currentWeight) > Number(previousWeight)
+								? "my-2 flex flex-row  items-center p-4 "
+								: Number(currentWeight) < Number(previousWeight)
+									? "my-2 flex flex-row  items-center p-4 "
+									: "my-2 flex flex-row  items-center p-4"}
+					>
+						<Tooltip.Provider delayDuration={100}>
+							<Tooltip.Root>
+								<Tooltip.Trigger>
+									<div
+										class="bg-secondary mx-2 flex flex-col items-start rounded-2xl border p-4 "
+									>
+										<h4 class="text-accent text-2xl font-bold">Current Weight</h4>
+										<div class="flex flex-row items-center">
+											<span class="flex flex-row items-center text-8xl"
+												>{currentWeight}
+												<WeightIcon class="text-foreground" /></span
+											>
+											<span>
+												{#if currentWeight && previousWeight}
+													{#if Number(currentWeight) > Number(previousWeight)}
+														<ChevronUp class="text-red-500 " />
+													{:else if Number(currentWeight) < Number(previousWeight)}
+														<ChevronDown class="text-green-500 " />
+													{:else}
+														<div></div>
+													{/if}
+												{/if}
+											</span>
+										</div>
+										<span>
+											{#if currentWeightDate}
+												{df.format(currentWeightDate)}
+											{:else}
+												-
+											{/if}
+										</span>
+									</div>
+								</Tooltip.Trigger>
+								<Tooltip.Content side="left">
+									<div class="mx-4 flex flex-col items-start">
+										<div class="flex flex-row items-center">
+											<h2 class="text-4xl">{previousWeight}</h2>
+										</div>
+										<span>
+											{#if previousWeightDate}
+												{df.format(previousWeightDate)}
+											{:else}
+												-
+											{/if}
+										</span>
+										<h4 class="text-accent font-bold">Previous Weight</h4>
+									</div>
+								</Tooltip.Content>
+							</Tooltip.Root>
+						</Tooltip.Provider>
+					</div>
+					<div
+						class="bg-secondary flex flex-col items-center justify-center rounded-2xl border p-4"
+					>
+						<h4 class="text-accent text-2xl font-bold">Average Steps</h4>
+						<span class="flex flex-row items-center text-8xl"
+							>{Math.round(Number(averageStepsIntake))} <FootPrint /></span
+						>
+
+				
+					</div>
+				</div>
+				<div
+					class="bg-secondary flex flex-col items-center justify-center rounded-2xl border p-4"
+				>
+					<h4 class="text-accent text-2xl font-bold">Average Water</h4>
+					<span class="flex flex-row items-center text-8xl"
+						>{Math.round(Number(averageWaterIntake))}
+						<Droplet class="fill-blue-400 text-blue-400" /></span
+					>
+				</div>
+			</div>
+
+
 			<div
 				class="border-accent bg-primary mx-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
 			>
@@ -194,89 +278,8 @@
 				</Card>
 			</div>
 
-			<div class="flex flex-col">
-				<div class="flex flex-row items-center">
-					<div
-						class={!currentWeight || !previousWeight
-							? "my-2 flex flex-row  items-center p-4"
-							: Number(currentWeight) > Number(previousWeight)
-								? "my-2 flex flex-row  items-center p-4 "
-								: Number(currentWeight) < Number(previousWeight)
-									? "my-2 flex flex-row  items-center p-4 "
-									: "my-2 flex flex-row  items-center p-4"}
-					>
-						<Tooltip.Provider delayDuration={100}>
-							<Tooltip.Root>
-								<Tooltip.Trigger>
-									<div
-										class="border-accent bg-primary mx-4 flex flex-col items-start rounded-2xl border p-4 shadow-2xl"
-									>
-										<h4 class="text-accent text-2xl font-bold">Current Weight</h4>
-										<div class="flex flex-row items-center">
-											<span class="flex flex-row items-center text-8xl"
-												>{currentWeight}
-												<WeightIcon class="text-foreground" /></span
-											>
-											<span>
-												{#if currentWeight && previousWeight}
-													{#if Number(currentWeight) > Number(previousWeight)}
-														<ChevronUp class="text-red-500 " />
-													{:else if Number(currentWeight) < Number(previousWeight)}
-														<ChevronDown class="text-green-500 " />
-													{:else}
-														<div></div>
-													{/if}
-												{/if}
-											</span>
-										</div>
-										<span>
-											{#if currentWeightDate}
-												{df.format(currentWeightDate)}
-											{:else}
-												-
-											{/if}
-										</span>
-									</div>
-								</Tooltip.Trigger>
-								<Tooltip.Content side="left">
-									<div class="mx-4 flex flex-col items-start">
-										<div class="flex flex-row items-center">
-											<h2 class="text-4xl">{previousWeight}</h2>
-										</div>
-										<span>
-											{#if previousWeightDate}
-												{df.format(previousWeightDate)}
-											{:else}
-												-
-											{/if}
-										</span>
-										<h4 class="text-accent font-bold">Previous Weight</h4>
-									</div>
-								</Tooltip.Content>
-							</Tooltip.Root>
-						</Tooltip.Provider>
-					</div>
-					<div
-						class="border-accent bg-primary flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
-					>
-						<h4 class="text-accent text-2xl font-bold">Average Steps</h4>
-						<span class="flex flex-row items-center text-8xl"
-							>{Math.round(Number(averageStepsIntake))} <FootPrint /></span
-						>
-
-				
-					</div>
-				</div>
-				<div
-					class="border-accent bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
-				>
-					<h4 class="text-accent text-2xl font-bold">Average Water</h4>
-					<span class="flex flex-row items-center text-8xl"
-						>{Math.round(Number(averageWaterIntake))}
-						<Droplet class="fill-blue-400 text-blue-400" /></span
-					>
-				</div>
-			</div>
+		
+			<Supplements data={supplementCharts} />
 		</div>
 
 		<div class="mt-24 flex flex-row items-center justify-evenly">
