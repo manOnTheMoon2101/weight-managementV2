@@ -120,18 +120,33 @@
 
 			<div class="flex flex-row">
 				<Toggler />
-				<Button
-					variant="screen"
-					aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-					title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-					onclick={toggleFullscreen}
-				>
-					{#if isFullscreen}
-						<Minimize />
-					{:else}
-						<Maximize />
-					{/if}
-				</Button>
+				
+
+
+				<div>
+					<Tooltip.Provider delayDuration={100}>
+						<Tooltip.Root>
+							<Tooltip.Trigger>
+								<Button
+						variant="screen"
+						aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+						title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+						onclick={toggleFullscreen}
+					>
+						{#if isFullscreen}
+							<Minimize />
+						{:else}
+							<Maximize />
+						{/if}
+					</Button>
+				
+							</Tooltip.Trigger>
+							<Tooltip.Content side="top">
+								<span>{!isFullscreen ? 'Fullscreen' : 'Normal'}</span>
+							</Tooltip.Content>
+						</Tooltip.Root>
+					</Tooltip.Provider>
+				</div>
 			</div>
 		</div>
 		<div class="flex flex-row items-center justify-between">

@@ -6,6 +6,7 @@
 	import { toggleMode, setTheme, resetMode } from "mode-watcher";
 	import { Button } from "$lib/components/ui/button/index.js";
 	import Palette from "@lucide/svelte/icons/palette";
+	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	const THEME_STORAGE_KEY = "selectedTheme";
 	function saveTheme(theme: string) {
 		if (typeof window !== "undefined") {
@@ -66,7 +67,33 @@
 	</div> -->
 
 	<DropdownMenu.Root>
-		<DropdownMenu.Trigger class="cursor-pointer"><Button variant='screen'><Palette/></Button></DropdownMenu.Trigger>
+		<DropdownMenu.Trigger class="cursor-pointer">
+		
+		
+		
+		
+		
+			<Tooltip.Provider delayDuration={100}>
+				<Tooltip.Root>
+					<Tooltip.Trigger>
+						<Button variant='screen'><Palette/></Button>
+		
+					</Tooltip.Trigger>
+					<Tooltip.Content side="top">
+						<span>Change Theme</span>
+					</Tooltip.Content>
+				</Tooltip.Root>
+			</Tooltip.Provider>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		</DropdownMenu.Trigger>
 		<DropdownMenu.Content class="flex flex-row items-center gap-2 p-2">
 			<DropdownMenu.Item closeOnSelect={false}>
 				<Button onclick={() => setThemeWithStorage("")} variant='beigeButton'>Beige</Button>
