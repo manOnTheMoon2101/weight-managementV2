@@ -234,7 +234,7 @@
 				<h4 class="text-accent text-2xl font-bold">Analysis</h4>
 				<div class="mb-4 flex flex-row justify-around">
 					<div
-						class={viewMode == "7days" ? "bg-accent mx-2" : "mx-2"}
+						
 						role="button"
 						tabindex="0"
 						onclick={() => (viewMode = "7days")}
@@ -242,10 +242,10 @@
 							if (e.key === "Enter" || e.key === " ") viewMode = "7days";
 						}}
 					>
-						<Button size="sm" variant="secondary">Last 7 Days</Button>
+						<Button class={viewMode == "7days" ? "bg-accent mx-2" : "mx-2"} size="sm" variant="secondary">Last 7 Days</Button>
 					</div>
 					<div
-						class={viewMode == "month" ? "bg-accent mx-2" : "mx-2"}
+						
 						role="button"
 						tabindex="0"
 						onclick={() => (viewMode = "month")}
@@ -253,7 +253,7 @@
 							if (e.key === "Enter" || e.key === " ") viewMode = "month";
 						}}
 					>
-						<Button size="sm" variant="secondary">Last Month</Button>
+						<Button class={viewMode == "month" ? "bg-accent mx-2" : "mx-2"} size="sm" variant="secondary">Last Month</Button>
 					</div>
 				</div>
 
@@ -375,7 +375,7 @@
 			<div class="w-full">
 				<div class="mb-4 flex flex-row justify-center">
 					<div
-						class={weightViewMode == "7days" ? "bg-accent mx-2" : "mx-2"}
+
 						role="button"
 						tabindex="0"
 						onclick={() => (weightViewMode = "7days")}
@@ -383,10 +383,10 @@
 							if (e.key === "Enter" || e.key === " ") weightViewMode = "7days";
 						}}
 					>
-						<Button size="sm" variant="secondary">Last 7 Days</Button>
+						<Button class={weightViewMode == "7days" ? "bg-accent mx-2" : "mx-2"} size="sm" variant="secondary">Last 7 Days</Button>
 					</div>
 					<div
-						class={weightViewMode == "month" ? "bg-accent mx-2" : "mx-2"}
+						
 						role="button"
 						tabindex="0"
 						onclick={() => (weightViewMode = "month")}
@@ -394,7 +394,7 @@
 							if (e.key === "Enter" || e.key === " ") weightViewMode = "month";
 						}}
 					>
-						<Button size="sm" variant="secondary">Last Month</Button>
+						<Button class={weightViewMode == "month" ? "bg-accent mx-2" : "mx-2"} size="sm" variant="secondary">Last Month</Button>
 					</div>
 				</div>
 				<Weight dateSeriesData={weightCharts} />
