@@ -10,7 +10,7 @@ import {
 } from "$lib/server/schema/index";
 import { redirect } from "@sveltejs/kit";
 import { put } from "@vercel/blob";
-import { and, count, eq, sql } from "drizzle-orm";
+import { and, count, eq, gt, sql } from "drizzle-orm";
 import type { PageServerLoad } from "./$types";
 export const load: PageServerLoad = async ({ request }) => {
 	try {
@@ -61,6 +61,19 @@ export const load: PageServerLoad = async ({ request }) => {
 			),
 			columns: {
 				weight: true,
+				createdAt: true,
+			},
+		});
+
+		const allWaist = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				gt(health_tracker.waistMeasurement, 0)
+			),
+			columns: {
+				waistMeasurement: true,
 				createdAt: true,
 			},
 		});
@@ -171,6 +184,17 @@ export const load: PageServerLoad = async ({ request }) => {
 			}),
 		}));
 
+		const formattedWaistEntries = allWaist.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			weight: entry.waistMeasurement,
+			createdAt: new Date(entry.createdAt).toLocaleDateString("en-GB", {
+				day: "2-digit",
+				month: "2-digit",
+				year: "numeric",
+			}),
+		}));
+
 		const supplementCounts = await db
 			.select({
 				fatburnerCount: count(sql`case when ${supplements.fatburner} = true then 1 end`),
@@ -191,6 +215,7 @@ export const load: PageServerLoad = async ({ request }) => {
 		const supplementsChart = supplementCounts || null;
 		const weightMonthChart = formattedMonthWeightEntries || null;
 		const weightWeekChart = formattedWeekWeightEntries || null;
+		const waistChart = formattedWaistEntries || null;
 		const currentWeight = latestWeightEntries[0] || null;
 		const previousWeight = latestWeightEntries[1] || null;
 
@@ -250,6 +275,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			currentWeight: currentWeight,
 			weightMonthChart: weightMonthChart,
 			weightWeekChart: weightWeekChart,
+			waistChart : waistChart,
 			previousWeight: previousWeight,
 			averageWaterIntake: averageWaterIntake,
 			averageStepsIntake: averageStepsIntake,

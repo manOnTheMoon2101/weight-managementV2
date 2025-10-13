@@ -7,6 +7,7 @@ import { nutrients } from "./nutrients";
 export const health_tracker = pgTable("health_tracker", {
 	id: serial("id").primaryKey(),
 	weight: integer("weight").default(0).notNull(),
+	waistMeasurement: integer("waistMeasurement").default(0),
 	water: integer("water").default(0),
 	steps: integer("steps").default(0),
 	createdAt: timestamp("created_at").notNull().defaultNow(),

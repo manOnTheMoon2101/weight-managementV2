@@ -1,0 +1,1 @@
+ALTER TABLE "health_tracker" ADD COLUMN "waistMeasurement" integer DEFAULT 0;

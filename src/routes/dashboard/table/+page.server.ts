@@ -121,7 +121,7 @@ export const actions = {
 		const fat = Number(form.get("fat")) || 0;
 		const sugar = Number(form.get("sugar")) || 0;
 		const carbs = Number(form.get("carbs")) || 0;
-
+		const waistMeasurement = Number(form.get("waist")) || 0;
 		const fatburner = Boolean(form.get("fatBurner")) || false;
 		const multiVitamin = Boolean(form.get("vitamin")) || false;
 		const magnesium = Boolean(form.get("magnesium")) || false;
@@ -137,7 +137,7 @@ export const actions = {
 
 		await db
 			.update(health_tracker)
-			.set({ weight, steps, water })
+			.set({ weight, steps, water , waistMeasurement })
 			.where(eq(health_tracker.nutrientsId, id));
 
 		await db
@@ -199,7 +199,7 @@ export const actions = {
 		const fat = Number(form.get("fat")) || 0;
 		const sugar = Number(form.get("sugar")) || 0;
 		const carbs = Number(form.get("carbs")) || 0;
-
+		const waistMeasurement = Number(form.get("waist")) || 0;
 		const fatburner = Boolean(form.get("fatBurner")) || false;
 		const multiVitamin = Boolean(form.get("vitamin")) || false;
 		const magnesium = Boolean(form.get("magnesium")) || false;
@@ -240,6 +240,7 @@ export const actions = {
 				nutrientsId: nutrientsData[0].id,
 				userId: session.user.id,
 				weight,
+				waistMeasurement,
 				water,
 				steps,
 			})

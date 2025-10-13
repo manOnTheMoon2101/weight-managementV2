@@ -31,6 +31,7 @@
 		weight?: number;
 		water?: number;
 		steps?: number;
+		waistMeasurement?: number
 	};
 
 	type SleepSchedule = {
@@ -57,6 +58,7 @@
 			weight: row.health_tracker?.[0]?.weight,
 			water: row.health_tracker?.[0]?.water,
 			steps: row.health_tracker?.[0]?.steps,
+			waistMeasurement : row.health_tracker?.[0].waistMeasurement
 		}))
 	);
 
@@ -77,6 +79,7 @@
 		},
 		{ headerName: "Date", field: "createdAt" },
 		{ headerName: "Weight", field: "weight", filter: "agNumberColumnFilter" },
+		{ headerName: "Waist Measurement", field: "waistMeasurement", filter: "agNumberColumnFilter" },
 		{
 			headerName: "Steps",
 			field: "steps",
