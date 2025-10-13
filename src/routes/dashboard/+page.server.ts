@@ -10,7 +10,7 @@ import {
 } from "$lib/server/schema/index";
 import { redirect } from "@sveltejs/kit";
 import { put } from "@vercel/blob";
-import { and, count, eq, sql } from "drizzle-orm";
+import { and, count, eq, gt, sql } from "drizzle-orm";
 import type { PageServerLoad } from "./$types";
 export const load: PageServerLoad = async ({ request }) => {
 	try {
@@ -70,6 +70,7 @@ export const load: PageServerLoad = async ({ request }) => {
 				eq(health_tracker.userId, session.user.id),
 				eq(health_tracker.isActive, true),
 				eq(health_tracker.isDeleted, false),
+				gt(health_tracker.waistMeasurement, 0)
 			),
 			columns: {
 				waistMeasurement: true,
