@@ -23,7 +23,7 @@
 	<Sheet.Trigger>
 		<Button variant={'secondary'}>Add</Button>
 	</Sheet.Trigger>
-	<Sheet.Content class="max-h-[100vh] " side="left">
+	<Sheet.Content class="max-h-[100vh] overflow-y-auto" side="left">
 		<Sheet.Header>
 			<Sheet.Title>Add New Data</Sheet.Title>
 		</Sheet.Header>
