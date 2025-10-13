@@ -8,8 +8,10 @@
 	import * as Popover from "$lib/components/ui/popover/index.js";
 	import * as Select from "$lib/components/ui/select/index.js";
 	import CalendarIcon from "@lucide/svelte/icons/calendar";
-		import ArrowDownToLine from "@lucide/svelte/icons/arrow-down-to-line"
+	import ArrowDownToLine from "@lucide/svelte/icons/arrow-down-to-line";
 	import { page } from "$app/state";
+	import Measurement from "./components/cellRenderers/Measurement.svelte";
+	import Weight from "./components/cellRenderers/Weight.svelte";
 	import Supplements from "./components/cellRenderers/Supplements.svelte";
 	import Dialog from "./components/view_dialog/Dialog.svelte";
 	import { makeSvelteCellRenderer } from "ag-grid-svelte5-extended";
@@ -31,12 +33,12 @@
 		weight?: number;
 		water?: number;
 		steps?: number;
-		waistMeasurement?: number
+		waistMeasurement?: number;
 	};
 
 	type SleepSchedule = {
 		score?: number;
-		time?:any;
+		time?: any;
 	};
 
 	type NutrientRow = {
@@ -54,11 +56,11 @@
 			zen: row.supplements?.map((x: Supplement) => x.zen),
 			multiVitamin: row.supplements?.map((x: Supplement) => x.multiVitamin),
 			magnesium: row.supplements?.map((x: Supplement) => x.magnesium),
-			sleepTime : row?.sleep_schedule?.[0]?.time,
+			sleepTime: row?.sleep_schedule?.[0]?.time,
 			weight: row.health_tracker?.[0]?.weight,
 			water: row.health_tracker?.[0]?.water,
 			steps: row.health_tracker?.[0]?.steps,
-			waistMeasurement : row.health_tracker?.[0].waistMeasurement
+			waistMeasurement: row.health_tracker?.[0].waistMeasurement,
 		}))
 	);
 
@@ -78,8 +80,18 @@
 			}),
 		},
 		{ headerName: "Date", field: "createdAt" },
-		{ headerName: "Weight", field: "weight", filter: "agNumberColumnFilter" },
-		{ headerName: "Waist Measurement", field: "waistMeasurement", filter: "agNumberColumnFilter" },
+		{
+			headerName: "Weight",
+			field: "weight",
+			filter: "agNumberColumnFilter",
+			cellRenderer: makeSvelteCellRenderer(Weight as any),
+		},
+		{
+			headerName: "Waist Measurement",
+			field: "waistMeasurement",
+			filter: "agNumberColumnFilter",
+			cellRenderer: makeSvelteCellRenderer(Measurement as any),
+		},
 		{
 			headerName: "Steps",
 			field: "steps",
@@ -153,8 +165,8 @@
 		},
 		{
 			headerName: "Supplements",
-			filter:false,
-			sortable:false,
+			filter: false,
+			sortable: false,
 			cellRenderer: makeSvelteCellRenderer(Supplements as any),
 			cellRendererParams: {
 				supplementFields: ["fatBurner", "zen", "multiVitamin", "magnesium", "cla"],
@@ -181,20 +193,20 @@
 	});
 
 	async function updateDateRange() {
-    if (value?.start && value?.end) {
-        const startDateStr = value.start.toString();
-        const endDateStr = value.end.toString();
-        const url = new URL(page.url);
-        url.searchParams.set("startDate", startDateStr);
-        url.searchParams.set("endDate", endDateStr);
- 
-        window.location.href = url.toString();
-    }
-}
+		if (value?.start && value?.end) {
+			const startDateStr = value.start.toString();
+			const endDateStr = value.end.toString();
+			const url = new URL(page.url);
+			url.searchParams.set("startDate", startDateStr);
+			url.searchParams.set("endDate", endDateStr);
+
+			window.location.href = url.toString();
+		}
+	}
 
 	let selectedPreset = $state("");
 	let tableComponent: any = $state();
-	
+
 	function handlePresetSelect(selectedValue: string | string[]) {
 		const valueToUse = Array.isArray(selectedValue) ? selectedValue[0] : selectedValue;
 		const item = items.find((i) => i.value === valueToUse);
@@ -227,46 +239,45 @@
 </script>
 
 <div class="flex flex-row items-center justify-between">
-<div>
-	<Popover.Root>
-		<Popover.Trigger
-			class={cn(
-				buttonVariants({
-					variant: "outline",
-					class: "w-[300px] justify-start text-left font-normal border border-accent mx-2",
-				}),
-				!value && "text-muted-foreground"
-			)}
-		>
-			<CalendarIcon class="mr-2 size-4" />
-			{value && (value.start || value.end) ? valueString : "Pick a Preset"}
-		</Popover.Trigger>
-		<Popover.Content class="flex w-auto flex-col space-y-2 p-2">
-			<Select.Root type="single" onValueChange={handlePresetSelect}>
-				<Select.Trigger>
-					{selectedPreset || "Select a preset range"}
-				</Select.Trigger>
-				<Select.Content>
-					{#each items as item (item.value)}
-						<Select.Item value={item.value}>{item.label}</Select.Item>
-					{/each}
-				</Select.Content>
-			</Select.Root>
-			<div class="rounded-md border">
-				<RangeCalendar bind:value onValueChange={handleCalendarChange} />
-			</div>
-		</Popover.Content>
-	</Popover.Root>
+	<div>
+		<Popover.Root>
+			<Popover.Trigger
+				class={cn(
+					buttonVariants({
+						variant: "outline",
+						class: "border-accent mx-2 w-[300px] justify-start border text-left font-normal",
+					}),
+					!value && "text-muted-foreground"
+				)}
+			>
+				<CalendarIcon class="mr-2 size-4" />
+				{value && (value.start || value.end) ? valueString : "Pick a Preset"}
+			</Popover.Trigger>
+			<Popover.Content class="flex w-auto flex-col space-y-2 p-2">
+				<Select.Root type="single" onValueChange={handlePresetSelect}>
+					<Select.Trigger>
+						{selectedPreset || "Select a preset range"}
+					</Select.Trigger>
+					<Select.Content>
+						{#each items as item (item.value)}
+							<Select.Item value={item.value}>{item.label}</Select.Item>
+						{/each}
+					</Select.Content>
+				</Select.Root>
+				<div class="rounded-md border">
+					<RangeCalendar bind:value onValueChange={handleCalendarChange} />
+				</div>
+			</Popover.Content>
+		</Popover.Root>
 
-
-<AddDialog dialogOpen/>
-</div>
-<div>
-	<Button variant="link" onclick={() => tableComponent?.exportToCsv()}>
-		<ArrowDownToLine class="mr-2 size-4" />
-		Download CSV
-	</Button>
-</div>
+		<AddDialog dialogOpen />
+	</div>
+	<div>
+		<Button variant="link" onclick={() => tableComponent?.exportToCsv()}>
+			<ArrowDownToLine class="mr-2 size-4" />
+			Download CSV
+		</Button>
+	</div>
 </div>
 
 <div>
