@@ -54,6 +54,22 @@
 						</Card.Content>
 					</Card.Root>
 
+					<div>
+						<Card.Root class="bg-primary flex-1">
+							<Card.Header class="pb-3">
+								<Card.Title class="text-base">Measurements</Card.Title>
+							</Card.Header>
+							<Card.Content class="space-y-2">
+								<div>
+									<Label for="waist" class="text-sm">Waist</Label>
+									<Input id="waist" name="waist" placeholder="Waist(Cm)" class="h-8" />
+								</div>
+								
+							</Card.Content>
+						</Card.Root>
+
+
+					</div>
 					<div class="flex flex-row gap-3">
 						<Card.Root class="bg-primary flex-1">
 							<Card.Header class="pb-3">
