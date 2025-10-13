@@ -11,6 +11,7 @@
 	import WeightIcon from "@lucide/svelte/icons/weight";
 	import { DateFormatter } from "@internationalized/date";
 	import Weight from "./components/charts/Weight.svelte";
+	import Waist from "./components/charts/Waist.svelte";
 	import Supplements from "./components/charts/Supplements.svelte";
 	import "@fontsource/balsamiq-sans";
 	import { Badge } from "$lib/components/ui/badge/index.js";
@@ -26,6 +27,7 @@
 	let weightWeekChart = $derived(data.weightWeekChart);
 	let weightViewMode = $state("7days");
 	let weightCharts = $derived(weightViewMode === "7days" ? weightWeekChart : weightMonthChart);
+	let waistChart = $derived(data.waistChart)
 	let supplementCharts = $derived(data.supplementsChart);
 	let currentWeight = $derived(data.currentWeight?.weight);
 	let currentWeightDate = $derived(data.currentWeight?.createdAt);
@@ -398,6 +400,7 @@
 					</div>
 				</div>
 				<Weight dateSeriesData={weightCharts} />
+				<Waist dateSeriesData={waistChart} />
 			</div>
 		</div>
 	</div>
