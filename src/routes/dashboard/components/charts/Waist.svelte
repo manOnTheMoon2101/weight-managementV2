@@ -10,7 +10,7 @@
 	<LineChart
 		data={dateSeriesData}
 		x="createdAt"
-		y="weight"
+		y="waistMeasurement"
 		points
 		yDomain={[0, 120]}
 		padding={{ left: 60, bottom: 40, top: 20, right: 20 }}
@@ -27,7 +27,7 @@
 			  <!-- <Tooltip.Header value={data.createdAt} format="day" /> -->
 			  <Tooltip.List>
 				<Tooltip.Item label={'Date'} value={data.createdAt} />
-				<Tooltip.Item label={'Waist'} value={data.waist} />
+				<Tooltip.Item label={'Waist'} value={data.waistMeasurement} />
 			  </Tooltip.List>
 			{/snippet}
 		  </Tooltip.Root>
