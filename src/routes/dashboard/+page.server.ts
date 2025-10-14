@@ -187,7 +187,7 @@ export const load: PageServerLoad = async ({ request }) => {
 		const formattedWaistEntries = allWaist.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
 		).map((entry) => ({
-			weight: entry.waistMeasurement,
+			waistMeasurement: entry.waistMeasurement,
 			createdAt: new Date(entry.createdAt).toLocaleDateString("en-GB", {
 				day: "2-digit",
 				month: "2-digit",
