@@ -54,12 +54,12 @@
 			<Button
 				href="/dashboard"
 				variant={"navbar"}
-				class={page.url.pathname === "/dashboard" ? "bg-secondary" : ""}>Dashboard</Button
+				class={page.url.pathname !== "/dashboard" ? "bg-secondary" : ""}>Dashboard</Button
 			>
 			<Button
 				href="/dashboard/table"
 				variant={"navbar"}
-				class={page.url.pathname === "/dashboard/table" ? "bg-secondary" : ""}>Table</Button
+				class={page.url.pathname !== "/dashboard/table" ? "bg-secondary" : ""}>Table</Button
 			>
 		</div>
 	</div>
