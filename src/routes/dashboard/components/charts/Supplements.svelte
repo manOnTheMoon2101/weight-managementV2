@@ -1,5 +1,6 @@
 <script lang="ts">
     import { PieChart } from "layerchart";
+    import Button from "$lib/components/ui/button/button.svelte";
     let { data } = $props();
     
     const colors = ["var(--accent)", "white", "var(--secondary)", "var(--background)", "var(--zen)"];
@@ -15,6 +16,24 @@
 
 <div class="h-[400px] w-1/2  bg-primary rounded-2xl p-4 flex flex-col justify-center items-center">
     <h4 class="text-accent font-bold  text-2xl text-center">Supplements</h4>
+    <div class="mb-4 flex flex-row justify-around">
+					<div
+						
+						role="button"
+						tabindex="0"
+						
+					>
+						<Button  size="sm" variant="secondary">Last 7 Days</Button>
+					</div>
+					<div
+						
+						role="button"
+						tabindex="0"
+						
+					>
+						<Button  size="sm" variant="secondary">Last Month</Button>
+					</div>
+				</div>
     <PieChart
         data={pieData}
         key="fruit"

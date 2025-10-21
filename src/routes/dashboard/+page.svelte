@@ -17,9 +17,7 @@
 	import { Badge } from "$lib/components/ui/badge/index.js";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import Card from "$lib/components/ui/card/card.svelte";
-	import { toggleMode, setTheme, resetMode } from "mode-watcher";
 	import Toggler from "./components/navbar/components/toggler.svelte";
-	import { onMount } from "svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
