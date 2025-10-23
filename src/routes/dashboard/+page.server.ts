@@ -184,18 +184,18 @@ export const load: PageServerLoad = async ({ request }) => {
 			}),
 		}));
 
-		const formattedWaistEntries = allWaist.sort(
-			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-		).map((entry) => ({
-			waistMeasurement: entry.waistMeasurement,
-			createdAt: new Date(entry.createdAt).toLocaleDateString("en-GB", {
-				day: "2-digit",
-				month: "2-digit",
-				year: "numeric",
-			}),
-		}));
+		const formattedWaistEntries = allWaist
+			.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+			.map((entry) => ({
+				waistMeasurement: entry.waistMeasurement,
+				createdAt: new Date(entry.createdAt).toLocaleDateString("en-GB", {
+					day: "2-digit",
+					month: "2-digit",
+					year: "numeric",
+				}),
+			}));
 
-		const supplementCounts = await db
+		const supplementCountsWeekAgo = await db
 			.select({
 				fatburnerCount: count(sql`case when ${supplements.fatburner} = true then 1 end`),
 				multiVitaminCount: count(sql`case when ${supplements.multiVitamin} = true then 1 end`),
@@ -208,11 +208,31 @@ export const load: PageServerLoad = async ({ request }) => {
 				and(
 					eq(supplements.userId, session.user.id),
 					eq(supplements.isActive, true),
-					eq(supplements.isDeleted, false)
+					eq(supplements.isDeleted, false),
+					sql`${supplements.createdAt} >= ${sevenDaysAgo.toISOString()}`
 				)
 			);
 
-		const supplementsChart = supplementCounts || null;
+			const supplementCountsMonthAgo = await db
+			.select({
+				fatburnerCount: count(sql`case when ${supplements.fatburner} = true then 1 end`),
+				multiVitaminCount: count(sql`case when ${supplements.multiVitamin} = true then 1 end`),
+				magnesiumCount: count(sql`case when ${supplements.magnesium} = true then 1 end`),
+				claCount: count(sql`case when ${supplements.cla} = true then 1 end`),
+				zenCount: count(sql`case when ${supplements.zen} = true then 1 end`),
+			})
+			.from(supplements)
+			.where(
+				and(
+					eq(supplements.userId, session.user.id),
+					eq(supplements.isActive, true),
+					eq(supplements.isDeleted, false),
+					sql`${supplements.createdAt} >= ${oneMonthAgo.toISOString()}`
+				)
+			);
+
+		const supplementCountsWeekChart = supplementCountsWeekAgo || null;
+		const supplementCountsMonthChart = supplementCountsMonthAgo || null;
 		const weightMonthChart = formattedMonthWeightEntries || null;
 		const weightWeekChart = formattedWeekWeightEntries || null;
 		const waistChart = formattedWaistEntries || null;
@@ -271,11 +291,12 @@ export const load: PageServerLoad = async ({ request }) => {
 		return {
 			user: session.user,
 			averageSleepIntake: averageTimeFromSQL,
-			supplementsChart: supplementsChart,
+			supplementCountsWeekChart: supplementCountsWeekChart,
+			supplementCountsMonthChart : supplementCountsMonthChart,
 			currentWeight: currentWeight,
 			weightMonthChart: weightMonthChart,
 			weightWeekChart: weightWeekChart,
-			waistChart : waistChart,
+			waistChart: waistChart,
 			previousWeight: previousWeight,
 			averageWaterIntake: averageWaterIntake,
 			averageStepsIntake: averageStepsIntake,
