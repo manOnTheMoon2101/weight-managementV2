@@ -6,7 +6,8 @@
 	import { Button } from "$lib/components/ui/button";
 	import LimitsDialog from "./components/limits-dialog.svelte";
 	import { page } from "$app/state";
-
+	import TableProperties from "@lucide/svelte/icons/table-properties";
+	import LayoutDashboard from "@lucide/svelte/icons/layout-dashboard";
 	let {
 		user,
 		userColour,
@@ -25,7 +26,7 @@
 	<div class="flex flex-row items-center justify-between">
 		<div>
 			<DropdownMenu.Root>
-				<DropdownMenu.Trigger>
+				<DropdownMenu.Trigger class="cursor-pointer">
 					<div class="my-1 flex flex-row items-center">
 						<Avatar.Root class="mr-2">
 							<Avatar.Image src={parsedUser.image} alt="User Image" />
@@ -33,7 +34,10 @@
 								>{firstLetter ?? "?"}</Avatar.Fallback
 							>
 						</Avatar.Root>
-						<span>{parsedUser.name}</span>
+						<div class="flex flex-col justify-center items-start ">
+							<h3 class="text-lg">{parsedUser.name}</h3>
+						<h4 class="text-slate-600 text-sm">{parsedUser.email}</h4>
+						</div>
 					</div></DropdownMenu.Trigger
 				>
 				<DropdownMenu.Content>
@@ -54,12 +58,12 @@
 			<Button
 				href="/dashboard"
 				variant={"navbar"}
-				class={page.url.pathname !== "/dashboard" ? "bg-secondary" : ""}>Dashboard</Button
+				class={page.url.pathname !== "/dashboard" ? "bg-secondary" : ""}><LayoutDashboard/>Dashboard</Button
 			>
 			<Button
 				href="/dashboard/table"
 				variant={"navbar"}
-				class={page.url.pathname !== "/dashboard/table" ? "bg-secondary" : ""}>Table</Button
+				class={page.url.pathname !== "/dashboard/table" ? "bg-secondary" : ""}><TableProperties/>Table</Button
 			>
 		</div>
 	</div>
