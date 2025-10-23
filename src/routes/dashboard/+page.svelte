@@ -17,9 +17,7 @@
 	import { Badge } from "$lib/components/ui/badge/index.js";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import Card from "$lib/components/ui/card/card.svelte";
-	import { toggleMode, setTheme, resetMode } from "mode-watcher";
 	import Toggler from "./components/navbar/components/toggler.svelte";
-	import { onMount } from "svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
@@ -28,7 +26,8 @@
 	let weightViewMode = $state("7days");
 	let weightCharts = $derived(weightViewMode === "7days" ? weightWeekChart : weightMonthChart);
 	let waistChart = $derived(data.waistChart)
-	let supplementCharts = $derived(data.supplementsChart);
+	let supplementCharts = $derived(data.supplementCountsWeekChart);
+	let supplementCountsMonthChart = $derived(data.supplementCountsMonthChart);
 	let currentWeight = $derived(data.currentWeight?.weight);
 	let currentWeightDate = $derived(data.currentWeight?.createdAt);
 	let previousWeight = $derived(data.previousWeight?.weight);
@@ -46,6 +45,8 @@
 
 	let viewMode = $state("7days");
 	let isFullscreen = $state(false);
+
+	$inspect(supplementCharts)
 
 	function greet(name: string): string {
 		const hour = new Date().getHours();
@@ -370,7 +371,7 @@
 				</Card>
 			</div>
 
-			<Supplements data={supplementCharts} />
+			<Supplements data={supplementCharts} monthData={supplementCountsMonthChart} />
 		</div>
 
 		<div class="mt-24 flex flex-row items-center justify-evenly">
