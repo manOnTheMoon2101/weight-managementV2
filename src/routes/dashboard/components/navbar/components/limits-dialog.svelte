@@ -20,7 +20,7 @@
 			<Dialog.Title>Edit Limits</Dialog.Title>
 			<Dialog.Description>
 				<form method="POST" action="/dashboard?/updateLimits" onsubmit={handleUpdateSubmit}>
-	<div class="flex flex-row justify-between">
+	<div class="flex flex-row justify-between bg-primary p-1 rounded-lg">
 				<div>
 						<Label for="caloriesLimit">Calories</Label>
 					<Input

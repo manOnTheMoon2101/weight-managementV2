@@ -35,7 +35,7 @@
                         <input type="hidden" name="userColour" bind:value={hex} />
                     </div> -->
 
-					<div class="flex flex-row items-center justify-between">
+					<div class="flex flex-row items-center justify-between ">
 						<div
 							class="flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-transparent"
 						>
@@ -53,7 +53,7 @@
 							</Avatar.Root>
 						</div>
 
-						<div class="w-full">
+						<div class="w-full bg-primary p-1 rounded-lg">
 							<Label for="name">Name</Label>
 							<Input class="my-0" name="name" placeholder="Name" value={user.name} />
 							<Label class="my-0" for="email">Email</Label>
