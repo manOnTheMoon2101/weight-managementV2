@@ -4,6 +4,25 @@
 @source '../node_modules/layerchart/dist';
 @custom-variant dark (&:is(.dark *));
 
+
+
+
+::-webkit-scrollbar {
+  height: 7px;
+  width: 10px;
+  border: 1px solid var(--color-background);
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 20px;
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background: var(--accent);
+}
+
 :root {
 	--background: hsl(0 0% 100%) ;
 	--foreground: hsl(240 10% 3.9%);

@@ -15,18 +15,29 @@
 
 <Dialog.Root>
 	<Dialog.Trigger class="cursor-pointer">Edit Limits</Dialog.Trigger>
-	<Dialog.Content>
+	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()}>
 		<Dialog.Header>
 			<Dialog.Title>Edit Limits</Dialog.Title>
 			<Dialog.Description>
 				<form method="POST" action="/dashboard?/updateLimits" onsubmit={handleUpdateSubmit}>
-					<Label for="caloriesLimit">Calories</Label>
+	<div class="flex flex-row justify-between">
+				<div>
+						<Label for="caloriesLimit">Calories</Label>
 					<Input
 						name="caloriesLimit"
 						placeholder="Calories"
 						type={"number"}
 						value={limits?.caloriesLimit}
 					/>
+
+					<Label for="waterLimit">Water</Label>
+					<Input name="waterLimit" placeholder="Water" type={"number"} value={limits?.waterLimit} />
+
+					<Label for="stepsLimit">Steps</Label>
+					<Input name="stepsLimit" placeholder="Steps" type={"number"} value={limits?.stepsLimit} />
+			</div>
+
+<div>
 
 					<Label for="fatLimit">Fat</Label>
 					<Input name="fatLimit" placeholder="Fat" type={"number"} value={limits?.fatLimit} />
@@ -44,17 +55,13 @@
 
 					<Label for="sugarLimit">Sugar</Label>
 					<Input name="sugarLimit" placeholder="Sugar" type={"number"} value={limits?.sugarLimit} />
-
-					<Label for="waterLimit">Water</Label>
-					<Input name="waterLimit" placeholder="Water" type={"number"} value={limits?.waterLimit} />
-
-					<Label for="stepsLimit">Steps</Label>
-					<Input name="stepsLimit" placeholder="Steps" type={"number"} value={limits?.stepsLimit} />
-					<div class="flex flex-row justify-center">
+</div>
+	</div>
+					<div class="flex flex-row justify-end mt-4">
 						{#if !updateLoading}
-							<Button type="submit" variant='sign'>Save</Button>
+							<Button type="submit" variant='save'>Save</Button>
 						{:else}
-							<Button type="submit" variant='sign' disabled>
+							<Button type="submit" variant='save' disabled>
 								<div class="flex items-center justify-center space-x-2">
 									<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
 									<span>Saving...</span>
