@@ -18,6 +18,7 @@
 	import { makeSvelteCellRenderer } from "ag-grid-svelte5-extended";
 	import AddDialog from "../components/navbar/components/add_dialog/AddDialog.svelte";
 	import Limits from "./components/cellRenderers/Limits.svelte";
+	import Refresh from  "@lucide/svelte/icons/refresh-ccw";
 	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
 
 	const { data } = $props<{ data: PageData }>();
@@ -316,12 +317,17 @@
 			</Popover.Content>
 		</Popover.Root>
 
-		<AddDialog dialogOpen />
+	
 	</div>
 	<div>
-		<Button variant="link" onclick={() => tableComponent?.exportToCsv()}>
+			<AddDialog dialogOpen />
+		<Button variant="save" onclick={() => tableComponent?.exportToCsv()}>
 			<ArrowDownToLine class="mr-2 size-4" />
 			Download CSV
+		</Button>
+		<Button variant="save" >
+			<Refresh class="mr-2 size-4" />
+			Refresh
 		</Button>
 	</div>
 </div>

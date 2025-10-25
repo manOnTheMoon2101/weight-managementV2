@@ -10,6 +10,7 @@
 	import Measurement from  "@lucide/svelte/icons/ruler";
 	import Apple from  "@lucide/svelte/icons/apple";
 	import Pill from "@lucide/svelte/icons/pill";
+		import Plus from "@lucide/svelte/icons/circle-plus";
 	import { enhance } from "$app/forms";
 	
 	let { dialogOpen = $bindable() } = $props<{ dialogOpen: boolean }>();
@@ -25,7 +26,7 @@
 
 <Sheet.Root>
 	<Sheet.Trigger>
-		<Button variant={'secondary'}>Add</Button>
+		<Button variant={'save'}><Plus class="mr-1"/>Add</Button>
 	</Sheet.Trigger>
 	<Sheet.Content class="max-h-[100vh] overflow-y-auto" side="right">
 		<Sheet.Header>
@@ -153,11 +154,11 @@
 					 -->
 					<div class="flex gap-2 mt-4">
 						{#if !createLoading}
-						<Button type="submit" class="w-full" variant='sign'>
+						<Button type="submit" class="w-full" variant='save'>
 							Create
 						</Button>
 						{:else}
-						<Button type="submit"  class="w-full" variant='sign' disabled>
+						<Button type="submit"  class="w-full" variant='save' disabled>
 							<div class="flex items-center justify-center space-x-2">
 								<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
 								<span>Creating...</span>
