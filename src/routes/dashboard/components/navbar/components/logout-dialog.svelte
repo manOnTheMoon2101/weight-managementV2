@@ -5,6 +5,7 @@
 	import Logout from "@lucide/svelte/icons/log-out";
 	import { goto } from "$app/navigation";
 	import { authClient } from "$lib/auth-client";
+	import LogOut from "@lucide/svelte/icons/log-out";
 
 	async function handleSignOut() {
 		try {
@@ -42,7 +43,7 @@
 					onclick={() => handleSignOut()}
 					class="w-fit"
 					variant="destructive"
-					size="lg">Log out</Button
+					size="lg"><LogOut/>Log out</Button
 				>
 			</AlertDialog.Footer>
 		</div>
