@@ -17,6 +17,7 @@
 				sign:"bg-secondary cursor-pointer text-white hover:bg-secondary/80",
 				logout:"bg-destructive cursor-pointer text-secondary-foreground hover:bg-destructive/80",
 				link: "text-secondary underline-offset-4 cursor-pointer hover:underline",
+				save: "text-accent underline-offset-4 cursor-pointer hover:underline",
 
 				beigeButton: "bg-[hsl(37,38%,80%)] cursor-pointer text-white hover:bg-[hsl(37,38%,80%)]/80",
 				redButton: "bg-[hsl(0,100%,50%)] cursor-pointer text-white hover:bg-bg-[hsl(0,100%,50%)]/80",

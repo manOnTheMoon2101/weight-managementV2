@@ -6,6 +6,11 @@
 	import { Checkbox } from "$lib/components/ui/checkbox/index.js";
 	import SettingsIcon from "@lucide/svelte/icons/settings-2";
 	import * as Sheet from "$lib/components/ui/sheet/index.js";
+	import Health from  "@lucide/svelte/icons/heart";
+	import Measurement from  "@lucide/svelte/icons/ruler";
+	import Apple from  "@lucide/svelte/icons/apple";
+	import Pill from "@lucide/svelte/icons/pill";
+		import Plus from "@lucide/svelte/icons/circle-plus";
 	import { enhance } from "$app/forms";
 	
 	let { dialogOpen = $bindable() } = $props<{ dialogOpen: boolean }>();
@@ -21,11 +26,11 @@
 
 <Sheet.Root>
 	<Sheet.Trigger>
-		<Button variant={'secondary'}>Add</Button>
+		<Button variant={'save'}><Plus class="mr-1"/>Add</Button>
 	</Sheet.Trigger>
-	<Sheet.Content class="max-h-[100vh] overflow-y-auto" side="left">
+	<Sheet.Content class="max-h-[100vh] overflow-y-auto" side="right">
 		<Sheet.Header>
-			<Sheet.Title>Add New Data</Sheet.Title>
+			<Sheet.Title>Add New</Sheet.Title>
 		</Sheet.Header>
 		<form 
 	
@@ -36,7 +41,7 @@
 		>
 					<Card.Root class="bg-primary">
 						<Card.Header class="pb-3">
-							<Card.Title class="text-base">Health</Card.Title>
+							<Card.Title class="text-base flex"><Health class="mr-1"/>Health</Card.Title>
 						</Card.Header>
 						<Card.Content class="space-y-2">
 							<div>
@@ -57,7 +62,7 @@
 					<div>
 						<Card.Root class="bg-primary flex-1">
 							<Card.Header class="pb-3">
-								<Card.Title class="text-base">Measurements</Card.Title>
+								<Card.Title class="text-base flex"><Measurement class="mr-1"/>Measurements</Card.Title>
 							</Card.Header>
 							<Card.Content class="space-y-2">
 								<div>
@@ -73,7 +78,7 @@
 					<div class="flex flex-row gap-3">
 						<Card.Root class="bg-primary flex-1">
 							<Card.Header class="pb-3">
-								<Card.Title class="text-base">Nutrients</Card.Title>
+								<Card.Title class="text-base flex"><Apple class="mr-1"/>Nutrients</Card.Title>
 							</Card.Header>
 							<Card.Content class="space-y-2">
 								<div>
@@ -101,27 +106,27 @@
 
 						<Card.Root class="bg-primary flex-1">
 							<Card.Header class="pb-3">
-								<Card.Title class="text-base">Supplements</Card.Title>
+								<Card.Title class="text-base flex"><Pill class="mr-1"/>Supplements</Card.Title>
 							</Card.Header>
 							<Card.Content>
 								<div class="flex flex-col space-y-1">
-									<div class="flex items-center space-x-2">
+									<div class="flex items-start space-x-2 my-4">
 										<Checkbox id="cla" name="cla"  />
 										<Label for="cla" class="text-sm">CLA</Label>
 									</div>
-									<div class="flex items-center space-x-2">
+									<div class="flex items-start space-x-2 my-4">
 										<Checkbox id="fatBurner" name="fatBurner"  />
 										<Label for="fatBurner" class="text-sm">Fat Burner</Label>
 									</div>
-									<div class="flex items-center space-x-2">
+									<div class="flex items-start space-x-2 my-4">
 										<Checkbox id="vitamin" name="vitamin"  />
 										<Label for="vitamin" class="text-sm">Vitamin</Label>
 									</div>
-									<div class="flex items-center space-x-2">
+									<div class="flex items-start space-x-2 my-4">
 										<Checkbox id="zen" name="zen"  />
 										<Label for="zen" class="text-sm">Zen</Label>
 									</div>
-									<div class="flex items-center space-x-2">
+									<div class="flex items-start space-x-2 my-4">
 										<Checkbox id="magnesium" name="magnesium"  />
 										<Label for="magnesium" class="text-sm">Magnesium</Label>
 									</div>
@@ -149,11 +154,11 @@
 					 -->
 					<div class="flex gap-2 mt-4">
 						{#if !createLoading}
-						<Button type="submit" class="w-full" variant='sign'>
+						<Button type="submit" class="w-full" variant='save'>
 							Create
 						</Button>
 						{:else}
-						<Button type="submit"  class="w-full" variant='sign' disabled>
+						<Button type="submit"  class="w-full" variant='save' disabled>
 							<div class="flex items-center justify-center space-x-2">
 								<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
 								<span>Creating...</span>

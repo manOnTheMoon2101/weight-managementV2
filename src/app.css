@@ -4,6 +4,25 @@
 @source '../node_modules/layerchart/dist';
 @custom-variant dark (&:is(.dark *));
 
+
+
+
+::-webkit-scrollbar {
+  height: 7px;
+  width: 10px;
+  border: 1px solid var(--color-background);
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 20px;
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background: var(--accent);
+}
+
 :root {
 	--background: hsl(0 0% 100%) ;
 	--foreground: hsl(240 10% 3.9%);
@@ -35,6 +54,8 @@
 	--sign: hsl(140, 100%, 38%);
 	--zen: hsl(34, 100%, 38%);
 	--radius: 0.5rem;
+
+	--save:hsl(140, 100%, 38%)
 }
 
 .dark {
@@ -199,6 +220,8 @@
 	--color-sidebar-ring: var(--sidebar-ring);
 	--color-sign: var(--sign);
 	--color-zen: var(--zen);
+	--color-save: var(--save);
+
 }
 
 @layer base {

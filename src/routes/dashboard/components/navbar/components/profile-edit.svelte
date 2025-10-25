@@ -18,7 +18,7 @@
 
 <Dialog.Root>
 	<Dialog.Trigger class="cursor-pointer">Edit Profile</Dialog.Trigger>
-	<Dialog.Content>
+	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()}>
 		<Dialog.Header>
 			<Dialog.Title>Edit Profile</Dialog.Title>
 			<Dialog.Description>
@@ -34,22 +34,38 @@
                         <ColorPicker bind:hex components={ChromeVariant} sliderDirection="horizontal" />
                         <input type="hidden" name="userColour" bind:value={hex} />
                     </div> -->
-					<input type="file" name="file" bind:this={fileInput} class="hidden" accept="image/*" />
 
-					<Avatar.Root class="cursor-pointer" onclick={() => fileInput?.click()}>
-						<Avatar.Image src={user.image} alt={user.name} />
-						<Avatar.Fallback>CN</Avatar.Fallback>
-					</Avatar.Root>
-					<!-- <button>Upload</button> -->
-					<Label for="name">Name</Label>
-					<Input name="name" placeholder="Name" value={user.name} />
-					<Label for="email">Email</Label>
-					<Input name="email" placeholder="Email" type="email" value={user.email} />
-					<div class="flex flex-row justify-center">
+					<div class="flex flex-row items-center justify-between ">
+						<div
+							class="flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-transparent"
+						>
+							<input
+								type="file"
+								name="file"
+								bind:this={fileInput}
+								class="hidden"
+								accept="image/*"
+							/>
+
+							<Avatar.Root class="h-24 w-24 cursor-pointer" onclick={() => fileInput?.click()}>
+								<Avatar.Image src={user.image} alt={user.name} />
+								<Avatar.Fallback>CN</Avatar.Fallback>
+							</Avatar.Root>
+						</div>
+
+						<div class="w-full bg-primary p-1 rounded-lg">
+							<Label for="name">Name</Label>
+							<Input class="my-0" name="name" placeholder="Name" value={user.name} />
+							<Label class="my-0" for="email">Email</Label>
+							<Input name="email" placeholder="Email" type="email" value={user.email} />
+						</div>
+					</div>
+
+					<div class="mt-4 flex flex-row justify-end">
 						{#if !updateLoading}
-							<Button type="submit" variant={"sign"}>Save</Button>
+							<Button type="submit" variant={"save"}>Save</Button>
 						{:else}
-							<Button type="submit" variant={"sign"} disabled>
+							<Button type="submit" variant={"save"} disabled>
 								<div class="flex items-center justify-center space-x-2">
 									<div class="border-accent h-4 w-4 animate-spin rounded-full border-b-2"></div>
 									<span>Saving...</span>
