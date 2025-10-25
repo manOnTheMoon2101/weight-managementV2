@@ -131,6 +131,16 @@
 				limit: limits?.caloriesLimit,
 			}),
 		},
+				{
+			headerName: "Supplements",
+			filter: false,
+			sortable: false,
+			minWidth:150,
+			cellRenderer: makeSvelteCellRenderer(Supplements as any),
+			cellRendererParams: {
+				supplementFields: ["fatBurner", "zen", "multiVitamin", "magnesium", "cla"],
+			},
+		},
 		{ headerName: "Protein", field: "protein", filter: "agNumberColumnFilter" },
 		{
 			headerName: "Fat",
@@ -164,15 +174,6 @@
 				type: "More",
 				limit: limits?.carbsLimit,
 			}),
-		},
-		{
-			headerName: "Supplements",
-			filter: false,
-			sortable: false,
-			cellRenderer: makeSvelteCellRenderer(Supplements as any),
-			cellRendererParams: {
-				supplementFields: ["fatBurner", "zen", "multiVitamin", "magnesium", "cla"],
-			},
 		},
 	];
 
