@@ -35,6 +35,8 @@
 	--sign: hsl(140, 100%, 38%);
 	--zen: hsl(34, 100%, 38%);
 	--radius: 0.5rem;
+
+	--save:hsl(140, 100%, 38%)
 }
 
 .dark {
@@ -199,6 +201,8 @@
 	--color-sidebar-ring: var(--sidebar-ring);
 	--color-sign: var(--sign);
 	--color-zen: var(--zen);
+	--color-save: var(--save);
+
 }
 
 @layer base {
