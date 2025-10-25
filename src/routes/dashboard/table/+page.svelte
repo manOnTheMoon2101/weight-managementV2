@@ -10,6 +10,7 @@
 	import CalendarIcon from "@lucide/svelte/icons/calendar";
 	import ArrowDownToLine from "@lucide/svelte/icons/arrow-down-to-line";
 	import { page } from "$app/state";
+	import { browser } from "$app/environment";
 	import Measurement from "./components/cellRenderers/Measurement.svelte";
 	import Weight from "./components/cellRenderers/Weight.svelte";
 	import Supplements from "./components/cellRenderers/Supplements.svelte";
@@ -176,6 +177,28 @@
 
 	let value: { start: DateValue | undefined; end: DateValue | undefined } | undefined = $state();
 
+	$effect(() => {
+		if (browser) {
+			const storedDates = localStorage.getItem("dates");
+			if (storedDates) {
+				try {
+					const item = JSON.parse(storedDates);
+					const foundItem = items.find((i) => i.value === item.value);
+					if (foundItem) {
+						selectedPreset = foundItem.label;
+						const todayDate = today(getLocalTimeZone());
+						value = {
+							start: todayDate.add({ days: foundItem.start }),
+							end: todayDate.add({ days: foundItem.end }),
+						};
+					}
+				} catch (error) {
+					console.error("Error parsing stored dates:", error);
+				}
+			}
+		}
+	});
+
 	const df = new DateFormatter("en-US", {
 		dateStyle: "medium",
 	});
@@ -207,10 +230,27 @@
 	let selectedPreset = $state("");
 	let tableComponent: any = $state();
 
+	const storedDateLabel = $derived.by(() => {
+		if (!browser) return null;
+
+		const stored = localStorage.getItem("dates");
+		if (stored) {
+			try {
+				const parsed = JSON.parse(stored);
+				return parsed.label;
+			} catch (error) {
+				console.error("Error parsing stored dates:", error);
+				return null;
+			}
+		}
+		return null;
+	});
+
 	function handlePresetSelect(selectedValue: string | string[]) {
 		const valueToUse = Array.isArray(selectedValue) ? selectedValue[0] : selectedValue;
 		const item = items.find((i) => i.value === valueToUse);
-		if (item) {
+		if (item && browser) {
+			localStorage.setItem("dates", JSON.stringify(item));
 			selectedPreset = item.label;
 			const todayDate = today(getLocalTimeZone());
 			value = {
@@ -232,6 +272,12 @@
 
 	function handleCalendarChange(newValue: typeof value) {
 		value = newValue;
+		// Clear preset selection when manually changing dates
+		selectedPreset = "";
+		// Clear localStorage when manually selecting dates
+		if (browser) {
+			localStorage.removeItem("dates");
+		}
 		if (newValue?.start && newValue?.end) {
 			updateDateRange();
 		}
@@ -251,7 +297,7 @@
 				)}
 			>
 				<CalendarIcon class="mr-2 size-4" />
-				{value && (value.start || value.end) ? valueString : "Last 7 Days"}
+				{value && (value.start || value.end) ? valueString : storedDateLabel ? selectedPreset : ""}
 			</Popover.Trigger>
 			<Popover.Content class="flex w-auto flex-col space-y-2 p-2">
 				<Select.Root type="single" onValueChange={handlePresetSelect}>
