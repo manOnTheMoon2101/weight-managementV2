@@ -13,13 +13,13 @@
 	import { browser } from "$app/environment";
 	import Measurement from "./components/cellRenderers/Measurement.svelte";
 	import Weight from "./components/cellRenderers/Weight.svelte";
-	import Date from "./components/cellRenderers/Date.svelte"
+	import Date from "./components/cellRenderers/Date.svelte";
 	import Supplements from "./components/cellRenderers/Supplements.svelte";
 	import Dialog from "./components/view_dialog/Dialog.svelte";
 	import { makeSvelteCellRenderer } from "ag-grid-svelte5-extended";
 	import AddDialog from "../components/navbar/components/add_dialog/AddDialog.svelte";
 	import Limits from "./components/cellRenderers/Limits.svelte";
-	import Refresh from  "@lucide/svelte/icons/refresh-ccw";
+	import Refresh from "@lucide/svelte/icons/refresh-ccw";
 	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
 
 	const { data } = $props<{ data: PageData }>();
@@ -82,7 +82,7 @@
 				rowToEdit: params.data,
 			}),
 		},
-		{ headerName: "Date", field: "createdAt" ,cellRenderer: makeSvelteCellRenderer(Date as any),},
+		{ headerName: "Date", field: "createdAt", cellRenderer: makeSvelteCellRenderer(Date as any),minWidth:175, },
 		{
 			headerName: "Weight",
 			field: "weight",
@@ -132,11 +132,11 @@
 				limit: limits?.caloriesLimit,
 			}),
 		},
-				{
+		{
 			headerName: "Supplements",
 			filter: false,
 			sortable: false,
-			minWidth:150,
+			minWidth: 150,
 			cellRenderer: makeSvelteCellRenderer(Supplements as any),
 			cellRendererParams: {
 				supplementFields: ["fatBurner", "zen", "multiVitamin", "magnesium", "cla"],
@@ -316,16 +316,14 @@
 				</div>
 			</Popover.Content>
 		</Popover.Root>
-
-	
 	</div>
 	<div>
-			<AddDialog dialogOpen />
+		<AddDialog dialogOpen />
 		<Button variant="save" onclick={() => tableComponent?.exportToCsv()}>
 			<ArrowDownToLine class="mr-2 size-4" />
 			Download CSV
 		</Button>
-		<Button variant="save" >
+		<Button variant="save">
 			<Refresh class="mr-2 size-4" />
 			Refresh
 		</Button>
