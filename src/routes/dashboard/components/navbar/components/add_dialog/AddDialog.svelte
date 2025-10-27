@@ -10,7 +10,7 @@
 	import Measurement from  "@lucide/svelte/icons/ruler";
 	import Apple from  "@lucide/svelte/icons/apple";
 	import Pill from "@lucide/svelte/icons/pill";
-		import Plus from "@lucide/svelte/icons/circle-plus";
+	import Plus from "@lucide/svelte/icons/circle-plus";
 	import { enhance } from "$app/forms";
 	
 	let { dialogOpen = $bindable() } = $props<{ dialogOpen: boolean }>();
