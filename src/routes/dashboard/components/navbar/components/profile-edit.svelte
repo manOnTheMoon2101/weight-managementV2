@@ -53,7 +53,7 @@
 							</Avatar.Root>
 						</div>
 
-						<div class="w-full bg-primary p-1 rounded-lg">
+						<div class="w-full  p-1 rounded-lg">
 							<Label for="name">Name</Label>
 							<Input class="my-0" name="name" placeholder="Name" value={user.name} />
 							<Label class="my-0" for="email">Email</Label>
