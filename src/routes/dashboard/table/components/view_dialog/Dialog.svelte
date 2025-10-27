@@ -9,6 +9,11 @@
 	import X from "@lucide/svelte/icons/x";
 	import * as Sheet from "$lib/components/ui/sheet/index.js";
 	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
+		import Health from  "@lucide/svelte/icons/heart";
+	import Measurement from  "@lucide/svelte/icons/ruler";
+	import Apple from  "@lucide/svelte/icons/apple";
+	import Bed from  "@lucide/svelte/icons/bed";
+	import Pill from "@lucide/svelte/icons/pill";
 	let { dialogOpen = $bindable(), rowToEdit } = $props<{ dialogOpen: boolean; rowToEdit: any }>();
 	
 	let deleteLoading = $state(false);
@@ -32,7 +37,7 @@
 
 <Sheet.Root>
 	<Sheet.Trigger class="w-full">
-		<Button size={"sm"} variant={"sign"}><SettingsIcon class="size-4" />Edit</Button>
+		<Button size={"sm"} variant={"save"}><SettingsIcon class="size-4" />Edit</Button>
 	</Sheet.Trigger>
 	<Sheet.Content class="max-h-[100vh] overflow-y-auto" side="left">
 		<Sheet.Header>
@@ -42,7 +47,7 @@
 					<input type="hidden" name="id" value={rowToEdit?.id || ""} />
 					<Card.Root class="bg-primary">
 						<Card.Header class="pb-3">
-							<Card.Title class="text-base">Health</Card.Title>
+							<Card.Title class="text-base flex"><Health class="mr-1"/>Health</Card.Title>
 						</Card.Header>
 						<Card.Content class="space-y-2">
 							<div>
@@ -78,7 +83,7 @@
 					<div>
 						<Card.Root class="bg-primary flex-1">
 							<Card.Header class="pb-3">
-								<Card.Title class="text-base">Measurements</Card.Title>
+								<Card.Title class="text-base flex"><Measurement class="mr-1"/>Measurements</Card.Title>
 							</Card.Header>
 							<Card.Content class="space-y-2">
 								<div>
@@ -95,7 +100,7 @@
 					<div class="flex flex-row gap-3">
 						<Card.Root class="bg-primary flex-1">
 							<Card.Header class="pb-3">
-								<Card.Title class="text-base">Nutrients</Card.Title>
+								<Card.Title class="text-base flex"><Apple class="mr-1"/>Nutrients</Card.Title>
 							</Card.Header>
 							<Card.Content class="space-y-2">
 								<div>
@@ -143,7 +148,7 @@
 
 						<Card.Root class="bg-primary flex-1">
 							<Card.Header class="pb-3">
-								<Card.Title class="text-base">Supplements</Card.Title>
+								<Card.Title class="text-base flex"><Pill class="mr-1"/>Supplements</Card.Title>
 							</Card.Header>
 							<Card.Content>
 								<div class="flex flex-col space-y-1">
@@ -194,7 +199,7 @@
 
 					<Card.Root class="bg-primary">
 						<Card.Header class="pb-3">
-							<Card.Title class="text-base">Sleep</Card.Title>
+							<Card.Title class="text-base flex"><Bed class="mr-1"/>Sleep</Card.Title>
 						</Card.Header>
 						<Card.Content>
 							<!-- <div>
@@ -222,9 +227,9 @@
 					
 
 					{#if !updateLoading}
-					<Button class="mt-4 w-full" variant="sign" type="submit">Update</Button>
+					<Button class="mt-4 w-full" variant="save" type="submit">Update</Button>
 									{:else}
-										<Button class="mt-4  w-full" variant="sign" type="button" disabled>
+										<Button class="mt-4  w-full" variant="save" type="button" disabled>
 											<div class="flex items-center justify-center space-x-2">
 												<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
 												<span>Updating...</span>
@@ -235,7 +240,7 @@
 									<div >
 										<AlertDialog.Root>
 											<AlertDialog.Trigger class="w-full">
-												<Button class="mt-4 w-full" variant="destructive">Delete</Button>
+												<Button class="mt-4 w-full text-destructive" variant="save">Delete</Button>
 											</AlertDialog.Trigger>
 											<AlertDialog.Content>
 												<AlertDialog.Header>
