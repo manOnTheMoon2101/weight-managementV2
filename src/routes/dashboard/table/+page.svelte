@@ -13,6 +13,7 @@
 	import { browser } from "$app/environment";
 	import Measurement from "./components/cellRenderers/Measurement.svelte";
 	import Weight from "./components/cellRenderers/Weight.svelte";
+	import Date from "./components/cellRenderers/Date.svelte"
 	import Supplements from "./components/cellRenderers/Supplements.svelte";
 	import Dialog from "./components/view_dialog/Dialog.svelte";
 	import { makeSvelteCellRenderer } from "ag-grid-svelte5-extended";
@@ -81,7 +82,7 @@
 				rowToEdit: params.data,
 			}),
 		},
-		{ headerName: "Date", field: "createdAt" },
+		{ headerName: "Date", field: "createdAt" ,cellRenderer: makeSvelteCellRenderer(Date as any),},
 		{
 			headerName: "Weight",
 			field: "weight",
