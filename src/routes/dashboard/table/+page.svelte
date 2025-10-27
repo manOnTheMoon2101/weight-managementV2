@@ -268,8 +268,6 @@
 		{ value: "yesterday", label: "Yesterday", start: -1, end: -1 },
 		{ value: "last7days", label: "Last 7 days", start: -7, end: 0 },
 		{ value: "last30days", label: "Last 30 days", start: -30, end: 0 },
-		{ value: "thisweek", label: "This week", start: -7, end: 0 },
-		{ value: "thismonth", label: "This month", start: -30, end: 0 },
 	];
 
 	function handleCalendarChange(newValue: typeof value) {
