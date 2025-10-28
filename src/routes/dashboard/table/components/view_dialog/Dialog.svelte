@@ -152,6 +152,32 @@
 							</Card.Header>
 							<Card.Content>
 								<div class="flex flex-col space-y-1">
+									
+									<div class="flex items-start space-x-2 my-4">
+										<Checkbox
+											id="vitamin"
+											name="vitamin"
+											checked={rowToEdit?.multiVitamin == "true" ? true : false}
+										/>
+										<Label for="vitamin" class="text-sm">Vitamin</Label>
+									</div>
+									<div class="flex items-start space-x-2 my-4">
+										<Checkbox
+											id="magnesium"
+											name="magnesium"
+											checked={rowToEdit?.magnesium == "true" ? true : false}
+										/>
+										<Label for="magnesium" class="text-sm">Magnesium</Label>
+									</div>
+									<div class="flex items-start space-x-2 my-4">
+										<Checkbox
+											id="zen"
+											name="zen"
+											checked={rowToEdit?.zen == "true" ? true : false}
+										/>
+										<Label for="zen" class="text-sm">Zen</Label>
+									</div>
+									
 									<div class="flex items-start space-x-2 my-4">
 										<Checkbox
 											id="cla"
@@ -167,30 +193,6 @@
 											checked={rowToEdit?.fatBurner == "true" ? true : false}
 										/>
 										<Label for="fatBurner" class="text-sm">Fat Burner</Label>
-									</div>
-									<div class="flex items-start space-x-2 my-4">
-										<Checkbox
-											id="vitamin"
-											name="vitamin"
-											checked={rowToEdit?.multiVitamin == "true" ? true : false}
-										/>
-										<Label for="vitamin" class="text-sm">Vitamin</Label>
-									</div>
-									<div class="flex items-start space-x-2 my-4">
-										<Checkbox
-											id="zen"
-											name="zen"
-											checked={rowToEdit?.zen == "true" ? true : false}
-										/>
-										<Label for="zen" class="text-sm">Zen</Label>
-									</div>
-									<div class="flex items-start space-x-2 my-4">
-										<Checkbox
-											id="magnesium"
-											name="magnesium"
-											checked={rowToEdit?.magnesium == "true" ? true : false}
-										/>
-										<Label for="magnesium" class="text-sm">Magnesium</Label>
 									</div>
 								</div>
 							</Card.Content>
