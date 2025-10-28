@@ -152,23 +152,8 @@
 							</Card.Header>
 							<Card.Content>
 								<div class="flex flex-col space-y-1">
-									<div class="flex items-center space-x-2">
-										<Checkbox
-											id="cla"
-											name="cla"
-											checked={rowToEdit?.cla == "true" ? true : false}
-										/>
-										<Label for="cla" class="text-sm">CLA</Label>
-									</div>
-									<div class="flex items-center space-x-2">
-										<Checkbox
-											id="fatBurner"
-											name="fatBurner"
-											checked={rowToEdit?.fatBurner == "true" ? true : false}
-										/>
-										<Label for="fatBurner" class="text-sm">Fat Burner</Label>
-									</div>
-									<div class="flex items-center space-x-2">
+									
+									<div class="flex items-start space-x-2 my-4">
 										<Checkbox
 											id="vitamin"
 											name="vitamin"
@@ -176,7 +161,15 @@
 										/>
 										<Label for="vitamin" class="text-sm">Vitamin</Label>
 									</div>
-									<div class="flex items-center space-x-2">
+									<div class="flex items-start space-x-2 my-4">
+										<Checkbox
+											id="magnesium"
+											name="magnesium"
+											checked={rowToEdit?.magnesium == "true" ? true : false}
+										/>
+										<Label for="magnesium" class="text-sm">Magnesium</Label>
+									</div>
+									<div class="flex items-start space-x-2 my-4">
 										<Checkbox
 											id="zen"
 											name="zen"
@@ -184,13 +177,22 @@
 										/>
 										<Label for="zen" class="text-sm">Zen</Label>
 									</div>
-									<div class="flex items-center space-x-2">
+									
+									<div class="flex items-start space-x-2 my-4">
 										<Checkbox
-											id="magnesium"
-											name="magnesium"
-											checked={rowToEdit?.magnesium == "true" ? true : false}
+											id="cla"
+											name="cla"
+											checked={rowToEdit?.cla == "true" ? true : false}
 										/>
-										<Label for="magnesium" class="text-sm">Magnesium</Label>
+										<Label for="cla" class="text-sm">CLA</Label>
+									</div>
+									<div class="flex items-start space-x-2 my-4">
+										<Checkbox
+											id="fatBurner"
+											name="fatBurner"
+											checked={rowToEdit?.fatBurner == "true" ? true : false}
+										/>
+										<Label for="fatBurner" class="text-sm">Fat Burner</Label>
 									</div>
 								</div>
 							</Card.Content>
