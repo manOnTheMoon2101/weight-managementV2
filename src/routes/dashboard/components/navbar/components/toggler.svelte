@@ -1,13 +1,14 @@
 <script lang="ts">
-	import SunIcon from "@lucide/svelte/icons/sun";
-	import MoonIcon from "@lucide/svelte/icons/moon";
-	import { onMount } from "svelte";
+	import { onMount, onDestroy } from "svelte";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-	import { toggleMode, setTheme, resetMode } from "mode-watcher";
+	import { toggleMode, setTheme } from "mode-watcher";
 	import { Button } from "$lib/components/ui/button/index.js";
 	import Palette from "@lucide/svelte/icons/palette";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	const THEME_STORAGE_KEY = "selectedTheme";
+	const themes = ["", "redTheme", "purpleTheme", "greenTheme"];
+	let currentThemeIndex = 0;
+
 	function saveTheme(theme: string) {
 		if (typeof window !== "undefined") {
 			localStorage.setItem(THEME_STORAGE_KEY, theme);
@@ -22,19 +23,29 @@
 	function setThemeWithStorage(theme: string) {
 		setTheme(theme);
 		saveTheme(theme);
+		// Update current theme index
+		currentThemeIndex = themes.indexOf(theme);
 	}
-	function toggleModeWithStorage() {
-		toggleMode();
-		if (typeof window !== "undefined") {
-			const isDark = document.documentElement.classList.contains("dark");
-			localStorage.setItem("dark-mode", isDark.toString());
+
+	function cycleTheme() {
+		currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+		const nextTheme = themes[currentThemeIndex];
+		setThemeWithStorage(nextTheme);
+	}
+
+	function handleKeydown(event: KeyboardEvent) {
+		if (event.altKey && event.key.toLowerCase() === 't') {
+			event.preventDefault();
+			cycleTheme();
 		}
 	}
+
 
 	onMount(() => {
 		const savedTheme = loadTheme();
 		if (savedTheme) {
 			setTheme(savedTheme);
+			currentThemeIndex = themes.indexOf(savedTheme);
 		}
 
 		if (typeof window !== "undefined") {
@@ -44,6 +55,15 @@
 			} else if (savedDarkMode === "false" && document.documentElement.classList.contains("dark")) {
 				toggleMode();
 			}
+
+			// Add global keyboard event listener
+			window.addEventListener('keydown', handleKeydown);
+		}
+	});
+
+	onDestroy(() => {
+		if (typeof window !== "undefined") {
+			window.removeEventListener('keydown', handleKeydown);
 		}
 	});
 </script>
@@ -76,11 +96,20 @@
 			<Tooltip.Provider delayDuration={100}>
 				<Tooltip.Root>
 					<Tooltip.Trigger>
-						<Button variant='screen'><Palette/></Button>
+						<!-- <Button variant='screen'><Palette/></Button> -->
 		
+						<p  class="text-accent mx-2 text-sm">
+  Change Theme
+  <kbd
+    class="bg-muted text-muted-foreground pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100"
+  >
+    <span class="text-xs">ALT</span>T
+  </kbd>
+</p>
+
 					</Tooltip.Trigger>
 					<Tooltip.Content side="top">
-						<span>Change Theme</span>
+						<span>Change Theme (Alt+T)</span>
 					</Tooltip.Content>
 				</Tooltip.Root>
 			</Tooltip.Provider>

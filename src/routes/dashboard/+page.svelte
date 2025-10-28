@@ -122,7 +122,7 @@
 			{/if}
 
 			<div class="flex flex-row">
-				<Toggler />
+				
 				
 
 
