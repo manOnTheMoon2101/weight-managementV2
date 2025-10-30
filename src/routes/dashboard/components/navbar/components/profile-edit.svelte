@@ -18,7 +18,7 @@
 
 <Dialog.Root>
 	<Dialog.Trigger class="cursor-pointer">Edit Profile</Dialog.Trigger>
-	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()}>
+	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="sm:max-w-[700px]">
 		<Dialog.Header>
 			<Dialog.Title>Edit Profile</Dialog.Title>
 			<Dialog.Description>
