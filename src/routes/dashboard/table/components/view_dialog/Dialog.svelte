@@ -33,6 +33,16 @@
 	function handleUpdateSubmit() {
 		updateLoading = true;
 	}
+
+		function formatDate(dateValue: string | Date): string {
+		const date = new Date(dateValue);
+		return date.toLocaleDateString("en-US", {
+			weekday: "long",
+			month: "short",
+			year: "numeric",
+			day: "numeric",
+		});
+	}
 </script>
 
 <Sheet.Root>
@@ -41,7 +51,7 @@
 	</Sheet.Trigger>
 	<Sheet.Content class="max-h-[100vh] overflow-y-auto" side="left">
 		<Sheet.Header>
-			<Sheet.Title class="flex flex-row justify-center">{rowToEdit ? formatDMY(rowToEdit.createdAt) : ""}</Sheet.Title>
+			<Sheet.Title class="flex flex-row justify-center">{rowToEdit ? formatDate(rowToEdit.createdAt) : ""}</Sheet.Title>
 			<Sheet.Description>
 				<form class="space-y-3 overflow-y-auto" method="POST" action="?/updateNutrients" onsubmit={handleUpdateSubmit}>
 					<input type="hidden" name="id" value={rowToEdit?.id || ""} />
