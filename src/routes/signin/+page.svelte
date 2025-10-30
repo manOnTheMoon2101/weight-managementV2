@@ -9,18 +9,22 @@
 	let loading = false;
 
 	async function handleSignIn() {
+		loading = true;
 		error = "";
-		try {
-			loading = true;
-			await authClient.signIn.email({
-				email,
-				password,
-			});
-			await goto("/dashboard");
-		} catch (e) {
-			error = "Sign in failed. Please check your credentials.";
-		}
-		loading = false;
+
+		await authClient.signIn.email({
+			email,
+			password,
+			fetchOptions:{
+				onSuccess: async () => {
+				await goto("/dashboard");
+			},
+			onError: (ctx) => {
+				error = "Wrong Password or Email";
+				loading = false;
+			},
+			}
+		});
 	}
 </script>
 
@@ -71,8 +75,8 @@
 			{#if !loading}
 				<Button variant="sign" type="submit" size="lg" class="w-full">Sign In</Button>
 			{:else}
-				<div class="flex items-center justify-center space-x-2 text-foreground">
-					<div class="h-5 w-5 animate-spin rounded-full border-b-2 border-accent"></div>
+				<div class="text-foreground flex items-center justify-center space-x-2">
+					<div class="border-accent h-5 w-5 animate-spin rounded-full border-b-2"></div>
 					<span>Signing in...</span>
 				</div>
 			{/if}
