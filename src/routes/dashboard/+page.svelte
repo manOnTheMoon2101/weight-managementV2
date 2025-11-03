@@ -25,7 +25,7 @@
 	let weightWeekChart = $derived(data.weightWeekChart);
 	let weightViewMode = $state("7days");
 	let weightCharts = $derived(weightViewMode === "7days" ? weightWeekChart : weightMonthChart);
-	let waistChart = $derived(data.waistChart)
+	let waistChart = $derived(data.waistChart);
 	let supplementCharts = $derived(data.supplementCountsWeekChart);
 	let supplementCountsMonthChart = $derived(data.supplementCountsMonthChart);
 	let currentWeight = $derived(data.currentWeight?.weight);
@@ -46,16 +46,16 @@
 	let viewMode = $state("7days");
 	let isFullscreen = $state(false);
 
-	$inspect(supplementCharts)
+	$inspect(supplementCharts);
 
-	function greet(name: string): string {
+	function greet(): string {
 		const hour = new Date().getHours();
 		if (hour < 12) {
-			return `Good morning,${name}!`;
+			return `Good morning`;
 		} else if (hour < 18) {
-			return `Good afternoon,${name}!`;
+			return `Good afternoon`;
 		} else {
-			return `Good evening,${name}!`;
+			return `Good evening`;
 		}
 	}
 
@@ -116,46 +116,63 @@
 				>
 			</div>
 		</div>
-		<div class="my-4 flex flex-row justify-between">
+		
+
+		<div class="flex flex-row items-center justify-between">
+			<div class="bg-primary my-4 flex flex-col justify-between w-2xl">
 			{#if user}
-				<h1 class="text-6xl font-bold">{greet(user.name)}</h1>
+				<div>
+					<h1 class="text-xl">{greet()}</h1>
+					<h2 class="text-2xl font-bold">{user.name}</h2>
+				</div>
 			{/if}
 
 			<div class="flex flex-row">
-				
-				
-
-
-				<div>
-					<Tooltip.Provider delayDuration={100}>
-						<Tooltip.Root>
-							<Tooltip.Trigger>
-								<Button
-						variant="screen"
-						aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-						title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-						onclick={toggleFullscreen}
-					>
-						{#if isFullscreen}
-							<Minimize />
+				<div class="flex flex-col items-start p-2">
+					<div class="flex flex-row items-center">
+						<span class="flex flex-row items-center text-4xl"
+							>{currentWeight}
+							<WeightIcon class="text-foreground" /></span
+						>
+					</div>
+					<span>
+						{#if currentWeightDate}
+							{df.format(currentWeightDate)}
 						{:else}
-							<Maximize />
+							-
 						{/if}
-					</Button>
-				
-							</Tooltip.Trigger>
-							<Tooltip.Content side="top">
-								<span>{!isFullscreen ? 'Fullscreen' : 'Normal'}</span>
-							</Tooltip.Content>
-						</Tooltip.Root>
-					</Tooltip.Provider>
+					</span>
+					<h4 class="text-accent font-bold">Current Weight</h4>
 				</div>
-			</div>
-		</div>
-		<div class="flex flex-row items-center justify-between">
-			<div class="flex flex-col">
-				<div class="flex flex-row items-center justify-center">
-					<div class="mx-2">
+
+				<span class="flex items-center justify-center">
+					{#if currentWeight && previousWeight}
+						{#if Number(currentWeight) > Number(previousWeight)}
+							<ChevronUp class="text-red-500 " />
+						{:else if Number(currentWeight) < Number(previousWeight)}
+							<ChevronDown class="text-green-500 " />
+						{:else}
+							<div></div>
+						{/if}
+					{/if}
+				</span>
+
+				<div class="flex flex-col items-start p-2">
+					<span class="flex flex-row items-center text-4xl"
+						>{previousWeight}<WeightIcon class="text-foreground" /></span
+					>
+
+					<span>
+						{#if previousWeightDate}
+							{df.format(previousWeightDate)}
+						{:else}
+							-
+						{/if}
+					</span>
+					<h4 class="text-accent font-bold">Previous Weight</h4>
+				</div>
+
+				<!-- <div class="mx-2">
 						<Tooltip.Provider delayDuration={100}>
 							<Tooltip.Root>
 								<Tooltip.Trigger>
@@ -204,7 +221,52 @@
 								</Tooltip.Content>
 							</Tooltip.Root>
 						</Tooltip.Provider>
-					</div>
+					</div> -->
+
+				<!-- <div>
+					<Tooltip.Provider delayDuration={100}>
+						<Tooltip.Root>
+							<Tooltip.Trigger>
+								<Button
+						variant="screen"
+						aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+						title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+						onclick={toggleFullscreen}
+					>
+						{#if isFullscreen}
+							<Minimize />
+						{:else}
+							<Maximize />
+						{/if}
+					</Button>
+				
+							</Tooltip.Trigger>
+							<Tooltip.Content side="top">
+								<span>{!isFullscreen ? 'Fullscreen' : 'Normal'}</span>
+							</Tooltip.Content>
+						</Tooltip.Root>
+					</Tooltip.Provider>
+				</div> -->
+			</div>
+			
+		</div>
+
+			<div class="flex flex-row justify-around">
+				<div class="bg-primary mx-2">
+			Steps Chart
+		</div>
+
+		<div class="bg-primary mx-2">
+			Water Chart
+		</div>
+			</div>
+		</div>
+
+
+	
+		<div class="flex flex-row items-center justify-between">
+			<div class="flex flex-col">
+				<div class="flex flex-row items-center justify-center">
 					<div
 						class="bg-secondary flex flex-col items-center justify-center rounded-2xl border p-4"
 					>
@@ -231,13 +293,10 @@
 				</div>
 			</div>
 
-			<div
-				class="bg-primary mx-2 flex flex-col items-center justify-center rounded-2xl p-4"
-			>
+			<div class="bg-primary mx-2 flex flex-col items-center justify-center rounded-2xl p-4">
 				<h4 class="text-accent text-2xl font-bold">Analysis</h4>
 				<div class="mb-4 flex flex-row justify-around">
 					<div
-						
 						role="button"
 						tabindex="0"
 						onclick={() => (viewMode = "7days")}
@@ -245,10 +304,13 @@
 							if (e.key === "Enter" || e.key === " ") viewMode = "7days";
 						}}
 					>
-						<Button class={viewMode == "7days" ? "bg-accent mx-2" : "mx-2"} size="sm" variant="secondary">Last 7 Days</Button>
+						<Button
+							class={viewMode == "7days" ? "bg-accent mx-2" : "mx-2"}
+							size="sm"
+							variant="secondary">Last 7 Days</Button
+						>
 					</div>
 					<div
-						
 						role="button"
 						tabindex="0"
 						onclick={() => (viewMode = "month")}
@@ -256,7 +318,11 @@
 							if (e.key === "Enter" || e.key === " ") viewMode = "month";
 						}}
 					>
-						<Button class={viewMode == "month" ? "bg-accent mx-2" : "mx-2"} size="sm" variant="secondary">Last Month</Button>
+						<Button
+							class={viewMode == "month" ? "bg-accent mx-2" : "mx-2"}
+							size="sm"
+							variant="secondary">Last Month</Button
+						>
 					</div>
 				</div>
 
@@ -378,7 +444,6 @@
 			<div class="w-full">
 				<div class="mb-4 flex flex-row justify-center">
 					<div
-
 						role="button"
 						tabindex="0"
 						onclick={() => (weightViewMode = "7days")}
@@ -386,10 +451,13 @@
 							if (e.key === "Enter" || e.key === " ") weightViewMode = "7days";
 						}}
 					>
-						<Button class={weightViewMode == "7days" ? "bg-accent mx-2" : "mx-2"} size="sm" variant="secondary">Last 7 Days</Button>
+						<Button
+							class={weightViewMode == "7days" ? "bg-accent mx-2" : "mx-2"}
+							size="sm"
+							variant="secondary">Last 7 Days</Button
+						>
 					</div>
 					<div
-						
 						role="button"
 						tabindex="0"
 						onclick={() => (weightViewMode = "month")}
@@ -397,7 +465,11 @@
 							if (e.key === "Enter" || e.key === " ") weightViewMode = "month";
 						}}
 					>
-						<Button class={weightViewMode == "month" ? "bg-accent mx-2" : "mx-2"} size="sm" variant="secondary">Last Month</Button>
+						<Button
+							class={weightViewMode == "month" ? "bg-accent mx-2" : "mx-2"}
+							size="sm"
+							variant="secondary">Last Month</Button
+						>
 					</div>
 				</div>
 				<Weight dateSeriesData={weightCharts} />
