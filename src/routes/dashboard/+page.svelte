@@ -116,63 +116,62 @@
 				>
 			</div>
 		</div>
-		
 
 		<div class="flex flex-row items-center justify-between">
-			<div class="bg-primary my-4 flex flex-col justify-between w-2xl">
-			{#if user}
-				<div>
-					<h1 class="text-xl">{greet()}</h1>
-					<h2 class="text-2xl font-bold">{user.name}</h2>
-				</div>
-			{/if}
-
-			<div class="flex flex-row">
-				<div class="flex flex-col items-start p-2">
-					<div class="flex flex-row items-center">
-						<span class="flex flex-row items-center text-4xl"
-							>{currentWeight}
-							<WeightIcon class="text-foreground" /></span
-						>
+			<div class="bg-primary my-4 flex w-2xl flex-col justify-between">
+				{#if user}
+					<div>
+						<h1 class="text-xl">{greet()}</h1>
+						<h2 class="text-2xl font-bold">{user.name}</h2>
 					</div>
-					<span>
-						{#if currentWeightDate}
-							{df.format(currentWeightDate)}
-						{:else}
-							-
+				{/if}
+
+				<div class="flex flex-row">
+					<div class="flex flex-col items-start p-2">
+						<div class="flex flex-row items-center">
+							<span class="flex flex-row items-center text-4xl"
+								>{currentWeight}
+								<WeightIcon class="text-foreground" /></span
+							>
+						</div>
+						<span>
+							{#if currentWeightDate}
+								{df.format(currentWeightDate)}
+							{:else}
+								-
+							{/if}
+						</span>
+						<h4 class="text-accent font-bold">Current Weight</h4>
+					</div>
+
+					<span class="flex items-center justify-center">
+						{#if currentWeight && previousWeight}
+							{#if Number(currentWeight) > Number(previousWeight)}
+								<ChevronUp class="text-red-500 " />
+							{:else if Number(currentWeight) < Number(previousWeight)}
+								<ChevronDown class="text-green-500 " />
+							{:else}
+								<div></div>
+							{/if}
 						{/if}
 					</span>
-					<h4 class="text-accent font-bold">Current Weight</h4>
-				</div>
 
-				<span class="flex items-center justify-center">
-					{#if currentWeight && previousWeight}
-						{#if Number(currentWeight) > Number(previousWeight)}
-							<ChevronUp class="text-red-500 " />
-						{:else if Number(currentWeight) < Number(previousWeight)}
-							<ChevronDown class="text-green-500 " />
-						{:else}
-							<div></div>
-						{/if}
-					{/if}
-				</span>
+					<div class="flex flex-col items-start p-2">
+						<span class="flex flex-row items-center text-4xl"
+							>{previousWeight}<WeightIcon class="text-foreground" /></span
+						>
 
-				<div class="flex flex-col items-start p-2">
-					<span class="flex flex-row items-center text-4xl"
-						>{previousWeight}<WeightIcon class="text-foreground" /></span
-					>
+						<span>
+							{#if previousWeightDate}
+								{df.format(previousWeightDate)}
+							{:else}
+								-
+							{/if}
+						</span>
+						<h4 class="text-accent font-bold">Previous Weight</h4>
+					</div>
 
-					<span>
-						{#if previousWeightDate}
-							{df.format(previousWeightDate)}
-						{:else}
-							-
-						{/if}
-					</span>
-					<h4 class="text-accent font-bold">Previous Weight</h4>
-				</div>
-
-				<!-- <div class="mx-2">
+					<!-- <div class="mx-2">
 						<Tooltip.Provider delayDuration={100}>
 							<Tooltip.Root>
 								<Tooltip.Trigger>
@@ -223,7 +222,7 @@
 						</Tooltip.Provider>
 					</div> -->
 
-				<!-- <div>
+					<!-- <div>
 					<Tooltip.Provider delayDuration={100}>
 						<Tooltip.Root>
 							<Tooltip.Trigger>
@@ -247,25 +246,18 @@
 						</Tooltip.Root>
 					</Tooltip.Provider>
 				</div> -->
+				</div>
 			</div>
-			
-		</div>
 
 			<div class="flex flex-row justify-around">
-				<div class="bg-primary mx-2">
-			Steps Chart
-		</div>
+				<div class="bg-primary mx-2">Steps Chart</div>
 
-		<div class="bg-primary mx-2">
-			Water Chart
-		</div>
+				<div class="bg-primary mx-2">Water Chart</div>
 			</div>
 		</div>
 
-
-	
 		<div class="flex flex-row items-center justify-between">
-			<div class="flex flex-col">
+			<!-- <div class="flex flex-col">
 				<div class="flex flex-row items-center justify-center">
 					<div
 						class="bg-secondary flex flex-col items-center justify-center rounded-2xl border p-4"
@@ -291,7 +283,7 @@
 						<Droplet class="fill-blue-400 text-blue-400" /></span
 					>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="bg-primary mx-2 flex flex-col items-center justify-center rounded-2xl p-4">
 				<h4 class="text-accent text-2xl font-bold">Analysis</h4>
@@ -438,6 +430,9 @@
 			</div>
 
 			<Supplements data={supplementCharts} monthData={supplementCountsMonthChart} />
+
+			<div class="bg-primary mx-2">Sleep Chart</div>
+			<div class="bg-primary mx-2">Protein Chart</div>
 		</div>
 
 		<div class="mt-24 flex flex-row items-center justify-evenly">
