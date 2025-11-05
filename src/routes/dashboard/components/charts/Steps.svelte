@@ -34,7 +34,7 @@
 	} satisfies Chart.ChartConfig;
 </script>
 
-<Card.Root>
+<Card.Root class="bg-primary">
 	<Card.Header>
 		<div class="flex flex-row justify-between">
 			<div>
@@ -73,6 +73,7 @@
 					},
 				]}
 				axis="x"
+				grid={false}
 				props={{
 					area: {
 						curve: curveNatural,
