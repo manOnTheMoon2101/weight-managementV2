@@ -117,7 +117,7 @@
 		</div>
 
 		<div class="flex flex-row items-center justify-between ">
-			<div class="bg-primary my-4 flex  flex-col justify-between w-3/5">
+			<div class="bg-primary flex flex-col justify-between w-3/5 rounded-lg">
 				{#if user}
 					<div>
 						<h1 class="text-xl">{greet()}</h1>

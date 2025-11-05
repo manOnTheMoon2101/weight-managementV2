@@ -72,7 +72,7 @@
 						color: chartConfig.steps.color,
 					},
 				]}
-				axis="x"
+				axis={false}
 				grid={false}
 				props={{
 					area: {
@@ -82,7 +82,7 @@
 						motion: "tween",
 					},
 					xAxis: {
-						format: (v: Date) => v.toLocaleDateString("en-US", { month: "short" }),
+						style: "display: none;",
 					},
 				}}
 			>
