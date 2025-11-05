@@ -247,7 +247,7 @@
 				</div> -->
 				</div>
 			</div>
-<div class="w-2/5 flex flex-row">
+<div class="w-2/5 flex flex-row justify-around  ">
 	<Steps dateSeriesData={stepsMonthChart} />
 
 		<Steps dateSeriesData={stepsMonthChart} />	

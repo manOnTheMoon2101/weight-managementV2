@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Svg, Axis, Spline, LineChart, Points, Tooltip, Highlight } from "layerchart";
+	import { Svg, Axis, Layer, Highlight, Area, LinearGradient, Chart, Tooltip } from "layerchart";
 	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	let { dateSeriesData } = $props();
@@ -26,10 +26,10 @@
 	$inspect(averageSteps);
 </script>
 
-<div class="border-accent bg-primary my-4 h-[200px] w-full rounded-2xl border p-4 shadow-2xl">
+<div>
 	<div class="flex flex-row justify-between">
 		<div>
-			{averageSteps}
+			<span class="text-2xl">{averageSteps}</span>
 			<h3>Avarage Steps</h3>
 		</div>
 
@@ -49,29 +49,33 @@
 			</DropdownMenu.Root>
 		</div>
 	</div>
-	<LineChart
+	<Chart
 		data={dateSeriesData}
 		x="createdAt"
 		y="steps"
-		points
 		yDomain={[minSteps, maxSteps]}
-		padding={{ left: 20, bottom: 40, top: 20, right: 20 }}
+		yNice
+		padding={{ left: 0, bottom: 0 }}
+		tooltip={{ mode: "quadtree-x" }}
 	>
-		<Svg>
-			<!-- <Axis placement="left" rule class="fill-foreground" /> -->
-			<!-- <Axis placement="bottom" rule class="fill-foreground" /> -->
-			<Spline class="stroke-secondary stroke-2" />
-			<Points class="fill-accent " />
-			<Highlight lines />
-		</Svg>
-		<Tooltip.Root class="bg-accent">
+		<Layer type="canvas">
+			<!-- <Axis placement="left" grid rule />
+			<Axis placement="bottom" rule /> -->
+			<LinearGradient class="from-accent/50 to-accent/1" vertical>
+				{#snippet children({ gradient })}
+					<Area line={{ class: "stroke-2 stroke-primary" }} fill={gradient} />
+				{/snippet}
+			</LinearGradient>
+			<Highlight points lines />
+		</Layer>
+
+		<Tooltip.Root class="bg-primary">
 			{#snippet children({ data })}
-				<!-- <Tooltip.Header value={data.createdAt} format="day" /> -->
+				<Tooltip.Header value={data.createdAt} />
 				<Tooltip.List>
-					<Tooltip.Item label={"Date"} value={data.createdAt} />
-					<Tooltip.Item label={"Steps"} value={data.steps} />
+					<Tooltip.Item label="Steps" value={data.steps} />
 				</Tooltip.List>
 			{/snippet}
 		</Tooltip.Root>
-	</LineChart>
+	</Chart>
 </div>
