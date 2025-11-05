@@ -17,12 +17,14 @@
 	import { Badge } from "$lib/components/ui/badge/index.js";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import Card from "$lib/components/ui/card/card.svelte";
+	import Steps from "./components/charts/Steps.svelte";
 	import Toggler from "./components/navbar/components/toggler.svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
 	let weightMonthChart = $derived(data.weightMonthChart);
 	let weightWeekChart = $derived(data.weightWeekChart);
+	let stepsMonthChart = $derived(data.stepsMonthChart);
 	let weightViewMode = $state("7days");
 	let weightCharts = $derived(weightViewMode === "7days" ? weightWeekChart : weightMonthChart);
 	let waistChart = $derived(data.waistChart);
@@ -32,9 +34,6 @@
 	let currentWeightDate = $derived(data.currentWeight?.createdAt);
 	let previousWeight = $derived(data.previousWeight?.weight);
 	let previousWeightDate = $derived(data.previousWeight?.createdAt);
-	let averageWaterIntake = $derived(data.averageWaterIntake);
-	let averageStepsIntake = $derived(data.averageStepsIntake);
-	let averageSleepIntake = $derived(data.averageSleepIntake);
 	let last7DaysSteps = $derived(data.last7DaysSteps);
 	let lastMonthSteps = $derived(data.lastMonthSteps);
 	let userStepLimit = $derived(data.userStepLimit);
@@ -117,8 +116,8 @@
 			</div>
 		</div>
 
-		<div class="flex flex-row items-center justify-between">
-			<div class="bg-primary my-4 flex w-2xl flex-col justify-between">
+		<div class="flex flex-row items-center justify-between ">
+			<div class="bg-primary my-4 flex  flex-col justify-between w-3/5">
 				{#if user}
 					<div>
 						<h1 class="text-xl">{greet()}</h1>
@@ -248,43 +247,14 @@
 				</div> -->
 				</div>
 			</div>
+<div class="w-2/5 flex flex-row">
+	<Steps dateSeriesData={stepsMonthChart} />
 
-			<div class="flex flex-row justify-around">
-				<div class="bg-primary mx-2">Steps Chart</div>
-
-				<div class="bg-primary mx-2">Water Chart</div>
-			</div>
+		<Steps dateSeriesData={stepsMonthChart} />	
+</div>	
 		</div>
 
 		<div class="flex flex-row items-center justify-between">
-			<!-- <div class="flex flex-col">
-				<div class="flex flex-row items-center justify-center">
-					<div
-						class="bg-secondary flex flex-col items-center justify-center rounded-2xl border p-4"
-					>
-						<h4 class="text-accent text-2xl font-bold">Average Steps</h4>
-						<span class="flex flex-row items-center text-8xl"
-							>{Math.round(Number(averageStepsIntake))} <FootPrint /></span
-						>
-					</div>
-				</div>
-				<div
-					class="bg-secondary my-2 flex flex-col items-center justify-center rounded-2xl border p-4 shadow-2xl"
-				>
-					<h4 class="text-accent text-2xl font-bold">Average Sleep Time</h4>
-					<span class="flex flex-row items-center text-8xl"
-						>{averageSleepIntake} <Timer class="text-accent " /></span
-					>
-				</div>
-				<div class="bg-secondary flex flex-col items-center justify-center rounded-2xl border p-4">
-					<h4 class="text-accent text-2xl font-bold">Average Water</h4>
-					<span class="flex flex-row items-center text-8xl"
-						>{Math.round(Number(averageWaterIntake))}
-						<Droplet class="fill-blue-400 text-blue-400" /></span
-					>
-				</div>
-			</div> -->
-
 			<div class="bg-primary mx-2 flex flex-col items-center justify-center rounded-2xl p-4">
 				<h4 class="text-accent text-2xl font-bold">Analysis</h4>
 				<div class="mb-4 flex flex-row justify-around">

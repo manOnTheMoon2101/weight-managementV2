@@ -25,7 +25,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			throw redirect(302, "/login");
 		}
 
-		const latestWeightEntries = await db.query.health_tracker.findMany({
+		const weightEntries = await db.query.health_tracker.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
 				eq(health_tracker.isActive, true),
@@ -48,6 +48,19 @@ export const load: PageServerLoad = async ({ request }) => {
 			),
 			columns: {
 				weight: true,
+				createdAt: true,
+			},
+		});
+
+			const StepsMonthAgo = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
+			),
+			columns: {
+				steps: true,
 				createdAt: true,
 			},
 		});
@@ -173,6 +186,17 @@ export const load: PageServerLoad = async ({ request }) => {
 			}),
 		}));
 
+		const formattedMonthStepsEntries = StepsMonthAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			steps: entry.steps,
+			createdAt: new Date(entry.createdAt).toLocaleDateString("en-GB", {
+				day: "2-digit",
+				month: "2-digit",
+				year: "numeric",
+			}),
+		}));
+
 		const formattedWeekWeightEntries = WeightsWeekAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
 		).map((entry) => ({
@@ -234,10 +258,11 @@ export const load: PageServerLoad = async ({ request }) => {
 		const supplementCountsWeekChart = supplementCountsWeekAgo || null;
 		const supplementCountsMonthChart = supplementCountsMonthAgo || null;
 		const weightMonthChart = formattedMonthWeightEntries || null;
+		const stepsMonthChart = formattedMonthStepsEntries || null
 		const weightWeekChart = formattedWeekWeightEntries || null;
 		const waistChart = formattedWaistEntries || null;
-		const currentWeight = latestWeightEntries[0] || null;
-		const previousWeight = latestWeightEntries[1] || null;
+		const currentWeight = weightEntries[0] || null;
+		const previousWeight = weightEntries[1] || null;
 
 		const waterIntake = await db.query.health_tracker.findMany({
 			where: and(
@@ -295,6 +320,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			supplementCountsMonthChart : supplementCountsMonthChart,
 			currentWeight: currentWeight,
 			weightMonthChart: weightMonthChart,
+			stepsMonthChart : stepsMonthChart,
 			weightWeekChart: weightWeekChart,
 			waistChart: waistChart,
 			previousWeight: previousWeight,
