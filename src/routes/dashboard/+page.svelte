@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import ChevronDown from "@lucide/svelte/icons/chevron-down";
-	import ChevronUp from "@lucide/svelte/icons/chevron-up";
+	import ChevronDown from "@lucide/svelte/icons/arrow-down-to-dot";
+	import ChevronUp from "@lucide/svelte/icons/arrow-up-from-dot";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import FootPrint from "@lucide/svelte/icons/footprints";
 	import Timer from "@lucide/svelte/icons/timer";
@@ -159,7 +159,7 @@
 						{/if}
 					</span>
 
-					
+
 
 					<div class="flex flex-col items-start p-2">
 						<div class="flex flex-row items-center">

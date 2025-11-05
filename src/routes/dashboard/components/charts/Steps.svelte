@@ -10,7 +10,7 @@
 
 	let { dateSeriesData } = $props();
 
-	$inspect(dateSeriesData);
+	
 
 	let averageSteps =
 		dateSeriesData && dateSeriesData.length > 0
