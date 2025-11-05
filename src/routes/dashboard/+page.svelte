@@ -116,12 +116,12 @@
 			</div>
 		</div>
 
-		<div class="flex flex-row items-center justify-between ">
-			<div class="bg-primary flex flex-col justify-between w-3/5 rounded-lg">
+		<div class="flex flex-row items-center justify-between">
+			<div class="bg-primary flex w-3/5 flex-col justify-between rounded-lg">
 				{#if user}
 					<div>
-						<h1 class="text-xl">{greet()}</h1>
-						<h2 class="text-2xl font-bold">{user.name}</h2>
+						<h1 class="text-sm font-bold text-muted-foreground">{greet()}</h1>
+						<h2 class="text-2xl font-bold ">{user.name}</h2>
 					</div>
 				{/if}
 
@@ -247,11 +247,10 @@
 				</div> -->
 				</div>
 			</div>
-<div class="w-2/5 flex flex-row justify-around  ">
-	<Steps dateSeriesData={stepsMonthChart} />
-
-		<Steps dateSeriesData={stepsMonthChart} />	
-</div>	
+			<div class="flex w-2/5 flex-row justify-around">
+				<Steps dateSeriesData={stepsMonthChart} />
+				<Steps dateSeriesData={stepsMonthChart} />
+			</div>
 		</div>
 
 		<div class="flex flex-row items-center justify-between">
