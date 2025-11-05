@@ -1,7 +1,13 @@
 <script lang="ts">
-	import { Svg, Axis, Layer, Highlight, Area, LinearGradient, Chart, Tooltip } from "layerchart";
+	import { AreaChart } from "layerchart";
+	import TrendingUpIcon from "@lucide/svelte/icons/trending-up";
+	import { curveNatural } from "d3-shape";
+	import { scaleUtc } from "d3-scale";
+	import * as Chart from "$lib/components/ui/chart/index.js";
+	import * as Card from "$lib/components/ui/card/index.js";
 	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+
 	let { dateSeriesData } = $props();
 
 	$inspect(dateSeriesData);
@@ -23,59 +29,82 @@
 			? Math.max(...dateSeriesData.map((x: any) => x.steps))
 			: 0;
 
-	$inspect(averageSteps);
+	const chartConfig = {
+		steps: { label: "Steps", color: "var(--accent)" },
+	} satisfies Chart.ChartConfig;
 </script>
 
-<div>
-	<div class="flex flex-row justify-between">
-		<div>
-			<span class="text-2xl">{averageSteps}</span>
-			<h3>Avarage Steps</h3>
-		</div>
+<Card.Root>
+	<Card.Header>
+		<div class="flex flex-row justify-between">
+			<div>
+				<Card.Title>{averageSteps}</Card.Title>
+				<Card.Description>Avarage Steps</Card.Description>
+			</div>
 
-		<div>
-			<DropdownMenu.Root>
-				<DropdownMenu.Trigger class="cursor-pointer">
-					<EllipsisVertical />
-				</DropdownMenu.Trigger>
-				<DropdownMenu.Content>
-					<DropdownMenu.Group>
-						<DropdownMenu.Label class="flex items-center">Filter</DropdownMenu.Label>
-						<DropdownMenu.Separator />
-						<DropdownMenu.Item closeOnSelect={false}>Last Month</DropdownMenu.Item>
-						<DropdownMenu.Item closeOnSelect={false}>Last 7 Days</DropdownMenu.Item>
-					</DropdownMenu.Group>
-				</DropdownMenu.Content>
-			</DropdownMenu.Root>
+			<div>
+				<DropdownMenu.Root>
+					<DropdownMenu.Trigger class="cursor-pointer">
+						<EllipsisVertical />
+					</DropdownMenu.Trigger>
+					<DropdownMenu.Content>
+						<DropdownMenu.Group>
+							<DropdownMenu.Label class="flex items-center">Filter</DropdownMenu.Label>
+							<DropdownMenu.Separator />
+							<DropdownMenu.Item closeOnSelect={false}>Last Month</DropdownMenu.Item>
+							<DropdownMenu.Item closeOnSelect={false}>Last 7 Days</DropdownMenu.Item>
+						</DropdownMenu.Group>
+					</DropdownMenu.Content>
+				</DropdownMenu.Root>
+			</div>
 		</div>
-	</div>
-	<Chart
-		data={dateSeriesData}
-		x="createdAt"
-		y="steps"
-		yDomain={[minSteps, maxSteps]}
-		yNice
-		padding={{ left: 0, bottom: 0 }}
-		tooltip={{ mode: "quadtree-x" }}
-	>
-		<Layer type="canvas">
-			<!-- <Axis placement="left" grid rule />
-			<Axis placement="bottom" rule /> -->
-			<LinearGradient class="from-accent/50 to-accent/1" vertical>
-				{#snippet children({ gradient })}
-					<Area line={{ class: "stroke-2 stroke-primary" }} fill={gradient} />
+	</Card.Header>
+	<Card.Content>
+		<Chart.Container config={chartConfig}>
+			<AreaChart
+				data={dateSeriesData}
+				x="createdAt"
+				xScale={scaleUtc()}
+				series={[
+					{
+						key: "steps",
+						label: "Steps",
+						color: chartConfig.steps.color,
+					},
+				]}
+				axis="x"
+				props={{
+					area: {
+						curve: curveNatural,
+						"fill-opacity": 0.4,
+						line: { class: "stroke-1" },
+						motion: "tween",
+					},
+					xAxis: {
+						format: (v: Date) => v.toLocaleDateString("en-US", { month: "short" }),
+					},
+				}}
+			>
+				{#snippet tooltip()}
+					<Chart.Tooltip
+						labelFormatter={(v: Date) =>
+							v.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+						indicator="line"
+					/>
 				{/snippet}
-			</LinearGradient>
-			<Highlight points lines />
-		</Layer>
-
-		<Tooltip.Root class="bg-primary">
-			{#snippet children({ data })}
-				<Tooltip.Header value={data.createdAt} />
-				<Tooltip.List>
-					<Tooltip.Item label="Steps" value={data.steps} />
-				</Tooltip.List>
-			{/snippet}
-		</Tooltip.Root>
-	</Chart>
-</div>
+			</AreaChart>
+		</Chart.Container>
+	</Card.Content>
+	<!-- <Card.Footer>
+		<div class="flex w-full items-start gap-2 text-sm">
+			<div class="grid gap-2">
+				<div class="flex items-center gap-2 leading-none font-medium">
+					Trending up by 5.2% this month <TrendingUpIcon class="size-4" />
+				</div>
+				<div class="text-muted-foreground flex items-center gap-2 leading-none">
+					January - June 2024
+				</div>
+			</div>
+		</div>
+	</Card.Footer> -->
+</Card.Root>

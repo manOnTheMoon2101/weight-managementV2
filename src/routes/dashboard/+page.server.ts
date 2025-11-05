@@ -190,11 +190,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
 		).map((entry) => ({
 			steps: entry.steps,
-			createdAt: new Date(entry.createdAt).toLocaleDateString("en-GB", {
-				day: "2-digit",
-				month: "2-digit",
-				year: "numeric",
-			}),
+			createdAt: new Date(entry.createdAt),
 		}));
 
 		const formattedWeekWeightEntries = WeightsWeekAgo.sort(
