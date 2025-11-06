@@ -20,6 +20,7 @@
 	import Steps from "./components/charts/Steps.svelte";
 	import Toggler from "./components/navbar/components/toggler.svelte";
 	import Water from "./components/charts/Water.svelte";
+	import Protein from "./components/charts/Protein.svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
@@ -273,155 +274,28 @@
 			</div>
 		</div>
 
-		<div class="flex flex-row items-center justify-between">
-			<div class="bg-primary mx-2 flex flex-col items-center justify-center rounded-2xl p-4">
-				<h4 class="text-accent text-2xl font-bold">Analysis</h4>
-				<div class="mb-4 flex flex-row justify-around">
-					<div
-						role="button"
-						tabindex="0"
-						onclick={() => (viewMode = "7days")}
-						onkeydown={(e) => {
-							if (e.key === "Enter" || e.key === " ") viewMode = "7days";
-						}}
-					>
-						<Button
-							class={viewMode == "7days" ? "bg-accent mx-2" : "mx-2"}
-							size="sm"
-							variant="secondary">Last 7 Days</Button
-						>
-					</div>
-					<div
-						role="button"
-						tabindex="0"
-						onclick={() => (viewMode = "month")}
-						onkeydown={(e) => {
-							if (e.key === "Enter" || e.key === " ") viewMode = "month";
-						}}
-					>
-						<Button
-							class={viewMode == "month" ? "bg-accent mx-2" : "mx-2"}
-							size="sm"
-							variant="secondary">Last Month</Button
-						>
-					</div>
-				</div>
 
-				<Card
-					class="bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border-none p-4"
-				>
-					<Tooltip.Provider delayDuration={100}>
-						<Tooltip.Root>
-							<Tooltip.Trigger>
-								{#if viewMode === "7days"}
-									<div class="text-center">
-										<h6 class="mb-2 text-lg font-semibold">Days with Steps ≤ {userStepLimit}</h6>
-										<Badge variant={"weekly"} class="px-4 py-2 text-xl">
-											{last7DaysSteps?.length || 0} days
-										</Badge>
-									</div>
-								{:else}
-									<div class="text-center">
-										<div class="text-center">
-											<h6 class="mb-2 text-lg font-semibold">Days with Steps ≤ {userStepLimit}</h6>
-											<Badge variant={"weekly"} class="px-4 py-2 text-xl">
-												{lastMonthSteps?.length || 0} days
-											</Badge>
-										</div>
-									</div>
-								{/if}
-							</Tooltip.Trigger>
-							<Tooltip.Content side="left">
-								{#if last7DaysSteps && last7DaysSteps.length > 0 && viewMode == "7days"}
-									<h4>Dates</h4>
-									<div class="text-muted-foreground mt-3 text-sm">
-										{last7DaysSteps
-											.map((entry) =>
-												new Date(entry.createdAt).toLocaleDateString("en-US", {
-													month: "short",
-													day: "numeric",
-												})
-											)
-											.join(", ")}
-									</div>
-								{:else if lastMonthSteps && lastMonthSteps.length > 0 && viewMode == "month"}
-									<h4>Dates</h4>
-									<div class="text-muted-foreground mt-3 text-sm">
-										{lastMonthSteps
-											.map((entry) =>
-												new Date(entry.createdAt).toLocaleDateString("en-US", {
-													month: "short",
-													day: "numeric",
-												})
-											)
-											.join(", ")}
-									</div>
-								{/if}
-							</Tooltip.Content>
-						</Tooltip.Root>
-					</Tooltip.Provider>
-				</Card>
 
-				<Card
-					class="bg-primary my-2 flex flex-col items-center justify-center rounded-2xl border-none p-4"
-				>
-					<Tooltip.Provider delayDuration={100}>
-						<Tooltip.Root>
-							<Tooltip.Trigger>
-								{#if last7DaysWater && last7DaysWater.length > 0 && viewMode === "7days"}
-									<div class="text-center">
-										<h6 class="mb-2 text-lg font-semibold">Days with Water ≤ {waterLimit}</h6>
-										<Badge variant={"weekly"} class="px-4 py-2 text-xl">
-											{last7DaysWater?.length || 0} days
-										</Badge>
-									</div>
-								{:else if last7DaysWater && last7DaysWater.length > 0 && viewMode === "month"}
-									<div class="text-center">
-										<div class="text-center">
-											<h6 class="mb-2 text-lg font-semibold">Days with Water ≤ {waterLimit}</h6>
-											<Badge variant={"weekly"} class="px-4 py-2 text-xl">
-												{lastMonthWater?.length || 0} days
-											</Badge>
-										</div>
-									</div>
-								{/if}
-							</Tooltip.Trigger>
-							<Tooltip.Content side="left">
-								{#if last7DaysWater && last7DaysWater.length > 0 && viewMode === "7days"}
-									<h4>Dates</h4>
-									<div class="text-muted-foreground mt-3 text-sm">
-										{last7DaysWater
-											.map((entry) =>
-												new Date(entry.createdAt).toLocaleDateString("en-US", {
-													month: "short",
-													day: "numeric",
-												})
-											)
-											.join(", ")}
-									</div>
-								{:else if lastMonthWater && lastMonthWater.length > 0 && viewMode === "month"}
-									<h4>Dates</h4>
-									<div class="text-muted-foreground mt-3 text-sm">
-										{lastMonthWater
-											.map((entry) =>
-												new Date(entry.createdAt).toLocaleDateString("en-US", {
-													month: "short",
-													day: "numeric",
-												})
-											)
-											.join(", ")}
-									</div>
-								{/if}
-							</Tooltip.Content>
-						</Tooltip.Root>
-					</Tooltip.Provider>
-				</Card>
+
+
+
+
+
+		
+		<div class="flex flex-row items-start justify-around">
+			<div class="flex w-3/5 flex-row justify-around">
+				<Protein/>
+			<Supplements/>
+			
 			</div>
 
-			<Supplements data={supplementCharts} monthData={supplementCountsMonthChart} />
+			<!-- <Supplements data={supplementCharts} monthData={supplementCountsMonthChart} /> -->
 
-			<div class="bg-primary mx-2">Sleep Chart</div>
-			<div class="bg-primary mx-2">Protein Chart</div>
+			<div class="flex w-2/5 flex-row justify-around">
+				<Steps dateSeriesData={stepsCharts} bind:viewMode={stepsViewMode} />
+				<Water  dateSeriesData={waterCharts} bind:viewMode={waterViewMode} waterLimit={data.waterLimit} />
+			</div>
+			
 		</div>
 
 		<div class="mt-24 flex flex-row items-center justify-evenly">

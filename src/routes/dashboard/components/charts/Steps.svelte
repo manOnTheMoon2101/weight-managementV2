@@ -41,7 +41,7 @@
 		<div class="flex flex-row justify-between">
 			<div>
 				<Card.Title><Footprints/></Card.Title>
-				<Card.Description>Avarage Steps</Card.Description>
+				<Card.Description>Steps</Card.Description>
 			</div>
 
 			<div>

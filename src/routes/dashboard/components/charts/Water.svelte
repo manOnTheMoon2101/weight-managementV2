@@ -39,7 +39,7 @@
 		<div class="flex flex-row justify-between">
 			<div>
 				<Card.Title><Droplet /></Card.Title>
-				<Card.Description>Avarage Water</Card.Description>
+				<Card.Description>Water</Card.Description>
 			</div>
 
 			<div>
