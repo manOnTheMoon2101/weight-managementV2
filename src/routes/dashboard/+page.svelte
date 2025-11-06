@@ -150,9 +150,9 @@
 					<span class="flex items-center justify-center">
 						{#if currentWeight && previousWeight}
 							{#if Number(currentWeight) > Number(previousWeight)}
-								<ChevronUp class="text-red-500 " />
+							Gained:	<ChevronUp class="text-red-500 " />
 							{:else if Number(currentWeight) < Number(previousWeight)}
-								<ChevronDown class="text-green-500 " />
+								Lost:<ChevronDown class="text-green-500 " />
 							{:else}
 								<div></div>
 							{/if}
