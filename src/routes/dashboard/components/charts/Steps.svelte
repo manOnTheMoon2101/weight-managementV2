@@ -8,26 +8,27 @@
 	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 
-	let { dateSeriesData } = $props();
+	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
 
-	
-
-	let averageSteps =
+	let averageSteps = $derived(
 		dateSeriesData && dateSeriesData.length > 0
 			? Math.round(
 					dateSeriesData.reduce((sum: number, x: any) => sum + x.steps, 0) / dateSeriesData.length
 				)
-			: 0;
+			: 0
+	);
 
-	let minSteps =
+	let minSteps = $derived(
 		dateSeriesData && dateSeriesData.length > 0
 			? Math.min(...dateSeriesData.map((x: any) => x.steps))
-			: 0;
+			: 0
+	);
 
-	let maxSteps =
+	let maxSteps = $derived(
 		dateSeriesData && dateSeriesData.length > 0
 			? Math.max(...dateSeriesData.map((x: any) => x.steps))
-			: 0;
+			: 0
+	);
 
 	const chartConfig = {
 		steps: { label: "Steps", color: "var(--accent)" },
@@ -51,8 +52,18 @@
 						<DropdownMenu.Group>
 							<DropdownMenu.Label class="flex items-center">Filter</DropdownMenu.Label>
 							<DropdownMenu.Separator />
-							<DropdownMenu.Item closeOnSelect={false}>Last Month</DropdownMenu.Item>
-							<DropdownMenu.Item closeOnSelect={false}>Last 7 Days</DropdownMenu.Item>
+							<DropdownMenu.Item
+								class={viewMode === "month" ? "bg-accent" : ""}
+								onclick={() => (viewMode = "month")}
+							>
+								Last Month
+							</DropdownMenu.Item>
+							<DropdownMenu.Item
+								class={viewMode === "7days" ? "bg-accent" : ""}
+								onclick={() => (viewMode = "7days")}
+							>
+								Last 7 Days
+							</DropdownMenu.Item>
 						</DropdownMenu.Group>
 					</DropdownMenu.Content>
 				</DropdownMenu.Root>
@@ -96,16 +107,16 @@
 			</AreaChart>
 		</Chart.Container>
 	</Card.Content>
-	<!-- <Card.Footer>
-		<div class="flex w-full items-start gap-2 text-sm">
-			<div class="grid gap-2">
+	<Card.Footer>
+		<div class="flex w-full items-start text-sm">
+			<div class="grid">
 				<div class="flex items-center gap-2 leading-none font-medium">
-					Trending up by 5.2% this month <TrendingUpIcon class="size-4" />
+					{averageSteps} avg steps <TrendingUpIcon class="size-4" />
 				</div>
 				<div class="text-muted-foreground flex items-center gap-2 leading-none">
-					January - June 2024
+					Range: {minSteps.toLocaleString()} - {maxSteps.toLocaleString()} steps
 				</div>
 			</div>
 		</div>
-	</Card.Footer> -->
+	</Card.Footer>
 </Card.Root>
