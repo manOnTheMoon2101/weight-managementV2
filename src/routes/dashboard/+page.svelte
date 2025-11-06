@@ -31,9 +31,10 @@
 	let waterWeekChart = $derived(data.waterWeekChart);
 	let weightViewMode = $state("7days");
 	let stepsViewMode = $state("7days");
+	let waterViewMode = $state("7days");
 	let weightCharts = $derived(weightViewMode === "7days" ? weightWeekChart : weightMonthChart);
 	let stepsCharts = $derived(stepsViewMode === "7days" ? stepsWeekChart : stepsMonthChart);
-	let waterCharts = $derived(stepsViewMode === "7days" ? waterWeekChart : waterMonthChart);
+	let waterCharts = $derived(waterViewMode === "7days" ? waterWeekChart : waterMonthChart);
 	let waistChart = $derived(data.waistChart);
 	let supplementCharts = $derived(data.supplementCountsWeekChart);
 	let supplementCountsMonthChart = $derived(data.supplementCountsMonthChart);
@@ -268,7 +269,7 @@
 			</div>
 			<div class="flex w-2/5 flex-row justify-around">
 				<Steps dateSeriesData={stepsCharts} bind:viewMode={stepsViewMode} />
-				<Water  dateSeriesData={waterCharts} bind:viewMode={stepsViewMode} waterLimit={data.waterLimit} />
+				<Water  dateSeriesData={waterCharts} bind:viewMode={waterViewMode} waterLimit={data.waterLimit} />
 			</div>
 		</div>
 
