@@ -19,6 +19,7 @@
 	import Card from "$lib/components/ui/card/card.svelte";
 	import Steps from "./components/charts/Steps.svelte";
 	import Toggler from "./components/navbar/components/toggler.svelte";
+	import Water from "./components/charts/Water.svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
@@ -264,7 +265,7 @@
 			</div>
 			<div class="flex w-2/5 flex-row justify-around">
 				<Steps dateSeriesData={stepsCharts} bind:viewMode={stepsViewMode} />
-				
+				<Water/>
 			</div>
 		</div>
 

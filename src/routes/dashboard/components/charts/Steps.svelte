@@ -5,6 +5,7 @@
 	import { scaleUtc } from "d3-scale";
 	import * as Chart from "$lib/components/ui/chart/index.js";
 	import * as Card from "$lib/components/ui/card/index.js";
+	import Footprints from "@lucide/svelte/icons/footprints";
 	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 
@@ -39,7 +40,7 @@
 	<Card.Header>
 		<div class="flex flex-row justify-between">
 			<div>
-				<Card.Title>{averageSteps}</Card.Title>
+				<Card.Title><Footprints/></Card.Title>
 				<Card.Description>Avarage Steps</Card.Description>
 			</div>
 
