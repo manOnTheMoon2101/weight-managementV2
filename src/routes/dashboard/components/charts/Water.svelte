@@ -41,14 +41,14 @@
 		</div>
 	</Card.Header>
 	<Card.Content class="flex-1">
-		<Chart.Container config={chartConfig} class="mx-auto aspect-square max-h-[250px]">
+		<Chart.Container config={chartConfig} >
 			<ArcChart
 				label="browser"
 				value="visitors"
-				outerRadius={88}
-				innerRadius={66}
-				trackOuterRadius={83}
-				trackInnerRadius={72}
+				outerRadius={66}
+				innerRadius={46}
+				trackOuterRadius={63}
+				trackInnerRadius={52}
 				padding={40}
 				range={[0, 360]}
 				maxValue={3000}
@@ -64,7 +64,7 @@
 				tooltip={false}
 			>
 				{#snippet belowMarks()}
-					<circle cx="0" cy="0" r="80" class="fill-background" />
+					<circle cx="0" cy="0" r="60" class="fill-background" />
 				{/snippet}
 				{#snippet aboveMarks()}
 					<Text
@@ -85,12 +85,16 @@
 			</ArcChart>
 		</Chart.Container>
 	</Card.Content>
-	<Card.Footer class="flex-col gap-2 text-sm">
-		<div class="flex items-center gap-2 leading-none font-medium">
-			Trending up by 5.2% this month <TrendingUpIcon class="size-4" />
-		</div>
-		<div class="text-muted-foreground flex items-center gap-2 leading-none">
-			January - June 2024
+	<Card.Footer>
+		<div class="flex w-full items-start text-sm">
+			<div class="grid">
+				<div class="flex items-center gap-2 leading-none font-medium">
+					test avg steps for last 7 days <TrendingUpIcon class="size-4" />
+				</div>
+				<div class="text-muted-foreground flex items-center gap-2 leading-none">
+					Range: 200 - 2250 ml
+				</div>
+			</div>
 		</div>
 	</Card.Footer>
 </Card.Root>
