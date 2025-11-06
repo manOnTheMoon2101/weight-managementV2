@@ -7,11 +7,30 @@
 	import Droplet from "@lucide/svelte/icons/droplet";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 
-	const chartData = [{ browser: "safari", visitors: 2700, color: "var(--color-safari)" }];
+	let { dateSeriesData, viewMode = $bindable("7days"), waterLimit } = $props();
+
+	let averageWater = $derived(
+		dateSeriesData && dateSeriesData.length > 0
+			? Math.round(
+					dateSeriesData.reduce((sum: number, x: any) => sum + x.water, 0) / dateSeriesData.length
+				)
+			: 0
+	);
+
+	let minWater = $derived(
+		dateSeriesData && dateSeriesData.length > 0
+			? Math.min(...dateSeriesData.map((x: any) => x.water))
+			: 0
+	);
+
+	let maxWater = $derived(
+		dateSeriesData && dateSeriesData.length > 0
+			? Math.max(...dateSeriesData.map((x: any) => x.water))
+			: 0
+	);
 
 	const chartConfig = {
-		visitors: { label: "Water" },
-		safari: { label: "Safari", color: "var(--accent)" },
+		water: { label: "Water", color: "var(--accent)" },
 	} satisfies Chart.ChartConfig;
 </script>
 
@@ -32,8 +51,18 @@
 						<DropdownMenu.Group>
 							<DropdownMenu.Label class="flex items-center">Filter</DropdownMenu.Label>
 							<DropdownMenu.Separator />
-							<DropdownMenu.Item>Last Month</DropdownMenu.Item>
-							<DropdownMenu.Item>Last 7 Days</DropdownMenu.Item>
+							<DropdownMenu.Item
+								class={viewMode === "month" ? "bg-accent" : ""}
+								onclick={() => (viewMode = "month")}
+							>
+								Last Month
+							</DropdownMenu.Item>
+							<DropdownMenu.Item
+								class={viewMode === "7days" ? "bg-accent" : ""}
+								onclick={() => (viewMode = "7days")}
+							>
+								Last 7 Days
+							</DropdownMenu.Item>
 						</DropdownMenu.Group>
 					</DropdownMenu.Content>
 				</DropdownMenu.Root>
@@ -41,22 +70,24 @@
 		</div>
 	</Card.Header>
 	<Card.Content class="flex-1">
-		<Chart.Container config={chartConfig} >
+		<Chart.Container config={chartConfig}>
 			<ArcChart
-				label="browser"
-				value="visitors"
+				label="water"
+				value="water"
 				outerRadius={66}
 				innerRadius={46}
 				trackOuterRadius={63}
 				trackInnerRadius={52}
 				padding={40}
 				range={[0, 360]}
-				maxValue={3000}
-				series={chartData.map((d) => ({
-					key: d.browser,
-					color: d.color,
-					data: [d],
-				}))}
+				maxValue={waterLimit}
+				series={[
+					{
+						key: "water",
+						color: "var(--accent)",
+						data: [{ water: averageWater }],
+					},
+				]}
 				props={{
 					arc: { track: { fill: "var(--muted)" }, motion: "tween" },
 					tooltip: { context: { hideDelay: 350 } },
@@ -68,14 +99,14 @@
 				{/snippet}
 				{#snippet aboveMarks()}
 					<Text
-						value={String(chartData[0].visitors)}
+						value={String(averageWater)}
 						textAnchor="middle"
 						verticalAnchor="middle"
-						class="fill-foreground text-4xl! font-bold"
+						class="fill-orange-900 text-4xl! font-bold"
 						dy={3}
 					/>
 					<Text
-						value="Water"
+						value="ml"
 						textAnchor="middle"
 						verticalAnchor="middle"
 						class="fill-muted-foreground!"
@@ -89,10 +120,11 @@
 		<div class="flex w-full items-start text-sm">
 			<div class="grid">
 				<div class="flex items-center gap-2 leading-none font-medium">
-					test avg steps for last 7 days <TrendingUpIcon class="size-4" />
+					{averageWater} ml avg water for last {viewMode == "7days" ? "7 days" : "30 days"}
+					<TrendingUpIcon class="size-4" />
 				</div>
 				<div class="text-muted-foreground flex items-center gap-2 leading-none">
-					Range: 200 - 2250 ml
+					Range: {minWater} - {maxWater} ml
 				</div>
 			</div>
 		</div>

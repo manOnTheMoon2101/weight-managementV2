@@ -78,6 +78,32 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 		});
 
+		const WaterMonthAgo = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
+			),
+			columns: {
+				water: true,
+				createdAt: true,
+			},
+		});
+
+		const WaterWeekAgo = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				sql`${health_tracker.createdAt} >= ${sevenDaysAgo.toISOString()}`
+			),
+			columns: {
+				water: true,
+				createdAt: true,
+			},
+		});
+
 		const WeightsWeekAgo = await db.query.health_tracker.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
@@ -213,6 +239,20 @@ export const load: PageServerLoad = async ({ request }) => {
 			createdAt: new Date(entry.createdAt),
 		}));
 
+		const formattedMonthWaterEntries = WaterMonthAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			water: entry.water,
+			createdAt: new Date(entry.createdAt),
+		}));
+
+		const formattedWeekWaterEntries = WaterWeekAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			water: entry.water,
+			createdAt: new Date(entry.createdAt),
+		}));
+
 		const formattedWeekWeightEntries = WeightsWeekAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
 		).map((entry) => ({
@@ -276,6 +316,8 @@ export const load: PageServerLoad = async ({ request }) => {
 		const weightMonthChart = formattedMonthWeightEntries || null;
 		const stepsMonthChart = formattedMonthStepsEntries || null;
 		const stepsWeekChart = formattedWeekStepsEntries || null;
+		const waterMonthChart = formattedMonthWaterEntries || null;
+		const waterWeekChart = formattedWeekWaterEntries || null;
 		const weightWeekChart = formattedWeekWeightEntries || null;
 		const waistChart = formattedWaistEntries || null;
 		const currentWeight = weightEntries[0] || null;
@@ -339,6 +381,8 @@ export const load: PageServerLoad = async ({ request }) => {
 			weightMonthChart: weightMonthChart,
 			stepsMonthChart: stepsMonthChart,
 			stepsWeekChart: stepsWeekChart,
+			waterMonthChart: waterMonthChart,
+			waterWeekChart: waterWeekChart,
 			weightWeekChart: weightWeekChart,
 			waistChart: waistChart,
 			previousWeight: previousWeight,
