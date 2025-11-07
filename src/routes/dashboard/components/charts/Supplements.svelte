@@ -119,7 +119,7 @@
 	</Card.Header>
 	<Card.Content class="flex-1">
 		{#if chartData().length > 0}
-			<Chart.Container config={chartConfig} class="mx-auto aspect-square max-h-[250px]">
+			<Chart.Container config={chartConfig}>
 				<PieChart
 					data={chartData()}
 					key="supplement"
@@ -147,12 +147,14 @@
 			</div>
 		{/if}
 	</Card.Content>
-	<Card.Footer class="flex-col gap-2 text-sm">
-		<div class="flex items-center gap-2 leading-none font-medium">
-			Total supplements: {totalCount}
-		</div>
-		<div class="text-muted-foreground leading-none">
-			Showing data for the last {viewMode === "week" ? "7 days" : "month"}
+	<Card.Footer>
+		<div class="flex w-full items-start text-sm">
+			<div class="grid">
+				<div class="flex items-center gap-2 leading-none font-medium">
+					Total {totalCount} supplements used for last {viewMode === "week" ? "7 days" : "month"}
+					<TrendingUpIcon class="size-4" />
+				</div>
+			</div>
 		</div>
 	</Card.Footer>
 </Card.Root>
