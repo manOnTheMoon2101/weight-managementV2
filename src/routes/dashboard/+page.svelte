@@ -279,7 +279,7 @@
 			<div class="flex w-3/5 flex-row justify-around">
 				<Protein dateSeriesData={proteinCharts} bind:viewMode={proteinViewMode} />
 			
-				<Supplements/>
+				<Supplements weekData={supplementCharts} monthData={supplementCountsMonthChart} />
 			</div>
 
 			<!-- <Supplements data={supplementCharts} monthData={supplementCountsMonthChart} /> -->
