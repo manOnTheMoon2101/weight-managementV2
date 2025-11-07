@@ -289,6 +289,9 @@
 				<Sleep dateSeriesData={sleepCharts}
 					bind:viewMode={sleepViewMode}
 					/>
+						<Sleep dateSeriesData={sleepCharts}
+					bind:viewMode={sleepViewMode}
+					/>
 			</div>
 		</div>
 
