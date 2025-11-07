@@ -1,11 +1,10 @@
 <script lang="ts">
-	import { AreaChart } from "layerchart";
+	import { LineChart } from "layerchart";
 	import TrendingUpIcon from "@lucide/svelte/icons/trending-up";
 	import { curveNatural } from "d3-shape";
 	import { scaleUtc } from "d3-scale";
 	import * as Chart from "$lib/components/ui/chart/index.js";
 	import * as Card from "$lib/components/ui/card/index.js";
-	import Footprints from "@lucide/svelte/icons/footprints";
 	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import Bed from "@lucide/svelte/icons/bed";
@@ -89,10 +88,13 @@
 	</Card.Header>
 	<Card.Content>
 		<Chart.Container config={chartConfig}>
-			<AreaChart
+			<LineChart
+				points={{ r: 4 }}
 				data={transformedData}
 				x="createdAt"
 				xScale={scaleUtc()}
+				axis={false}
+				grid={false}
 				series={[
 					{
 						key: "hours",
@@ -100,28 +102,23 @@
 						color: chartConfig.hours.color,
 					},
 				]}
-				axis={false}
-				grid={false}
 				props={{
-					area: {
-						curve: curveNatural,
-						"fill-opacity": 0.4,
-						line: { class: "stroke-1" },
-						motion: "tween",
+					spline: { curve: curveNatural, motion: "tween", strokeWidth: 2 },
+					highlight: {
+						points: {
+							motion: "none",
+							r: 6,
+						},
 					},
 					xAxis: {
-						style: "display: none;",
+						format: (v: Date) => v.toLocaleDateString("en-US", { month: "short" }),
 					},
 				}}
 			>
 				{#snippet tooltip()}
-					<Chart.Tooltip
-						labelFormatter={(v: Date) =>
-							v.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-						indicator="line"
-					/>
+					<Chart.Tooltip hideLabel />
 				{/snippet}
-			</AreaChart>
+			</LineChart>
 		</Chart.Container>
 	</Card.Content>
 	<Card.Footer>
