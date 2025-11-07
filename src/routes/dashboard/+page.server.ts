@@ -25,7 +25,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			throw redirect(302, "/login");
 		}
 
-		const latestWeightEntries = await db.query.health_tracker.findMany({
+		const weightEntries = await db.query.health_tracker.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
 				eq(health_tracker.isActive, true),
@@ -48,6 +48,58 @@ export const load: PageServerLoad = async ({ request }) => {
 			),
 			columns: {
 				weight: true,
+				createdAt: true,
+			},
+		});
+
+		const StepsMonthAgo = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
+			),
+			columns: {
+				steps: true,
+				createdAt: true,
+			},
+		});
+
+		const StepsWeekAgo = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				sql`${health_tracker.createdAt} >= ${sevenDaysAgo.toISOString()}`
+			),
+			columns: {
+				steps: true,
+				createdAt: true,
+			},
+		});
+
+		const WaterMonthAgo = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
+			),
+			columns: {
+				water: true,
+				createdAt: true,
+			},
+		});
+
+		const WaterWeekAgo = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				sql`${health_tracker.createdAt} >= ${sevenDaysAgo.toISOString()}`
+			),
+			columns: {
+				water: true,
 				createdAt: true,
 			},
 		});
@@ -173,6 +225,34 @@ export const load: PageServerLoad = async ({ request }) => {
 			}),
 		}));
 
+		const formattedMonthStepsEntries = StepsMonthAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			steps: entry.steps,
+			createdAt: new Date(entry.createdAt),
+		}));
+
+		const formattedWeekStepsEntries = StepsWeekAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			steps: entry.steps,
+			createdAt: new Date(entry.createdAt),
+		}));
+
+		const formattedMonthWaterEntries = WaterMonthAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			water: entry.water,
+			createdAt: new Date(entry.createdAt),
+		}));
+
+		const formattedWeekWaterEntries = WaterWeekAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			water: entry.water,
+			createdAt: new Date(entry.createdAt),
+		}));
+
 		const formattedWeekWeightEntries = WeightsWeekAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
 		).map((entry) => ({
@@ -213,7 +293,7 @@ export const load: PageServerLoad = async ({ request }) => {
 				)
 			);
 
-			const supplementCountsMonthAgo = await db
+		const supplementCountsMonthAgo = await db
 			.select({
 				fatburnerCount: count(sql`case when ${supplements.fatburner} = true then 1 end`),
 				multiVitaminCount: count(sql`case when ${supplements.multiVitamin} = true then 1 end`),
@@ -234,10 +314,14 @@ export const load: PageServerLoad = async ({ request }) => {
 		const supplementCountsWeekChart = supplementCountsWeekAgo || null;
 		const supplementCountsMonthChart = supplementCountsMonthAgo || null;
 		const weightMonthChart = formattedMonthWeightEntries || null;
+		const stepsMonthChart = formattedMonthStepsEntries || null;
+		const stepsWeekChart = formattedWeekStepsEntries || null;
+		const waterMonthChart = formattedMonthWaterEntries || null;
+		const waterWeekChart = formattedWeekWaterEntries || null;
 		const weightWeekChart = formattedWeekWeightEntries || null;
 		const waistChart = formattedWaistEntries || null;
-		const currentWeight = latestWeightEntries[0] || null;
-		const previousWeight = latestWeightEntries[1] || null;
+		const currentWeight = weightEntries[0] || null;
+		const previousWeight = weightEntries[1] || null;
 
 		const waterIntake = await db.query.health_tracker.findMany({
 			where: and(
@@ -292,9 +376,13 @@ export const load: PageServerLoad = async ({ request }) => {
 			user: session.user,
 			averageSleepIntake: averageTimeFromSQL,
 			supplementCountsWeekChart: supplementCountsWeekChart,
-			supplementCountsMonthChart : supplementCountsMonthChart,
+			supplementCountsMonthChart: supplementCountsMonthChart,
 			currentWeight: currentWeight,
 			weightMonthChart: weightMonthChart,
+			stepsMonthChart: stepsMonthChart,
+			stepsWeekChart: stepsWeekChart,
+			waterMonthChart: waterMonthChart,
+			waterWeekChart: waterWeekChart,
 			weightWeekChart: weightWeekChart,
 			waistChart: waistChart,
 			previousWeight: previousWeight,
