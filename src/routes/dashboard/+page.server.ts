@@ -4,13 +4,14 @@ import { db } from "$lib/server/db";
 import {
 	health_tracker,
 	limits,
+	nutrients,
 	sleep_schedule,
 	supplements,
 	user,
 } from "$lib/server/schema/index";
 import { redirect } from "@sveltejs/kit";
 import { put } from "@vercel/blob";
-import { and, count, eq, gt, sql } from "drizzle-orm";
+import { and, count, eq, gt, gte, sql } from "drizzle-orm";
 import type { PageServerLoad } from "./$types";
 export const load: PageServerLoad = async ({ request }) => {
 	try {
@@ -74,6 +75,60 @@ export const load: PageServerLoad = async ({ request }) => {
 			),
 			columns: {
 				steps: true,
+				createdAt: true,
+			},
+		});
+
+		const ProteinMonthAgo = await db.query.nutrients.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				gte(nutrients.protein, 1),
+				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
+			),
+			columns: {
+				protein: true,
+				createdAt: true,
+			},
+		});
+
+		const ProteinWeekAgo = await db.query.nutrients.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				gte(nutrients.protein, 1),
+				sql`${health_tracker.createdAt} >= ${sevenDaysAgo.toISOString()}`
+			),
+			columns: {
+				protein: true,
+				createdAt: true,
+			},
+		});
+
+		const sleepMonthAgo = await db.query.sleep_schedule.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
+			),
+			columns: {
+				time: true,
+				createdAt: true,
+			},
+		});
+
+		const sleepWeekAgo = await db.query.sleep_schedule.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				sql`${health_tracker.createdAt} >= ${sevenDaysAgo.toISOString()}`
+			),
+			columns: {
+				time: true,
 				createdAt: true,
 			},
 		});
@@ -246,12 +301,40 @@ export const load: PageServerLoad = async ({ request }) => {
 			createdAt: new Date(entry.createdAt),
 		}));
 
+		const formattedWeekProteinEntries = ProteinWeekAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			protein: entry.protein,
+			createdAt: new Date(entry.createdAt),
+		}));
+
+		const formattedMonthProteinEntries = ProteinMonthAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			protein: entry.protein,
+			createdAt: new Date(entry.createdAt),
+		}));
+
 		const formattedWeekWaterEntries = WaterWeekAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
 		).map((entry) => ({
 			water: entry.water,
 			createdAt: new Date(entry.createdAt),
 		}));
+
+		const formattedMonthSleepEntries = sleepMonthAgo
+			.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+			.map((entry) => ({
+				time: entry.time,
+				createdAt: new Date(entry.createdAt),
+			}));
+
+		const formattedWeekSleepEntries = sleepWeekAgo
+			.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+			.map((entry) => ({
+				time: entry.time,
+				createdAt: new Date(entry.createdAt),
+			}));
 
 		const formattedWeekWeightEntries = WeightsWeekAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -318,6 +401,10 @@ export const load: PageServerLoad = async ({ request }) => {
 		const stepsWeekChart = formattedWeekStepsEntries || null;
 		const waterMonthChart = formattedMonthWaterEntries || null;
 		const waterWeekChart = formattedWeekWaterEntries || null;
+		const proteinMonthChart = formattedMonthProteinEntries || null;
+		const proteinWeekChart = formattedWeekProteinEntries || null;
+		const sleepMonthChart = formattedMonthSleepEntries || null;
+		const sleepWeekChart = formattedWeekSleepEntries || null;
 		const weightWeekChart = formattedWeekWeightEntries || null;
 		const waistChart = formattedWaistEntries || null;
 		const currentWeight = weightEntries[0] || null;
@@ -383,6 +470,10 @@ export const load: PageServerLoad = async ({ request }) => {
 			stepsWeekChart: stepsWeekChart,
 			waterMonthChart: waterMonthChart,
 			waterWeekChart: waterWeekChart,
+			proteinWeekChart: proteinWeekChart,
+			proteinMonthChart: proteinMonthChart,
+			sleepMonthChart: sleepMonthChart,
+			sleepWeekChart: sleepWeekChart,
 			weightWeekChart: weightWeekChart,
 			waistChart: waistChart,
 			previousWeight: previousWeight,

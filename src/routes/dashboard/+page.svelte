@@ -21,6 +21,7 @@
 	import Toggler from "./components/navbar/components/toggler.svelte";
 	import Water from "./components/charts/Water.svelte";
 	import Protein from "./components/charts/Protein.svelte";
+	import Sleep from "./components/charts/Sleep.svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
@@ -30,12 +31,20 @@
 	let stepsWeekChart = $derived(data.stepsWeekChart);
 	let waterMonthChart = $derived(data.waterMonthChart);
 	let waterWeekChart = $derived(data.waterWeekChart);
+	let proteinMonthChart = $derived(data.proteinMonthChart);
+	let proteinWeekChart = $derived(data.proteinWeekChart);
+	let sleepMonthChart = $derived(data.sleepMonthChart);
+	let sleepWeekChart = $derived(data.sleepWeekChart);
 	let weightViewMode = $state("7days");
 	let stepsViewMode = $state("7days");
 	let waterViewMode = $state("7days");
+	let sleepViewMode = $state("7days");
+	let proteinViewMode = $state("7days");
 	let weightCharts = $derived(weightViewMode === "7days" ? weightWeekChart : weightMonthChart);
 	let stepsCharts = $derived(stepsViewMode === "7days" ? stepsWeekChart : stepsMonthChart);
-	let waterCharts = $derived(waterViewMode === "7days" ? waterWeekChart : waterMonthChart);
+	let sleepCharts = $derived(sleepViewMode === "7days" ? sleepWeekChart : sleepMonthChart);
+		let waterCharts = $derived(waterViewMode === "7days" ? waterWeekChart : waterMonthChart);
+		let proteinCharts = $derived(proteinViewMode === "7days" ? proteinWeekChart : proteinMonthChart);
 	let waistChart = $derived(data.waistChart);
 	let supplementCharts = $derived(data.supplementCountsWeekChart);
 	let supplementCountsMonthChart = $derived(data.supplementCountsMonthChart);
@@ -129,18 +138,13 @@
 			<div class="bg-primary flex w-3/5 flex-col justify-between rounded-lg">
 				{#if user}
 					<div>
-						<h1 class="text-sm font-bold text-muted-foreground">{greet()}</h1>
-						<h2 class="text-2xl font-bold ">{user.name}</h2>
+						<h1 class="text-muted-foreground text-sm font-bold">{greet()}</h1>
+						<h2 class="text-2xl font-bold">{user.name}</h2>
 					</div>
 				{/if}
 
 				<div class="flex flex-row">
-
-
-
-
-
-										<div class="flex flex-col items-start p-2">
+					<div class="flex flex-col items-start p-2">
 						<span class="flex flex-row items-center text-6xl"
 							>{previousWeight}<WeightIcon class="text-foreground" /></span
 						>
@@ -155,11 +159,10 @@
 						<h4 class="text-accent text-sm font-bold">Previous Weight</h4>
 					</div>
 
-
 					<span class="flex items-center justify-center">
 						{#if currentWeight && previousWeight}
 							{#if Number(currentWeight) > Number(previousWeight)}
-							Gained:	<ChevronUp class="text-red-500 " />
+								Gained: <ChevronUp class="text-red-500 " />
 							{:else if Number(currentWeight) < Number(previousWeight)}
 								Lost:<ChevronDown class="text-green-500 " />
 							{:else}
@@ -167,8 +170,6 @@
 							{/if}
 						{/if}
 					</span>
-
-
 
 					<div class="flex flex-col items-start p-2">
 						<div class="flex flex-row items-center">
@@ -186,10 +187,6 @@
 						</span>
 						<h4 class="text-accent text-sm font-bold">Current Weight</h4>
 					</div>
-
-					
-
-
 
 					<!-- <div class="mx-2">
 						<Tooltip.Provider delayDuration={100}>
@@ -270,32 +267,32 @@
 			</div>
 			<div class="flex w-2/5 flex-row justify-around">
 				<Steps dateSeriesData={stepsCharts} bind:viewMode={stepsViewMode} />
-				<Water  dateSeriesData={waterCharts} bind:viewMode={waterViewMode} waterLimit={data.waterLimit} />
+				<Water
+					dateSeriesData={waterCharts}
+					bind:viewMode={waterViewMode}
+					waterLimit={data.waterLimit}
+				/>
 			</div>
 		</div>
 
-
-
-
-
-
-
-
-		
 		<div class="flex flex-row items-start justify-around">
 			<div class="flex w-3/5 flex-row justify-around">
-				<Protein/>
-			<Supplements/>
+				<Protein dateSeriesData={proteinCharts} bind:viewMode={proteinViewMode} />
 			
+				<Supplements weekData={supplementCharts} monthData={supplementCountsMonthChart} />
 			</div>
 
 			<!-- <Supplements data={supplementCharts} monthData={supplementCountsMonthChart} /> -->
 
 			<div class="flex w-2/5 flex-row justify-around">
-				<Steps dateSeriesData={stepsCharts} bind:viewMode={stepsViewMode} />
-				<Water  dateSeriesData={waterCharts} bind:viewMode={waterViewMode} waterLimit={data.waterLimit} />
+				
+				<Sleep dateSeriesData={sleepCharts}
+					bind:viewMode={sleepViewMode}
+					/>
+						<Sleep dateSeriesData={sleepCharts}
+					bind:viewMode={sleepViewMode}
+					/>
 			</div>
-			
 		</div>
 
 		<div class="mt-24 flex flex-row items-center justify-evenly">

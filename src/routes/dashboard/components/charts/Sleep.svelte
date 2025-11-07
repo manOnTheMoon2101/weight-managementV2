@@ -1,51 +1,62 @@
 <script lang="ts">
-	import { scaleBand } from "d3-scale";
-	import { BarChart, type ChartContextValue } from "layerchart";
+	import { LineChart } from "layerchart";
 	import TrendingUpIcon from "@lucide/svelte/icons/trending-up";
+	import { curveNatural } from "d3-shape";
+	import { scaleUtc } from "d3-scale";
 	import * as Chart from "$lib/components/ui/chart/index.js";
 	import * as Card from "$lib/components/ui/card/index.js";
-	import { cubicInOut } from "svelte/easing";
 	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
-	import Beef from "@lucide/svelte/icons/beef";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+	import Bed from "@lucide/svelte/icons/bed";
 
 	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
 
-	let averageProtein = $derived(
+	function timeToHours(timeStr: string): number {
+		if (!timeStr) return 0;
+		const [hours, minutes, seconds] = timeStr.split(":").map(Number);
+		return hours + minutes / 60 + (seconds || 0) / 3600;
+	}
+
+	let transformedData = $derived(
 		dateSeriesData && dateSeriesData.length > 0
-			? Math.round(
-					dateSeriesData.reduce((sum: number, x: any) => sum + x.protein, 0) / dateSeriesData.length
-				)
+			? dateSeriesData.map((x: any) => ({
+					...x,
+					hours: timeToHours(x.time),
+				}))
+			: []
+	);
+
+	let averageSleep = $derived(
+		transformedData.length > 0
+			? (
+					transformedData.reduce((sum: any, x: any) => sum + x.hours, 0) / transformedData.length
+				).toFixed(1)
 			: 0
 	);
 
-	let minProtein = $derived(
-		dateSeriesData && dateSeriesData.length > 0
-			? Math.min(...dateSeriesData.map((x: any) => x.protein))
+	let minSleep = $derived(
+		transformedData.length > 0
+			? Math.min(...transformedData.map((x: any) => x.hours)).toFixed(1)
 			: 0
 	);
 
-	let maxProtein = $derived(
-		dateSeriesData && dateSeriesData.length > 0
-			? Math.max(...dateSeriesData.map((x: any) => x.protein))
+	let maxSleep = $derived(
+		transformedData.length > 0
+			? Math.max(...transformedData.map((x: any) => x.hours)).toFixed(1)
 			: 0
 	);
-
-	$inspect(dateSeriesData);
 
 	const chartConfig = {
-		desktop: { label: "Protein", color: "var(--accent)" },
+		hours: { label: "Hours", color: "var(--accent)" },
 	} satisfies Chart.ChartConfig;
-
-	let context = $state<ChartContextValue>();
 </script>
 
 <Card.Root class="bg-primary">
 	<Card.Header>
 		<div class="flex flex-row justify-between">
 			<div>
-				<Card.Title><Beef /></Card.Title>
-				<Card.Description>Protein</Card.Description>
+				<Card.Title><Bed /></Card.Title>
+				<Card.Description>Sleep</Card.Description>
 			</div>
 
 			<div>
@@ -77,54 +88,48 @@
 	</Card.Header>
 	<Card.Content>
 		<Chart.Container config={chartConfig}>
-			<BarChart
-				bind:context
-				data={dateSeriesData}
-				xScale={scaleBand().padding(0.25)}
+			<LineChart
+				points={{ r: 4 }}
+				data={transformedData}
 				x="createdAt"
+				xScale={scaleUtc()}
 				axis={false}
 				grid={false}
-				series={
-        [
-          { key: "protein", label: "Protein", color: chartConfig.desktop.color }
-          ]
-          }
+				series={[
+					{
+						key: "hours",
+						label: "Hours",
+						color: chartConfig.hours.color,
+					},
+				]}
 				props={{
-					bars: {
-						stroke: "none",
-						rounded: "all",
-						radius: 8,
-						initialY: context?.height,
-						initialHeight: 0,
-						motion: {
-							x: { type: "tween", duration: 500, easing: cubicInOut },
-							width: { type: "tween", duration: 500, easing: cubicInOut },
-							height: { type: "tween", duration: 500, easing: cubicInOut },
-							y: { type: "tween", duration: 500, easing: cubicInOut },
+					spline: { curve: curveNatural, motion: "tween", strokeWidth: 2 },
+					highlight: {
+						points: {
+							motion: "none",
+							r: 6,
 						},
 					},
-					highlight: { area: { fill: "none" } },
+					xAxis: {
+						format: (v: Date) => v.toLocaleDateString("en-US", { month: "short" }),
+					},
 				}}
 			>
 				{#snippet tooltip()}
-					<Chart.Tooltip
-						labelFormatter={(v: Date) =>
-							v.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-						indicator="line"
-					/>
+					<Chart.Tooltip hideLabel />
 				{/snippet}
-			</BarChart>
+			</LineChart>
 		</Chart.Container>
 	</Card.Content>
 	<Card.Footer>
 		<div class="flex w-full items-start text-sm">
 			<div class="grid">
 				<div class="flex items-center gap-2 leading-none font-medium">
-					{averageProtein} avg protein for last {viewMode == "7days" ? "7 days" : "30 days"}
+					{averageSleep} avg hours for last {viewMode == "7days" ? "7 days" : "30 days"}
 					<TrendingUpIcon class="size-4" />
 				</div>
 				<div class="text-muted-foreground flex items-center gap-2 leading-none">
-					Range: {minProtein.toLocaleString()} - {maxProtein.toLocaleString()} protein
+					Range: {minSleep} - {maxSleep} hours
 				</div>
 			</div>
 		</div>
