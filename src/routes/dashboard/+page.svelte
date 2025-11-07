@@ -31,16 +31,20 @@
 	let stepsWeekChart = $derived(data.stepsWeekChart);
 	let waterMonthChart = $derived(data.waterMonthChart);
 	let waterWeekChart = $derived(data.waterWeekChart);
+	let proteinMonthChart = $derived(data.proteinMonthChart);
+	let proteinWeekChart = $derived(data.proteinWeekChart);
 	let sleepMonthChart = $derived(data.sleepMonthChart);
 	let sleepWeekChart = $derived(data.sleepWeekChart);
 	let weightViewMode = $state("7days");
 	let stepsViewMode = $state("7days");
 	let waterViewMode = $state("7days");
 	let sleepViewMode = $state("7days");
+	let proteinViewMode = $state("7days");
 	let weightCharts = $derived(weightViewMode === "7days" ? weightWeekChart : weightMonthChart);
 	let stepsCharts = $derived(stepsViewMode === "7days" ? stepsWeekChart : stepsMonthChart);
 	let sleepCharts = $derived(sleepViewMode === "7days" ? sleepWeekChart : sleepMonthChart);
 		let waterCharts = $derived(waterViewMode === "7days" ? waterWeekChart : waterMonthChart);
+		let proteinCharts = $derived(proteinViewMode === "7days" ? proteinWeekChart : proteinMonthChart);
 	let waistChart = $derived(data.waistChart);
 	let supplementCharts = $derived(data.supplementCountsWeekChart);
 	let supplementCountsMonthChart = $derived(data.supplementCountsMonthChart);
@@ -273,7 +277,8 @@
 
 		<div class="flex flex-row items-start justify-around">
 			<div class="flex w-3/5 flex-row justify-around">
-				<Protein />
+				<Protein dateSeriesData={proteinCharts} bind:viewMode={proteinViewMode} />
+			
 				<Supplements/>
 			</div>
 
