@@ -107,6 +107,36 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 		});
 
+
+
+			const CaloriesMonthAgo = await db.query.nutrients.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				gte(nutrients.protein, 1),
+				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
+			),
+			columns: {
+				calories: true,
+				createdAt: true,
+			},
+		});
+
+		const CaloriesWeekAgo = await db.query.nutrients.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				gte(nutrients.protein, 1),
+				sql`${health_tracker.createdAt} >= ${sevenDaysAgo.toISOString()}`
+			),
+			columns: {
+				calories: true,
+				createdAt: true,
+			},
+		});
+
 		const sleepMonthAgo = await db.query.sleep_schedule.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
@@ -168,6 +198,40 @@ export const load: PageServerLoad = async ({ request }) => {
 			),
 			columns: {
 				weight: true,
+				createdAt: true,
+			},
+		});
+
+
+
+		const MeasurementsMonthAgo = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				// gte(health_tracker.waistMeasurement, 1),
+				gte(health_tracker.weight, 1),
+				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
+			),
+			columns: {
+				waistMeasurement: true,
+				weight:true,
+				createdAt: true,
+			},
+		});
+
+			const MeasurementsWeekAgo = await db.query.health_tracker.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				// gte(health_tracker.waistMeasurement, 1),
+				gte(health_tracker.weight, 1),
+				sql`${health_tracker.createdAt} >= ${sevenDaysAgo.toISOString()}`
+			),
+			columns: {
+				waistMeasurement: true,
+				weight:true,
 				createdAt: true,
 			},
 		});
@@ -280,6 +344,25 @@ export const load: PageServerLoad = async ({ request }) => {
 			}),
 		}));
 
+
+		const formattedMonthMeasurementsEntries = MeasurementsMonthAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			weight: entry.weight,
+			waist: entry.waistMeasurement,
+			createdAt: new Date(entry.createdAt),
+		}));
+
+		const formattedWeekMeasurementsEntries = MeasurementsWeekAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			weight: entry.weight,
+			waist: entry.waistMeasurement,
+			createdAt: new Date(entry.createdAt),
+		}));
+
+		
+
 		const formattedMonthStepsEntries = StepsMonthAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
 		).map((entry) => ({
@@ -314,6 +397,23 @@ export const load: PageServerLoad = async ({ request }) => {
 			protein: entry.protein,
 			createdAt: new Date(entry.createdAt),
 		}));
+
+
+
+		const formattedWeekCaloriesEntries = CaloriesWeekAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			calories: entry.calories,
+			createdAt: new Date(entry.createdAt),
+		}));
+
+		const formattedMonthCaloriesEntries = CaloriesMonthAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			calories: entry.calories,
+			createdAt: new Date(entry.createdAt),
+		}));
+
 
 		const formattedWeekWaterEntries = WaterWeekAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -398,11 +498,15 @@ export const load: PageServerLoad = async ({ request }) => {
 		const supplementCountsMonthChart = supplementCountsMonthAgo || null;
 		const weightMonthChart = formattedMonthWeightEntries || null;
 		const stepsMonthChart = formattedMonthStepsEntries || null;
+		const measurementMonthChart = formattedMonthMeasurementsEntries || null;
+				const measurementWeekChart = formattedWeekMeasurementsEntries || null;
 		const stepsWeekChart = formattedWeekStepsEntries || null;
 		const waterMonthChart = formattedMonthWaterEntries || null;
 		const waterWeekChart = formattedWeekWaterEntries || null;
 		const proteinMonthChart = formattedMonthProteinEntries || null;
 		const proteinWeekChart = formattedWeekProteinEntries || null;
+		const caloriesMonthChart = formattedMonthCaloriesEntries || null;
+		const caloriesWeekChart = formattedWeekCaloriesEntries || null;
 		const sleepMonthChart = formattedMonthSleepEntries || null;
 		const sleepWeekChart = formattedWeekSleepEntries || null;
 		const weightWeekChart = formattedWeekWeightEntries || null;
@@ -467,11 +571,15 @@ export const load: PageServerLoad = async ({ request }) => {
 			currentWeight: currentWeight,
 			weightMonthChart: weightMonthChart,
 			stepsMonthChart: stepsMonthChart,
+			measurementMonthChart : measurementMonthChart,
+			measurementWeekChart : measurementWeekChart,
 			stepsWeekChart: stepsWeekChart,
 			waterMonthChart: waterMonthChart,
 			waterWeekChart: waterWeekChart,
 			proteinWeekChart: proteinWeekChart,
 			proteinMonthChart: proteinMonthChart,
+			caloriesWeekChart : caloriesWeekChart,
+			caloriesMonthChart : caloriesMonthChart,
 			sleepMonthChart: sleepMonthChart,
 			sleepWeekChart: sleepWeekChart,
 			weightWeekChart: weightWeekChart,

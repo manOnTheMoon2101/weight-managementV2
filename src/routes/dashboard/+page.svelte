@@ -22,6 +22,8 @@
 	import Water from "./components/charts/Water.svelte";
 	import Protein from "./components/charts/Protein.svelte";
 	import Sleep from "./components/charts/Sleep.svelte";
+	import Calories from "./components/charts/Calories.svelte";
+	import MultiChart from "./components/charts/MultiChart.svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
@@ -29,10 +31,14 @@
 	let weightWeekChart = $derived(data.weightWeekChart);
 	let stepsMonthChart = $derived(data.stepsMonthChart);
 	let stepsWeekChart = $derived(data.stepsWeekChart);
+	let measurementMonthChart = $derived(data.measurementMonthChart);
+		let measurementWeekChart = $derived(data.measurementWeekChart);
 	let waterMonthChart = $derived(data.waterMonthChart);
 	let waterWeekChart = $derived(data.waterWeekChart);
 	let proteinMonthChart = $derived(data.proteinMonthChart);
 	let proteinWeekChart = $derived(data.proteinWeekChart);
+		let caloriesMonthChart = $derived(data.caloriesMonthChart);
+	let caloriesWeekChart = $derived(data.caloriesWeekChart);
 	let sleepMonthChart = $derived(data.sleepMonthChart);
 	let sleepWeekChart = $derived(data.sleepWeekChart);
 	let weightViewMode = $state("7days");
@@ -40,11 +46,15 @@
 	let waterViewMode = $state("7days");
 	let sleepViewMode = $state("7days");
 	let proteinViewMode = $state("7days");
+	let caloriesViewMode = $state("7days");
+	let measurementViewMode = $state("7days");
 	let weightCharts = $derived(weightViewMode === "7days" ? weightWeekChart : weightMonthChart);
 	let stepsCharts = $derived(stepsViewMode === "7days" ? stepsWeekChart : stepsMonthChart);
 	let sleepCharts = $derived(sleepViewMode === "7days" ? sleepWeekChart : sleepMonthChart);
 		let waterCharts = $derived(waterViewMode === "7days" ? waterWeekChart : waterMonthChart);
 		let proteinCharts = $derived(proteinViewMode === "7days" ? proteinWeekChart : proteinMonthChart);
+		let caloriesCharts = $derived(caloriesViewMode === "7days" ? caloriesWeekChart : caloriesMonthChart);
+		let measurementCharts = $derived(measurementViewMode === "7days" ? measurementWeekChart : measurementMonthChart);
 	let waistChart = $derived(data.waistChart);
 	let supplementCharts = $derived(data.supplementCountsWeekChart);
 	let supplementCountsMonthChart = $derived(data.supplementCountsMonthChart);
@@ -289,47 +299,12 @@
 				<Sleep dateSeriesData={sleepCharts}
 					bind:viewMode={sleepViewMode}
 					/>
-						<Sleep dateSeriesData={sleepCharts}
-					bind:viewMode={sleepViewMode}
-					/>
+					<Calories dateSeriesData={caloriesCharts} bind:viewMode={caloriesViewMode} />
 			</div>
 		</div>
 
-		<div class="mt-24 flex flex-row items-center justify-evenly">
-			<div class="w-full">
-				<div class="mb-4 flex flex-row justify-center">
-					<div
-						role="button"
-						tabindex="0"
-						onclick={() => (weightViewMode = "7days")}
-						onkeydown={(e) => {
-							if (e.key === "Enter" || e.key === " ") weightViewMode = "7days";
-						}}
-					>
-						<Button
-							class={weightViewMode == "7days" ? "bg-accent mx-2" : "mx-2"}
-							size="sm"
-							variant="secondary">Last 7 Days</Button
-						>
-					</div>
-					<div
-						role="button"
-						tabindex="0"
-						onclick={() => (weightViewMode = "month")}
-						onkeydown={(e) => {
-							if (e.key === "Enter" || e.key === " ") weightViewMode = "month";
-						}}
-					>
-						<Button
-							class={weightViewMode == "month" ? "bg-accent mx-2" : "mx-2"}
-							size="sm"
-							variant="secondary">Last Month</Button
-						>
-					</div>
-				</div>
-				<Weight dateSeriesData={weightCharts} />
-				<Waist dateSeriesData={waistChart} />
-			</div>
+		<div>
+			<MultiChart dateSeriesData={measurementCharts} bind:viewMode={measurementViewMode} />
 		</div>
 	</div>
 </div>
