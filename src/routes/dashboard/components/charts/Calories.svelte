@@ -11,7 +11,7 @@
 
 	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
 
-	let averageProtein = $derived(
+	let averageCalories = $derived(
 		dateSeriesData && dateSeriesData.length > 0
 			? Math.round(
 					dateSeriesData.reduce((sum: number, x: any) => sum + x.calories, 0) / dateSeriesData.length
@@ -19,13 +19,13 @@
 			: 0
 	);
 
-	let minProtein = $derived(
+	let minCalories = $derived(
 		dateSeriesData && dateSeriesData.length > 0
 			? Math.min(...dateSeriesData.map((x: any) => x.calories))
 			: 0
 	);
 
-	let maxProtein = $derived(
+	let maxCalories = $derived(
 		dateSeriesData && dateSeriesData.length > 0
 			? Math.max(...dateSeriesData.map((x: any) => x.calories))
 			: 0
@@ -120,11 +120,11 @@
 		<div class="flex w-full items-start text-sm">
 			<div class="grid">
 				<div class="flex items-center gap-2 leading-none font-medium">
-					{averageProtein} avg protein for last {viewMode == "7days" ? "7 days" : "30 days"}
+					{averageCalories} avg protein for last {viewMode == "7days" ? "7 days" : "30 days"}
 					<TrendingUpIcon class="size-4" />
 				</div>
 				<div class="text-muted-foreground flex items-center gap-2 leading-none">
-					Range: {minProtein.toLocaleString()} - {maxProtein.toLocaleString()} protein
+					Range: {minCalories.toLocaleString()} - {maxCalories.toLocaleString()} protein
 				</div>
 			</div>
 		</div>
