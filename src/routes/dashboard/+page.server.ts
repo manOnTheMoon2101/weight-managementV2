@@ -209,7 +209,7 @@ export const load: PageServerLoad = async ({ request }) => {
 				eq(health_tracker.userId, session.user.id),
 				eq(health_tracker.isActive, true),
 				eq(health_tracker.isDeleted, false),
-				gte(health_tracker.waistMeasurement, 1),
+				// gte(health_tracker.waistMeasurement, 1),
 				gte(health_tracker.weight, 1),
 				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
 			),
@@ -225,7 +225,7 @@ export const load: PageServerLoad = async ({ request }) => {
 				eq(health_tracker.userId, session.user.id),
 				eq(health_tracker.isActive, true),
 				eq(health_tracker.isDeleted, false),
-				gte(health_tracker.waistMeasurement, 1),
+				// gte(health_tracker.waistMeasurement, 1),
 				gte(health_tracker.weight, 1),
 				sql`${health_tracker.createdAt} >= ${sevenDaysAgo.toISOString()}`
 			),

@@ -89,16 +89,16 @@
 			</LineChart>
 		</Chart.Container>
 	</Card.Content>
-	<!-- <Card.Footer>
-    <div class="flex w-full items-start gap-2 text-sm">
-      <div class="grid gap-2">
-        <div class="flex items-center gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUpIcon class="size-4" />
-        </div>
-        <div class="text-muted-foreground flex items-center gap-2 leading-none">
-          January - June 2024
-        </div>
-      </div>
-    </div>
-  </Card.Footer> -->
+	<Card.Footer>
+		<div class="flex w-full items-start gap-2 text-sm">
+			<div class="grid gap-2">
+				<!-- <div class="flex items-center gap-2 leading-none font-medium">
+					<TrendingUpIcon class="size-4" />
+				</div> -->
+				<div class="text-muted-foreground flex items-center gap-2 leading-none">
+					{viewMode == "7days" ? "Last 7 days" : "Last 30 days"}
+				</div>
+			</div>
+		</div>
+	</Card.Footer>
 </Card.Root>
