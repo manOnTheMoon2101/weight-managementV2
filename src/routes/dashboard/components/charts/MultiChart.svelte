@@ -57,7 +57,7 @@
 				xScale={scaleUtc()}
 				axis={false}
 				grid={false}
-                 points={{ r: 4 }}
+				points={{ r: 4 }}
 				series={[
 					{
 						key: "weight",
@@ -72,10 +72,15 @@
 				]}
 				props={{
 					spline: { curve: curveNatural, motion: "tween", strokeWidth: 2 },
+					highlight: {
+						points: {
+							motion: "none",
+							r: 6,
+						},
+					},
 					xAxis: {
 						format: (v: Date) => v.toLocaleDateString("en-US", { month: "short" }),
 					},
-					highlight: { points: { r: 4 } },
 				}}
 			>
 				{#snippet tooltip()}
