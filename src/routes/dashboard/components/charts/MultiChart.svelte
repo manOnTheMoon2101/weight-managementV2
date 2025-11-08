@@ -6,45 +6,68 @@
 	import Scale from "@lucide/svelte/icons/scale";
 	import * as Chart from "$lib/components/ui/chart/index.js";
 	import * as Card from "$lib/components/ui/card/index.js";
+	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 
-	const chartData = [
-		{ date: new Date("2024-01-01"), desktop: 186, mobile: 80 },
-		{ date: new Date("2024-02-01"), desktop: 305, mobile: 200 },
-		{ date: new Date("2024-03-01"), desktop: 237, mobile: 120 },
-		{ date: new Date("2024-04-01"), desktop: 73, mobile: 190 },
-		{ date: new Date("2024-05-01"), desktop: 209, mobile: 130 },
-		{ date: new Date("2024-06-01"), desktop: 214, mobile: 140 },
-	];
+	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
 
+	$inspect(dateSeriesData);
 	const chartConfig = {
-		desktop: { label: "Desktop", color: "var(--accent)" },
-		mobile: { label: "Mobile", color: "var(--secondary)" },
+		waist: { label: "Waist", color: "var(--accent)" },
+		weight: { label: "Weights", color: "var(--secondary)" },
 	} satisfies Chart.ChartConfig;
 </script>
 
 <Card.Root class="bg-primary">
 	<Card.Header>
-		<Card.Title><Scale /></Card.Title>
-		<Card.Description>Measurements</Card.Description>
+		<div class="flex flex-row justify-between">
+			<div>
+				<Card.Title><Scale /></Card.Title>
+				<Card.Description>Measurements</Card.Description>
+			</div>
+
+			<div>
+				<DropdownMenu.Root>
+					<DropdownMenu.Trigger class="cursor-pointer">
+						<EllipsisVertical />
+					</DropdownMenu.Trigger>
+					<DropdownMenu.Content>
+						<DropdownMenu.Group>
+							<DropdownMenu.Label class="flex items-center">Filter</DropdownMenu.Label>
+							<DropdownMenu.Separator />
+							<DropdownMenu.Item
+								class={viewMode === "month" ? "bg-accent" : ""}
+								onclick={() => (viewMode = "month")}>Last Month</DropdownMenu.Item
+							>
+							<DropdownMenu.Item
+								class={viewMode === "7days" ? "bg-accent" : ""}
+								onclick={() => (viewMode = "7days")}>Last 7 Days</DropdownMenu.Item
+							>
+						</DropdownMenu.Group>
+					</DropdownMenu.Content>
+				</DropdownMenu.Root>
+			</div>
+		</div>
 	</Card.Header>
 	<Card.Content>
 		<Chart.Container config={chartConfig} class="h-[100px] w-full">
 			<LineChart
-				data={chartData}
-				x="date"
+				data={dateSeriesData}
+				x="createdAt"
 				xScale={scaleUtc()}
 				axis={false}
 				grid={false}
+                 points={{ r: 4 }}
 				series={[
 					{
-						key: "desktop",
-						label: "Desktop",
-						color: chartConfig.desktop.color,
+						key: "weight",
+						label: "Weight",
+						color: chartConfig.weight.color,
 					},
 					{
-						key: "mobile",
-						label: "Mobile",
-						color: chartConfig.mobile.color,
+						key: "waist",
+						label: "Waist",
+						color: chartConfig.waist.color,
 					},
 				]}
 				props={{
