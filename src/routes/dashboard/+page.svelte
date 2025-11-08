@@ -22,6 +22,7 @@
 	import Water from "./components/charts/Water.svelte";
 	import Protein from "./components/charts/Protein.svelte";
 	import Sleep from "./components/charts/Sleep.svelte";
+	import Calories from "./components/charts/Calories.svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
@@ -33,6 +34,8 @@
 	let waterWeekChart = $derived(data.waterWeekChart);
 	let proteinMonthChart = $derived(data.proteinMonthChart);
 	let proteinWeekChart = $derived(data.proteinWeekChart);
+		let caloriesMonthChart = $derived(data.caloriesMonthChart);
+	let caloriesWeekChart = $derived(data.caloriesWeekChart);
 	let sleepMonthChart = $derived(data.sleepMonthChart);
 	let sleepWeekChart = $derived(data.sleepWeekChart);
 	let weightViewMode = $state("7days");
@@ -40,11 +43,13 @@
 	let waterViewMode = $state("7days");
 	let sleepViewMode = $state("7days");
 	let proteinViewMode = $state("7days");
+	let caloriesViewMode = $state("7days");
 	let weightCharts = $derived(weightViewMode === "7days" ? weightWeekChart : weightMonthChart);
 	let stepsCharts = $derived(stepsViewMode === "7days" ? stepsWeekChart : stepsMonthChart);
 	let sleepCharts = $derived(sleepViewMode === "7days" ? sleepWeekChart : sleepMonthChart);
 		let waterCharts = $derived(waterViewMode === "7days" ? waterWeekChart : waterMonthChart);
 		let proteinCharts = $derived(proteinViewMode === "7days" ? proteinWeekChart : proteinMonthChart);
+		let caloriesCharts = $derived(caloriesViewMode === "7days" ? caloriesWeekChart : caloriesMonthChart);
 	let waistChart = $derived(data.waistChart);
 	let supplementCharts = $derived(data.supplementCountsWeekChart);
 	let supplementCountsMonthChart = $derived(data.supplementCountsMonthChart);
@@ -289,9 +294,7 @@
 				<Sleep dateSeriesData={sleepCharts}
 					bind:viewMode={sleepViewMode}
 					/>
-						<Sleep dateSeriesData={sleepCharts}
-					bind:viewMode={sleepViewMode}
-					/>
+					<Calories dateSeriesData={caloriesCharts} bind:viewMode={caloriesViewMode} />
 			</div>
 		</div>
 

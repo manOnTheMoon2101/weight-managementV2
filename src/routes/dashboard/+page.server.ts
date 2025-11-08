@@ -107,6 +107,36 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 		});
 
+
+
+			const CaloriesMonthAgo = await db.query.nutrients.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				gte(nutrients.protein, 1),
+				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
+			),
+			columns: {
+				calories: true,
+				createdAt: true,
+			},
+		});
+
+		const CaloriesWeekAgo = await db.query.nutrients.findMany({
+			where: and(
+				eq(health_tracker.userId, session.user.id),
+				eq(health_tracker.isActive, true),
+				eq(health_tracker.isDeleted, false),
+				gte(nutrients.protein, 1),
+				sql`${health_tracker.createdAt} >= ${sevenDaysAgo.toISOString()}`
+			),
+			columns: {
+				calories: true,
+				createdAt: true,
+			},
+		});
+
 		const sleepMonthAgo = await db.query.sleep_schedule.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
@@ -315,6 +345,23 @@ export const load: PageServerLoad = async ({ request }) => {
 			createdAt: new Date(entry.createdAt),
 		}));
 
+
+
+		const formattedWeekCaloriesEntries = CaloriesWeekAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			calories: entry.calories,
+			createdAt: new Date(entry.createdAt),
+		}));
+
+		const formattedMonthCaloriesEntries = CaloriesMonthAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			calories: entry.calories,
+			createdAt: new Date(entry.createdAt),
+		}));
+
+
 		const formattedWeekWaterEntries = WaterWeekAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
 		).map((entry) => ({
@@ -403,6 +450,8 @@ export const load: PageServerLoad = async ({ request }) => {
 		const waterWeekChart = formattedWeekWaterEntries || null;
 		const proteinMonthChart = formattedMonthProteinEntries || null;
 		const proteinWeekChart = formattedWeekProteinEntries || null;
+		const caloriesMonthChart = formattedMonthCaloriesEntries || null;
+		const caloriesWeekChart = formattedWeekCaloriesEntries || null;
 		const sleepMonthChart = formattedMonthSleepEntries || null;
 		const sleepWeekChart = formattedWeekSleepEntries || null;
 		const weightWeekChart = formattedWeekWeightEntries || null;
@@ -472,6 +521,8 @@ export const load: PageServerLoad = async ({ request }) => {
 			waterWeekChart: waterWeekChart,
 			proteinWeekChart: proteinWeekChart,
 			proteinMonthChart: proteinMonthChart,
+			caloriesWeekChart : caloriesWeekChart,
+			caloriesMonthChart : caloriesMonthChart,
 			sleepMonthChart: sleepMonthChart,
 			sleepWeekChart: sleepWeekChart,
 			weightWeekChart: weightWeekChart,
