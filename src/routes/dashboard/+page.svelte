@@ -23,6 +23,7 @@
 	import Protein from "./components/charts/Protein.svelte";
 	import Sleep from "./components/charts/Sleep.svelte";
 	import Calories from "./components/charts/Calories.svelte";
+	import MultiChart from "./components/charts/MultiChart.svelte";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
@@ -298,41 +299,8 @@
 			</div>
 		</div>
 
-		<div class="mt-24 flex flex-row items-center justify-evenly">
-			<div class="w-full">
-				<div class="mb-4 flex flex-row justify-center">
-					<div
-						role="button"
-						tabindex="0"
-						onclick={() => (weightViewMode = "7days")}
-						onkeydown={(e) => {
-							if (e.key === "Enter" || e.key === " ") weightViewMode = "7days";
-						}}
-					>
-						<Button
-							class={weightViewMode == "7days" ? "bg-accent mx-2" : "mx-2"}
-							size="sm"
-							variant="secondary">Last 7 Days</Button
-						>
-					</div>
-					<div
-						role="button"
-						tabindex="0"
-						onclick={() => (weightViewMode = "month")}
-						onkeydown={(e) => {
-							if (e.key === "Enter" || e.key === " ") weightViewMode = "month";
-						}}
-					>
-						<Button
-							class={weightViewMode == "month" ? "bg-accent mx-2" : "mx-2"}
-							size="sm"
-							variant="secondary">Last Month</Button
-						>
-					</div>
-				</div>
-				<Weight dateSeriesData={weightCharts} />
-				<Waist dateSeriesData={waistChart} />
-			</div>
+		<div>
+			<MultiChart/>
 		</div>
 	</div>
 </div>
