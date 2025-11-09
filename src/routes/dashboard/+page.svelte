@@ -24,6 +24,8 @@
 	import Sleep from "./components/charts/Sleep.svelte";
 	import Calories from "./components/charts/Calories.svelte";
 	import MultiChart from "./components/charts/MultiChart.svelte";
+	import * as Avatar from "$lib/components/ui/avatar/index.js";
+	import { Separator } from "$lib/components/ui/separator/index.js";
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
@@ -76,8 +78,6 @@
 
 	let viewMode = $state("7days");
 	let isFullscreen = $state(false);
-
-	$inspect(supplementCharts);
 
 	function greet(): string {
 		const hour = new Date().getHours();
@@ -132,6 +132,7 @@
 			isFullscreen = !!(document as any).msFullscreenElement;
 		});
 	}
+	const firstLetter = $derived(user?.name?.charAt(0));
 </script>
 
 <div class="flex flex-col gap-1">
@@ -149,30 +150,47 @@
 		</div>
 
 		<div class="flex flex-row items-center justify-between">
-			<div class="bg-primary flex w-3/5 flex-col justify-between rounded-lg h-[300px]">
+			<div class="bg-primary flex h-[300px] w-3/5 flex-col justify-between rounded-lg">
 				{#if user}
-					<div>
-						<h1 class="text-muted-foreground text-sm font-bold">{greet()}</h1>
-						<h2 class="text-2xl font-bold">{user.name}</h2>
+					<div class="flex flex-row items-center justify-between">
+						<div>
+							<div class="flex flex-row items-center">
+								<div>
+									<Avatar.Root class="mr-2 size-15">
+										<Avatar.Image src={user.image} alt="User Image" />
+										<Avatar.Fallback>{firstLetter ?? "?"}</Avatar.Fallback>
+									</Avatar.Root>
+								</div>
+
+								<div class="flex flex-col">
+									<h1 class="text-muted-foreground text-lg font-bold">{greet()}</h1>
+									<h2 class="text-4xl font-bold">{user.name}</h2>
+								</div>
+							</div>
+						</div>
+
+						<div><Badge variant="secondary">{df.format(new Date())}</Badge></div>
 					</div>
 				{/if}
 
-				<div class="flex flex-row">
+				<div class="flex flex-row justify-between">
 					<div class="flex flex-col items-start p-2">
-						<span class="flex flex-row items-center text-6xl"
-							>{previousWeight}<WeightIcon class="text-foreground" /></span
-						>
+						<span class="flex flex-row items-center text-6xl">{previousWeight}</span>
 
 						<span class="text-sm">
 							{#if previousWeightDate}
-								{df.format(previousWeightDate)}
+								<Badge variant="secondary">{df.format(previousWeightDate)}</Badge>
 							{:else}
 								-
 							{/if}
 						</span>
-						<h4 class="text-accent text-sm font-bold">Previous Weight</h4>
+						<h4 class="text-muted-foreground text-sm">Previous Weight</h4>
 					</div>
 
+					<div class="my-2">
+						<Separator orientation="vertical" />
+					</div>
+					<!-- 					
 					<span class="flex items-center justify-center">
 						{#if currentWeight && previousWeight}
 							{#if Number(currentWeight) > Number(previousWeight)}
@@ -183,23 +201,20 @@
 								<div></div>
 							{/if}
 						{/if}
-					</span>
+					</span> -->
 
 					<div class="flex flex-col items-start p-2">
 						<div class="flex flex-row items-center">
-							<span class="flex flex-row items-center text-6xl"
-								>{currentWeight}
-								<WeightIcon class="text-foreground" /></span
-							>
+							<span class="flex flex-row items-center text-6xl">{currentWeight} </span>
 						</div>
 						<span class="text-sm">
 							{#if currentWeightDate}
-								{df.format(currentWeightDate)}
+								<Badge variant="secondary">{df.format(currentWeightDate)}</Badge>
 							{:else}
 								-
 							{/if}
 						</span>
-						<h4 class="text-accent text-sm font-bold">Current Weight</h4>
+						<h4 class="text-muted-foreground text-sm">Current Weight</h4>
 					</div>
 
 					<!-- <div class="mx-2">
@@ -289,14 +304,12 @@
 			</div>
 		</div>
 
-		<div class="flex flex-row items-start justify-between my-4">
+		<div class="my-4 flex flex-row items-start justify-between">
 			<div class="flex w-3/5 flex-row justify-around">
 				<Protein dateSeriesData={proteinCharts} bind:viewMode={proteinViewMode} />
 
 				<Supplements weekData={supplementCharts} monthData={supplementCountsMonthChart} />
 			</div>
-
-			<!-- <Supplements data={supplementCharts} monthData={supplementCountsMonthChart} /> -->
 
 			<div class="flex w-2/5 flex-row justify-around">
 				<Sleep dateSeriesData={sleepCharts} bind:viewMode={sleepViewMode} />
