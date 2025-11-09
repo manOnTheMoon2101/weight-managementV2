@@ -36,7 +36,7 @@
 	} satisfies Chart.ChartConfig;
 </script>
 
-<Card.Root class="bg-primary">
+<Card.Root class="bg-primary mx-2">
 	<Card.Header>
 		<div class="flex flex-row justify-between">
 			<div>

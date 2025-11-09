@@ -149,7 +149,7 @@
 		</div>
 
 		<div class="flex flex-row items-center justify-between">
-			<div class="bg-primary flex w-3/5 flex-col justify-between rounded-lg">
+			<div class="bg-primary flex w-3/5 flex-col justify-between rounded-lg h-[300px]">
 				{#if user}
 					<div>
 						<h1 class="text-muted-foreground text-sm font-bold">{greet()}</h1>
@@ -289,7 +289,7 @@
 			</div>
 		</div>
 
-		<div class="flex flex-row items-start justify-around">
+		<div class="flex flex-row items-start justify-between my-4">
 			<div class="flex w-3/5 flex-row justify-around">
 				<Protein dateSeriesData={proteinCharts} bind:viewMode={proteinViewMode} />
 
