@@ -115,8 +115,12 @@
 					},
 				}}
 			>
-				{#snippet tooltip()}
-					<Chart.Tooltip hideLabel />
+					{#snippet tooltip()}
+					<Chart.Tooltip
+						labelFormatter={(v: Date) =>
+							v.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+						indicator="line"
+					/>
 				{/snippet}
 			</LineChart>
 		</Chart.Container>
