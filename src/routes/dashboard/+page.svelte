@@ -32,12 +32,12 @@
 	let stepsMonthChart = $derived(data.stepsMonthChart);
 	let stepsWeekChart = $derived(data.stepsWeekChart);
 	let measurementMonthChart = $derived(data.measurementMonthChart);
-		let measurementWeekChart = $derived(data.measurementWeekChart);
+	let measurementWeekChart = $derived(data.measurementWeekChart);
 	let waterMonthChart = $derived(data.waterMonthChart);
 	let waterWeekChart = $derived(data.waterWeekChart);
 	let proteinMonthChart = $derived(data.proteinMonthChart);
 	let proteinWeekChart = $derived(data.proteinWeekChart);
-		let caloriesMonthChart = $derived(data.caloriesMonthChart);
+	let caloriesMonthChart = $derived(data.caloriesMonthChart);
 	let caloriesWeekChart = $derived(data.caloriesWeekChart);
 	let sleepMonthChart = $derived(data.sleepMonthChart);
 	let sleepWeekChart = $derived(data.sleepWeekChart);
@@ -51,10 +51,14 @@
 	let weightCharts = $derived(weightViewMode === "7days" ? weightWeekChart : weightMonthChart);
 	let stepsCharts = $derived(stepsViewMode === "7days" ? stepsWeekChart : stepsMonthChart);
 	let sleepCharts = $derived(sleepViewMode === "7days" ? sleepWeekChart : sleepMonthChart);
-		let waterCharts = $derived(waterViewMode === "7days" ? waterWeekChart : waterMonthChart);
-		let proteinCharts = $derived(proteinViewMode === "7days" ? proteinWeekChart : proteinMonthChart);
-		let caloriesCharts = $derived(caloriesViewMode === "7days" ? caloriesWeekChart : caloriesMonthChart);
-		let measurementCharts = $derived(measurementViewMode === "7days" ? measurementWeekChart : measurementMonthChart);
+	let waterCharts = $derived(waterViewMode === "7days" ? waterWeekChart : waterMonthChart);
+	let proteinCharts = $derived(proteinViewMode === "7days" ? proteinWeekChart : proteinMonthChart);
+	let caloriesCharts = $derived(
+		caloriesViewMode === "7days" ? caloriesWeekChart : caloriesMonthChart
+	);
+	let measurementCharts = $derived(
+		measurementViewMode === "7days" ? measurementWeekChart : measurementMonthChart
+	);
 	let waistChart = $derived(data.waistChart);
 	let supplementCharts = $derived(data.supplementCountsWeekChart);
 	let supplementCountsMonthChart = $derived(data.supplementCountsMonthChart);
@@ -288,18 +292,15 @@
 		<div class="flex flex-row items-start justify-around">
 			<div class="flex w-3/5 flex-row justify-around">
 				<Protein dateSeriesData={proteinCharts} bind:viewMode={proteinViewMode} />
-			
+
 				<Supplements weekData={supplementCharts} monthData={supplementCountsMonthChart} />
 			</div>
 
 			<!-- <Supplements data={supplementCharts} monthData={supplementCountsMonthChart} /> -->
 
 			<div class="flex w-2/5 flex-row justify-around">
-				
-				<Sleep dateSeriesData={sleepCharts}
-					bind:viewMode={sleepViewMode}
-					/>
-					<Calories dateSeriesData={caloriesCharts} bind:viewMode={caloriesViewMode} />
+				<Sleep dateSeriesData={sleepCharts} bind:viewMode={sleepViewMode} />
+				<Calories dateSeriesData={caloriesCharts} bind:viewMode={caloriesViewMode} />
 			</div>
 		</div>
 
