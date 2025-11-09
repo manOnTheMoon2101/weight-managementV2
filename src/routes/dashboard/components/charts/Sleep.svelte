@@ -51,7 +51,7 @@
 	} satisfies Chart.ChartConfig;
 </script>
 
-<Card.Root class="bg-primary">
+<Card.Root class="bg-primary mx-2">
 	<Card.Header>
 		<div class="flex flex-row justify-between">
 			<div>
@@ -115,8 +115,12 @@
 					},
 				}}
 			>
-				{#snippet tooltip()}
-					<Chart.Tooltip hideLabel />
+					{#snippet tooltip()}
+					<Chart.Tooltip
+						labelFormatter={(v: Date) =>
+							v.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+						indicator="line"
+					/>
 				{/snippet}
 			</LineChart>
 		</Chart.Container>
