@@ -9,6 +9,7 @@
 	import Person from "@lucide/svelte/icons/circle-user"
 	import TableProperties from "@lucide/svelte/icons/table-properties";
 	import LayoutDashboard from "@lucide/svelte/icons/layout-dashboard";
+	import Calculator from "@lucide/svelte/icons/calculator"
 	import Toggler from "../navbar/components/toggler.svelte"
 	let {
 		user,
@@ -61,12 +62,17 @@
 			<Button
 				href="/dashboard"
 				variant={"navbar"}
-				class={page.url.pathname !== "/dashboard" ? "bg-secondary" : "mx-2"}><LayoutDashboard/>Dashboard</Button
+				class={page.url.pathname !== "/dashboard" ? "bg-secondary mx-2" : "mx-2"}><LayoutDashboard/>Dashboard</Button
 			>
 			<Button
 				href="/dashboard/table"
 				variant={"navbar"}
-				class={page.url.pathname !== "/dashboard/table" ? "bg-secondary" : "mx-2"}><TableProperties/>Table</Button
+				class={page.url.pathname !== "/dashboard/table" ? "bg-secondary mx-2" : "mx-2"}><TableProperties/>Table</Button
+			>
+			<Button
+				disabled
+				variant={"navbar"}
+				class={page.url.pathname !== "/dashboard/table" ? "bg-secondary mx-2" : "mx-2"}><Calculator/>Nutrition AI(Soon)</Button
 			>
 		</div>
 	</div>
