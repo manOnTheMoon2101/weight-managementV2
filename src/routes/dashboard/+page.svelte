@@ -169,7 +169,7 @@
 							</div>
 						</div>
 
-						<div><span>{df.format(new Date())}</span></div>
+						<!-- <div><span>{df.format(new Date())}</span></div> -->
 					</div>
 				{/if}
 
