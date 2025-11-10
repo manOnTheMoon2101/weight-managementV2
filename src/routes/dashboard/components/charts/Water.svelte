@@ -6,6 +6,7 @@
 	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import Droplet from "@lucide/svelte/icons/droplet";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+	import Badge from "$lib/components/ui/badge/badge.svelte";
 
 	let { dateSeriesData, viewMode = $bindable("7days"), waterLimit } = $props();
 
@@ -58,7 +59,9 @@
 			<div>
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger class="cursor-pointer">
-						<EllipsisVertical />
+						<Badge class="bg-amber-500 text-center text-xs "
+							>{viewMode == "7days" ? "Last 7 Days" : "Last Month"}
+						</Badge>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
 						<DropdownMenu.Group>
@@ -134,7 +137,7 @@
 			<div class="grid">
 				<div class="flex items-center gap-2 leading-none font-medium">
 					{averageWater} ml avg water for last {viewMode == "7days" ? "7 days" : "30 days"}
-					<TrendingUpIcon class="size-4" />
+					
 				</div>
 				<div class="text-muted-foreground flex items-center gap-2 leading-none">
 					Range: {minWater} - {maxWater} ml

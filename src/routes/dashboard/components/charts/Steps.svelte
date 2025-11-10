@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { AreaChart } from "layerchart";
-	import TrendingUpIcon from "@lucide/svelte/icons/trending-up";
 	import { curveNatural } from "d3-shape";
 	import { scaleUtc } from "d3-scale";
 	import * as Chart from "$lib/components/ui/chart/index.js";
@@ -8,6 +7,7 @@
 	import Footprints from "@lucide/svelte/icons/footprints";
 	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+	import Badge from "$lib/components/ui/badge/badge.svelte";
 
 	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
 
@@ -58,11 +58,13 @@
 			<div>
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger class="cursor-pointer">
-						<EllipsisVertical />
+						<Badge class="bg-amber-500 text-center text-xs "
+							>{viewMode == "7days" ? "Last 7 Days" : "Last Month"}
+						</Badge>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
 						<DropdownMenu.Group>
-							<DropdownMenu.Label class="flex items-center">Filter</DropdownMenu.Label>
+							<DropdownMenu.Label class="flex items-center">Set Filter</DropdownMenu.Label>
 							<DropdownMenu.Separator />
 							<DropdownMenu.Item
 								class={viewMode === "month" ? "bg-accent" : ""}
@@ -124,7 +126,6 @@
 			<div class="grid">
 				<div class="flex items-center gap-2 leading-none font-medium">
 					{averageSteps} avg steps for last {viewMode == "7days" ? "7 days" : "30 days"}
-					<TrendingUpIcon class="size-4" />
 				</div>
 				<div class="text-muted-foreground flex items-center gap-2 leading-none">
 					Range: {minSteps.toLocaleString()} - {maxSteps.toLocaleString()} steps

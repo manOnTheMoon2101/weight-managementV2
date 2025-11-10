@@ -6,6 +6,7 @@
 	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import Pill from "@lucide/svelte/icons/pill";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+	import Badge from "$lib/components/ui/badge/badge.svelte";
 
 	interface Props {
 		weekData?: Array<{
@@ -105,7 +106,9 @@
 			<div>
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger class="cursor-pointer">
-						<EllipsisVertical />
+						<Badge class="bg-amber-500 text-center text-xs "
+							>{viewMode == "7days" ? "Last 7 Days" : "Last Month"}
+						</Badge>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
 						<DropdownMenu.Group>

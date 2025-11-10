@@ -8,6 +8,7 @@
 	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import Bed from "@lucide/svelte/icons/bed";
+	import Badge from "$lib/components/ui/badge/badge.svelte";
 
 	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
 
@@ -74,7 +75,9 @@
 			<div>
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger class="cursor-pointer">
-						<EllipsisVertical />
+						<Badge class="bg-amber-500 text-center text-xs "
+							>{viewMode == "7days" ? "Last 7 Days" : "Last Month"}
+						</Badge>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
 						<DropdownMenu.Group>
