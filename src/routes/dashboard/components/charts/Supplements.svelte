@@ -34,7 +34,7 @@
 	$effect(() => {
 		const savedViewMode = localStorage.getItem("supplementsChart");
 		if (savedViewMode) {
-			viewMode = savedViewMode as "7days" | "month";
+			viewMode = savedViewMode as "week" | "month";
 		}
 	});
 
@@ -107,7 +107,7 @@
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger class="cursor-pointer">
 						<Badge
-							>{viewMode == "7days" ? "Last 7 Days" : "Last Month"}
+							>{viewMode == "week" ? "Last 7 Days" : "Last Month"}
 						</Badge>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
