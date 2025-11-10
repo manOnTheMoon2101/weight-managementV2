@@ -13,7 +13,7 @@
 	import Plus from "@lucide/svelte/icons/circle-plus";
 	import { enhance } from "$app/forms";
 	
-	let { dialogOpen = $bindable() } = $props<{ dialogOpen: boolean }>();
+	let { dialogOpen = $bindable() ,latestWaist = {} } = $props<{ dialogOpen: boolean,latestWaist : any }>();
 
 	let createLoading = $state(false);
 	
@@ -66,8 +66,9 @@
 							</Card.Header>
 							<Card.Content class="space-y-2">
 								<div>
+									
 									<Label for="waist" class="text-sm">Waist</Label>
-									<Input id="waist" name="waist" placeholder="Waist(Cm)" class="h-8" />
+									<Input id="waist" value={latestWaist ? latestWaist.waistMeasurement : 0} name="waist" placeholder="Waist(Cm)" class="h-8" />
 								</div>
 								
 							</Card.Content>
