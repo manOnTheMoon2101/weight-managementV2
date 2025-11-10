@@ -6,7 +6,7 @@
 		variants: {
 			variant: {
 				default:
-					"bg-primary text-primary-foreground hover:bg-primary/80 border-transparent",
+					"bg-accent text-primary-foreground hover:bg-accent/80 border-transparent",
 					weekly:
 					"bg-accent text-primary hover:bg-accent/80 border-transparent",
 				secondary:

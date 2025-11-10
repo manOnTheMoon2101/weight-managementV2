@@ -39,7 +39,7 @@
 			<div>
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger class="cursor-pointer">
-						<Badge class="bg-amber-500 text-center text-xs "
+						<Badge
 							>{viewMode == "7days" ? "Last 7 Days" : "Last Month"}
 						</Badge>
 					</DropdownMenu.Trigger>
