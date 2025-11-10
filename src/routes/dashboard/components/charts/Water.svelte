@@ -9,6 +9,19 @@
 
 	let { dateSeriesData, viewMode = $bindable("7days"), waterLimit } = $props();
 
+
+
+	$effect(() => {
+		const savedViewMode = localStorage.getItem("waterChart");
+		if (savedViewMode) {
+			viewMode = savedViewMode as "7days" | "month";
+		}
+	});
+
+	$effect(() => {
+		localStorage.setItem("waterChart", viewMode);
+	});
+
 	let averageWater = $derived(
 		dateSeriesData && dateSeriesData.length > 0
 			? Math.round(

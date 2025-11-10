@@ -28,6 +28,18 @@
 
 	let viewMode = $state<"week" | "month">("week");
 
+
+
+	$effect(() => {
+		const savedViewMode = localStorage.getItem("supplementsChart");
+		if (savedViewMode) {
+			viewMode = savedViewMode as "7days" | "month";
+		}
+	});
+
+	$effect(() => {
+		localStorage.setItem("supplementsChart", viewMode);
+	});
 	const colors = [
 		"var(--accent)",
 		"var(--primary)",

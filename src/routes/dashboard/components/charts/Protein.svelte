@@ -11,6 +11,18 @@
 
 	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
 
+
+	$effect(() => {
+		const savedViewMode = localStorage.getItem("proteinChart");
+		if (savedViewMode) {
+			viewMode = savedViewMode as "7days" | "month";
+		}
+	});
+
+	$effect(() => {
+		localStorage.setItem("proteinChart", viewMode);
+	});
+
 	let averageProtein = $derived(
 		dateSeriesData && dateSeriesData.length > 0
 			? Math.round(

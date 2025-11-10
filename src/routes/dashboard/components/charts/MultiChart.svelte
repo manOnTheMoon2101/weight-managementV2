@@ -11,7 +11,16 @@
 
 	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
 
-	$inspect(dateSeriesData);
+	$effect(() => {
+		const savedViewMode = localStorage.getItem("multiChart");
+		if (savedViewMode) {
+			viewMode = savedViewMode as "7days" | "month";
+		}
+	});
+
+	$effect(() => {
+		localStorage.setItem("multiChart", viewMode);
+	});
 	const chartConfig = {
 		waist: { label: "Waist", color: "var(--accent)" },
 		weight: { label: "Weights", color: "var(--secondary)" },

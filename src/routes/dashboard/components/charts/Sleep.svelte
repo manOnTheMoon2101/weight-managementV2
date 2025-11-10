@@ -11,6 +11,18 @@
 
 	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
 
+
+	$effect(() => {
+		const savedViewMode = localStorage.getItem("sleepChart");
+		if (savedViewMode) {
+			viewMode = savedViewMode as "7days" | "month";
+		}
+	});
+
+	$effect(() => {
+		localStorage.setItem("sleepChart", viewMode);
+	});
+
 	function timeToHours(timeStr: string): number {
 		if (!timeStr) return 0;
 		const [hours, minutes, seconds] = timeStr.split(":").map(Number);

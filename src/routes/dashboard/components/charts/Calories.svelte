@@ -11,6 +11,18 @@
 
 	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
 
+
+	$effect(() => {
+		const savedViewMode = localStorage.getItem("caloriesChart");
+		if (savedViewMode) {
+			viewMode = savedViewMode as "7days" | "month";
+		}
+	});
+
+	$effect(() => {
+		localStorage.setItem("caloriesChart", viewMode);
+	});
+
 	let averageCalories = $derived(
 		dateSeriesData && dateSeriesData.length > 0
 			? Math.round(

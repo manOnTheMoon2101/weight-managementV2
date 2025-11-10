@@ -11,6 +11,17 @@
 
 	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
 
+	$effect(() => {
+		const savedViewMode = localStorage.getItem("stepsChart");
+		if (savedViewMode) {
+			viewMode = savedViewMode as "7days" | "month";
+		}
+	});
+
+	$effect(() => {
+		localStorage.setItem("stepsChart", viewMode);
+	});
+
 	let averageSteps = $derived(
 		dateSeriesData && dateSeriesData.length > 0
 			? Math.round(
@@ -40,7 +51,7 @@
 	<Card.Header>
 		<div class="flex flex-row justify-between">
 			<div>
-				<Card.Title><Footprints/></Card.Title>
+				<Card.Title><Footprints /></Card.Title>
 				<Card.Description>Steps</Card.Description>
 			</div>
 
@@ -112,7 +123,8 @@
 		<div class="flex w-full items-start text-sm">
 			<div class="grid">
 				<div class="flex items-center gap-2 leading-none font-medium">
-					{averageSteps} avg steps for last {viewMode == "7days" ? '7 days' : '30 days'} <TrendingUpIcon class="size-4" />
+					{averageSteps} avg steps for last {viewMode == "7days" ? "7 days" : "30 days"}
+					<TrendingUpIcon class="size-4" />
 				</div>
 				<div class="text-muted-foreground flex items-center gap-2 leading-none">
 					Range: {minSteps.toLocaleString()} - {maxSteps.toLocaleString()} steps
