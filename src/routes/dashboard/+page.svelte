@@ -169,22 +169,23 @@
 							</div>
 						</div>
 
-						<div><Badge variant="secondary">{df.format(new Date())}</Badge></div>
+						<!-- <div><span>{df.format(new Date())}</span></div> -->
 					</div>
 				{/if}
 
 				<div class="flex flex-row justify-between">
-					<div class="flex flex-col items-start p-2">
-						<span class="flex flex-row items-center text-6xl">{previousWeight}</span>
-
+				<div class="flex flex-col items-start p-2">
+						<div class="flex flex-row items-center">
+							<span class="flex flex-row items-center text-6xl">{currentWeight} </span>
+						</div>
 						<span class="text-sm">
-							{#if previousWeightDate}
-								<Badge variant="secondary">{df.format(previousWeightDate)}</Badge>
+							{#if currentWeightDate}
+								<span>{df.format(currentWeightDate)}</span>
 							{:else}
 								-
 							{/if}
 						</span>
-						<h4 class="text-muted-foreground text-sm">Previous Weight</h4>
+						<h4 class="text-muted-foreground text-sm">Current Weight</h4>
 					</div>
 
 					<div class="my-2">
@@ -203,19 +204,21 @@
 						{/if}
 					</span> -->
 
-					<div class="flex flex-col items-start p-2">
-						<div class="flex flex-row items-center">
-							<span class="flex flex-row items-center text-6xl">{currentWeight} </span>
-						</div>
+					
+
+						<div class="flex flex-col items-start p-2">
+						<span class="flex flex-row items-center text-6xl">{previousWeight}</span>
+
 						<span class="text-sm">
-							{#if currentWeightDate}
-								<Badge variant="secondary">{df.format(currentWeightDate)}</Badge>
+							{#if previousWeightDate}
+								<span>{df.format(previousWeightDate)}</span>
 							{:else}
 								-
 							{/if}
 						</span>
-						<h4 class="text-muted-foreground text-sm">Current Weight</h4>
+						<h4 class="text-muted-foreground text-sm">Previous Weight</h4>
 					</div>
+
 
 					<!-- <div class="mx-2">
 						<Tooltip.Provider delayDuration={100}>

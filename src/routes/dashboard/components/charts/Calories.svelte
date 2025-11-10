@@ -8,8 +8,21 @@
 	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import Zap from "@lucide/svelte/icons/zap";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+	import Badge from "$lib/components/ui/badge/badge.svelte";
 
 	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
+
+
+	$effect(() => {
+		const savedViewMode = localStorage.getItem("caloriesChart");
+		if (savedViewMode) {
+			viewMode = savedViewMode as "7days" | "month";
+		}
+	});
+
+	$effect(() => {
+		localStorage.setItem("caloriesChart", viewMode);
+	});
 
 	let averageCalories = $derived(
 		dateSeriesData && dateSeriesData.length > 0
@@ -51,7 +64,9 @@
 			<div>
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger class="cursor-pointer">
-						<EllipsisVertical />
+						<Badge
+							>{viewMode == "7days" ? "Last 7 Days" : "Last Month"}
+						</Badge>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
 						<DropdownMenu.Group>

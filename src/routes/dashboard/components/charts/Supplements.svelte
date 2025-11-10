@@ -6,6 +6,7 @@
 	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import Pill from "@lucide/svelte/icons/pill";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+	import Badge from "$lib/components/ui/badge/badge.svelte";
 
 	interface Props {
 		weekData?: Array<{
@@ -28,6 +29,18 @@
 
 	let viewMode = $state<"week" | "month">("week");
 
+
+
+	$effect(() => {
+		const savedViewMode = localStorage.getItem("supplementsChart");
+		if (savedViewMode) {
+			viewMode = savedViewMode as "week" | "month";
+		}
+	});
+
+	$effect(() => {
+		localStorage.setItem("supplementsChart", viewMode);
+	});
 	const colors = [
 		"var(--accent)",
 		"var(--primary)",
@@ -93,7 +106,9 @@
 			<div>
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger class="cursor-pointer">
-						<EllipsisVertical />
+						<Badge
+							>{viewMode == "week" ? "Last 7 Days" : "Last Month"}
+						</Badge>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
 						<DropdownMenu.Group>

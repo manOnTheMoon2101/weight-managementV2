@@ -51,6 +51,7 @@
 		[key: string]: any;
 	};
 
+	const latestWaistEntry = $derived(data.latestWaistEntry)
 	const nutrients = $derived.by(() =>
 		data.nutrients.map((row: NutrientRow) => ({
 			...row,
@@ -318,7 +319,7 @@
 		</Popover.Root>
 	</div>
 	<div>
-		<AddDialog dialogOpen />
+		<AddDialog dialogOpen latestWaist={latestWaistEntry} />
 		<Button variant="save" onclick={() => tableComponent?.exportToCsv()}>
 			<ArrowDownToLine class="mr-2 size-4" />
 			Download CSV

@@ -8,10 +8,20 @@
 	import * as Card from "$lib/components/ui/card/index.js";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
+	import Badge from "$lib/components/ui/badge/badge.svelte";
 
 	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
 
-	$inspect(dateSeriesData);
+	$effect(() => {
+		const savedViewMode = localStorage.getItem("multiChart");
+		if (savedViewMode) {
+			viewMode = savedViewMode as "7days" | "month";
+		}
+	});
+
+	$effect(() => {
+		localStorage.setItem("multiChart", viewMode);
+	});
 	const chartConfig = {
 		waist: { label: "Waist", color: "var(--accent)" },
 		weight: { label: "Weights", color: "var(--secondary)" },
@@ -29,7 +39,9 @@
 			<div>
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger class="cursor-pointer">
-						<EllipsisVertical />
+						<Badge
+							>{viewMode == "7days" ? "Last 7 Days" : "Last Month"}
+						</Badge>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
 						<DropdownMenu.Group>
