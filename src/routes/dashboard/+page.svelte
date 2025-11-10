@@ -169,7 +169,7 @@
 							</div>
 						</div>
 
-						<div><Badge variant="secondary">{df.format(new Date())}</Badge></div>
+						<div><span>{df.format(new Date())}</span></div>
 					</div>
 				{/if}
 
@@ -180,7 +180,7 @@
 						</div>
 						<span class="text-sm">
 							{#if currentWeightDate}
-								<Badge variant="secondary">{df.format(currentWeightDate)}</Badge>
+								<span>{df.format(currentWeightDate)}</span>
 							{:else}
 								-
 							{/if}
@@ -211,7 +211,7 @@
 
 						<span class="text-sm">
 							{#if previousWeightDate}
-								<Badge variant="secondary">{df.format(previousWeightDate)}</Badge>
+								<span>{df.format(previousWeightDate)}</span>
 							{:else}
 								-
 							{/if}
