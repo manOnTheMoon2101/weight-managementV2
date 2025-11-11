@@ -173,8 +173,26 @@
 					</div>
 				{/if}
 
+				<div>
+					<span class="flex items-center justify-center text-lg font-semibold">
+						{#if currentWeight && previousWeight}
+							{#if Number(currentWeight) > Number(previousWeight)}
+								<span>
+									Gained <span class="text-red-500">{(Number(currentWeight) - Number(previousWeight)).toFixed(1)}kg</span>
+								</span>
+							{:else if Number(currentWeight) < Number(previousWeight)}
+								<span >
+									Lost <span class="text-green-500">{(Number(previousWeight) - Number(currentWeight)).toFixed(1)}kg</span>
+								</span>
+							{:else}
+								<span class="text-gray-500">No change</span>
+							{/if}
+						{/if}
+					</span>
+				</div>
+
 				<div class="flex flex-row justify-between">
-				<div class="flex flex-col items-start p-2">
+					<div class="flex flex-col items-start p-2">
 						<div class="flex flex-row items-center">
 							<span class="flex flex-row items-center text-6xl">{currentWeight} </span>
 						</div>
@@ -191,22 +209,8 @@
 					<div class="my-2">
 						<Separator orientation="vertical" />
 					</div>
-					<!-- 					
-					<span class="flex items-center justify-center">
-						{#if currentWeight && previousWeight}
-							{#if Number(currentWeight) > Number(previousWeight)}
-								Gained: <ChevronUp class="text-red-500 " />
-							{:else if Number(currentWeight) < Number(previousWeight)}
-								Lost:<ChevronDown class="text-green-500 " />
-							{:else}
-								<div></div>
-							{/if}
-						{/if}
-					</span> -->
 
-					
-
-						<div class="flex flex-col items-start p-2">
+					<div class="flex flex-col items-start p-2">
 						<span class="flex flex-row items-center text-6xl">{previousWeight}</span>
 
 						<span class="text-sm">
@@ -218,7 +222,6 @@
 						</span>
 						<h4 class="text-muted-foreground text-sm">Previous Weight</h4>
 					</div>
-
 
 					<!-- <div class="mx-2">
 						<Tooltip.Provider delayDuration={100}>

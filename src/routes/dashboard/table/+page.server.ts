@@ -87,6 +87,21 @@ export const load: PageServerLoad = async ({ request, url }) => {
 			orderBy: (health_tracker, { desc }) => desc(health_tracker.createdAt),
 		});
 
+
+		const latestWeightEntry = await db.query.health_tracker.findFirst({
+			where:and(
+			eq(health_tracker.userId, session.user.id),
+			eq(health_tracker.isActive, true),
+			eq(health_tracker.isDeleted, false),
+			gte(health_tracker.waistMeasurement,1)
+		),
+			columns:{
+				weight:true,
+				createdAt:true
+			},
+			orderBy: (health_tracker, { desc }) => desc(health_tracker.createdAt),
+		});
+
 		const userLimits = await db.query.limits.findFirst({
 			where: and(
 				eq(limits.userId, session.user.id),
@@ -99,6 +114,7 @@ export const load: PageServerLoad = async ({ request, url }) => {
 			nutrients: userNutrients,
 			limits: userLimits || null,
 			latestWaistEntry : latestWaistEntry || null,
+			latestWeightEntry: latestWeightEntry || null,
 			dateRange: {
 				startDate: actualStartDate,
 				endDate: actualEndDate,
