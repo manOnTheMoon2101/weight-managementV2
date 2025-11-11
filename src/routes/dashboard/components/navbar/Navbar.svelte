@@ -6,7 +6,7 @@
 	import { Button } from "$lib/components/ui/button";
 	import LimitsDialog from "./components/limits-dialog.svelte";
 	import { page } from "$app/state";
-	import Person from "@lucide/svelte/icons/circle-user"
+	import Manage from "@lucide/svelte/icons/chart-no-axes-column"
 	import TableProperties from "@lucide/svelte/icons/table-properties";
 	import LayoutDashboard from "@lucide/svelte/icons/layout-dashboard";
 	import Calculator from "@lucide/svelte/icons/calculator"
@@ -45,7 +45,7 @@
 				>
 				<DropdownMenu.Content>
 					<DropdownMenu.Group>
-						<DropdownMenu.Label class="flex items-center"><Person class="mr-1"/>My Account</DropdownMenu.Label>
+						<DropdownMenu.Label class="flex items-center"><Manage class="mr-1"/>Manage</DropdownMenu.Label>
 						<DropdownMenu.Separator />
 						<DropdownMenu.Item closeOnSelect={false}
 							><EditDialog {user} {userColour} /></DropdownMenu.Item

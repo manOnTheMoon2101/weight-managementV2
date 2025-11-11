@@ -15,10 +15,10 @@
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger class="cursor-pointer">Edit Limits</Dialog.Trigger>
+	<Dialog.Trigger class="cursor-pointer">Preferences</Dialog.Trigger>
 	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()}>
 		<Dialog.Header>
-			<Dialog.Title>Edit Limits</Dialog.Title>
+			<Dialog.Title>Preferences</Dialog.Title>
 			<Dialog.Description>
 				<form method="POST" action="/dashboard?/updateLimits" onsubmit={handleUpdateSubmit}>
 					<div class="flex flex-row justify-between rounded-lg p-1">
