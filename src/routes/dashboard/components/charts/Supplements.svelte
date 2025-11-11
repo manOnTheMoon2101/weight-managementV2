@@ -167,7 +167,7 @@
 			<div class="grid">
 				<div class="flex items-center gap-2 leading-none font-medium">
 					Total {totalCount} supplements used for last {viewMode === "week" ? "7 days" : "month"}
-					<TrendingUpIcon class="size-4" />
+					
 				</div>
 			</div>
 		</div>

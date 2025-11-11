@@ -145,7 +145,7 @@
 			<div class="grid">
 				<div class="flex items-center gap-2 leading-none font-medium">
 					{averageSleep} avg hours for last {viewMode == "7days" ? "7 days" : "30 days"}
-					<TrendingUpIcon class="size-4" />
+					
 				</div>
 				<div class="text-muted-foreground flex items-center gap-2 leading-none">
 					Range: {minSleep} - {maxSleep} hours
