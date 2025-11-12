@@ -55,38 +55,24 @@
 	--zen: hsl(34, 100%, 38%);
 	--radius: 0.5rem;
 
+
+	--chart1:hsl(183, 100%, 50%);
+	--chart2:hsl(25, 100%, 50%);
+	--chart3:hsl(190, 100%, 94%);
+	--chart4:hsl(305, 100%, 50%);
+	--chart5:hsl(167, 100%, 50%);
 	--save:hsl(140, 100%, 38%)
 }
 
 .dark {
 	--sign: hsl(140, 100%, 38%);
-	--background: hsl(216, 18%, 16%);
+	--background: hsl(216, 18.07%, 16.27%);
 	--foreground: hsl(0 0% 98%);
 	--muted: hsl(240 3.7% 15.9%);
-	--muted-foreground: hsl(240 5% 64.9%);
-	--popover: hsl(240 10% 3.9%);
-	--popover-foreground: hsl(0 0% 98%);
-	--card: hsl(240 10% 3.9%);
-	--card-foreground: hsl(0 0% 98%);
-	--border: hsl(240 3.7% 15.9%);
-	--input: hsl(240 3.7% 15.9%);
-	--primary: hsl(217, 10%, 25%);
-	--primary-foreground: hsl(217, 10%, 25%);
-	--secondary: hsl(36, 11%, 53%);
-	--secondary-foreground: hsl(0 0% 98%);
-	--accent: hsl(37, 38%, 80%);
-	--accent-foreground: hsla(37, 38%, 80%, 0.216);
+	--primary: hsl(216.92, 10.24%, 24.9%);
+	--secondary: hsl(182.65, 100%, 35.49%);
+	--accent: hsl(177.65, 100%, 50%);
 	--destructive: hsl(0 62.8% 30.6%);
-	--destructive-foreground: hsl(0 0% 98%);
-	--ring: hsl(240 4.9% 83.9%);
-	--sidebar: hsl(240 5.9% 10%);
-	--sidebar-foreground: hsl(240 4.8% 95.9%);
-	--sidebar-primary: hsl(224.3 76.3% 48%);
-	--sidebar-primary-foreground: hsl(0 0% 100%);
-	--sidebar-accent: hsl(240 3.7% 15.9%);
-	--sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-	--sidebar-border: hsl(240 3.7% 15.9%);
-	--sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
 :root[data-theme="redTheme"] {
@@ -219,6 +205,11 @@
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-ring: var(--sidebar-ring);
 	--color-sign: var(--sign);
+	--color-chart1: var(--chart1);
+	--color-chart2: var(--chart2);
+	--color-chart3: var(--chart3);
+	--color-chart4: var(--chart4);
+	--color-chart5: var(--chart5);
 	--color-zen: var(--zen);
 	--color-save: var(--save);
 

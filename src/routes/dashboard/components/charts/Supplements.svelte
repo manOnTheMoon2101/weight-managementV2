@@ -42,11 +42,11 @@
 		localStorage.setItem("supplementsChart", viewMode);
 	});
 	const colors = [
-		"var(--accent)",
-		"var(--primary)",
-		"var(--secondary)",
-		"var(--accent)",
-		"var(--background)",
+		"var(--chart1)",
+		"var(--chart2)",
+		"var(--chart3)",
+		"var(--chart4)",
+		"var(--chart5)",
 	];
 
 	const currentData = $derived(viewMode === "week" ? weekData?.[0] : monthData?.[0]);

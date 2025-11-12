@@ -109,7 +109,7 @@
 		</DropdownMenu.Trigger>
 		<DropdownMenu.Content class="flex flex-row items-center gap-2 p-2">
 			<DropdownMenu.Item closeOnSelect={false}>
-				<Button onclick={() => setThemeWithStorage("")} variant="beigeButton">Beige</Button>
+				<Button onclick={() => setThemeWithStorage("")} variant="tronButton">Tron Legacy</Button>
 			</DropdownMenu.Item>
 			<DropdownMenu.Item closeOnSelect={false}>
 				<Button onclick={() => setThemeWithStorage("redTheme")} variant="redButton">Red</Button>
