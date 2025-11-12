@@ -659,6 +659,19 @@ export const actions = {
 		const sugarLimit = form.get("sugarLimit") as unknown as number;
 		const stepsLimit = form.get("stepsLimit") as unknown as number;
 		const waterLimit = form.get("waterLimit") as unknown as number;
+		const journey = form.get("journey") as unknown as string;
+
+
+		if(journey){
+
+			await db
+				.update(user)
+				.set({
+					journey,
+					updatedAt: new Date(),
+				})
+				.where(eq(user.id, session.user.id));
+		}
 
 		if (
 			!caloriesLimit ||
