@@ -107,22 +107,92 @@
 				</Tooltip.Root>
 			</Tooltip.Provider>
 		</DropdownMenu.Trigger>
-		<DropdownMenu.Content class="flex flex-row items-center gap-2 p-2">
-			<DropdownMenu.Item closeOnSelect={false}>
-				<Button onclick={() => setThemeWithStorage("")} variant="tronButton">Tron Legacy</Button>
-			</DropdownMenu.Item>
-			<DropdownMenu.Item closeOnSelect={false}>
-				<Button onclick={() => setThemeWithStorage("redTheme")} variant="redButton">Red</Button>
-			</DropdownMenu.Item>
-			<DropdownMenu.Item closeOnSelect={false}>
-				<Button onclick={() => setThemeWithStorage("purpleTheme")} variant="purpleButton"
-					>Purple</Button
+		<DropdownMenu.Content class="flex min-w-[280px] flex-col gap-2 p-3">
+			<DropdownMenu.Item closeOnSelect={false} class="cursor-pointer">
+				<button
+					onclick={() => setThemeWithStorage("")}
+					class="hover:bg-accent/10 flex w-full items-center justify-between gap-3 rounded p-2 transition-colors"
 				>
+					<span class="font-medium">Tron Legacy</span>
+					<div class="flex gap-1">
+						<div
+							class="bg-tronBackround border-border h-6 w-6 rounded-full border"
+							title="Background"
+						></div>
+						<div
+							class="bg-tronPrimary border-border h-6 w-6 rounded-full border"
+							title="Primary"
+						></div>
+						<div
+							class="bg-tronSecondary border-border h-6 w-6 rounded-full border"
+							title="Secondary"
+						></div>
+						<div
+							class="bg-tronAccent border-border h-6 w-6 rounded-full border"
+							title="Accent"
+						></div>
+					</div>
+				</button>
 			</DropdownMenu.Item>
-			<DropdownMenu.Item closeOnSelect={false}>
-				<Button onclick={() => setThemeWithStorage("forestTheme")} variant="forestButton"
-					>Forest</Button
+			<DropdownMenu.Item closeOnSelect={false} class="cursor-pointer">
+				<button
+					onclick={() => setThemeWithStorage("redTheme")}
+					class="hover:bg-accent/10 flex w-full items-center justify-between gap-3 rounded p-2 transition-colors"
 				>
+					<span class="font-medium">Red</span>
+					<div class="flex gap-1">
+						<div
+							class="bg-background border-border h-6 w-6 rounded-full border"
+							title="Background"
+						></div>
+						<div class="bg-primary border-border h-6 w-6 rounded-full border" title="Primary"></div>
+						<div
+							class="bg-secondary border-border h-6 w-6 rounded-full border"
+							title="Secondary"
+						></div>
+						<div class="bg-accent border-border h-6 w-6 rounded-full border" title="Accent"></div>
+					</div>
+				</button>
+			</DropdownMenu.Item>
+			<DropdownMenu.Item closeOnSelect={false} class="cursor-pointer">
+				<button
+					onclick={() => setThemeWithStorage("purpleTheme")}
+					class="hover:bg-accent/10 flex w-full items-center justify-between gap-3 rounded p-2 transition-colors"
+				>
+					<span class="font-medium">Purple</span>
+					<div class="flex gap-1">
+						<div
+							class="bg-background border-border h-6 w-6 rounded-full border"
+							title="Background"
+						></div>
+						<div class="bg-primary border-border h-6 w-6 rounded-full border" title="Primary"></div>
+						<div
+							class="bg-secondary border-border h-6 w-6 rounded-full border"
+							title="Secondary"
+						></div>
+						<div class="bg-accent border-border h-6 w-6 rounded-full border" title="Accent"></div>
+					</div>
+				</button>
+			</DropdownMenu.Item>
+			<DropdownMenu.Item closeOnSelect={false} class="cursor-pointer">
+				<button
+					onclick={() => setThemeWithStorage("forestTheme")}
+					class="hover:bg-accent/10 flex w-full items-center justify-between gap-3 rounded p-2 transition-colors"
+				>
+					<span class="font-medium">Witching Woods</span>
+					<div class="flex gap-1">
+						<div
+							class="bg-forestBackround border-border h-6 w-6 rounded-full border"
+							title="Background"
+						></div>
+						<div class="bg-forestPrimary border-border h-6 w-6 rounded-full border" title="Primary"></div>
+						<div
+							class="bg-forestSecondary border-border h-6 w-6 rounded-full border"
+							title="Secondary"
+						></div>
+						<div class="bg-forestAccent border-border h-6 w-6 rounded-full border" title="Accent"></div>
+					</div>
+				</button>
 			</DropdownMenu.Item>
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>

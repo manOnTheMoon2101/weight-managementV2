@@ -19,7 +19,7 @@
 				link: "text-secondary underline-offset-4 cursor-pointer hover:underline",
 				save: "text-accent underline-offset-4 cursor-pointer hover:underline",
 
-				tronButton: "bg-[#00FFF5] cursor-pointer text-primary hover:bg-[#00FFF5)]/80",
+				tronButton: "bg-[#00FFF5] cursor-pointer text-white hover:bg-[#00FFF5)]/80",
 				redButton: "bg-[hsl(0,100%,50%)] cursor-pointer text-white hover:bg-bg-[hsl(0,100%,50%)]/80",
 				forestButton: "bg-[#31694E] cursor-pointer text-white hover:bg-[#31694E]/80",
 				purpleButton: "bg-[hsl(330,37%,48%)] cursor-pointer text-white hover:bg-[hsl(330,37%,48%)]/80",
