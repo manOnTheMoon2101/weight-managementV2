@@ -24,6 +24,15 @@ export const load: LayoutServerLoad = async ({ request }) => {
         }
     });
 
+     const userJourney = await db.query.user.findFirst({
+        where: and(
+            eq(user.id, session.user.id),
+        ),
+        columns: {
+            journey: true
+        }
+    });
+
     const userLimits = await db.query.limits.findFirst({
         where: and(
           eq(limits.userId, session.user.id),
@@ -35,6 +44,7 @@ export const load: LayoutServerLoad = async ({ request }) => {
     return {
         limits: userLimits || null,
         userColour: userColour,
+        userJourney: userJourney,
         user: session.user,
     };
 };

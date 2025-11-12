@@ -42,11 +42,11 @@
 		localStorage.setItem("supplementsChart", viewMode);
 	});
 	const colors = [
-		"var(--accent)",
-		"var(--primary)",
-		"var(--secondary)",
-		"var(--accent)",
-		"var(--background)",
+		"var(--chart1)",
+		"var(--chart2)",
+		"var(--chart3)",
+		"var(--chart4)",
+		"var(--chart5)",
 	];
 
 	const currentData = $derived(viewMode === "week" ? weekData?.[0] : monthData?.[0]);
@@ -112,8 +112,6 @@
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
 						<DropdownMenu.Group>
-							<DropdownMenu.Label class="flex items-center">Filter</DropdownMenu.Label>
-							<DropdownMenu.Separator />
 							<DropdownMenu.Item
 								onclick={() => (viewMode = "month")}
 								class={viewMode === "month" ? "bg-accent" : ""}

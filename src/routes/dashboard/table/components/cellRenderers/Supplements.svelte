@@ -18,11 +18,11 @@
 	);
 
 	const supplementColors: any = {
-		fatBurner: "text-accent",
-		zen: "text-zen",
-		multiVitamin: "text-white",
-		magnesium: "text-secondary",
-		cla: "text-white",
+		fatBurner: "text-chart1",
+		zen: "text-chart2",
+		multiVitamin: "text-chart3",
+		magnesium: "text-chart4",
+		cla: "text-chart5",
 	};
 
 	const supplementDisplayNames: any = {
