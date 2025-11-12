@@ -57,6 +57,7 @@
 								value={limits?.stepsLimit}
 							/>
 							<div class="my-2">
+								<Label for="journey">Journey</Label>
 								<Select.Root type="single" name="journey" bind:value>
 									<Select.Trigger class="w-[180px]">{triggerContent}</Select.Trigger>
 									<Select.Content>
