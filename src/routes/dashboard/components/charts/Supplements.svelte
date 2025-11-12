@@ -112,8 +112,6 @@
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
 						<DropdownMenu.Group>
-							<DropdownMenu.Label class="flex items-center">Filter</DropdownMenu.Label>
-							<DropdownMenu.Separator />
 							<DropdownMenu.Item
 								onclick={() => (viewMode = "month")}
 								class={viewMode === "month" ? "bg-accent" : ""}
