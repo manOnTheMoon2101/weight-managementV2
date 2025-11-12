@@ -6,7 +6,7 @@
 	import Palette from "@lucide/svelte/icons/palette";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	const THEME_STORAGE_KEY = "selectedTheme";
-	const themes = ["", "redTheme", "purpleTheme", "greenTheme"];
+	const themes = ["", "redTheme", "purpleTheme", "forestTheme"];
 	let currentThemeIndex = 0;
 
 	function saveTheme(theme: string) {
@@ -120,8 +120,8 @@
 				>
 			</DropdownMenu.Item>
 			<DropdownMenu.Item closeOnSelect={false}>
-				<Button onclick={() => setThemeWithStorage("greenTheme")} variant="greenButton"
-					>Green</Button
+				<Button onclick={() => setThemeWithStorage("forestTheme")} variant="forestButton"
+					>Forest</Button
 				>
 			</DropdownMenu.Item>
 		</DropdownMenu.Content>
