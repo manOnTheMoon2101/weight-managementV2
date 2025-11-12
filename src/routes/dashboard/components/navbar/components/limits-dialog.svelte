@@ -4,10 +4,21 @@
 	import { Label } from "$lib/components/ui/label/index.js";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import { Switch } from "$lib/components/ui/switch/index.js";
+	import * as Select from "$lib/components/ui/select/index.js";
 	let { limits } = $props<{ limits: any }>();
 
 	let updateLoading = $state(false);
-	let goalEnabled = $state(false);
+
+	let journeys = [
+		{ value: "Weight_Loss", name: "Weight Loss" },
+		{ value: "Weight_Gain", name: "Bulk" },
+	];
+
+	let value = $state("");
+
+	const triggerContent = $derived(
+		journeys.find((f) => f.value === value)?.name ?? "Select a Journey"
+	);
 
 	function handleUpdateSubmit() {
 		updateLoading = true;
@@ -47,9 +58,16 @@
 								value={limits?.stepsLimit}
 							/>
 							<div class="my-2">
-								<Label for="journey">{goalEnabled ? "Weight Loss" : "Bulk"}</Label>
-
-								<Switch name="journey" bind:checked={goalEnabled} />
+								<Select.Root type="single" name="journey" bind:value>
+									<Select.Trigger class="w-[180px]">{triggerContent}</Select.Trigger>
+									<Select.Content>
+										{#each journeys as journey (journey.value)}
+											<Select.Item value={journey.value} label={journey.name}>
+												{journey.name}
+											</Select.Item>
+										{/each}
+									</Select.Content>
+								</Select.Root>
 							</div>
 						</div>
 

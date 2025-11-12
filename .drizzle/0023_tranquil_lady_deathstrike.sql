@@ -1,0 +1,1 @@
+ALTER TABLE "user" ADD COLUMN "journey" text DEFAULT 'Weight_Loss';
