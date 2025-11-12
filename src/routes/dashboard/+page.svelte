@@ -29,6 +29,7 @@
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
+	$inspect(user)
 	let weightMonthChart = $derived(data.weightMonthChart);
 	let weightWeekChart = $derived(data.weightWeekChart);
 	let stepsMonthChart = $derived(data.stepsMonthChart);
@@ -71,6 +72,7 @@
 	let last7DaysSteps = $derived(data.last7DaysSteps);
 	let lastMonthSteps = $derived(data.lastMonthSteps);
 	let userStepLimit = $derived(data.userStepLimit);
+	let userJourney = $derived(data.userJourney);
 
 	let last7DaysWater = $derived(data.last7DaysWater);
 	let lastMonthWater = $derived(data.lastMonthWater);
@@ -178,11 +180,11 @@
 						{#if currentWeight && previousWeight}
 							{#if Number(currentWeight) > Number(previousWeight)}
 								<span>
-									Gained <span class="text-red-500">{(Number(currentWeight) - Number(previousWeight)).toFixed(1)}kg</span>
+									Gained <span class={userJourney?.journey === 'Weight_Gain' ? 'text-green-500' : 'text-red-500'}>{(Number(currentWeight) - Number(previousWeight)).toFixed(1)}kg</span>
 								</span>
 							{:else if Number(currentWeight) < Number(previousWeight)}
 								<span >
-									Lost <span class="text-green-500">{(Number(previousWeight) - Number(currentWeight)).toFixed(1)}kg</span>
+									Lost <span class={userJourney?.journey === 'Weight_Loss' ? 'text-green-500' : 'text-red-500'}>{(Number(previousWeight) - Number(currentWeight)).toFixed(1)}kg</span>
 								</span>
 							{:else}
 								<span class="text-gray-500">No change</span>

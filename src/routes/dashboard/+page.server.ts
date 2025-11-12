@@ -494,6 +494,19 @@ export const load: PageServerLoad = async ({ request }) => {
 				)
 			);
 
+
+			const userJourneyField = await db.query.user.findFirst({
+			where: and(
+				eq(user.id, session.user.id),
+				// eq(user.isActive, true),
+				// eq(user.isDeleted, false)
+			),
+			columns: {
+				journey: true,
+			},
+		});
+
+const userJourney = userJourneyField || null;
 		const supplementCountsWeekChart = supplementCountsWeekAgo || null;
 		const supplementCountsMonthChart = supplementCountsMonthAgo || null;
 		const weightMonthChart = formattedMonthWeightEntries || null;
@@ -590,6 +603,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			last7DaysSteps: last7DaysSteps,
 			lastMonthSteps: lastMonthSteps,
 			userStepLimit: userStepLimit,
+			userJourney : userJourney,
 
 			last7DaysWater: last7DaysWater,
 			lastMonthWater: lastMonthWater,
