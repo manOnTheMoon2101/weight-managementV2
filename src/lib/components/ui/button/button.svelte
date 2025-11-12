@@ -9,13 +9,13 @@
 			variant: {
 				default: "bg-primary cursor-pointer text-primary-foreground hover:bg-primary/90",
 				navbar: "bg-accent cursor-pointer text-white hover:bg-accent/90",
-				destructive: "bg-destructive cursor-pointer text-destructive-foreground hover:bg-destructive/90",
+				destructive: "bg-destructive cursor-pointer text-foreground hover:bg-destructive/80",
 				outline: "border-input cursor-pointer bg-background hover:bg-accent hover:text-accent-foreground border",
 				secondary: "bg-secondary cursor-pointer text-white hover:bg-secondary/80",
 				ghost: "hover:bg-accent cursor-pointer hover:text-accent-foreground",
 				screen: "cursor-pointer hover:text-accent-foreground",
 				sign:"bg-secondary cursor-pointer text-white hover:bg-secondary/80",
-				logout:"bg-destructive cursor-pointer text-secondary-foreground hover:bg-destructive/80",
+				logout:"bg-destructive cursor-pointer text-foreground hover:bg-destructive/80",
 				link: "text-secondary underline-offset-4 cursor-pointer hover:underline",
 				save: "text-accent underline-offset-4 cursor-pointer hover:underline",
 
