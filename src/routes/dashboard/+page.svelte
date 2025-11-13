@@ -332,7 +332,5 @@
 </div>
 
 <style>
-	:global(body) {
-		font-family: "Balsamiq Sans", system-ui;
-	}
+
 </style>

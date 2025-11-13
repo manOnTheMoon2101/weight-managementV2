@@ -6,7 +6,7 @@
 	import Palette from "@lucide/svelte/icons/palette";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	const THEME_STORAGE_KEY = "selectedTheme";
-	const themes = ["", "redTheme", "purpleTheme", "forestTheme"];
+	const themes = ["", "redTheme","forestTheme","windowsTheme"];
 	let currentThemeIndex = 0;
 
 	function saveTheme(theme: string) {
@@ -68,22 +68,7 @@
 </script>
 
 <div class="flex flex-col">
-	<!-- <div class="flex flex-row justify-center">Change Theme(BETA)</div>
-	<div class="flex flex-row items-center gap-2">
-		<Button onclick={() => setThemeWithStorage("redTheme")} variant="secondary">Red</Button>
-		<Button onclick={() => setThemeWithStorage("purpleTheme")} variant="secondary">Purple</Button>
-		<Button onclick={() => setThemeWithStorage("greenTheme")} variant="secondary">Green</Button>
-		<Button onclick={() => setThemeWithStorage("")} variant="outline">Beige</Button>
-		<Button onclick={toggleModeWithStorage} variant="outline" size="icon">
-			<SunIcon
-				class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all! dark:scale-0 dark:-rotate-90"
-			/>
-			<MoonIcon
-				class="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all! dark:scale-100 dark:rotate-0"
-			/>
-			<span class="sr-only">Toggle theme</span>
-		</Button>
-	</div> -->
+	
 
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger class="cursor-pointer">
@@ -156,21 +141,21 @@
 			</DropdownMenu.Item>
 			<DropdownMenu.Item closeOnSelect={false} class="cursor-pointer">
 				<button
-					onclick={() => setThemeWithStorage("purpleTheme")}
+					onclick={() => setThemeWithStorage("windowsTheme")}
 					class="hover:bg-accent/10 flex w-full items-center justify-between gap-3 rounded p-2 transition-colors"
 				>
-					<span class="font-medium">Purple</span>
+					<span class="font-medium">Windows `97</span>
 					<div class="flex gap-1">
 						<div
-							class="bg-background border-border h-6 w-6 rounded-full border"
+							class="bg-windowsBackround border-border h-6 w-6 rounded-full border"
 							title="Background"
 						></div>
-						<div class="bg-primary border-border h-6 w-6 rounded-full border" title="Primary"></div>
+						<div class="bg-windowsPrimary border-border h-6 w-6 rounded-full border" title="Primary"></div>
 						<div
-							class="bg-secondary border-border h-6 w-6 rounded-full border"
+							class="bg-windowsSecondary border-border h-6 w-6 rounded-full border"
 							title="Secondary"
 						></div>
-						<div class="bg-accent border-border h-6 w-6 rounded-full border" title="Accent"></div>
+						<div class="bg-windowsAccent border-border h-6 w-6 rounded-full border" title="Accent"></div>
 					</div>
 				</button>
 			</DropdownMenu.Item>
