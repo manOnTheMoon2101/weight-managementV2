@@ -116,7 +116,7 @@
 						value={String(averageWater)}
 						textAnchor="middle"
 						verticalAnchor="middle"
-						class="fill-orange-900 text-4xl! font-bold"
+						class="fill-secondary text-4xl! font-bold"
 						dy={3}
 					/>
 					<Text
