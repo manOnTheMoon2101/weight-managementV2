@@ -59,7 +59,7 @@
 							<div class="my-2">
 								<Label for="journey">Journey</Label>
 								<Select.Root type="single" name="journey" bind:value>
-									<Select.Trigger class="w-[180px]">{triggerContent}</Select.Trigger>
+									<Select.Trigger class="w-[180px] text-foregroundAlt">{triggerContent}</Select.Trigger>
 									<Select.Content>
 										{#each journeys as journey (journey.value)}
 											<Select.Item value={journey.value} label={journey.name}>
