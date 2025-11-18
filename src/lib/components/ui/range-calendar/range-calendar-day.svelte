@@ -17,13 +17,13 @@
 	class={cn(
 		buttonVariants({ variant: "ghost" }),
 		"size-9 p-0 font-normal data-[selected]:opacity-100",
-		"[&[data-today]:not([data-selected])]:bg-accent [&[data-today]:not([data-selected])]:text-accent-foreground",
+		"[&[data-today]:not([data-selected])]:bg-accent [&[data-today]:not([data-selected])]:text-accent",
 		// Selection Start
-		"data-[selection-start]:bg-primary data-[selection-start]:text-primary-foreground data-[selection-start]:hover:bg-primary data-[selection-start]:hover:text-primary-foreground data-[selection-start]:focus:bg-primary data-[selection-start]:focus:text-primary-foreground",
+		"data-[selection-start]:bg-secondary data-[selection-start]:text-foreground data-[selection-start]:hover:bg-primary data-[selection-start]:hover:text-foreground data-[selection-start]:focus:bg-accent data-[selection-start]:focus:text-foreground",
 		// Selection End
-		"data-[selection-end]:bg-primary data-[selection-end]:text-primary-foreground data-[selection-end]:hover:bg-primary data-[selection-end]:hover:text-primary-foreground data-[selection-end]:focus:bg-primary data-[selection-end]:focus:text-primary-foreground",
+		"data-[selection-end]:bg-secondary data-[selection-end]:text-foreground data-[selection-end]:hover:bg-primary data-[selection-end]:hover:text-foreground data-[selection-end]:focus:bg-accent data-[selection-end]:focus:text-foreground",
 		// Outside months
-		"data-[outside-month]:text-muted-foreground [&[data-outside-month][data-selected]]:bg-accent/50 [&[data-outside-month][data-selected]]:text-muted-foreground data-[outside-month]:pointer-events-none data-[outside-month]:opacity-50 [&[data-outside-month][data-selected]]:opacity-30",
+		"data-[outside-month]:text-foreground [&[data-outside-month][data-selected]]:bg-accent/50 [&[data-outside-month][data-selected]]:text-muted-foreground data-[outside-month]:pointer-events-none data-[outside-month]:opacity-50 [&[data-outside-month][data-selected]]:opacity-30",
 		// Disabled
 		"data-[disabled]:text-muted-foreground data-[disabled]:opacity-50",
 		// Unavailable

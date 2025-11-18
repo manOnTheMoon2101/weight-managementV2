@@ -20,7 +20,7 @@
 	<Dialog.Trigger class="cursor-pointer">Account</Dialog.Trigger>
 	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="sm:max-w-[700px]">
 		<Dialog.Header>
-			<Dialog.Title>Edit Profile</Dialog.Title>
+			<Dialog.Title>Edit Account</Dialog.Title>
 			<Dialog.Description>
 				<form
 					method="POST"

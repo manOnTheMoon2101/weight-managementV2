@@ -296,7 +296,7 @@
 						variant: "outline",
 						class: "border-accent mx-2 w-[300px] justify-start border text-left font-normal",
 					}),
-					!value && "text-muted-foreground"
+					!value && "text-foreground"
 				)}
 			>
 				<CalendarIcon class="mr-2 size-4" />

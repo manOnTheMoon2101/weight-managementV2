@@ -31,7 +31,7 @@
 		headerBackgroundColor: `var(--secondary)`,
 		headerTextColor: "white",
 		oddRowBackgroundColor: "var(--primary)",
-		rowHoverColor:'var(--accent-foreground)'
+		rowHoverColor:'var(--secondary)'
 	});
 
 	let gridDiv: HTMLDivElement;
