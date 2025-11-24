@@ -53,7 +53,7 @@
 	let context = $state<ChartContextValue>();
 </script>
 
-<Card.Root class="bg-primary mx-2">
+<Card.Root class="bg-primary mx-2 my-2">
 	<Card.Header>
 		<div class="flex flex-row justify-between">
 			<div>
