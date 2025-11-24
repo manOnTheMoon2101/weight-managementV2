@@ -83,8 +83,10 @@
 				dialogOpen: false,
 				rowToEdit: params.data,
 			}),
+			minWidth: 100,
+			maxWidth: 120,
 		},
-		{ headerName: "Date", field: "createdAt", cellRenderer: makeSvelteCellRenderer(Date as any),minWidth:175, },
+		{ headerName: "Date", field: "createdAt", cellRenderer: makeSvelteCellRenderer(Date as any), minWidth: 140, maxWidth: 200 },
 		{
 			headerName: "Weight",
 			field: "weight",
@@ -287,20 +289,22 @@
 	}
 </script>
 
-<div class="flex flex-row items-center justify-between">
-	<div>
+<div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+	<div class="w-full md:w-auto">
 		<Popover.Root>
 			<Popover.Trigger
 				class={cn(
 					buttonVariants({
 						variant: "outline",
-						class: "border-accent mx-2 w-[300px] justify-start border text-left font-normal",
+						class: "border-accent mx-2 w-full md:w-[300px] justify-start border text-left font-normal",
 					}),
 					!value && "text-foreground"
 				)}
 			>
-				<CalendarIcon class="mr-2 size-4" />
-				{value && (value.start || value.end) ? valueString : storedDateLabel ? selectedPreset : ""}
+				<CalendarIcon class="mr-2 size-4 flex-shrink-0" />
+				<span class="truncate">
+					{value && (value.start || value.end) ? valueString : storedDateLabel ? selectedPreset : "Select date range"}
+				</span>
 			</Popover.Trigger>
 			<Popover.Content class="flex w-auto flex-col space-y-2 p-2">
 				<Select.Root type="single" onValueChange={handlePresetSelect}>
@@ -319,15 +323,16 @@
 			</Popover.Content>
 		</Popover.Root>
 	</div>
-	<div>
+	<div class="flex flex-wrap gap-2 px-2 md:px-0">
 		<AddDialog dialogOpen latestWaist={latestWaistEntry}  latestWeight={latestWeightEntry}/>
-		<Button variant="save" onclick={() => tableComponent?.exportToCsv()}>
+		<Button variant="save" onclick={() => tableComponent?.exportToCsv()} class="flex-1 md:flex-none">
 			<ArrowDownToLine class="mr-2 size-4" />
-			Download CSV
+			<span class="hidden sm:inline">Download CSV</span>
+			<span class="sm:hidden">CSV</span>
 		</Button>
-		<Button variant="save">
+		<Button variant="save" class="flex-1 md:flex-none">
 			<Refresh class="mr-2 size-4" />
-			Refresh
+			<span class="hidden sm:inline">Refresh</span>
 		</Button>
 	</div>
 </div>
