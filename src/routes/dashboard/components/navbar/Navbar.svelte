@@ -10,6 +10,7 @@
 	import TableProperties from "@lucide/svelte/icons/table-properties";
 	import LayoutDashboard from "@lucide/svelte/icons/layout-dashboard";
 	import Calculator from "@lucide/svelte/icons/calculator"
+	import Menu from "@lucide/svelte/icons/menu"
 	import Toggler from "../navbar/components/toggler.svelte"
 	let {
 		user,
@@ -61,21 +62,50 @@
 		</div>
 		<div class="flex flex-row items-center">
 			<Toggler />
-			<Button
-				href="/dashboard"
-				variant={"navbar"}
-				class={page.url.pathname !== "/dashboard" ? "bg-secondary mx-2" : "mx-2"}><LayoutDashboard/>Dashboard</Button
-			>
-			<Button
-				href="/dashboard/table"
-				variant={"navbar"}
-				class={page.url.pathname !== "/dashboard/table" ? "bg-secondary mx-2" : "mx-2"}><TableProperties/>Table</Button
-			>
-			<Button
-				disabled
-				variant={"navbar"}
-				class={page.url.pathname !== "/dashboard/table" ? "bg-secondary mx-2" : "mx-2"}><Calculator/>Nutrition AI(Soon)</Button
-			>
+			<!-- Desktop Navigation -->
+			<div class="hidden md:flex flex-row items-center">
+				<Button
+					href="/dashboard"
+					variant={"navbar"}
+					class={page.url.pathname !== "/dashboard" ? "bg-secondary mx-2" : "mx-2"}><LayoutDashboard/>Dashboard</Button
+				>
+				<Button
+					href="/dashboard/table"
+					variant={"navbar"}
+					class={page.url.pathname !== "/dashboard/table" ? "bg-secondary mx-2" : "mx-2"}><TableProperties/>Table</Button
+				>
+				<Button
+					disabled
+					variant={"navbar"}
+					class={page.url.pathname !== "/dashboard/table" ? "bg-secondary mx-2" : "mx-2"}><Calculator/>Nutrition AI(Soon)</Button
+				>
+			</div>
+			<!-- Mobile Navigation Dropdown -->
+			<div class="md:hidden">
+				<DropdownMenu.Root>
+					<DropdownMenu.Trigger>
+						<Button variant="navbar" size="icon" class="mx-2">
+							<Menu />
+						</Button>
+					</DropdownMenu.Trigger>
+					<DropdownMenu.Content align="end">
+						<DropdownMenu.Group>
+							<DropdownMenu.Item class="cursor-pointer" onclick={() => window.location.href = '/dashboard'}>
+								<LayoutDashboard class="mr-2 h-4 w-4" />
+								Dashboard
+							</DropdownMenu.Item>
+							<DropdownMenu.Item class="cursor-pointer" onclick={() => window.location.href = '/dashboard/table'}>
+								<TableProperties class="mr-2 h-4 w-4" />
+								Table
+							</DropdownMenu.Item>
+							<DropdownMenu.Item disabled class="cursor-not-allowed">
+								<Calculator class="mr-2 h-4 w-4" />
+								Nutrition AI (Soon)
+							</DropdownMenu.Item>
+						</DropdownMenu.Group>
+					</DropdownMenu.Content>
+				</DropdownMenu.Root>
+			</div>
 		</div>
 	</div>
 </div>
