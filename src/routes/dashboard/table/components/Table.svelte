@@ -31,7 +31,9 @@
 		headerBackgroundColor: `var(--secondary)`,
 		headerTextColor: "white",
 		oddRowBackgroundColor: "var(--primary)",
-		rowHoverColor:'var(--secondary)'
+		rowHoverColor:'var(--secondary)',
+		headerFontSize: 14,
+		fontSize: 13,
 	});
 
 	let gridDiv: HTMLDivElement;
@@ -57,6 +59,8 @@
 	}
 	export { exportToCsv };
 	onMount(() => {
+		const isMobile = window.innerWidth < 768;
+		
 		const gridOptions: GridOptions<any> = {
 			theme: darkTheme,
 			columnDefs,
@@ -65,15 +69,29 @@
 				sortable: true,
 				filter: true,
 				flex: 1,
+				minWidth: isMobile ? 120 : undefined,
 			},
+			suppressHorizontalScroll: false,
 			onGridReady: (params) => {
 				gridApi = params.api;
+				if (isMobile) {
+					params.api.sizeColumnsToFit();
+				}
 			},
 		};
 
 		if (gridDiv) {
 			createGrid(gridDiv, gridOptions);
 		}
+
+		const handleResize = () => {
+			if (gridApi) {
+				gridApi.sizeColumnsToFit();
+			}
+		};
+
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
 	});
 
 
@@ -84,11 +102,5 @@
 </script>
 
 <div class="flex flex-col gap-4">
-	<!-- <div class="flex flex-row items-center justify-end">
-		<ArrowDownToLine />
-		<Button variant="outline" onclick={exportToCsv}>
-			Download CSV
-		</Button>
-	</div> -->
-	<div bind:this={gridDiv} style="height: 80vh; width: 100%;"></div>
+	<div bind:this={gridDiv} class="ag-theme-quartz-dark w-full overflow-x-auto" style="height: 80vh;"></div>
 </div>
