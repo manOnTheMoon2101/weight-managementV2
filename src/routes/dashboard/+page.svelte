@@ -139,7 +139,7 @@
 
 <div class="flex flex-col gap-1">
 	<div>
-		<div class="mb-4 md:hidden">
+		<!-- <div class="mb-4 md:hidden">
 			<div
 				class="flex items-center gap-2 rounded-md border border-yellow-300 bg-yellow-100 p-3 text-yellow-900 dark:border-yellow-700 dark:bg-yellow-950 dark:text-yellow-200"
 			>
@@ -149,9 +149,9 @@
 					coming soon :)</span
 				>
 			</div>
-		</div>
+		</div> -->
 
-		<div class="flex flex-row items-center justify-between">
+		<div class="flex flex-col items-center justify-between md:flex-row">
 			<div class="bg-primary flex h-[300px] w-3/5 flex-col justify-between rounded-lg">
 				{#if user}
 					<div class="flex flex-row items-center justify-between">
@@ -302,7 +302,7 @@
 				</div> -->
 				</div>
 			</div>
-			<div class="flex w-2/5 flex-row justify-around">
+			<div class="flex w-2/5 flex-col justify-around md:flex-row">
 				<Steps dateSeriesData={stepsCharts} bind:viewMode={stepsViewMode} />
 				<Water
 					dateSeriesData={waterCharts}
@@ -312,14 +312,14 @@
 			</div>
 		</div>
 
-		<div class="my-4 flex flex-row items-start justify-between">
-			<div class="flex w-3/5 flex-row justify-around">
+		<div class="flex flex-col my-4 items-center justify-between md:flex-row">
+			<div class="flex w-3/5 flex-col justify-around md:flex-row">
 				<Protein dateSeriesData={proteinCharts} bind:viewMode={proteinViewMode} />
 
 				<Supplements weekData={supplementCharts} monthData={supplementCountsMonthChart} />
 			</div>
 
-			<div class="flex w-2/5 flex-row justify-around">
+			<div class="flex w-2/5 flex-col justify-around md:flex-row">
 				<Sleep dateSeriesData={sleepCharts} bind:viewMode={sleepViewMode} />
 				<Calories dateSeriesData={caloriesCharts} bind:viewMode={caloriesViewMode} />
 			</div>
