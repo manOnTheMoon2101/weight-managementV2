@@ -95,7 +95,7 @@
 	const totalCount = $derived(chartData().reduce((sum, item) => sum + item.count, 0));
 </script>
 
-<Card.Root class="bg-primary flex flex-col">
+<Card.Root class="bg-primary flex flex-col my-2">
 	<Card.Header>
 		<div class="flex flex-row justify-between">
 			<div>
