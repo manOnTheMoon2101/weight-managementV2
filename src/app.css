@@ -51,8 +51,6 @@
 	--sign: hsl(140, 100%, 38%);
 	--zen: hsl(34, 100%, 38%);
 	--radius: 0.5rem;
-
-	
 }
 
 .dark {
@@ -76,12 +74,10 @@
 	--forestSecondary: hsl(105, 22.81%, 44.71%);
 	--forestAccent: hsl(151.07, 36.36%, 30.2%);
 
-
-	--windowsBackround: hsl(210, 46%, 95%);
-	--windowsPrimary: hsl(210, 100%, 42%);
-	--windowsSecondary: hsl(120, 73%, 35%);
-	--windowsAccent: hsl(39, 100%, 50%);
-
+	--windowsBackround: hsl(14.04, 88.68%, 89.61%);
+	--windowsPrimary: hsl(325.26, 90.48%, 95.88%);
+	--windowsSecondary: hsl(274.05, 82.22%, 91.18%);
+	--windowsAccent: hsl(228.96, 70.62%, 65.29%);
 
 	--chart1: hsl(183, 100%, 50%);
 	--chart2: hsl(25, 100%, 50%);
@@ -90,27 +86,19 @@
 	--chart5: hsl(167, 100%, 50%);
 	--save: hsl(140, 100%, 38%);
 
-
 	font-family: "Balsamiq Sans", system-ui;
-
 }
-
-
-
-
 
 :root[data-theme="windowsTheme"] {
 	--sign: hsl(120, 73%, 35%);
-	--background: hsl(210, 46%, 95%);
-	--foreground: hsl(0, 0%, 100%);
-	--muted: hsl(210, 15%, 65%);
-	--primary: hsl(210, 100%, 42%);
-	--secondary: hsl(120, 73%, 35%);
-	--accent: hsl(39, 100%, 50%);
-	--destructive: hsl(0, 65%, 48%);
-font-family: 'VT323', monospace;
-
-
+	--background: hsl(14.04, 88.68%, 89.61%);
+	--foreground: hsl(0, 0%, 2%);
+	--muted: hsl(10, 40%, 50%);
+	--primary: hsl(325.26, 90.48%, 95.88%);
+	--secondary: hsl(274.05, 82.22%, 91.18%);
+	--accent: hsl(228.96, 70.62%, 65.29%);
+	--destructive: hsl(0, 100%, 40%);
+	font-family: "VT323", monospace;
 
 	--chart1: hsl(210, 100%, 60%);
 	--chart2: hsl(120, 60%, 50%);
@@ -130,8 +118,6 @@ font-family: 'VT323', monospace;
 	--secondary: hsl(105, 22.81%, 44.71%);
 	--accent: hsl(151.07, 36.36%, 30.2%);
 	--destructive: hsl(0 62.8% 30.6%);
-
-
 
 	--chart1: hsl(140, 31%, 75%);
 	--chart2: hsl(122, 39%, 85%);
@@ -190,12 +176,10 @@ font-family: 'VT323', monospace;
 	--color-tronSecondary: var(--tronSecondary);
 	--color-tronAccent: var(--tronAccent);
 
-
 	--color-forestBackround: var(--forestBackround);
 	--color-forestPrimary: var(--forestPrimary);
 	--color-forestSecondary: var(--forestSecondary);
 	--color-forestAccent: var(--forestAccent);
-
 
 	--color-windowsBackround: var(--windowsBackround);
 	--color-windowsPrimary: var(--windowsPrimary);

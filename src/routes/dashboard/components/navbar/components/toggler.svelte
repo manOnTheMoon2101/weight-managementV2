@@ -144,7 +144,7 @@
 					onclick={() => setThemeWithStorage("windowsTheme")}
 					class="hover:bg-accent/10 flex w-full items-center justify-between gap-3 rounded p-2 transition-colors"
 				>
-					<span class="font-medium">Windows `97</span>
+					<span class="font-medium">Cotton Candy Code</span>
 					<div class="flex gap-1">
 						<div
 							class="bg-windowsBackround border-border h-6 w-6 rounded-full border"
