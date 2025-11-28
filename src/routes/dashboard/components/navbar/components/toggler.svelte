@@ -119,7 +119,7 @@
 					</div>
 				</button>
 			</DropdownMenu.Item>
-			<DropdownMenu.Item closeOnSelect={false} class="cursor-pointer">
+			<!-- <DropdownMenu.Item closeOnSelect={false} class="cursor-pointer">
 				<button
 					onclick={() => setThemeWithStorage("redTheme")}
 					class="hover:bg-accent/10 flex w-full items-center justify-between gap-3 rounded p-2 transition-colors"
@@ -138,13 +138,13 @@
 						<div class="bg-accent border-border h-6 w-6 rounded-full border" title="Accent"></div>
 					</div>
 				</button>
-			</DropdownMenu.Item>
+			</DropdownMenu.Item> -->
 			<DropdownMenu.Item closeOnSelect={false} class="cursor-pointer">
 				<button
 					onclick={() => setThemeWithStorage("windowsTheme")}
 					class="hover:bg-accent/10 flex w-full items-center justify-between gap-3 rounded p-2 transition-colors"
 				>
-					<span class="font-medium">Windows `97</span>
+					<span class="font-medium">Cotton Candy Code</span>
 					<div class="flex gap-1">
 						<div
 							class="bg-windowsBackround border-border h-6 w-6 rounded-full border"
@@ -164,7 +164,7 @@
 					onclick={() => setThemeWithStorage("forestTheme")}
 					class="hover:bg-accent/10 flex w-full items-center justify-between gap-3 rounded p-2 transition-colors"
 				>
-					<span class="font-medium">Witching Woods</span>
+					<span class="font-medium">Matcha Latte</span>
 					<div class="flex gap-1">
 						<div
 							class="bg-forestBackround border-border h-6 w-6 rounded-full border"

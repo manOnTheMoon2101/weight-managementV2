@@ -114,13 +114,13 @@
 						<DropdownMenu.Group>
 							<DropdownMenu.Item
 								onclick={() => (viewMode = "month")}
-								class={viewMode === "month" ? "bg-accent" : ""}
+								class={viewMode === "month" ? "text-secondary" : ""}
 							>
 								Last Month
 							</DropdownMenu.Item>
 							<DropdownMenu.Item
 								onclick={() => (viewMode = "week")}
-								class={viewMode === "week" ? "bg-accent" : ""}
+								class={viewMode === "week" ? "text-secondary" : ""}
 							>
 								Last 7 Days
 							</DropdownMenu.Item>
