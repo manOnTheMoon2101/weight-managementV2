@@ -6,7 +6,7 @@
 	import Palette from "@lucide/svelte/icons/palette";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	const THEME_STORAGE_KEY = "selectedTheme";
-	const themes = ["", "redTheme","forestTheme","windowsTheme"];
+	const themes = ["","forestTheme","windowsTheme"];
 	let currentThemeIndex = 0;
 
 	function saveTheme(theme: string) {
