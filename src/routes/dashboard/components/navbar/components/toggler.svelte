@@ -6,7 +6,7 @@
 	import Palette from "@lucide/svelte/icons/palette";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	const THEME_STORAGE_KEY = "selectedTheme";
-	const themes = ["", "redTheme","forestTheme","windowsTheme"];
+	const themes = ["", "forestTheme", "windowsTheme"];
 	let currentThemeIndex = 0;
 
 	function saveTheme(theme: string) {
@@ -68,8 +68,6 @@
 </script>
 
 <div class="flex flex-col">
-	
-
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger class="cursor-pointer">
 			<Tooltip.Provider delayDuration={100}>
@@ -144,18 +142,24 @@
 					onclick={() => setThemeWithStorage("windowsTheme")}
 					class="hover:bg-accent/10 flex w-full items-center justify-between gap-3 rounded p-2 transition-colors"
 				>
-					<span class="font-medium">Cotton Candy Code</span>
+					<span class="font-medium">Vintage Sunrise</span>
 					<div class="flex gap-1">
 						<div
 							class="bg-windowsBackround border-border h-6 w-6 rounded-full border"
 							title="Background"
 						></div>
-						<div class="bg-windowsPrimary border-border h-6 w-6 rounded-full border" title="Primary"></div>
+						<div
+							class="bg-windowsPrimary border-border h-6 w-6 rounded-full border"
+							title="Primary"
+						></div>
 						<div
 							class="bg-windowsSecondary border-border h-6 w-6 rounded-full border"
 							title="Secondary"
 						></div>
-						<div class="bg-windowsAccent border-border h-6 w-6 rounded-full border" title="Accent"></div>
+						<div
+							class="bg-windowsAccent border-border h-6 w-6 rounded-full border"
+							title="Accent"
+						></div>
 					</div>
 				</button>
 			</DropdownMenu.Item>
@@ -170,12 +174,18 @@
 							class="bg-forestBackround border-border h-6 w-6 rounded-full border"
 							title="Background"
 						></div>
-						<div class="bg-forestPrimary border-border h-6 w-6 rounded-full border" title="Primary"></div>
+						<div
+							class="bg-forestPrimary border-border h-6 w-6 rounded-full border"
+							title="Primary"
+						></div>
 						<div
 							class="bg-forestSecondary border-border h-6 w-6 rounded-full border"
 							title="Secondary"
 						></div>
-						<div class="bg-forestAccent border-border h-6 w-6 rounded-full border" title="Accent"></div>
+						<div
+							class="bg-forestAccent border-border h-6 w-6 rounded-full border"
+							title="Accent"
+						></div>
 					</div>
 				</button>
 			</DropdownMenu.Item>
