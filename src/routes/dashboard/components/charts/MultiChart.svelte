@@ -70,15 +70,16 @@
 				points={{ r: 4 }}
 				series={[
 					{
-						key: "weight",
-						label: "Weight",
-						color: chartConfig.weight.color,
-					},
-					{
 						key: "waist",
 						label: "Waist",
 						color: chartConfig.waist.color,
 					},
+					{
+						key: "weight",
+						label: "Weight",
+						color: chartConfig.weight.color,
+					},
+					
 				]}
 				props={{
 					spline: { curve: curveNatural, motion: "tween", strokeWidth: 2 },
