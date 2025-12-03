@@ -22,7 +22,7 @@
 			<Section class="mx-auto text-center">
 				<Text class="text-2xl font-bold text-zinc-900">Welcome {name}!</Text>
 				<Text class="mt-3 text-zinc-600">
-					Better Svelte Email converts Svelte components into email-safe HTML.
+					This template is currentl in development!
 				</Text>
 				<Row class="mt-6">
 					
@@ -32,7 +32,7 @@
 						pY={14}
 						class="ml-2 rounded-lg border border-zinc-200 text-zinc-900"
 					>
-						Use Github
+						Github
 					</Button>
 				</Row>
 			</Section>
