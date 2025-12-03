@@ -60,7 +60,9 @@
 		"ag-charts-community": "^12.0.1",
 		"ag-grid-community": "^34.0.1",
 		"ag-grid-svelte5-extended": "^0.0.13",
+		"axios": "^1.13.2",
 		"better-auth": "^1.1.19",
+		"better-svelte-email": "^1.1.0",
 		"d3-array": "^3.2.4",
 		"d3-scale": "^4.0.2",
 		"drizzle-orm": "^0.39.3",
@@ -68,6 +70,7 @@
 		"mode-watcher": "^1.1.0",
 		"paneforge": "^1.0.0-next.6",
 		"postgres": "^3.4.5",
+		"resend": "^6.5.2",
 		"svelte-awesome-color-picker": "^4.0.2",
 		"svelte-sonner": "^1.0.5",
 		"vaul-svelte": "^1.0.0-next.7"
