@@ -30,7 +30,7 @@
 						href="https://github.com/manOnTheMoon2101/weight-managementV2"
 						pX={24}
 						pY={14}
-						class="ml-2 rounded-lg border border-zinc-200 text-zinc-900"
+						class="ml-2 rounded-lg border bg-amber-600 border-zinc-200 text-zinc-900"
 					>
 						Github
 					</Button>
