@@ -5,6 +5,7 @@
 	import { dev } from "$app/environment";
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 	import { createInitialModeExpression } from "mode-watcher";
+	 import { Toaster } from "$lib/components/ui/sonner/index.js";
 	injectAnalytics({ mode: dev ? "development" : "production" });
 </script>
 
@@ -21,4 +22,5 @@
 </svelte:head>
 
 <ModeWatcher />
+<Toaster richColors />
 {@render children()}

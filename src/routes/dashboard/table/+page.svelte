@@ -8,8 +8,9 @@
 	import * as Popover from "$lib/components/ui/popover/index.js";
 	import * as Select from "$lib/components/ui/select/index.js";
 	import CalendarIcon from "@lucide/svelte/icons/calendar";
-	import ArrowDownToLine from "@lucide/svelte/icons/arrow-down-to-line";
+	import Mail from "@lucide/svelte/icons/mail";
 	import { page } from "$app/state";
+	import { toast } from "svelte-sonner";
 	import { browser } from "$app/environment";
 	import Measurement from "./components/cellRenderers/Measurement.svelte";
 	import Weight from "./components/cellRenderers/Weight.svelte";
@@ -21,6 +22,7 @@
 	import Limits from "./components/cellRenderers/Limits.svelte";
 	import Refresh from "@lucide/svelte/icons/refresh-ccw";
 	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
+	import axios from "axios";
 
 	const { data } = $props<{ data: PageData }>();
 
@@ -236,6 +238,26 @@
 
 	let selectedPreset = $state("");
 	let tableComponent: any = $state();
+	let isSendingEmail = $state(false);
+
+	async function sendEmail() {
+		isSendingEmail = true;
+		try {
+			await axios.post('/api/send-email');
+			
+			toast.success("Succesfully Sent Email")
+		} catch (error) {
+			if (axios.isAxiosError(error) && error.response) {
+				toast.error(`Failed to send email: ${error.response.data.error}`);
+			} else {
+				
+				toast.error('Error sending email')
+			}
+			console.error(error);
+		} finally {
+			isSendingEmail = false;
+		}
+	}
 
 	const storedDateLabel = $derived.by(() => {
 		if (!browser) return null;
@@ -325,15 +347,19 @@
 	</div>
 	<div class="flex flex-wrap gap-2 px-2 md:px-0">
 		<AddDialog dialogOpen latestWaist={latestWaistEntry}  latestWeight={latestWeightEntry}/>
-		<Button variant="save" onclick={() => tableComponent?.exportToCsv()} class="flex-1 md:flex-none">
+		<!-- <Button variant="save" onclick={() => tableComponent?.exportToCsv()} class="flex-1 md:flex-none">
 			<ArrowDownToLine class="mr-2 size-4" />
 			<span class="hidden sm:inline">Download CSV</span>
 			<span class="sm:hidden">CSV</span>
+		</Button> -->
+		<Button variant="save" onclick={sendEmail} disabled={isSendingEmail} class="flex-1 md:flex-none">
+			<Mail class="mr-2 size-4" />
+			<span>{isSendingEmail ? 'Sending...' : 'Send Email'}</span>
 		</Button>
-		<Button variant="save" class="flex-1 md:flex-none">
+		<!-- <Button variant="save" class="flex-1 md:flex-none">
 			<Refresh class="mr-2 size-4" />
 			<span class="hidden sm:inline">Refresh</span>
-		</Button>
+		</Button> -->
 	</div>
 </div>
 
