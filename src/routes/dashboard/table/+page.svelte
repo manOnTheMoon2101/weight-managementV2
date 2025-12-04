@@ -9,6 +9,7 @@
 	import * as Select from "$lib/components/ui/select/index.js";
 	import CalendarIcon from "@lucide/svelte/icons/calendar";
 	import Mail from "@lucide/svelte/icons/mail";
+	import ArrowDownToLine from "@lucide/svelte/icons/arrow-down-to-line";
 	import { page } from "$app/state";
 	import { toast } from "svelte-sonner";
 	import { browser } from "$app/environment";
@@ -349,11 +350,11 @@
 	</div>
 	<div class="flex flex-wrap gap-2 px-2 md:px-0">
 		<AddDialog dialogOpen latestWaist={latestWaistEntry}  latestWeight={latestWeightEntry}/>
-		<!-- <Button variant="save" onclick={() => tableComponent?.exportToCsv()} class="flex-1 md:flex-none">
+		<Button variant="save" onclick={() => tableComponent?.exportToCsv()} class="flex-1 md:flex-none">
 			<ArrowDownToLine class="mr-2 size-4" />
-			<span class="hidden sm:inline">Download CSV</span>
+			<span class="hidden sm:inline">Export to CSV</span>
 			<span class="sm:hidden">CSV</span>
-		</Button> -->
+		</Button>
 		<Button variant="save" onclick={sendEmail} disabled={isSendingEmail} class="flex-1 md:flex-none">
 			<Mail class="mr-2 size-4" />
 			<span>{isSendingEmail ? 'Sending...' : 'Send Email'}</span>
