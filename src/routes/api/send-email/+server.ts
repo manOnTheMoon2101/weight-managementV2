@@ -9,7 +9,6 @@ const { render } = new Renderer();
 export async function POST(r:any) {
 	try {
 		const nutrients = await r.request.json();
-		console.log(nutrients)
 		const html = await render(WelcomeEmail, { props: { nutrients } });
 		const { data, error } = await resend.emails.send({
 			from: "Weight Management App <onboarding@resend.dev>",
