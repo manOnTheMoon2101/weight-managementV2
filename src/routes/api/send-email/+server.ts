@@ -12,7 +12,7 @@ export async function POST(r:any) {
 		console.log(nutrients)
 		const html = await render(WelcomeEmail, { props: { nutrients } });
 		const { data, error } = await resend.emails.send({
-			from: "Acme <onboarding@resend.dev>",
+			from: "Weight Management App <onboarding@resend.dev>",
 			to: "clevejohnclayton.2101@gmail.com",
 			subject: "Hello world",
 			html: html,
