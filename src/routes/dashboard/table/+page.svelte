@@ -20,7 +20,7 @@
 	import { makeSvelteCellRenderer } from "ag-grid-svelte5-extended";
 	import AddDialog from "../components/navbar/components/add_dialog/AddDialog.svelte";
 	import Limits from "./components/cellRenderers/Limits.svelte";
-	import Refresh from "@lucide/svelte/icons/refresh-ccw";
+
 	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
 	import axios from "axios";
 
@@ -52,6 +52,7 @@
 		sleep_schedule?: SleepSchedule[];
 		[key: string]: any;
 	};
+	
 
 	const latestWaistEntry = $derived(data.latestWaistEntry)
 	const latestWeightEntry = $derived(data.latestWeightEntry)
@@ -68,6 +69,7 @@
 			water: row.health_tracker?.[0]?.water,
 			steps: row.health_tracker?.[0]?.steps,
 			waistMeasurement: row.health_tracker?.[0].waistMeasurement,
+			userEmail: data.userEmail,
 		}))
 	);
 
