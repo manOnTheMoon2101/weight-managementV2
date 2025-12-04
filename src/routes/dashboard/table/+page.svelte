@@ -9,6 +9,8 @@
 	import * as Select from "$lib/components/ui/select/index.js";
 	import CalendarIcon from "@lucide/svelte/icons/calendar";
 	import Mail from "@lucide/svelte/icons/mail";
+	import ArrowDownToLine from "@lucide/svelte/icons/arrow-down-to-line";
+	// import Refresh from "@lucide/svelte/icons/refresh-cw";
 	import { page } from "$app/state";
 	import { toast } from "svelte-sonner";
 	import { browser } from "$app/environment";
@@ -20,7 +22,7 @@
 	import { makeSvelteCellRenderer } from "ag-grid-svelte5-extended";
 	import AddDialog from "../components/navbar/components/add_dialog/AddDialog.svelte";
 	import Limits from "./components/cellRenderers/Limits.svelte";
-	import Refresh from "@lucide/svelte/icons/refresh-ccw";
+
 	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
 	import axios from "axios";
 
@@ -52,6 +54,7 @@
 		sleep_schedule?: SleepSchedule[];
 		[key: string]: any;
 	};
+	
 
 	const latestWaistEntry = $derived(data.latestWaistEntry)
 	const latestWeightEntry = $derived(data.latestWeightEntry)
@@ -68,6 +71,7 @@
 			water: row.health_tracker?.[0]?.water,
 			steps: row.health_tracker?.[0]?.steps,
 			waistMeasurement: row.health_tracker?.[0].waistMeasurement,
+			userEmail: data.userEmail,
 		}))
 	);
 
@@ -243,7 +247,7 @@
 	async function sendEmail() {
 		isSendingEmail = true;
 		try {
-			await axios.post('/api/send-email');
+			await axios.post('/api/send-email',nutrients);
 			
 			toast.success("Succesfully Sent Email")
 		} catch (error) {
@@ -347,11 +351,11 @@
 	</div>
 	<div class="flex flex-wrap gap-2 px-2 md:px-0">
 		<AddDialog dialogOpen latestWaist={latestWaistEntry}  latestWeight={latestWeightEntry}/>
-		<!-- <Button variant="save" onclick={() => tableComponent?.exportToCsv()} class="flex-1 md:flex-none">
+		<Button variant="save" onclick={() => tableComponent?.exportToCsv()} class="flex-1 md:flex-none">
 			<ArrowDownToLine class="mr-2 size-4" />
-			<span class="hidden sm:inline">Download CSV</span>
+			<span class="hidden sm:inline">Export to CSV</span>
 			<span class="sm:hidden">CSV</span>
-		</Button> -->
+		</Button>
 		<Button variant="save" onclick={sendEmail} disabled={isSendingEmail} class="flex-1 md:flex-none">
 			<Mail class="mr-2 size-4" />
 			<span>{isSendingEmail ? 'Sending...' : 'Send Email'}</span>

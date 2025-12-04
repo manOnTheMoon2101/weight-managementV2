@@ -110,8 +110,15 @@ export const load: PageServerLoad = async ({ request, url }) => {
 			),
 		});
 
+		let userEmail;
+
+		if(session){
+			userEmail = session?.user?.email
+		}
+
 		return {
 			nutrients: userNutrients,
+			userEmail : userEmail,
 			limits: userLimits || null,
 			latestWaistEntry : latestWaistEntry || null,
 			latestWeightEntry: latestWeightEntry || null,
