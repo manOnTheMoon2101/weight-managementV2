@@ -6,10 +6,11 @@ const resend = new Resend(RESEND_API_KEY);
 
 const { render } = new Renderer();
 
-export async function POST() {
+export async function POST(r:any) {
 	try {
-		const name = "Cleve";
-		const html = await render(WelcomeEmail, { props: { name } });
+		const nutrients = await r.request.json();
+		console.log(nutrients)
+		const html = await render(WelcomeEmail, { props: { nutrients } });
 		const { data, error } = await resend.emails.send({
 			from: "Acme <onboarding@resend.dev>",
 			to: "clevejohnclayton.2101@gmail.com",

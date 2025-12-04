@@ -243,7 +243,7 @@
 	async function sendEmail() {
 		isSendingEmail = true;
 		try {
-			await axios.post('/api/send-email');
+			await axios.post('/api/send-email',nutrients);
 			
 			toast.success("Succesfully Sent Email")
 		} catch (error) {
