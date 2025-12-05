@@ -157,12 +157,12 @@
 					<div class="flex flex-row items-center justify-between">
 						<div>
 							<div class="flex flex-row items-center">
-								<div>
-									<Avatar.Root class="mr-2 size-15">
+								<!-- <div class="my-1 flex flex-row items-center rounded-lg p-1">
+									<Avatar.Root class="mr-2">
 										<Avatar.Image src={user.image} alt="User Image" />
 										<Avatar.Fallback>{firstLetter ?? "?"}</Avatar.Fallback>
 									</Avatar.Root>
-								</div>
+								</div> -->
 
 								<div class="flex flex-col">
 									<h1 class="text-muted-foreground text-lg font-bold">{greet()}</h1>

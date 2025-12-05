@@ -630,6 +630,7 @@ export const actions = {
 		}
 		const form = await request.formData();
 		const name = form.get("name") as string;
+		const surname = form.get("surname") as string;
 		const email = form.get("email") as string;
 		const colour = form.get("userColour") as string;
 		const file = form.get("file") as File | null;
@@ -652,6 +653,7 @@ export const actions = {
 			.update(user)
 			.set({
 				name,
+				surname,
 				email,
 				colour: colour || "#fbbf24",
 				...(imageUrl ? { image: imageUrl } : {}),

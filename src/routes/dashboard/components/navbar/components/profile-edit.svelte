@@ -19,6 +19,8 @@
 	let showCropper = $state(false);
 	let originalFileName = $state<string>("cropped-avatar.png");
 
+		$inspect(user)
+
 	function handleFileSelect(event: Event) {
 		const input = event.target as HTMLInputElement;
 		const file = input.files?.[0];
@@ -172,9 +174,13 @@
 							<div class="w-full rounded-lg p-1">
 								<Label for="name">Name</Label>
 								<Input class="my-0" name="name" placeholder="Name" value={user.name} />
+								<Label for="name">Surname</Label>
+								<Input class="my-0" name="surname" placeholder="Surname" value={user.surname} />
 								<Label class="my-0" for="email">Email</Label>
 								<Input name="email" placeholder="Email" type="email" value={user.email} />
 							</div>
+
+
 						</div>
 					{/if}
 

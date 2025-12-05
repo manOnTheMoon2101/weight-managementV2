@@ -6,6 +6,7 @@ import { limits } from "./limits";
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
+	surname: text("surname"),
 	colour: text("colour").notNull().default("#fbbf24"),
 	email: text("email").notNull().unique(),
 	emailVerified: boolean("email_verified").notNull(),
