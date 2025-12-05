@@ -4,9 +4,10 @@
 	import { Label } from "$lib/components/ui/label/index.js";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import * as Avatar from "$lib/components/ui/avatar/index.js";
-	import type { CropperSelection } from '@cropper/elements';
-	import * as Cropper from '@eslym/svelte-cropperjs';
-	
+	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
+	import type { CropperSelection } from "@cropper/elements";
+	import * as Cropper from "@eslym/svelte-cropperjs";
+
 	let { user, userColour }: { user: any; userColour: string } = $props();
 	let updateLoading = $state(false);
 	let fileInput = $state<HTMLInputElement>(null!);
@@ -14,7 +15,7 @@
 	let imageSrc = $state<string | null>(null);
 	let croppedImageUrl = $state<string | null>(null);
 	let showCropper = $state(false);
-	let originalFileName = $state<string>('cropped-avatar.png');
+	let originalFileName = $state<string>("cropped-avatar.png");
 
 	function handleFileSelect(event: Event) {
 		const input = event.target as HTMLInputElement;
@@ -26,40 +27,40 @@
 				imageSrc = e.target?.result as string;
 				showCropper = true;
 			};
-			console.log(file)
+			console.log(file);
 			reader.readAsDataURL(file);
 		}
 	}
 
 	async function handleCrop() {
 		if (!cropper) return;
-		
+
 		const canvas = await cropper.$toCanvas({ width: 256, height: 256 });
 		const blob = await new Promise<Blob>((resolve) =>
-			canvas.toBlob((b) => resolve(b!), 'image/png')
+			canvas.toBlob((b) => resolve(b!), "image/png")
 		);
-		
+
 		croppedImageUrl = URL.createObjectURL(blob);
-		
-		const file = new File([blob], originalFileName, { type: 'image/png' });
+
+		const file = new File([blob], originalFileName, { type: "image/png" });
 		const dataTransfer = new DataTransfer();
 		dataTransfer.items.add(file);
-		
+
 		showCropper = false;
-		
+
 		setTimeout(() => {
 			if (fileInput) {
 				fileInput.files = dataTransfer.files;
 			}
 		}, 0);
-		
+
 		console.log(file);
 	}
 
 	function cancelCrop() {
 		showCropper = false;
 		imageSrc = null;
-		fileInput.value = '';
+		fileInput.value = "";
 	}
 
 	function handleUpdateSubmit() {
@@ -131,7 +132,7 @@
 							</div>
 						</div>
 					{:else}
-						<div class="flex flex-row items-center justify-between ">
+						<div class="flex flex-row items-center justify-between">
 							<div
 								class="flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-transparent"
 							>
@@ -144,13 +145,25 @@
 									onchange={handleFileSelect}
 								/>
 
-								<Avatar.Root class="h-24 w-24 cursor-pointer" onclick={() => fileInput?.click()}>
-									<Avatar.Image src={croppedImageUrl || user.image} alt={user.name} />
-									<Avatar.Fallback>CN</Avatar.Fallback>
-								</Avatar.Root>
+								<Tooltip.Provider delayDuration={100}>
+									<Tooltip.Root>
+										<Tooltip.Trigger>
+											<Avatar.Root
+												class="h-24 w-24 cursor-pointer"
+												onclick={() => fileInput?.click()}
+											>
+												<Avatar.Image src={croppedImageUrl || user.image} alt={user.name} />
+												<Avatar.Fallback>CN</Avatar.Fallback>
+											</Avatar.Root>
+										</Tooltip.Trigger>
+										<Tooltip.Content side="top">
+											<span>Change Image</span>
+										</Tooltip.Content>
+									</Tooltip.Root>
+								</Tooltip.Provider>
 							</div>
 
-							<div class="w-full  p-1 rounded-lg">
+							<div class="w-full rounded-lg p-1">
 								<Label for="name">Name</Label>
 								<Input class="my-0" name="name" placeholder="Name" value={user.name} />
 								<Label class="my-0" for="email">Email</Label>
