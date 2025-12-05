@@ -26,6 +26,7 @@
 
 	const parsedUser = $derived(typeof user === "string" ? JSON.parse(user) : user);
 	const firstLetter = $derived(parsedUser?.name?.charAt(0));
+	const fullName = $derived(parsedUser.name + " " + (parsedUser?.surname ? parsedUser?.surname : null) );
 </script>
 
 <div class="border-b-accent border-b">
@@ -41,7 +42,7 @@
 							>
 						</Avatar.Root>
 						<div class="flex flex-col items-start justify-center">
-							<h3 class="text-lg">{parsedUser.name}</h3>
+							<h3 class="text-lg">{fullName}</h3>
 							<h4 class="text-sm text-slate-600">{parsedUser.email}</h4>
 						</div>
 					</div></DropdownMenu.Trigger
