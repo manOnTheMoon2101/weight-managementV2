@@ -635,7 +635,7 @@ export const actions = {
 		const colour = form.get("userColour") as string;
 		const file = form.get("file") as File | null;
 
-		if (!name || !email || !surname) {
+		if (!name || !email) {
 			return { success: false, error: "Name and email are required." };
 		}
 
