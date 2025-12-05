@@ -4,12 +4,63 @@
 	import { Label } from "$lib/components/ui/label/index.js";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import * as Avatar from "$lib/components/ui/avatar/index.js";
-	import ColorPicker, { ChromeVariant } from "svelte-awesome-color-picker";
-	import { enhance } from "$app/forms";
+	import type { CropperSelection } from '@cropper/elements';
+	import * as Cropper from '@eslym/svelte-cropperjs';
+	
 	let { user, userColour }: { user: any; userColour: string } = $props();
 	let updateLoading = $state(false);
-	let hex = $state(userColour || "#fbbf24");
-	let fileInput: HTMLInputElement;
+	let fileInput = $state<HTMLInputElement>(null!);
+	let cropper: CropperSelection = $state(null!);
+	let imageSrc = $state<string | null>(null);
+	let croppedImageUrl = $state<string | null>(null);
+	let showCropper = $state(false);
+	let originalFileName = $state<string>('cropped-avatar.png');
+
+	function handleFileSelect(event: Event) {
+		const input = event.target as HTMLInputElement;
+		const file = input.files?.[0];
+		if (file) {
+			originalFileName = file.name;
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				imageSrc = e.target?.result as string;
+				showCropper = true;
+			};
+			console.log(file)
+			reader.readAsDataURL(file);
+		}
+	}
+
+	async function handleCrop() {
+		if (!cropper) return;
+		
+		const canvas = await cropper.$toCanvas({ width: 256, height: 256 });
+		const blob = await new Promise<Blob>((resolve) =>
+			canvas.toBlob((b) => resolve(b!), 'image/png')
+		);
+		
+		croppedImageUrl = URL.createObjectURL(blob);
+		
+		const file = new File([blob], originalFileName, { type: 'image/png' });
+		const dataTransfer = new DataTransfer();
+		dataTransfer.items.add(file);
+		
+		showCropper = false;
+		
+		setTimeout(() => {
+			if (fileInput) {
+				fileInput.files = dataTransfer.files;
+			}
+		}, 0);
+		
+		console.log(file);
+	}
+
+	function cancelCrop() {
+		showCropper = false;
+		imageSrc = null;
+		fileInput.value = '';
+	}
 
 	function handleUpdateSubmit() {
 		updateLoading = true;
@@ -35,31 +86,78 @@
                         <input type="hidden" name="userColour" bind:value={hex} />
                     </div> -->
 
-					<div class="flex flex-row items-center justify-between ">
-						<div
-							class="flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-transparent"
-						>
-							<input
-								type="file"
-								name="file"
-								bind:this={fileInput}
-								class="hidden"
-								accept="image/*"
-							/>
-
-							<Avatar.Root class="h-24 w-24 cursor-pointer" onclick={() => fileInput?.click()}>
-								<Avatar.Image src={user.image} alt={user.name} />
-								<Avatar.Fallback>CN</Avatar.Fallback>
-							</Avatar.Root>
+					{#if showCropper && imageSrc}
+						<div class="mb-4">
+							<div class="grid grid-cols-[1fr_auto] gap-4">
+								<Cropper.Canvas background class="h-96 w-full">
+									<Cropper.Image
+										src={imageSrc}
+										alt="Selected Image"
+										rotatable
+										scalable
+										translatable
+									/>
+									<Cropper.Shade />
+									<Cropper.Handle action="move" plain />
+									<Cropper.Selection
+										id="selection"
+										bind:element={cropper}
+										aspect-ratio={1}
+										initial-aspect-ratio={1}
+										initial-coverage={0.8}
+										movable
+										resizable
+									>
+										<Cropper.Grid bordered covered />
+										<Cropper.Crosshair centered themeColor="#0000FF80" />
+										<Cropper.Handle action="move" plain />
+										<Cropper.Handle action="n-resize" />
+										<Cropper.Handle action="e-resize" />
+										<Cropper.Handle action="s-resize" />
+										<Cropper.Handle action="w-resize" />
+										<Cropper.Handle action="ne-resize" />
+										<Cropper.Handle action="nw-resize" />
+										<Cropper.Handle action="se-resize" />
+										<Cropper.Handle action="sw-resize" />
+									</Cropper.Selection>
+								</Cropper.Canvas>
+								<div class="flex flex-col gap-2">
+									<Cropper.Viewer selection="#selection" class="h-32 w-32 rounded-full border" />
+								</div>
+							</div>
+							<div class="mt-4 flex gap-2">
+								<Button type="button" onclick={handleCrop}>Apply Crop</Button>
+								<Button type="button" variant="outline" onclick={cancelCrop}>Cancel</Button>
+							</div>
 						</div>
+					{:else}
+						<div class="flex flex-row items-center justify-between ">
+							<div
+								class="flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-transparent"
+							>
+								<input
+									type="file"
+									name="file"
+									bind:this={fileInput}
+									class="hidden"
+									accept="image/*"
+									onchange={handleFileSelect}
+								/>
 
-						<div class="w-full  p-1 rounded-lg">
-							<Label for="name">Name</Label>
-							<Input class="my-0" name="name" placeholder="Name" value={user.name} />
-							<Label class="my-0" for="email">Email</Label>
-							<Input name="email" placeholder="Email" type="email" value={user.email} />
+								<Avatar.Root class="h-24 w-24 cursor-pointer" onclick={() => fileInput?.click()}>
+									<Avatar.Image src={croppedImageUrl || user.image} alt={user.name} />
+									<Avatar.Fallback>CN</Avatar.Fallback>
+								</Avatar.Root>
+							</div>
+
+							<div class="w-full  p-1 rounded-lg">
+								<Label for="name">Name</Label>
+								<Input class="my-0" name="name" placeholder="Name" value={user.name} />
+								<Label class="my-0" for="email">Email</Label>
+								<Input name="email" placeholder="Email" type="email" value={user.email} />
+							</div>
 						</div>
-					</div>
+					{/if}
 
 					<div class="mt-4 flex flex-row justify-end">
 						{#if !updateLoading}

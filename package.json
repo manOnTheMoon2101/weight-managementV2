@@ -52,6 +52,7 @@
 		"vite": "^6.1.1"
 	},
 	"dependencies": {
+		"@eslym/svelte-cropperjs": "^0.0.1",
 		"@fontsource/balsamiq-sans": "^5.2.6",
 		"@fontsource/lilita-one": "^5.2.6",
 		"@fontsource/open-sans": "^5.2.6",
