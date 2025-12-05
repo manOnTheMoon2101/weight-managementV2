@@ -3,6 +3,8 @@
 	import { Input } from "$lib/components/ui/input/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
 	import Button from "$lib/components/ui/button/button.svelte";
+
+	import Crop from "@lucide/svelte/icons/crop";
 	import * as Avatar from "$lib/components/ui/avatar/index.js";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import type { CropperSelection } from "@cropper/elements";
@@ -53,8 +55,6 @@
 				fileInput.files = dataTransfer.files;
 			}
 		}, 0);
-
-		console.log(file);
 	}
 
 	function cancelCrop() {
@@ -72,7 +72,13 @@
 	<Dialog.Trigger class="cursor-pointer">Account</Dialog.Trigger>
 	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="sm:max-w-[700px]">
 		<Dialog.Header>
-			<Dialog.Title>Edit Account</Dialog.Title>
+			<Dialog.Title>
+				{#if showCropper}
+					Crop Image
+				{:else}
+					Edit Account
+				{/if}
+			</Dialog.Title>
 			<Dialog.Description>
 				<form
 					method="POST"
@@ -127,7 +133,7 @@
 								</div>
 							</div>
 							<div class="mt-4 flex gap-2">
-								<Button type="button" onclick={handleCrop}>Apply Crop</Button>
+								<Button type="button" onclick={handleCrop}><Crop />Apply Crop</Button>
 								<Button type="button" variant="outline" onclick={cancelCrop}>Cancel</Button>
 							</div>
 						</div>
@@ -174,7 +180,11 @@
 
 					<div class="mt-4 flex flex-row justify-end">
 						{#if !updateLoading}
-							<Button type="submit" variant={"save"}>Save</Button>
+							<Button type="submit" variant={"save"}
+								>{#if !showCropper}
+									Save
+								{/if}</Button
+							>
 						{:else}
 							<Button type="submit" variant={"save"} disabled>
 								<div class="flex items-center justify-center space-x-2">
