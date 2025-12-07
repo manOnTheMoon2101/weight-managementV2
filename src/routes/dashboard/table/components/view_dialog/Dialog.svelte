@@ -9,13 +9,13 @@
 	import X from "@lucide/svelte/icons/x";
 	import * as Sheet from "$lib/components/ui/sheet/index.js";
 	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
-		import Health from  "@lucide/svelte/icons/heart";
-	import Measurement from  "@lucide/svelte/icons/ruler";
-	import Apple from  "@lucide/svelte/icons/apple";
-	import Bed from  "@lucide/svelte/icons/bed";
+	import Health from "@lucide/svelte/icons/heart";
+	import Measurement from "@lucide/svelte/icons/ruler";
+	import Apple from "@lucide/svelte/icons/apple";
+	import Bed from "@lucide/svelte/icons/bed";
 	import Pill from "@lucide/svelte/icons/pill";
 	let { dialogOpen = $bindable(), rowToEdit } = $props<{ dialogOpen: boolean; rowToEdit: any }>();
-	
+
 	let deleteLoading = $state(false);
 	let updateLoading = $state(false);
 
@@ -34,7 +34,7 @@
 		updateLoading = true;
 	}
 
-		function formatDate(dateValue: string | Date): string {
+	function formatDate(dateValue: string | Date): string {
 		const date = new Date(dateValue);
 		return date.toLocaleDateString("en-US", {
 			weekday: "long",
@@ -51,13 +51,20 @@
 	</Sheet.Trigger>
 	<Sheet.Content class="max-h-[100vh] overflow-y-auto" side="left">
 		<Sheet.Header>
-			<Sheet.Title class="flex flex-row justify-center">{rowToEdit ? formatDate(rowToEdit.createdAt) : ""}</Sheet.Title>
+			<Sheet.Title class="flex flex-row justify-center"
+				>{rowToEdit ? formatDate(rowToEdit.createdAt) : ""}</Sheet.Title
+			>
 			<Sheet.Description>
-				<form class="space-y-3 overflow-y-auto" method="POST" action="?/updateNutrients" onsubmit={handleUpdateSubmit}>
+				<form
+					class="space-y-3 overflow-y-auto"
+					method="POST"
+					action="?/updateNutrients"
+					onsubmit={handleUpdateSubmit}
+				>
 					<input type="hidden" name="id" value={rowToEdit?.id || ""} />
 					<Card.Root class="bg-primary">
 						<Card.Header class="pb-3">
-							<Card.Title class="text-base flex"><Health class="mr-1"/>Health</Card.Title>
+							<Card.Title class="flex text-base"><Health class="mr-1" />Health</Card.Title>
 						</Card.Header>
 						<Card.Content class="space-y-2">
 							<div>
@@ -93,24 +100,28 @@
 					<div>
 						<Card.Root class="bg-primary flex-1">
 							<Card.Header class="pb-3">
-								<Card.Title class="text-base flex"><Measurement class="mr-1"/>Measurements</Card.Title>
+								<Card.Title class="flex text-base"
+									><Measurement class="mr-1" />Measurements</Card.Title
+								>
 							</Card.Header>
 							<Card.Content class="space-y-2">
 								<div>
 									<Label for="waist" class="text-sm">Waist</Label>
-									<Input value={rowToEdit?.waistMeasurement || ""} name="waist" placeholder="Waist(Cm)" class="h-8" />
+									<Input
+										value={rowToEdit?.waistMeasurement || ""}
+										name="waist"
+										placeholder="Waist(Cm)"
+										class="h-8"
+									/>
 								</div>
-								
 							</Card.Content>
 						</Card.Root>
-
-
 					</div>
 
 					<div class="flex flex-row gap-3">
 						<Card.Root class="bg-primary flex-1">
 							<Card.Header class="pb-3">
-								<Card.Title class="text-base flex"><Apple class="mr-1"/>Nutrients</Card.Title>
+								<Card.Title class="flex text-base"><Apple class="mr-1" />Nutrients</Card.Title>
 							</Card.Header>
 							<Card.Content class="space-y-2">
 								<div>
@@ -158,12 +169,11 @@
 
 						<Card.Root class="bg-primary flex-1">
 							<Card.Header class="pb-3">
-								<Card.Title class="text-base flex"><Pill class="mr-1"/>Supplements</Card.Title>
+								<Card.Title class="flex text-base"><Pill class="mr-1" />Supplements</Card.Title>
 							</Card.Header>
 							<Card.Content>
 								<div class="flex flex-col space-y-1">
-									
-									<div class="flex items-start space-x-2 my-4">
+									<div class="my-4 flex items-start space-x-2">
 										<Checkbox
 											id="vitamin"
 											name="vitamin"
@@ -171,7 +181,7 @@
 										/>
 										<Label for="vitamin" class="text-sm">Vitamin</Label>
 									</div>
-									<div class="flex items-start space-x-2 my-4">
+									<div class="my-4 flex items-start space-x-2">
 										<Checkbox
 											id="magnesium"
 											name="magnesium"
@@ -179,7 +189,7 @@
 										/>
 										<Label for="magnesium" class="text-sm">Magnesium</Label>
 									</div>
-									<div class="flex items-start space-x-2 my-4">
+									<div class="my-4 flex items-start space-x-2">
 										<Checkbox
 											id="zen"
 											name="zen"
@@ -187,8 +197,8 @@
 										/>
 										<Label for="zen" class="text-sm">Zen</Label>
 									</div>
-									
-									<div class="flex items-start space-x-2 my-4">
+
+									<div class="my-4 flex items-start space-x-2">
 										<Checkbox
 											id="cla"
 											name="cla"
@@ -196,7 +206,7 @@
 										/>
 										<Label for="cla" class="text-sm">CLA</Label>
 									</div>
-									<div class="flex items-start space-x-2 my-4">
+									<div class="my-4 flex items-start space-x-2">
 										<Checkbox
 											id="fatBurner"
 											name="fatBurner"
@@ -211,7 +221,7 @@
 
 					<Card.Root class="bg-primary">
 						<Card.Header class="pb-3">
-							<Card.Title class="text-base flex"><Bed class="mr-1"/>Sleep</Card.Title>
+							<Card.Title class="flex text-base"><Bed class="mr-1" />Sleep</Card.Title>
 						</Card.Header>
 						<Card.Content>
 							<!-- <div>
@@ -236,54 +246,55 @@
 							</div>
 						</Card.Content>
 					</Card.Root>
-					
 
 					{#if !updateLoading}
-					<Button class="mt-4 w-full" variant="save" type="submit">Update</Button>
-									{:else}
-										<Button class="mt-4  w-full" variant="save" type="button" disabled>
-											<div class="flex items-center justify-center space-x-2">
-												<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
-												<span>Updating...</span>
-											</div>
-										</Button>
-									{/if}
+						<Button class="mt-4 w-full" variant="save" type="submit">Update</Button>
+					{:else}
+						<Button class="mt-4  w-full" variant="save" type="button" disabled>
+							<div class="flex items-center justify-center space-x-2">
+								<div class="border-accent h-4 w-4 animate-spin rounded-full border-b-2"></div>
+								<span>Updating...</span>
+							</div>
+						</Button>
+					{/if}
 
-									<div >
-										<AlertDialog.Root>
-											<AlertDialog.Trigger class="w-full">
-												<Button class="mt-4 w-full text-destructive" variant="save">Delete</Button>
-											</AlertDialog.Trigger>
-											<AlertDialog.Content>
-												<AlertDialog.Header>
-													<div class="flex flex-row items-center justify-between">
-														<AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
-														<AlertDialog.Cancel class="text-red-800 hover:bg-red-800/40"
-															><X /></AlertDialog.Cancel
-														>
-													</div>
-												</AlertDialog.Header>
-												<AlertDialog.Description>
-													This action cannot be undone. This will permanently delete the selected record.
-												</AlertDialog.Description>
-												<AlertDialog.Footer>
-													<form method="POST" action="?/removeNutrients" onsubmit={handleDeleteSubmit}>
-														<input type="hidden" name="id" value={rowToEdit?.id || ""} />
-														{#if !deleteLoading}
-															<Button class="mt-4" variant="destructive" type="submit">Delete</Button>
-														{:else}
-															<Button class="mt-4" variant="destructive" type="button" disabled>
-																<div class="flex items-center justify-center space-x-2">
-																	<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-accent"></div>
-																	<span>Deleting...</span>
-																</div>
-															</Button>
-														{/if}
-													</form>
-												</AlertDialog.Footer>
-											</AlertDialog.Content>
-										</AlertDialog.Root>
+					<div>
+						<AlertDialog.Root>
+							<AlertDialog.Trigger class="w-full">
+								<Button class="text-destructive mt-4 w-full" variant="save">Delete</Button>
+							</AlertDialog.Trigger>
+							<AlertDialog.Content>
+								<AlertDialog.Header>
+									<div class="flex flex-row items-center justify-between">
+										<AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
+										<AlertDialog.Cancel class="text-red-800 hover:bg-red-800/40"
+											><X /></AlertDialog.Cancel
+										>
 									</div>
+								</AlertDialog.Header>
+								<AlertDialog.Description>
+									This action cannot be undone. This will permanently delete the selected record.
+								</AlertDialog.Description>
+								<AlertDialog.Footer>
+									<form method="POST" action="?/removeNutrients" onsubmit={handleDeleteSubmit}>
+										<input type="hidden" name="id" value={rowToEdit?.id || ""} />
+										{#if !deleteLoading}
+											<Button class="mt-4" variant="destructive" type="submit">Delete</Button>
+										{:else}
+											<Button class="mt-4" variant="destructive" type="button" disabled>
+												<div class="flex items-center justify-center space-x-2">
+													<div
+														class="border-accent h-4 w-4 animate-spin rounded-full border-b-2"
+													></div>
+													<span>Deleting...</span>
+												</div>
+											</Button>
+										{/if}
+									</form>
+								</AlertDialog.Footer>
+							</AlertDialog.Content>
+						</AlertDialog.Root>
+					</div>
 				</form>
 			</Sheet.Description>
 		</Sheet.Header>

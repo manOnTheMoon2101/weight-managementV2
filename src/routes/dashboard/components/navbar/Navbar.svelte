@@ -26,7 +26,9 @@
 
 	const parsedUser = $derived(typeof user === "string" ? JSON.parse(user) : user);
 	const firstLetter = $derived(parsedUser?.name?.charAt(0));
-	const fullName = $derived(parsedUser.name + " " + (parsedUser?.surname ? parsedUser?.surname : null) );
+	const fullName = $derived(
+		parsedUser.name + " " + (parsedUser?.surname ? parsedUser?.surname : null)
+	);
 </script>
 
 <div class="border-b-accent border-b">

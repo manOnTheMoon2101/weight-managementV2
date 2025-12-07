@@ -2,8 +2,6 @@
 	import { onMount, onDestroy } from "svelte";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import { toggleMode, setTheme } from "mode-watcher";
-	import { Button } from "$lib/components/ui/button/index.js";
-	import Palette from "@lucide/svelte/icons/palette";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	const THEME_STORAGE_KEY = "selectedTheme";
 	const themes = ["", "forestTheme", "windowsTheme"];

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
 	import { Button } from "$lib/components/ui/button";
-	import X from "@lucide/svelte/icons/x";
 	import Logout from "@lucide/svelte/icons/log-out";
 	import { goto } from "$app/navigation";
 	import { authClient } from "$lib/auth-client";
