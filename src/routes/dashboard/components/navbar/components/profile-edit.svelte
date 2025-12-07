@@ -78,7 +78,7 @@
 				{#if showCropper}
 					Crop Image
 				{:else}
-					Edit Account
+					Manage Account
 				{/if}
 			</Dialog.Title>
 			<Dialog.Description>
