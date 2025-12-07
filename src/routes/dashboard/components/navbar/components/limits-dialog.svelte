@@ -13,7 +13,7 @@
 		{ value: "Weight_Gain", name: "Bulk" },
 	];
 
-	let value = $state(userJourney || "");
+	let value = $derived(userJourney || "");
 
 	const triggerContent = $derived(
 		journeys.find((f) => f.value === value)?.name ?? "Select a Journey"
