@@ -81,6 +81,7 @@
 					Manage Account
 				{/if}
 			</Dialog.Title>
+			</Dialog.Header>
 			<Dialog.Description>
 				<form
 					method="POST"
@@ -202,6 +203,6 @@
 					</div>
 				</form>
 			</Dialog.Description>
-		</Dialog.Header>
+
 	</Dialog.Content>
 </Dialog.Root>
