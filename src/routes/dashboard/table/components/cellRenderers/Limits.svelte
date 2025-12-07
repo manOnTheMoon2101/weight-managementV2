@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { ICellRendererParams } from "@ag-grid-community/core";
-	import Pill from "@lucide/svelte/icons/pill";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	let {
 		data,
@@ -15,9 +14,9 @@
 
 <div
 	class={data > limit && type === "More"
-		? "text-red-500"
+		? "text-destructive"
 		: data >= limit && type === "Less"
-			? "text-green-500"
+			? "text-save"
 			: ""}
 >
 	<Tooltip.Provider delayDuration={100}>
@@ -26,11 +25,11 @@
 				{data}
 			</Tooltip.Trigger>
 			{#if data && type === "Less" && data >= limit}
-				<Tooltip.Content class="bg-green-500">
+				<Tooltip.Content class="bg-save">
 					<p>Goal Achieved</p>
 				</Tooltip.Content>
 			{:else if data && type === "More" && data >= limit}
-				<Tooltip.Content class="bg-red-500">
+				<Tooltip.Content class="bg-destructive">
 					<p>Limits Exceeded</p>
 				</Tooltip.Content>
 			{:else}

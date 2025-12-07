@@ -59,7 +59,7 @@
 		<form class="flex w-full flex-col gap-6" on:submit|preventDefault={handleSignUp}>
 			<div class="space-y-4">
 				<div class="space-y-2">
-					<label for="name" class="text-sm font-medium text-gray-700">Full Name</label>
+					<label for="name" class="text-sm font-medium ">Full Name</label>
 					<Input
 						id="name"
 						type="text"
@@ -72,7 +72,7 @@
 				</div>
 
 				<div class="space-y-2">
-					<label for="email" class="text-sm font-medium text-gray-700">Email</label>
+					<label for="email" class="text-sm font-medium ">Email</label>
 					<Input
 						id="email"
 						type="email"
@@ -85,7 +85,7 @@
 				</div>
 
 				<div class="space-y-2">
-					<label for="password" class="text-sm font-medium text-gray-700">Password</label>
+					<label for="password" class="text-sm font-medium ">Password</label>
 					<Input
 						id="password"
 						type="password"

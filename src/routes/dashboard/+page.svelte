@@ -1,30 +1,14 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
-	import ChevronDown from "@lucide/svelte/icons/arrow-down-to-dot";
-	import ChevronUp from "@lucide/svelte/icons/arrow-up-from-dot";
-	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
-	import FootPrint from "@lucide/svelte/icons/footprints";
-	import Timer from "@lucide/svelte/icons/timer";
-	import Droplet from "@lucide/svelte/icons/droplet";
-	import Maximize from "@lucide/svelte/icons/maximize";
-	import Minimize from "@lucide/svelte/icons/minimize";
-	import WeightIcon from "@lucide/svelte/icons/weight";
 	import { DateFormatter } from "@internationalized/date";
-	import Weight from "./components/charts/Weight.svelte";
-	import Waist from "./components/charts/Waist.svelte";
 	import Supplements from "./components/charts/Supplements.svelte";
 	import "@fontsource/balsamiq-sans";
-	import { Badge } from "$lib/components/ui/badge/index.js";
-	import Button from "$lib/components/ui/button/button.svelte";
-	import Card from "$lib/components/ui/card/card.svelte";
 	import Steps from "./components/charts/Steps.svelte";
-	import Toggler from "./components/navbar/components/toggler.svelte";
 	import Water from "./components/charts/Water.svelte";
 	import Protein from "./components/charts/Protein.svelte";
 	import Sleep from "./components/charts/Sleep.svelte";
 	import Calories from "./components/charts/Calories.svelte";
 	import MultiChart from "./components/charts/MultiChart.svelte";
-	import * as Avatar from "$lib/components/ui/avatar/index.js";
 	import { Separator } from "$lib/components/ui/separator/index.js";
 	let { data }: { data: PageData } = $props();
 

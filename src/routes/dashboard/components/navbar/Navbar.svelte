@@ -26,7 +26,9 @@
 
 	const parsedUser = $derived(typeof user === "string" ? JSON.parse(user) : user);
 	const firstLetter = $derived(parsedUser?.name?.charAt(0));
-	const fullName = $derived(parsedUser.name + " " + (parsedUser?.surname ? parsedUser?.surname : null) );
+	const fullName = $derived(
+		parsedUser.name + " " + (parsedUser?.surname ? parsedUser?.surname : null)
+	);
 </script>
 
 <div class="border-b-accent border-b">
@@ -85,7 +87,7 @@
 					href="/dashboard/ai"
 					variant={"navbar"}
 					class={page.url.pathname !== "/dashboard/ai" ? "bg-secondary mx-2" : "mx-2"}
-					><Calculator />Nutrition AI(Soon)</Button
+					><Calculator />Nutrition AI(Coming 2026)</Button
 				>
 			</div>
 			<!-- Mobile Navigation Dropdown -->

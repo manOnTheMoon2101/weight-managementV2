@@ -51,6 +51,8 @@
 	--sign: hsl(140, 100%, 38%);
 	--zen: hsl(34, 100%, 38%);
 	--radius: 0.5rem;
+
+		font-family: "Balsamiq Sans", system-ui;
 }
 
 .dark {
@@ -86,7 +88,7 @@
 	--chart5: hsl(167, 100%, 50%);
 	--save: hsl(140, 100%, 38%);
 
-	font-family: "Balsamiq Sans", system-ui;
+
 }
 
 :root[data-theme="windowsTheme"] {
