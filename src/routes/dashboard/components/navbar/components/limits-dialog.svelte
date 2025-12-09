@@ -10,20 +10,36 @@
 	import Minus from "@lucide/svelte/icons/minus";
 	import Up from "@lucide/svelte/icons/corner-right-up";
 	import Down from "@lucide/svelte/icons/corner-right-down";
-	let { limits, userJourney } = $props<{ limits: any; userJourney: any }>();
+	import ColorPicker, { ChromeVariant } from "svelte-awesome-color-picker";
+	let { limits, userJourney, userSupplements } = $props<{
+		limits: any;
+		userJourney: any;
+		userSupplements: any;
+	}>();
 
 	let updateLoading = $state(false);
+	let supplementDialogOpen = $state(false);
+	let supplementEditDialogOpen = $state(false);
+	let selectedColor = $state("#FFFFFF");
+	let editColor = $state("#FFFFFF");
+	let editName = $state("");
+	let editType = $state("");
 
+	let data = $state({})
 	let journeys = [
 		{ value: "Weight_Loss", name: "Weight Loss" },
 		{ value: "Weight_Gain", name: "Bulk" },
 	];
+
+	let supplementTypes = [{ value: "Capsule" }, { value: "Liquid" }, { value: "Gummy" }];
 
 	let value = $derived(userJourney || "");
 
 	const triggerContent = $derived(
 		journeys.find((f) => f.value === value)?.name ?? "Select a Journey"
 	);
+
+	const triggerType = $derived(supplementTypes.find((f) => f.value === value)?.value ?? "Capsule");
 
 	function handleUpdateSubmit() {
 		updateLoading = true;
@@ -116,18 +132,15 @@
 						</Card.Header>
 						<Card.Content>
 							<Select.Root type="single" name="journey" bind:value>
-								<Select.Trigger class=" w-[180px]"
-									>
-									
+								<Select.Trigger class=" w-[180px]">
 									{#if triggerContent === "Weight Loss"}
-										<Down class="text-save"/>
-
-										{:else}
-										<Up class="text-destructive"/>
+										<Down class="text-save" />
+									{:else}
+										<Up class="text-destructive" />
 									{/if}
 									{triggerContent}</Select.Trigger
 								>
-								<Select.Content >
+								<Select.Content>
 									{#each journeys as journey (journey.value)}
 										<Select.Item value={journey.value} label={journey.name}>
 											{journey.name}
@@ -138,6 +151,26 @@
 						</Card.Content>
 					</Card.Root>
 
+					<Card.Root>
+						<Card.Header>
+							<Card.Title
+								>Supplements (BETA)
+								<Button onclick={() => (supplementDialogOpen = true)}>Add</Button>
+							</Card.Title>
+						</Card.Header>
+
+						<Card.Content>
+							{#each userSupplements as s}
+								<div>
+									{s.name}
+								{s.type}
+								<span style="color: {s.color}">{s.color}</span>
+
+								<Button onclick={() => (supplementEditDialogOpen = true, editColor = s.color, editType = s.type, editName = s.name)}>Edit</Button>
+								</div>
+							{/each}
+						</Card.Content>
+					</Card.Root>
 					<div class="mt-4 flex flex-row justify-end">
 						{#if !updateLoading}
 							<Button type="submit" variant="save">Save</Button>
@@ -153,5 +186,98 @@
 				</form>
 			</Dialog.Description>
 		</Dialog.Header>
+	</Dialog.Content>
+</Dialog.Root>
+
+<Dialog.Root bind:open={supplementDialogOpen}>
+	<Dialog.Content>
+		<Dialog.Header>
+			<Dialog.Title>Add Supplement</Dialog.Title>
+		</Dialog.Header>
+		<Dialog.Description>
+			<form
+				method="POST"
+				class="space-y-3"
+				action="/dashboard?/createSupplements"
+				onsubmit={handleUpdateSubmit}
+			>
+				<Label for="name">Supplement Name</Label>
+				<Input name="name" placeholder="Enter supplement name" type="text" />
+
+				<div>
+					<Label for="color">Colour</Label>
+
+					<ColorPicker
+						bind:hex={selectedColor}
+						components={ChromeVariant}
+						sliderDirection="horizontal"
+					/>
+					<input type="hidden" name="color" value={selectedColor} />
+
+					<Select.Root type="single" name="type" bind:value>
+						<Select.Trigger class=" w-[180px]">
+							{triggerType}</Select.Trigger
+						>
+						<Select.Content>
+							{#each supplementTypes as type (type.value)}
+								<Select.Item value={type.value} label={type.value}>
+									{type.value}
+								</Select.Item>
+							{/each}
+						</Select.Content>
+					</Select.Root>
+				</div>
+				<Button type="submit" variant="save" disabled={updateLoading}>
+					{updateLoading ? "Adding..." : "Add Supplement"}
+				</Button>
+			</form>
+		</Dialog.Description>
+	</Dialog.Content>
+</Dialog.Root>
+
+
+
+
+<Dialog.Root bind:open={supplementEditDialogOpen}>
+	<Dialog.Content>
+		<Dialog.Header>
+			<Dialog.Title>Edit Supplement</Dialog.Title>
+		</Dialog.Header>
+		<Dialog.Description>
+			<form
+				class="space-y-3"
+				onsubmit={handleUpdateSubmit}
+			>
+				<Label for="name">Supplement Name</Label>
+				<Input name="name" placeholder="Enter supplement name" type="text" value={editName} />
+
+				<div>
+					<Label for="color">Colour</Label>
+
+					<ColorPicker
+						bind:hex={editColor}
+						components={ChromeVariant}
+						sliderDirection="horizontal"
+					/>
+					<input type="hidden" name="color" value={editColor} />
+
+					<Select.Root type="single" name="type" bind:value>
+						<Select.Trigger class=" w-[180px]">
+							{editType}</Select.Trigger
+						>
+						<Select.Content>
+							{#each supplementTypes as type (type.value)}
+								<Select.Item value={type.value} label={type.value}>
+									{type.value}
+								</Select.Item>
+							{/each}
+						</Select.Content>
+					</Select.Root>
+				</div>
+				<Button type="submit" variant="save" disabled={updateLoading}>
+					{updateLoading ? "Adding..." : "Add Supplement"}
+				</Button>
+			</form>
+		</Dialog.Description>
 	</Dialog.Content>
 </Dialog.Root>

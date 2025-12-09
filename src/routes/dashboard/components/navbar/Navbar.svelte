@@ -15,11 +15,13 @@
 	let {
 		user,
 		userColour,
+		userSupplements,
 		userJourney,
 		limits,
 	}: {
 		user: any[];
 		userColour: any;
+		userSupplements: any;
 		userJourney: any;
 		limits: any[];
 	} = $props();
@@ -59,7 +61,7 @@
 							><EditDialog {user} {userColour} /></DropdownMenu.Item
 						>
 						<DropdownMenu.Item closeOnSelect={false}
-							><LimitsDialog {limits} {userJourney} /></DropdownMenu.Item
+							><LimitsDialog {limits} {userJourney} {userSupplements} /></DropdownMenu.Item
 						>
 
 						<DropdownMenu.Item closeOnSelect={false}><LogoutDialog /></DropdownMenu.Item>
