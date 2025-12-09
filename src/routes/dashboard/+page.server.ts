@@ -2,6 +2,7 @@ import { env } from "$env/dynamic/private";
 import { auth } from "$lib/server/auth";
 import { db } from "$lib/server/db";
 import {
+	custom_supplements,
 	health_tracker,
 	limits,
 	nutrients,
@@ -107,9 +108,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 		});
 
-
-
-			const CaloriesMonthAgo = await db.query.nutrients.findMany({
+		const CaloriesMonthAgo = await db.query.nutrients.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
 				eq(health_tracker.isActive, true),
@@ -202,8 +201,6 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 		});
 
-
-
 		const MeasurementsMonthAgo = await db.query.health_tracker.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
@@ -215,12 +212,12 @@ export const load: PageServerLoad = async ({ request }) => {
 			),
 			columns: {
 				waistMeasurement: true,
-				weight:true,
+				weight: true,
 				createdAt: true,
 			},
 		});
 
-			const MeasurementsWeekAgo = await db.query.health_tracker.findMany({
+		const MeasurementsWeekAgo = await db.query.health_tracker.findMany({
 			where: and(
 				eq(health_tracker.userId, session.user.id),
 				eq(health_tracker.isActive, true),
@@ -231,7 +228,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			),
 			columns: {
 				waistMeasurement: true,
-				weight:true,
+				weight: true,
 				createdAt: true,
 			},
 		});
@@ -344,7 +341,6 @@ export const load: PageServerLoad = async ({ request }) => {
 			}),
 		}));
 
-
 		const formattedMonthMeasurementsEntries = MeasurementsMonthAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
 		).map((entry) => ({
@@ -360,8 +356,6 @@ export const load: PageServerLoad = async ({ request }) => {
 			waist: entry.waistMeasurement,
 			createdAt: new Date(entry.createdAt),
 		}));
-
-		
 
 		const formattedMonthStepsEntries = StepsMonthAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -398,8 +392,6 @@ export const load: PageServerLoad = async ({ request }) => {
 			createdAt: new Date(entry.createdAt),
 		}));
 
-
-
 		const formattedWeekCaloriesEntries = CaloriesWeekAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
 		).map((entry) => ({
@@ -413,7 +405,6 @@ export const load: PageServerLoad = async ({ request }) => {
 			calories: entry.calories,
 			createdAt: new Date(entry.createdAt),
 		}));
-
 
 		const formattedWeekWaterEntries = WaterWeekAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -494,10 +485,9 @@ export const load: PageServerLoad = async ({ request }) => {
 				)
 			);
 
-
-			const userJourneyField = await db.query.user.findFirst({
+		const userJourneyField = await db.query.user.findFirst({
 			where: and(
-				eq(user.id, session.user.id),
+				eq(user.id, session.user.id)
 				// eq(user.isActive, true),
 				// eq(user.isDeleted, false)
 			),
@@ -506,13 +496,13 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 		});
 
-const userJourney = userJourneyField || null;
+		const userJourney = userJourneyField || null;
 		const supplementCountsWeekChart = supplementCountsWeekAgo || null;
 		const supplementCountsMonthChart = supplementCountsMonthAgo || null;
 		const weightMonthChart = formattedMonthWeightEntries || null;
 		const stepsMonthChart = formattedMonthStepsEntries || null;
 		const measurementMonthChart = formattedMonthMeasurementsEntries || null;
-				const measurementWeekChart = formattedWeekMeasurementsEntries || null;
+		const measurementWeekChart = formattedWeekMeasurementsEntries || null;
 		const stepsWeekChart = formattedWeekStepsEntries || null;
 		const waterMonthChart = formattedMonthWaterEntries || null;
 		const waterWeekChart = formattedWeekWaterEntries || null;
@@ -584,15 +574,15 @@ const userJourney = userJourneyField || null;
 			currentWeight: currentWeight,
 			weightMonthChart: weightMonthChart,
 			stepsMonthChart: stepsMonthChart,
-			measurementMonthChart : measurementMonthChart,
-			measurementWeekChart : measurementWeekChart,
+			measurementMonthChart: measurementMonthChart,
+			measurementWeekChart: measurementWeekChart,
 			stepsWeekChart: stepsWeekChart,
 			waterMonthChart: waterMonthChart,
 			waterWeekChart: waterWeekChart,
 			proteinWeekChart: proteinWeekChart,
 			proteinMonthChart: proteinMonthChart,
-			caloriesWeekChart : caloriesWeekChart,
-			caloriesMonthChart : caloriesMonthChart,
+			caloriesWeekChart: caloriesWeekChart,
+			caloriesMonthChart: caloriesMonthChart,
 			sleepMonthChart: sleepMonthChart,
 			sleepWeekChart: sleepWeekChart,
 			weightWeekChart: weightWeekChart,
@@ -603,7 +593,7 @@ const userJourney = userJourneyField || null;
 			last7DaysSteps: last7DaysSteps,
 			lastMonthSteps: lastMonthSteps,
 			userStepLimit: userStepLimit,
-			userJourney : userJourney,
+			userJourney: userJourney,
 
 			last7DaysWater: last7DaysWater,
 			lastMonthWater: lastMonthWater,
@@ -677,9 +667,7 @@ export const actions = {
 		const waterLimit = form.get("waterLimit") as unknown as number;
 		const journey = form.get("journey") as unknown as string;
 
-
-		if(journey){
-
+		if (journey) {
 			await db
 				.update(user)
 				.set({
@@ -740,5 +728,22 @@ export const actions = {
 		}
 
 		return { success: true };
+	},
+
+	createSupplements: async ({ request }: { request: Request }) => {
+		const session = await auth.api.getSession({ headers: request.headers });
+		if (!session) {
+			redirect(302, "/signin");
+		}
+
+		const form = await request.formData();
+		const name = form.get("name") as unknown as string;
+		const color = form.get("color") as unknown as string;
+
+		await db.insert(custom_supplements).values({
+			userId: session.user.id,
+			name,
+			color
+		});
 	},
 };

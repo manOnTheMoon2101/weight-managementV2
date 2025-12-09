@@ -4,7 +4,7 @@ import type { LayoutServerLoad } from "./$types";
 import { user } from "$lib/server/schema/index";
 import { eq, and } from 'drizzle-orm';
 import { db } from '$lib/server/db';
-import { limits } from "$lib/server/schema";
+import { limits , custom_supplements } from "$lib/server/schema";
 
 export const load: LayoutServerLoad = async ({ request }) => {
     const session = await auth.api.getSession({
@@ -41,9 +41,18 @@ export const load: LayoutServerLoad = async ({ request }) => {
         ),
     });
 
+    const userSupplements = await db.query.custom_supplements.findMany({
+        where: and(
+          eq(custom_supplements.userId, session.user.id),
+          eq(custom_supplements.isActive, true),
+          eq(custom_supplements.isDeleted, false)
+        ),
+    });
+
     return {
         limits: userLimits || null,
         userColour: userColour,
+        userSupplements : userSupplements || null,
         userJourney: userJourney,
         user: session.user,
     };

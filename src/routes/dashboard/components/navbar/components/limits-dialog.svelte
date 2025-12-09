@@ -10,9 +10,16 @@
 	import Minus from "@lucide/svelte/icons/minus";
 	import Up from "@lucide/svelte/icons/corner-right-up";
 	import Down from "@lucide/svelte/icons/corner-right-down";
-	let { limits, userJourney } = $props<{ limits: any; userJourney: any }>();
+	import ColorPicker, { ChromeVariant } from "svelte-awesome-color-picker";
+	let { limits, userJourney, userSupplements } = $props<{
+		limits: any;
+		userJourney: any;
+		userSupplements: any;
+	}>();
 
 	let updateLoading = $state(false);
+	let supplementDialogOpen = $state(false);
+	let selectedColor = $state("#FFFFFF");
 
 	let journeys = [
 		{ value: "Weight_Loss", name: "Weight Loss" },
@@ -116,18 +123,15 @@
 						</Card.Header>
 						<Card.Content>
 							<Select.Root type="single" name="journey" bind:value>
-								<Select.Trigger class=" w-[180px]"
-									>
-									
+								<Select.Trigger class=" w-[180px]">
 									{#if triggerContent === "Weight Loss"}
-										<Down class="text-save"/>
-
-										{:else}
-										<Up class="text-destructive"/>
+										<Down class="text-save" />
+									{:else}
+										<Up class="text-destructive" />
 									{/if}
 									{triggerContent}</Select.Trigger
 								>
-								<Select.Content >
+								<Select.Content>
 									{#each journeys as journey (journey.value)}
 										<Select.Item value={journey.value} label={journey.name}>
 											{journey.name}
@@ -138,6 +142,22 @@
 						</Card.Content>
 					</Card.Root>
 
+					<Card.Root>
+						<Card.Header>
+							<Card.Title
+								>Supplements
+								<Button onclick={() => (supplementDialogOpen = true)}>Add</Button>
+							</Card.Title>
+						</Card.Header>
+
+						<Card.Content>
+							{#each userSupplements as s}
+								{s.name}
+								{s.type}
+								<span style="color: {s.color}">{s.color}</span>
+							{/each}
+						</Card.Content>
+					</Card.Root>
 					<div class="mt-4 flex flex-row justify-end">
 						{#if !updateLoading}
 							<Button type="submit" variant="save">Save</Button>
@@ -153,5 +173,38 @@
 				</form>
 			</Dialog.Description>
 		</Dialog.Header>
+	</Dialog.Content>
+</Dialog.Root>
+
+<Dialog.Root bind:open={supplementDialogOpen}>
+	<Dialog.Content>
+		<Dialog.Header>
+			<Dialog.Title>Add Supplement</Dialog.Title>
+		</Dialog.Header>
+		<Dialog.Description>
+			<form
+				method="POST"
+				class="space-y-3"
+				action="/dashboard?/createSupplements"
+				onsubmit={handleUpdateSubmit}
+			>
+				<Label for="name">Supplement Name</Label>
+				<Input name="name" placeholder="Enter supplement name" type="text" />
+
+				<div>
+					<Label for="color">Colour</Label>
+
+					<ColorPicker
+						bind:hex={selectedColor}
+						components={ChromeVariant}
+						sliderDirection="horizontal"
+					/>
+					<input type="hidden" name="color" value={selectedColor} />
+				</div>
+				<Button type="submit" variant="save" disabled={updateLoading}>
+					{updateLoading ? "Adding..." : "Add Supplement"}
+				</Button>
+			</form>
+		</Dialog.Description>
 	</Dialog.Content>
 </Dialog.Root>
