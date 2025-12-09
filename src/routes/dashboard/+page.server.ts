@@ -739,11 +739,13 @@ export const actions = {
 		const form = await request.formData();
 		const name = form.get("name") as unknown as string;
 		const color = form.get("color") as unknown as string;
+		const type = form.get("type") as unknown as string;
 
 		await db.insert(custom_supplements).values({
 			userId: session.user.id,
 			name,
-			color
+			color,
+			type
 		});
 	},
 };

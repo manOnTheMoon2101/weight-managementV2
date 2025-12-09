@@ -26,11 +26,15 @@
 		{ value: "Weight_Gain", name: "Bulk" },
 	];
 
+	let supplementTypes = [{ value: "Capsule" }, { value: "Liquid" }, { value: "Gummy" }];
+
 	let value = $derived(userJourney || "");
 
 	const triggerContent = $derived(
 		journeys.find((f) => f.value === value)?.name ?? "Select a Journey"
 	);
+
+	const triggerType = $derived(supplementTypes.find((f) => f.value === value)?.value ?? "Capsule");
 
 	function handleUpdateSubmit() {
 		updateLoading = true;
@@ -200,6 +204,19 @@
 						sliderDirection="horizontal"
 					/>
 					<input type="hidden" name="color" value={selectedColor} />
+
+					<Select.Root type="single" name="type" bind:value>
+						<Select.Trigger class=" w-[180px]">
+							{triggerType}</Select.Trigger
+						>
+						<Select.Content>
+							{#each supplementTypes as type (type.value)}
+								<Select.Item value={type.value} label={type.value}>
+									{type.value}
+								</Select.Item>
+							{/each}
+						</Select.Content>
+					</Select.Root>
 				</div>
 				<Button type="submit" variant="save" disabled={updateLoading}>
 					{updateLoading ? "Adding..." : "Add Supplement"}
