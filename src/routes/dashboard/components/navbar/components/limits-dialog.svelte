@@ -149,7 +149,7 @@
 					<Card.Root>
 						<Card.Header>
 							<Card.Title
-								>Supplements
+								>Supplements (BETA)
 								<Button onclick={() => (supplementDialogOpen = true)}>Add</Button>
 							</Card.Title>
 						</Card.Header>
