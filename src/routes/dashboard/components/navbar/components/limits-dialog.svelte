@@ -19,8 +19,13 @@
 
 	let updateLoading = $state(false);
 	let supplementDialogOpen = $state(false);
+	let supplementEditDialogOpen = $state(false);
 	let selectedColor = $state("#FFFFFF");
+	let editColor = $state("#FFFFFF");
+	let editName = $state("");
+	let editType = $state("");
 
+	let data = $state({})
 	let journeys = [
 		{ value: "Weight_Loss", name: "Weight Loss" },
 		{ value: "Weight_Gain", name: "Bulk" },
@@ -156,9 +161,13 @@
 
 						<Card.Content>
 							{#each userSupplements as s}
-								{s.name}
+								<div>
+									{s.name}
 								{s.type}
 								<span style="color: {s.color}">{s.color}</span>
+
+								<Button onclick={() => (supplementEditDialogOpen = true, editColor = s.color, editType = s.type, editName = s.name)}>Edit</Button>
+								</div>
 							{/each}
 						</Card.Content>
 					</Card.Root>
@@ -208,6 +217,53 @@
 					<Select.Root type="single" name="type" bind:value>
 						<Select.Trigger class=" w-[180px]">
 							{triggerType}</Select.Trigger
+						>
+						<Select.Content>
+							{#each supplementTypes as type (type.value)}
+								<Select.Item value={type.value} label={type.value}>
+									{type.value}
+								</Select.Item>
+							{/each}
+						</Select.Content>
+					</Select.Root>
+				</div>
+				<Button type="submit" variant="save" disabled={updateLoading}>
+					{updateLoading ? "Adding..." : "Add Supplement"}
+				</Button>
+			</form>
+		</Dialog.Description>
+	</Dialog.Content>
+</Dialog.Root>
+
+
+
+
+<Dialog.Root bind:open={supplementEditDialogOpen}>
+	<Dialog.Content>
+		<Dialog.Header>
+			<Dialog.Title>Edit Supplement</Dialog.Title>
+		</Dialog.Header>
+		<Dialog.Description>
+			<form
+				class="space-y-3"
+				onsubmit={handleUpdateSubmit}
+			>
+				<Label for="name">Supplement Name</Label>
+				<Input name="name" placeholder="Enter supplement name" type="text" value={editName} />
+
+				<div>
+					<Label for="color">Colour</Label>
+
+					<ColorPicker
+						bind:hex={editColor}
+						components={ChromeVariant}
+						sliderDirection="horizontal"
+					/>
+					<input type="hidden" name="color" value={editColor} />
+
+					<Select.Root type="single" name="type" bind:value>
+						<Select.Trigger class=" w-[180px]">
+							{editType}</Select.Trigger
 						>
 						<Select.Content>
 							{#each supplementTypes as type (type.value)}
