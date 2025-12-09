@@ -10,7 +10,8 @@ import Shortcut from "./dropdown-menu-shortcut.svelte";
 import SubContent from "./dropdown-menu-sub-content.svelte";
 import SubTrigger from "./dropdown-menu-sub-trigger.svelte";
 
-const Sub = DropdownMenuPrimitive.Sub;
+// Safe access for SSR compatibility
+const Sub = DropdownMenuPrimitive.Sub ?? DropdownMenuPrimitive.Root;
 const Root = DropdownMenuPrimitive.Root;
 const Trigger = DropdownMenuPrimitive.Trigger;
 const Group = DropdownMenuPrimitive.Group;
