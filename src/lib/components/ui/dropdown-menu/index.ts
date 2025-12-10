@@ -11,11 +11,18 @@ import SubContent from "./dropdown-menu-sub-content.svelte";
 import SubTrigger from "./dropdown-menu-sub-trigger.svelte";
 
 // Safe access for SSR compatibility
-const Sub = DropdownMenuPrimitive.Sub ?? DropdownMenuPrimitive.Root;
 const Root = DropdownMenuPrimitive.Root;
 const Trigger = DropdownMenuPrimitive.Trigger;
 const Group = DropdownMenuPrimitive.Group;
 const RadioGroup = DropdownMenuPrimitive.RadioGroup;
+
+// Handle Sub component safely for SSR
+let Sub: any;
+try {
+	Sub = DropdownMenuPrimitive.Sub || Root;
+} catch {
+	Sub = Root;
+}
 
 export {
 	CheckboxItem,

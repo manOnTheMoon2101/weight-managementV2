@@ -24,8 +24,9 @@
 	let editColor = $state("#FFFFFF");
 	let editName = $state("");
 	let editType = $state("");
+	let editId = $state("");
 
-	let data = $state({})
+
 	let journeys = [
 		{ value: "Weight_Loss", name: "Weight Loss" },
 		{ value: "Weight_Gain", name: "Bulk" },
@@ -166,7 +167,7 @@
 								{s.type}
 								<span style="color: {s.color}">{s.color}</span>
 
-								<Button onclick={() => (supplementEditDialogOpen = true, editColor = s.color, editType = s.type, editName = s.name)}>Edit</Button>
+								<Button onclick={() => (supplementEditDialogOpen = true, editColor = s.color, editType = s.type, editName = s.name,editId = s.id)}>Edit</Button>
 								</div>
 							{/each}
 						</Card.Content>
@@ -245,9 +246,12 @@
 		</Dialog.Header>
 		<Dialog.Description>
 			<form
+				method="POST"
 				class="space-y-3"
+				action="/dashboard?/updateSupplements"
 				onsubmit={handleUpdateSubmit}
 			>
+			<input type="hidden" name="id" value={editId || ""} />
 				<Label for="name">Supplement Name</Label>
 				<Input name="name" placeholder="Enter supplement name" type="text" value={editName} />
 
@@ -261,7 +265,7 @@
 					/>
 					<input type="hidden" name="color" value={editColor} />
 
-					<Select.Root type="single" name="type" bind:value>
+					<Select.Root type="single" name="type" bind:value={editType}>
 						<Select.Trigger class=" w-[180px]">
 							{editType}</Select.Trigger
 						>
@@ -274,8 +278,21 @@
 						</Select.Content>
 					</Select.Root>
 				</div>
+
 				<Button type="submit" variant="save" disabled={updateLoading}>
-					{updateLoading ? "Adding..." : "Add Supplement"}
+					{updateLoading ? "Updating..." : "Update Supplement"}
+				</Button>
+			</form>
+			
+			<form
+				method="POST"
+				action="/dashboard?/deleteSupplements"
+				onsubmit={handleUpdateSubmit}
+				class="mt-2"
+			>
+				<input type="hidden" name="id" value={editId || ""} />
+				<Button type="submit" variant="destructive" disabled={updateLoading}>
+					{updateLoading ? "Deleting..." : "Delete"}
 				</Button>
 			</form>
 		</Dialog.Description>
