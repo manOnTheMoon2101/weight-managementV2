@@ -7,6 +7,9 @@
 	import * as Select from "$lib/components/ui/select/index.js";
 	import Goal from "@lucide/svelte/icons/goal";
 	import Journey from "@lucide/svelte/icons/footprints";
+	import Pill from "@lucide/svelte/icons/pill";
+	import Liquid from "@lucide/svelte/icons/milk";
+	import Gummy from "@lucide/svelte/icons/candy";
 	import Minus from "@lucide/svelte/icons/minus";
 	import Up from "@lucide/svelte/icons/corner-right-up";
 	import Down from "@lucide/svelte/icons/corner-right-down";
@@ -24,8 +27,8 @@
 	let editColor = $state("#FFFFFF");
 	let editName = $state("");
 	let editType = $state("");
+	let editId = $state("");
 
-	let data = $state({})
 	let journeys = [
 		{ value: "Weight_Loss", name: "Weight Loss" },
 		{ value: "Weight_Gain", name: "Bulk" },
@@ -161,12 +164,27 @@
 
 						<Card.Content>
 							{#each userSupplements as s}
-								<div>
-									{s.name}
-								{s.type}
-								<span style="color: {s.color}">{s.color}</span>
+								<div class="flex flex-row items-center justify-between">
+									<div class="flex flex-row items-center">
+										{s.name}
 
-								<Button onclick={() => (supplementEditDialogOpen = true, editColor = s.color, editType = s.type, editName = s.name)}>Edit</Button>
+										{#if s.type === "Gummy"}
+											<Gummy style="color: {s.color}" />
+										{:else if s.type === "Liquid"}
+											<Liquid style="color: {s.color}" />
+										{:else}
+											<Pill style="color: {s.color}" />
+										{/if}
+									</div>
+									<Button
+										onclick={() => (
+											(supplementEditDialogOpen = true),
+											(editColor = s.color),
+											(editType = s.type),
+											(editName = s.name),
+											(editId = s.id)
+										)}>Edit</Button
+									>
 								</div>
 							{/each}
 						</Card.Content>
@@ -235,9 +253,6 @@
 	</Dialog.Content>
 </Dialog.Root>
 
-
-
-
 <Dialog.Root bind:open={supplementEditDialogOpen}>
 	<Dialog.Content>
 		<Dialog.Header>
@@ -245,9 +260,12 @@
 		</Dialog.Header>
 		<Dialog.Description>
 			<form
+				method="POST"
 				class="space-y-3"
+				action="/dashboard?/updateSupplements"
 				onsubmit={handleUpdateSubmit}
 			>
+				<input type="hidden" name="id" value={editId || ""} />
 				<Label for="name">Supplement Name</Label>
 				<Input name="name" placeholder="Enter supplement name" type="text" value={editName} />
 
@@ -261,7 +279,7 @@
 					/>
 					<input type="hidden" name="color" value={editColor} />
 
-					<Select.Root type="single" name="type" bind:value>
+					<Select.Root type="single" name="type" bind:value={editType}>
 						<Select.Trigger class=" w-[180px]">
 							{editType}</Select.Trigger
 						>
@@ -274,8 +292,21 @@
 						</Select.Content>
 					</Select.Root>
 				</div>
+
 				<Button type="submit" variant="save" disabled={updateLoading}>
-					{updateLoading ? "Adding..." : "Add Supplement"}
+					{updateLoading ? "Updating..." : "Update Supplement"}
+				</Button>
+			</form>
+
+			<form
+				method="POST"
+				action="/dashboard?/deleteSupplements"
+				onsubmit={handleUpdateSubmit}
+				class="mt-2"
+			>
+				<input type="hidden" name="id" value={editId || ""} />
+				<Button type="submit" variant="destructive" disabled={updateLoading}>
+					{updateLoading ? "Deleting..." : "Delete"}
 				</Button>
 			</form>
 		</Dialog.Description>

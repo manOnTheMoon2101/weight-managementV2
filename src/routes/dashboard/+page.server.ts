@@ -748,4 +748,39 @@ export const actions = {
 			type
 		});
 	},
+
+	updateSupplements: async ({ request }: { request: Request }) => {
+		const session = await auth.api.getSession({ headers: request.headers });
+		if (!session) {
+			redirect(302, "/signin");
+		}
+
+		const form = await request.formData();
+		const id = form.get("id") as unknown as number;
+		const name = form.get("name") as unknown as string;
+		const color = form.get("color") as unknown as string;
+		const type = form.get("type") as unknown as string;
+
+		await db.update(custom_supplements).set({
+			name,
+			color,
+			type
+		}).where(eq(custom_supplements.id, id));
+	},
+
+
+	deleteSupplements: async ({ request }: { request: Request }) => {
+		const session = await auth.api.getSession({ headers: request.headers });
+		if (!session) {
+			redirect(302, "/signin");
+		}
+
+		const form = await request.formData();
+		const id = form.get("id") as unknown as number;
+		
+		await db.update(custom_supplements).set({
+			isActive:false,
+			isDeleted:true
+		}).where(eq(custom_supplements.id, id));
+	},
 };
