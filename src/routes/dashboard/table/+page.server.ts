@@ -3,6 +3,7 @@ import { and, eq, gte, lte } from "drizzle-orm";
 import { auth } from "../../../lib/server/auth";
 import { db } from "../../../lib/server/db";
 import {
+	custom_supplements,
 	health_tracker,
 	limits,
 	nutrients,
@@ -88,6 +89,18 @@ export const load: PageServerLoad = async ({ request, url }) => {
 		});
 
 
+		const allSupplements = await db.query.custom_supplements.findMany({
+			where:and(
+			eq(custom_supplements.userId, session.user.id),
+			eq(custom_supplements.isActive, true),
+			eq(custom_supplements.isDeleted, false),
+			
+		),
+			
+			orderBy: (custom_supplements, { desc }) => desc(custom_supplements.createdAt),
+		});
+
+
 		const latestWeightEntry = await db.query.health_tracker.findFirst({
 			where:and(
 			eq(health_tracker.userId, session.user.id),
@@ -122,6 +135,7 @@ export const load: PageServerLoad = async ({ request, url }) => {
 			limits: userLimits || null,
 			latestWaistEntry : latestWaistEntry || null,
 			latestWeightEntry: latestWeightEntry || null,
+			allSupplements : allSupplements || null,
 			dateRange: {
 				startDate: actualStartDate,
 				endDate: actualEndDate,

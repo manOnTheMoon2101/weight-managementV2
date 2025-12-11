@@ -10,15 +10,17 @@
 	import Apple from "@lucide/svelte/icons/apple";
 	import Pill from "@lucide/svelte/icons/pill";
 	import Plus from "@lucide/svelte/icons/circle-plus";
+	import * as Dialog from "$lib/components/ui/dialog/index.js";
 
 	let {
 		dialogOpen = $bindable(),
 		latestWaist = {},
 		latestWeight = {},
-	} = $props<{ dialogOpen: boolean; latestWaist: any; latestWeight: any }>();
+		allSupplements = {}
+	} = $props<{ dialogOpen: boolean; latestWaist: any; latestWeight: any , allSupplements:any}>();
 
 	let createLoading = $state(false);
-
+let supplementDialogOpen = $state(false);
 	function handleCreateSubmit() {
 		createLoading = true;
 	}
@@ -114,53 +116,15 @@
 
 				<Card.Root class="bg-primary flex-1">
 					<Card.Header class="pb-3">
-						<Card.Title class="flex text-base"><Pill class="mr-1" />Supplements</Card.Title>
+						<Card.Title class="flex text-base"><Pill class="mr-1" />Supplements <Button onclick={() => supplementDialogOpen = true}>Add</Button></Card.Title>
 					</Card.Header>
 					<Card.Content>
-						<div class="flex flex-col space-y-1">
-							<div class="my-4 flex items-start space-x-2">
-								<Checkbox id="vitamin" name="vitamin" />
-								<Label for="vitamin" class="text-sm">Vitamin</Label>
-							</div>
-							<div class="my-4 flex items-start space-x-2">
-								<Checkbox id="magnesium" name="magnesium" />
-								<Label for="magnesium" class="text-sm">Magnesium</Label>
-							</div>
-							<div class="my-4 flex items-start space-x-2">
-								<Checkbox id="zen" name="zen" />
-								<Label for="zen" class="text-sm">Zen</Label>
-							</div>
-
-							<div class="my-4 flex items-start space-x-2">
-								<Checkbox id="cla" name="cla" />
-								<Label for="cla" class="text-sm">CLA</Label>
-							</div>
-							<div class="my-4 flex items-start space-x-2">
-								<Checkbox id="fatBurner" name="fatBurner" />
-								<Label for="fatBurner" class="text-sm">Fat Burner</Label>
-							</div>
-						</div>
+						supplements
 					</Card.Content>
 				</Card.Root>
 			</div>
 
-			<!-- <Card.Root class="bg-card">
-						<Card.Header class="pb-3">
-							<Card.Title class="text-base">Sleep</Card.Title>
-						</Card.Header>
-						<Card.Content>
-							<div>
-								<Label for="score" class="text-sm">Score</Label>
-								<Input name="score" placeholder="Sleep Score" class="h-8" />
-							</div>
-
-							<div>
-                                <Label for="time" class="text-sm">Time</Label>
-                                <Input id="time" name="time" type='time' placeholder="Time" class="h-8" />
-                            </div>
-						</Card.Content>
-					</Card.Root>
-					 -->
+			
 			<div class="mt-4 flex gap-2">
 				{#if !createLoading}
 					<Button type="submit" class="w-full" variant="save">Create</Button>
@@ -176,3 +140,26 @@
 		</form>
 	</Sheet.Content>
 </Sheet.Root>
+
+
+
+
+
+
+
+<Dialog.Root bind:open={supplementDialogOpen}>
+
+	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="sm:max-w-[700px]">
+		<Dialog.Header>
+			<Dialog.Title>
+				Supplememts
+			</Dialog.Title>
+			</Dialog.Header>
+			<Dialog.Description>
+				{#each allSupplements  as s }
+					{s.name}
+				{/each}
+			</Dialog.Description>
+
+	</Dialog.Content>
+</Dialog.Root>
