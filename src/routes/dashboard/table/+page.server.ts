@@ -3,6 +3,7 @@ import { and, eq, gte, lte } from "drizzle-orm";
 import { auth } from "../../../lib/server/auth";
 import { db } from "../../../lib/server/db";
 import {
+	assignedSupplements,
 	custom_supplements,
 	health_tracker,
 	limits,
@@ -259,7 +260,17 @@ export const actions = {
 		const cla = Boolean(form.get("cla")) || false;
 		const zen = Boolean(form.get("zen")) || false;
 
-		// const time = form.get("time") as string;
+		// Parse assigned supplements from form data
+		const assignedSupplementsData = form.get("assignedSupplements");
+		let supplementsToAssign: Array<{ custom_supplementsId: number; quantity: string }> = [];
+		
+		if (assignedSupplementsData) {
+			try {
+				supplementsToAssign = JSON.parse(assignedSupplementsData as string);
+			} catch (error) {
+				console.error("Error parsing assigned supplements:", error);
+			}
+		}
 
 		const nutrientsData = await db
 			.insert(nutrients)
@@ -287,6 +298,22 @@ export const actions = {
 			})
 			.returning();
 
+		// Insert multiple assigned supplements
+		let assignedSupplementsResult: any[] = [];
+		if (supplementsToAssign.length > 0) {
+			const supplementValues = supplementsToAssign.map(supplement => ({
+				nutrientsId: nutrientsData[0].id,
+				custom_supplementsId: supplement.custom_supplementsId,
+				userId: session.user.id,
+				quantity: parseInt(supplement.quantity) || 0
+			}));
+
+			assignedSupplementsResult = await db
+				.insert(assignedSupplements)
+				.values(supplementValues)
+				.returning();
+		}
+
 		const healthData = await db
 			.insert(health_tracker)
 			.values({
@@ -306,6 +333,7 @@ export const actions = {
 				sleep: sleepData[0],
 				supplements: supplementData[0],
 				health: healthData[0],
+				assignedSupplements: assignedSupplementsResult
 			},
 		};
 	},
