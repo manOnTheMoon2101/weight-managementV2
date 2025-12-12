@@ -70,6 +70,15 @@ export const load: PageServerLoad = async ({ request, url }) => {
 				supplements: true,
 				health_tracker: true,
 				sleep_schedule: true,
+				assignedSupplements: {
+					where: and(
+						eq(assignedSupplements.isActive, true),
+						eq(assignedSupplements.isDeleted, false)
+					),
+					with: {
+						custom_supplement: true
+					}
+				},
 			},
 			orderBy: nutrients.createdAt,
 		});
@@ -100,6 +109,8 @@ export const load: PageServerLoad = async ({ request, url }) => {
 			
 			orderBy: (custom_supplements, { desc }) => desc(custom_supplements.createdAt),
 		});
+
+
 
 
 		const latestWeightEntry = await db.query.health_tracker.findFirst({

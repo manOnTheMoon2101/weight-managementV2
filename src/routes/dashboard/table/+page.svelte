@@ -73,6 +73,7 @@
 			steps: row.health_tracker?.[0]?.steps,
 			waistMeasurement: row.health_tracker?.[0].waistMeasurement,
 			userEmail: data.userEmail,
+			allAssignedSupplements: row.assignedSupplements || []
 		}))
 	);
 
