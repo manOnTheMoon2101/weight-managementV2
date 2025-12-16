@@ -195,6 +195,18 @@ export const actions = {
 
 		const time = form.get("time") as string;
 
+		// Handle assigned supplements
+		const assignedSupplementsData = form.get("assignedSupplements");
+		let supplementsToAssign: Array<{ custom_supplementsId: number; quantity: string }> = [];
+		
+		if (assignedSupplementsData) {
+			try {
+				supplementsToAssign = JSON.parse(assignedSupplementsData as string);
+			} catch (error) {
+				console.error("Error parsing assigned supplements:", error);
+			}
+		}
+
 		await db
 			.update(nutrients)
 			.set({ protein, fat, sugar, carbs, calories })
@@ -215,7 +227,36 @@ export const actions = {
 			.set({ time })
 			.where(and(eq(sleep_schedule.userId, session.user.id), eq(sleep_schedule.nutrientsId, id)));
 
-		return { success: true };
+		// Update assigned supplements
+		// First, mark existing assigned supplements as inactive/deleted
+		await db
+			.update(assignedSupplements)
+			.set({ isActive: false, isDeleted: true })
+			.where(and(
+				eq(assignedSupplements.nutrientsId, id),
+				eq(assignedSupplements.userId, session.user.id)
+			));
+
+		// Then insert new assigned supplements
+		let assignedSupplementsResult: any[] = [];
+		if (supplementsToAssign.length > 0) {
+			const supplementValues = supplementsToAssign.map(supplement => ({
+				nutrientsId: id,
+				custom_supplementsId: supplement.custom_supplementsId,
+				userId: session.user.id,
+				quantity: parseInt(supplement.quantity) || 0
+			}));
+
+			assignedSupplementsResult = await db
+				.insert(assignedSupplements)
+				.values(supplementValues)
+				.returning();
+		}
+
+		return { 
+			success: true,
+			assignedSupplements: assignedSupplementsResult
+		};
 	},
 
 	removeNutrients: async ({ request }: { request: Request }) => {
@@ -271,7 +312,6 @@ export const actions = {
 		const cla = Boolean(form.get("cla")) || false;
 		const zen = Boolean(form.get("zen")) || false;
 
-		// Parse assigned supplements from form data
 		const assignedSupplementsData = form.get("assignedSupplements");
 		let supplementsToAssign: Array<{ custom_supplementsId: number; quantity: string }> = [];
 		
@@ -308,8 +348,6 @@ export const actions = {
 				fatburner,
 			})
 			.returning();
-
-		// Insert multiple assigned supplements
 		let assignedSupplementsResult: any[] = [];
 		if (supplementsToAssign.length > 0) {
 			const supplementValues = supplementsToAssign.map(supplement => ({
