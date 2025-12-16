@@ -228,29 +228,74 @@ export const actions = {
 			.where(and(eq(sleep_schedule.userId, session.user.id), eq(sleep_schedule.nutrientsId, id)));
 
 		// Update assigned supplements
-		// First, mark existing assigned supplements as inactive/deleted
-		await db
-			.update(assignedSupplements)
-			.set({ isActive: false, isDeleted: true })
-			.where(and(
+		// Get existing assigned supplements for this nutrient
+		const existingSupplements = await db.query.assignedSupplements.findMany({
+			where: and(
 				eq(assignedSupplements.nutrientsId, id),
-				eq(assignedSupplements.userId, session.user.id)
-			));
+				eq(assignedSupplements.userId, session.user.id),
+				eq(assignedSupplements.isActive, true),
+				eq(assignedSupplements.isDeleted, false)
+			)
+		});
 
-		// Then insert new assigned supplements
 		let assignedSupplementsResult: any[] = [];
+		
 		if (supplementsToAssign.length > 0) {
-			const supplementValues = supplementsToAssign.map(supplement => ({
-				nutrientsId: id,
-				custom_supplementsId: supplement.custom_supplementsId,
-				userId: session.user.id,
-				quantity: parseInt(supplement.quantity) || 0
-			}));
+			// Process each supplement to assign
+			for (const supplement of supplementsToAssign) {
+				const existingSupplement = existingSupplements.find(
+					existing => existing.custom_supplementsId === supplement.custom_supplementsId
+				);
 
-			assignedSupplementsResult = await db
-				.insert(assignedSupplements)
-				.values(supplementValues)
-				.returning();
+				if (existingSupplement) {
+					// Update existing supplement
+					const updated = await db
+						.update(assignedSupplements)
+						.set({ 
+							quantity: parseInt(supplement.quantity) || 0,
+							updatedAt: new Date()
+						})
+						.where(eq(assignedSupplements.id, existingSupplement.id))
+						.returning();
+					assignedSupplementsResult.push(...updated);
+				} else {
+					// Insert new supplement
+					const inserted = await db
+						.insert(assignedSupplements)
+						.values({
+							nutrientsId: id,
+							custom_supplementsId: supplement.custom_supplementsId,
+							userId: session.user.id,
+							quantity: parseInt(supplement.quantity) || 0
+						})
+						.returning();
+					assignedSupplementsResult.push(...inserted);
+				}
+			}
+
+			// Mark supplements that are no longer assigned as inactive/deleted
+			const assignedSupplementIds = supplementsToAssign.map(s => s.custom_supplementsId);
+			const supplementsToDeactivate = existingSupplements.filter(
+				existing => !assignedSupplementIds.includes(existing.custom_supplementsId)
+			);
+
+			for (const supplementToDeactivate of supplementsToDeactivate) {
+				await db
+					.update(assignedSupplements)
+					.set({ isActive: false, isDeleted: true, updatedAt: new Date() })
+					.where(eq(assignedSupplements.id, supplementToDeactivate.id));
+			}
+		} else {
+			// If no supplements to assign, mark all existing as inactive/deleted
+			await db
+				.update(assignedSupplements)
+				.set({ isActive: false, isDeleted: true, updatedAt: new Date() })
+				.where(and(
+					eq(assignedSupplements.nutrientsId, id),
+					eq(assignedSupplements.userId, session.user.id),
+					eq(assignedSupplements.isActive, true),
+					eq(assignedSupplements.isDeleted, false)
+				));
 		}
 
 		return { 

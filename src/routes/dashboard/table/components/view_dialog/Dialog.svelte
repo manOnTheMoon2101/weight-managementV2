@@ -43,7 +43,10 @@
 	let updateLoading = $state(false);
 	let assignedSupplements = $state<Supplements[]>([]);
 	let supplementDialogOpen = $state(false);
+	let supplementQuantityEdit = $state(false)
 	let quantityInput = $state("");
+	let editingSupplementId = $state<number | null>(null);
+	let editQuantityInput = $state("");
 
 	$inspect(rowToEdit);
 	$effect(() => {
@@ -105,6 +108,25 @@
 		assignedSupplements = assignedSupplements.filter(
 			(s) => s.custom_supplementsId !== supplementId
 		);
+	}
+
+	function updateSupplementQuantity() {
+		if (!editQuantityInput.trim() || editingSupplementId === null) {
+			return;
+		}
+
+		const existingIndex = assignedSupplements.findIndex(
+			(s) => s.custom_supplementsId === editingSupplementId
+		);
+
+		if (existingIndex >= 0) {
+			assignedSupplements[existingIndex].quantity = editQuantityInput;
+		}
+
+		// Reset edit state
+		editingSupplementId = null;
+		editQuantityInput = "";
+		supplementQuantityEdit = false;
 	}
 </script>
 
@@ -193,7 +215,11 @@
 												<Button
 													size="sm"
 													variant="ghost"
-													onclick={() => removeSupplement(supplement.custom_supplementsId)}
+													onclick={() => {
+														editingSupplementId = supplement.custom_supplementsId;
+														editQuantityInput = supplement.quantity;
+														supplementQuantityEdit = true;
+													}}
 													class="hover:bg-destructive hover:text-destructive-foreground h-6 w-6 p-0"
 												>
 													edit
@@ -370,6 +396,46 @@
 		</Sheet.Header>
 	</Sheet.Content>
 </Sheet.Root>
+
+
+
+
+
+
+
+<Dialog.Root bind:open={supplementQuantityEdit}>
+	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="sm:max-w-[500px]">
+		<Dialog.Header>
+			<Dialog.Title>Edit Quantity</Dialog.Title>
+		</Dialog.Header>
+		<div class="space-y-4">
+			<div>
+				<Label for="editQuantity" class="text-sm">Quantity</Label>
+				<Input
+					id="editQuantity"
+					bind:value={editQuantityInput}
+					placeholder="Enter quantity"
+					type="text"
+					class="h-8"
+				/>
+			</div>
+			<div class="flex justify-end space-x-2">
+				<Button
+					variant="outline"
+					onclick={() => {
+						supplementQuantityEdit = false;
+						editingSupplementId = null;
+						editQuantityInput = "";
+					}}
+				>
+					Cancel
+				</Button>
+				<Button onclick={updateSupplementQuantity}>Save</Button>
+			</div>
+		</div>
+	</Dialog.Content>
+</Dialog.Root>
+
 
 
 <Dialog.Root bind:open={supplementDialogOpen}>
