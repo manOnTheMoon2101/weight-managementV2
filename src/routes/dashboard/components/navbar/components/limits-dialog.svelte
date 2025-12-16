@@ -10,6 +10,7 @@
 	import Pill from "@lucide/svelte/icons/pill";
 	import Liquid from "@lucide/svelte/icons/milk";
 	import Gummy from "@lucide/svelte/icons/candy";
+	import Plus from "@lucide/svelte/icons/circle-plus";
 	import Minus from "@lucide/svelte/icons/minus";
 	import Up from "@lucide/svelte/icons/corner-right-up";
 	import Pencil from "@lucide/svelte/icons/pencil";
@@ -157,9 +158,9 @@
 
 					<Card.Root>
 						<Card.Header>
-							<Card.Title
-								>Supplements (BETA)
-								<Button onclick={() => (supplementDialogOpen = true)}>Add</Button>
+							<Card.Title class="flex items-center justify-between"
+								>Supplements
+								<Button variant="save" onclick={() => (supplementDialogOpen = true)}><Plus /></Button>
 							</Card.Title>
 						</Card.Header>
 
