@@ -58,15 +58,11 @@
 
 	function handleUpdateSubmit(event: Event) {
 		updateLoading = true;
-
-		// Add assigned supplements data to form
 		const form = event.target as HTMLFormElement;
 		const formData = new FormData(form);
 
-		// Add the assigned supplements as JSON string
 		formData.set("assignedSupplements", JSON.stringify(assignedSupplements));
 
-		// Submit the form with the updated data
 		return true;
 	}
 
@@ -81,36 +77,28 @@
 	}
 
 	function assignSupplement(supplementId: number, quantity: string) {
-		console.log("assignSupplement called with:", supplementId, quantity);
 
 		if (!quantity.trim()) {
 			console.log("No quantity provided, returning");
 			return;
 		}
 
-		// Check if supplement is already assigned
 		const existingIndex = assignedSupplements.findIndex(
 			(s) => s.custom_supplementsId === supplementId
 		);
 
 		if (existingIndex >= 0) {
-			// Update existing supplement quantity
 			assignedSupplements[existingIndex].quantity = quantity;
-			console.log("Updated existing supplement");
 		} else {
-			// Add new supplement
 			assignedSupplements.push({
 				custom_supplementsId: supplementId,
 				quantity: quantity,
 			});
-			console.log("Added new supplement");
 		}
 
 
-
-		// Reset input and close dialog
 		quantityInput = "";
-		supplementDialogOpen = false;
+		// supplementDialogOpen = false;
 	}
 
 	function removeSupplement(supplementId: number) {
@@ -187,9 +175,7 @@
 								</Card.Title>
 							</Card.Header>
 							<Card.Content class="space-y-2">
-								<!-- Custom Supplements Section -->
 								<div class="border-t pt-2">
-									<h4 class="mb-2 text-sm font-medium">Custom Supplements</h4>
 									{#if assignedSupplements.length > 0}
 										{#each assignedSupplements as supplement}
 											{@const supplementData = allSupplements.find(
@@ -198,7 +184,7 @@
 											<div class="bg-muted mb-2 flex items-center justify-between rounded p-2">
 												<div class="flex-1">
 													<span class="text-sm font-medium"
-														>{supplement.custom_supplement?.name || ""}</span
+														>{supplementData?.name || ""}</span
 													>
 													<span class="text-muted-foreground ml-2 text-xs"
 														>Qty: {supplement.quantity}</span
@@ -385,11 +371,11 @@
 	</Sheet.Content>
 </Sheet.Root>
 
-<!-- Custom Supplements Dialog -->
+
 <Dialog.Root bind:open={supplementDialogOpen}>
 	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="sm:max-w-[500px]">
 		<Dialog.Header>
-			<Dialog.Title>Add Custom Supplements</Dialog.Title>
+			<Dialog.Title>Add Supplements</Dialog.Title>
 		</Dialog.Header>
 		<div class="space-y-4">
 			<div>
