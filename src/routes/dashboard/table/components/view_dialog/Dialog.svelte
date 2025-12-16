@@ -36,7 +36,7 @@
 	} = $props<{
 		dialogOpen: boolean;
 		rowToEdit: any;
-		allSupplements: SupplementData[];
+		allSupplements: any;
 	}>();
 
 	let deleteLoading = $state(false);
@@ -46,9 +46,6 @@
 	let quantityInput = $state("");
 
 	$inspect(rowToEdit);
-	$inspect(assignedSupplements);
-	$inspect(allSupplements);
-
 	$effect(() => {
 		if (rowToEdit?.allAssignedSupplements) {
 			assignedSupplements = [...rowToEdit.allAssignedSupplements];

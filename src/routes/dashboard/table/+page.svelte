@@ -73,7 +73,8 @@
 			steps: row.health_tracker?.[0]?.steps,
 			waistMeasurement: row.health_tracker?.[0].waistMeasurement,
 			userEmail: data.userEmail,
-			allAssignedSupplements: row.assignedSupplements || []
+			allAssignedSupplements: row.assignedSupplements || [],
+			allSupplements : allSupplements || []
 		}))
 	);
 
@@ -90,6 +91,7 @@
 			cellRendererParams: (params: any) => ({
 				dialogOpen: false,
 				rowToEdit: params.data,
+				allSupplements : allSupplements
 			}),
 			minWidth: 100,
 			maxWidth: 120,
