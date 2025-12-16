@@ -8,8 +8,6 @@
 	let { data }: ICellRendererParams = $props();
 
 	let supplements = $derived(data.allAssignedSupplements || []);
-
-	$inspect(supplements);
 </script>
 
 <div class="flex flex-row">

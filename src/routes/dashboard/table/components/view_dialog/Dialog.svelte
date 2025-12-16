@@ -246,7 +246,9 @@
 											</div>
 										{/each}
 									{:else}
-										<p class="text-muted-foreground text-sm">No supplements assigned</p>
+										<p class="text-muted-foreground flex flex-row justify-center text-sm">
+								No supplements assigned
+							</p>
 									{/if}
 								</div>
 							</Card.Content>
