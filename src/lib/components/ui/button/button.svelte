@@ -18,6 +18,7 @@
 				logout:"bg-destructive cursor-pointer text-foreground hover:bg-destructive/80",
 				link: "text-secondary underline-offset-4 cursor-pointer hover:underline",
 				save: "text-accent underline-offset-4 cursor-pointer hover:underline",
+				success : "bg-sign cursor-pointer text-white hover:bg-sign/80",
 
 				tronButton: "bg-[#00FFF5] cursor-pointer text-white hover:bg-[#00FFF5)]/80",
 				redButton: "bg-[hsl(0,100%,50%)] cursor-pointer text-white hover:bg-bg-[hsl(0,100%,50%)]/80",

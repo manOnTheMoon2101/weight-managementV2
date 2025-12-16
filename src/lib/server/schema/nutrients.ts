@@ -4,6 +4,7 @@ import { relations } from "drizzle-orm";
 import { supplements } from "./supplements";
 import { health_tracker } from "./health_tracking";
 import { sleep_schedule } from "./sleep_schedule";
+import { assignedSupplements } from "./assignedSupplements";
 
 export const nutrients = pgTable("nutrients", {
 	id: serial("id").primaryKey(),
@@ -27,5 +28,6 @@ export const nutrientsRelations = relations(nutrients, ({ many }) => ({
     supplements: many(supplements),
     user:many(user),
     health_tracker:many(health_tracker),
-    sleep_schedule:many(sleep_schedule)
+    sleep_schedule:many(sleep_schedule),
+    assignedSupplements: many(assignedSupplements)
 }));

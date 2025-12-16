@@ -10,16 +10,16 @@ import Shortcut from "./dropdown-menu-shortcut.svelte";
 import SubContent from "./dropdown-menu-sub-content.svelte";
 import SubTrigger from "./dropdown-menu-sub-trigger.svelte";
 
-// Safe access for SSR compatibility
-const Root = DropdownMenuPrimitive.Root;
-const Trigger = DropdownMenuPrimitive.Trigger;
-const Group = DropdownMenuPrimitive.Group;
-const RadioGroup = DropdownMenuPrimitive.RadioGroup;
 
-// Handle Sub component safely for SSR
+const Root = DropdownMenuPrimitive?.Root;
+const Trigger = DropdownMenuPrimitive?.Trigger;
+const Group = DropdownMenuPrimitive?.Group;
+const RadioGroup = DropdownMenuPrimitive?.RadioGroup;
+
+
 let Sub: any;
 try {
-	Sub = DropdownMenuPrimitive.Sub || Root;
+	Sub = DropdownMenuPrimitive?.Sub || Root;
 } catch {
 	Sub = Root;
 }

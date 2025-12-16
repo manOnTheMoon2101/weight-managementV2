@@ -58,6 +58,7 @@
 
 	const latestWaistEntry = $derived(data.latestWaistEntry)
 	const latestWeightEntry = $derived(data.latestWeightEntry)
+	const allSupplements = $derived(data.allSupplements)
 	const nutrients = $derived.by(() =>
 		data.nutrients.map((row: NutrientRow) => ({
 			...row,
@@ -72,6 +73,8 @@
 			steps: row.health_tracker?.[0]?.steps,
 			waistMeasurement: row.health_tracker?.[0].waistMeasurement,
 			userEmail: data.userEmail,
+			allAssignedSupplements: row.assignedSupplements || [],
+			allSupplements : allSupplements || []
 		}))
 	);
 
@@ -88,6 +91,7 @@
 			cellRendererParams: (params: any) => ({
 				dialogOpen: false,
 				rowToEdit: params.data,
+				allSupplements : allSupplements
 			}),
 			minWidth: 100,
 			maxWidth: 120,
@@ -148,9 +152,6 @@
 			sortable: false,
 			minWidth: 150,
 			cellRenderer: makeSvelteCellRenderer(Supplements as any),
-			cellRendererParams: {
-				supplementFields: ["fatBurner", "zen", "multiVitamin", "magnesium", "cla"],
-			},
 		},
 		{ headerName: "Protein", field: "protein", filter: "agNumberColumnFilter" },
 		{
@@ -350,7 +351,7 @@
 		</Popover.Root>
 	</div>
 	<div class="flex flex-wrap gap-2 px-2 md:px-0">
-		<AddDialog dialogOpen latestWaist={latestWaistEntry}  latestWeight={latestWeightEntry}/>
+		<AddDialog dialogOpen latestWaist={latestWaistEntry}  latestWeight={latestWeightEntry} allSupplements={allSupplements}/>
 		<Button variant="save" onclick={() => tableComponent?.exportToCsv()} class="flex-1 md:flex-none">
 			<ArrowDownToLine class="mr-2 size-4" />
 			<span class="hidden sm:inline">Export to CSV</span>

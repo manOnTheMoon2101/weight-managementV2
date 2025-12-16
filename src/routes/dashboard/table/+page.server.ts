@@ -3,6 +3,8 @@ import { and, eq, gte, lte } from "drizzle-orm";
 import { auth } from "../../../lib/server/auth";
 import { db } from "../../../lib/server/db";
 import {
+	assignedSupplements,
+	custom_supplements,
 	health_tracker,
 	limits,
 	nutrients,
@@ -68,6 +70,15 @@ export const load: PageServerLoad = async ({ request, url }) => {
 				supplements: true,
 				health_tracker: true,
 				sleep_schedule: true,
+				assignedSupplements: {
+					where: and(
+						eq(assignedSupplements.isActive, true),
+						eq(assignedSupplements.isDeleted, false)
+					),
+					with: {
+						custom_supplement: true
+					}
+				},
 			},
 			orderBy: nutrients.createdAt,
 		});
@@ -86,6 +97,20 @@ export const load: PageServerLoad = async ({ request, url }) => {
 			},
 			orderBy: (health_tracker, { desc }) => desc(health_tracker.createdAt),
 		});
+
+
+		const allSupplements = await db.query.custom_supplements.findMany({
+			where:and(
+			eq(custom_supplements.userId, session.user.id),
+			eq(custom_supplements.isActive, true),
+			eq(custom_supplements.isDeleted, false),
+			
+		),
+			
+			orderBy: (custom_supplements, { desc }) => desc(custom_supplements.createdAt),
+		});
+
+
 
 
 		const latestWeightEntry = await db.query.health_tracker.findFirst({
@@ -122,6 +147,7 @@ export const load: PageServerLoad = async ({ request, url }) => {
 			limits: userLimits || null,
 			latestWaistEntry : latestWaistEntry || null,
 			latestWeightEntry: latestWeightEntry || null,
+			allSupplements : allSupplements || null,
 			dateRange: {
 				startDate: actualStartDate,
 				endDate: actualEndDate,
@@ -169,6 +195,18 @@ export const actions = {
 
 		const time = form.get("time") as string;
 
+		// Handle assigned supplements
+		const assignedSupplementsData = form.get("assignedSupplements");
+		let supplementsToAssign: Array<{ custom_supplementsId: number; quantity: string }> = [];
+		
+		if (assignedSupplementsData) {
+			try {
+				supplementsToAssign = JSON.parse(assignedSupplementsData as string);
+			} catch (error) {
+				console.error("Error parsing assigned supplements:", error);
+			}
+		}
+
 		await db
 			.update(nutrients)
 			.set({ protein, fat, sugar, carbs, calories })
@@ -189,7 +227,81 @@ export const actions = {
 			.set({ time })
 			.where(and(eq(sleep_schedule.userId, session.user.id), eq(sleep_schedule.nutrientsId, id)));
 
-		return { success: true };
+		// Update assigned supplements
+		// Get existing assigned supplements for this nutrient
+		const existingSupplements = await db.query.assignedSupplements.findMany({
+			where: and(
+				eq(assignedSupplements.nutrientsId, id),
+				eq(assignedSupplements.userId, session.user.id),
+				eq(assignedSupplements.isActive, true),
+				eq(assignedSupplements.isDeleted, false)
+			)
+		});
+
+		let assignedSupplementsResult: any[] = [];
+		
+		if (supplementsToAssign.length > 0) {
+			// Process each supplement to assign
+			for (const supplement of supplementsToAssign) {
+				const existingSupplement = existingSupplements.find(
+					existing => existing.custom_supplementsId === supplement.custom_supplementsId
+				);
+
+				if (existingSupplement) {
+					// Update existing supplement
+					const updated = await db
+						.update(assignedSupplements)
+						.set({ 
+							quantity: parseInt(supplement.quantity) || 0,
+							updatedAt: new Date()
+						})
+						.where(eq(assignedSupplements.id, existingSupplement.id))
+						.returning();
+					assignedSupplementsResult.push(...updated);
+				} else {
+					// Insert new supplement
+					const inserted = await db
+						.insert(assignedSupplements)
+						.values({
+							nutrientsId: id,
+							custom_supplementsId: supplement.custom_supplementsId,
+							userId: session.user.id,
+							quantity: parseInt(supplement.quantity) || 0
+						})
+						.returning();
+					assignedSupplementsResult.push(...inserted);
+				}
+			}
+
+			// Mark supplements that are no longer assigned as inactive/deleted
+			const assignedSupplementIds = supplementsToAssign.map(s => s.custom_supplementsId);
+			const supplementsToDeactivate = existingSupplements.filter(
+				existing => !assignedSupplementIds.includes(existing.custom_supplementsId)
+			);
+
+			for (const supplementToDeactivate of supplementsToDeactivate) {
+				await db
+					.update(assignedSupplements)
+					.set({ isActive: false, isDeleted: true, updatedAt: new Date() })
+					.where(eq(assignedSupplements.id, supplementToDeactivate.id));
+			}
+		} else {
+			// If no supplements to assign, mark all existing as inactive/deleted
+			await db
+				.update(assignedSupplements)
+				.set({ isActive: false, isDeleted: true, updatedAt: new Date() })
+				.where(and(
+					eq(assignedSupplements.nutrientsId, id),
+					eq(assignedSupplements.userId, session.user.id),
+					eq(assignedSupplements.isActive, true),
+					eq(assignedSupplements.isDeleted, false)
+				));
+		}
+
+		return { 
+			success: true,
+			assignedSupplements: assignedSupplementsResult
+		};
 	},
 
 	removeNutrients: async ({ request }: { request: Request }) => {
@@ -245,7 +357,16 @@ export const actions = {
 		const cla = Boolean(form.get("cla")) || false;
 		const zen = Boolean(form.get("zen")) || false;
 
-		// const time = form.get("time") as string;
+		const assignedSupplementsData = form.get("assignedSupplements");
+		let supplementsToAssign: Array<{ custom_supplementsId: number; quantity: string }> = [];
+		
+		if (assignedSupplementsData) {
+			try {
+				supplementsToAssign = JSON.parse(assignedSupplementsData as string);
+			} catch (error) {
+				console.error("Error parsing assigned supplements:", error);
+			}
+		}
 
 		const nutrientsData = await db
 			.insert(nutrients)
@@ -272,6 +393,20 @@ export const actions = {
 				fatburner,
 			})
 			.returning();
+		let assignedSupplementsResult: any[] = [];
+		if (supplementsToAssign.length > 0) {
+			const supplementValues = supplementsToAssign.map(supplement => ({
+				nutrientsId: nutrientsData[0].id,
+				custom_supplementsId: supplement.custom_supplementsId,
+				userId: session.user.id,
+				quantity: parseInt(supplement.quantity) || 0
+			}));
+
+			assignedSupplementsResult = await db
+				.insert(assignedSupplements)
+				.values(supplementValues)
+				.returning();
+		}
 
 		const healthData = await db
 			.insert(health_tracker)
@@ -292,6 +427,7 @@ export const actions = {
 				sleep: sleepData[0],
 				supplements: supplementData[0],
 				health: healthData[0],
+				assignedSupplements: assignedSupplementsResult
 			},
 		};
 	},

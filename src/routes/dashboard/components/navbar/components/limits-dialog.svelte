@@ -10,8 +10,10 @@
 	import Pill from "@lucide/svelte/icons/pill";
 	import Liquid from "@lucide/svelte/icons/milk";
 	import Gummy from "@lucide/svelte/icons/candy";
+	import Plus from "@lucide/svelte/icons/circle-plus";
 	import Minus from "@lucide/svelte/icons/minus";
 	import Up from "@lucide/svelte/icons/corner-right-up";
+	import Pencil from "@lucide/svelte/icons/pencil";
 	import Down from "@lucide/svelte/icons/corner-right-down";
 	import ColorPicker, { ChromeVariant } from "svelte-awesome-color-picker";
 	let { limits, userJourney, userSupplements } = $props<{
@@ -156,9 +158,9 @@
 
 					<Card.Root>
 						<Card.Header>
-							<Card.Title
-								>Supplements (BETA)
-								<Button onclick={() => (supplementDialogOpen = true)}>Add</Button>
+							<Card.Title class="flex items-center justify-between"
+								>Supplements
+								<Button variant="save" onclick={() => (supplementDialogOpen = true)}><Plus /></Button>
 							</Card.Title>
 						</Card.Header>
 
@@ -183,7 +185,7 @@
 											(editType = s.type),
 											(editName = s.name),
 											(editId = s.id)
-										)}>Edit</Button
+										)}><Pencil /></Button
 									>
 								</div>
 							{/each}
@@ -225,12 +227,15 @@
 				<div>
 					<Label for="color">Colour</Label>
 
-					<ColorPicker
-						bind:hex={selectedColor}
-						components={ChromeVariant}
-						sliderDirection="horizontal"
-					/>
-					<input type="hidden" name="color" value={selectedColor} />
+					<div class="border-accent mb-4 rounded-md border py-2">
+						<ColorPicker
+							label={selectedColor ? selectedColor : "Choose a color"}
+							bind:hex={selectedColor}
+							components={ChromeVariant}
+							sliderDirection="horizontal"
+						/>
+						<input type="hidden" name="color" value={selectedColor} />
+					</div>
 
 					<Select.Root type="single" name="type" bind:value>
 						<Select.Trigger class=" w-[180px]">
@@ -270,14 +275,16 @@
 				<Input name="name" placeholder="Enter supplement name" type="text" value={editName} />
 
 				<div>
-					<Label for="color">Colour</Label>
-
-					<ColorPicker
-						bind:hex={editColor}
-						components={ChromeVariant}
-						sliderDirection="horizontal"
-					/>
-					<input type="hidden" name="color" value={editColor} />
+					<Label>Colour</Label>
+					<div class="border-accent mb-4 rounded-md border py-2">
+						<ColorPicker
+							label={editColor}
+							bind:hex={editColor}
+							components={ChromeVariant}
+							sliderDirection="horizontal"
+						/>
+						<input type="hidden" name="color" value={editColor} />
+					</div>
 
 					<Select.Root type="single" name="type" bind:value={editType}>
 						<Select.Trigger class=" w-[180px]">

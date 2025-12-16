@@ -4,34 +4,73 @@
 	import Input from "$lib/components/ui/input/input.svelte";
 	import Label from "$lib/components/ui/label/label.svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
-	import { Checkbox } from "$lib/components/ui/checkbox/index.js";
+	import Plus from "@lucide/svelte/icons/circle-plus";
 	import SettingsIcon from "@lucide/svelte/icons/settings-2";
 	import X from "@lucide/svelte/icons/x";
 	import * as Sheet from "$lib/components/ui/sheet/index.js";
 	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
 	import Health from "@lucide/svelte/icons/heart";
+	import Pencil from "@lucide/svelte/icons/pencil";
 	import Measurement from "@lucide/svelte/icons/ruler";
 	import Apple from "@lucide/svelte/icons/apple";
 	import Bed from "@lucide/svelte/icons/bed";
 	import Pill from "@lucide/svelte/icons/pill";
-	let { dialogOpen = $bindable(), rowToEdit } = $props<{ dialogOpen: boolean; rowToEdit: any }>();
+	import Liquid from "@lucide/svelte/icons/milk";
+	import Gummy from "@lucide/svelte/icons/candy";
+
+	interface Supplements {
+		custom_supplementsId: number;
+		quantity: string;
+		custom_supplement?: {
+			name: string;
+			id: number;
+		};
+	}
+
+	interface SupplementData {
+		id: number;
+		name: string;
+	}
+
+	let {
+		dialogOpen = $bindable(),
+		rowToEdit,
+		allSupplements = [],
+	} = $props<{
+		dialogOpen: boolean;
+		rowToEdit: any;
+		allSupplements: any;
+	}>();
 
 	let deleteLoading = $state(false);
 	let updateLoading = $state(false);
+	let assignedSupplements = $state<Supplements[]>([]);
+	let supplementDialogOpen = $state(false);
+	let supplementQuantityEdit = $state(false);
+	let quantityInput = $state("");
+	let editingSupplementId = $state<number | null>(null);
+	let editQuantityInput = $state("");
+	let editQuantityName = $state("");
 
-	function formatDMY(dateString: string): string {
-		const date = new Date(dateString);
-		const day = date.getDate().toString().padStart(2, "0");
-		const month = (date.getMonth() + 1).toString().padStart(2, "0");
-		const year = date.getFullYear();
-		return `${year}-${month}-${day}`;
-	}
+	$inspect(rowToEdit);
+	$effect(() => {
+		if (rowToEdit?.allAssignedSupplements) {
+			assignedSupplements = [...rowToEdit.allAssignedSupplements];
+		}
+	});
 
 	function handleDeleteSubmit() {
 		deleteLoading = true;
 	}
-	function handleUpdateSubmit() {
+
+	function handleUpdateSubmit(event: Event) {
 		updateLoading = true;
+		const form = event.target as HTMLFormElement;
+		const formData = new FormData(form);
+
+		formData.set("assignedSupplements", JSON.stringify(assignedSupplements));
+
+		return true;
 	}
 
 	function formatDate(dateValue: string | Date): string {
@@ -42,6 +81,53 @@
 			year: "numeric",
 			day: "numeric",
 		});
+	}
+
+	function assignSupplement(supplementId: number, quantity: string) {
+		if (!quantity.trim()) {
+			console.log("No quantity provided, returning");
+			return;
+		}
+
+		const existingIndex = assignedSupplements.findIndex(
+			(s) => s.custom_supplementsId === supplementId
+		);
+
+		if (existingIndex >= 0) {
+			assignedSupplements[existingIndex].quantity = quantity;
+		} else {
+			assignedSupplements.push({
+				custom_supplementsId: supplementId,
+				quantity: quantity,
+			});
+		}
+
+		quantityInput = "";
+		// supplementDialogOpen = false;
+	}
+
+	function removeSupplement(supplementId: number) {
+		assignedSupplements = assignedSupplements.filter(
+			(s) => s.custom_supplementsId !== supplementId
+		);
+	}
+
+	function updateSupplementQuantity() {
+		if (!editQuantityInput.trim() || editingSupplementId === null) {
+			return;
+		}
+
+		const existingIndex = assignedSupplements.findIndex(
+			(s) => s.custom_supplementsId === editingSupplementId
+		);
+
+		if (existingIndex >= 0) {
+			assignedSupplements[existingIndex].quantity = editQuantityInput;
+		}
+
+		editingSupplementId = null;
+		editQuantityInput = "";
+		supplementQuantityEdit = false;
 	}
 </script>
 
@@ -62,6 +148,12 @@
 					onsubmit={handleUpdateSubmit}
 				>
 					<input type="hidden" name="id" value={rowToEdit?.id || ""} />
+					<!-- Hidden input to store assigned supplements data -->
+					<input
+						type="hidden"
+						name="assignedSupplements"
+						value={JSON.stringify(assignedSupplements)}
+					/>
 					<Card.Root class="bg-primary">
 						<Card.Header class="pb-3">
 							<Card.Title class="flex text-base"><Health class="mr-1" />Health</Card.Title>
@@ -96,6 +188,72 @@
 							</div>
 						</Card.Content>
 					</Card.Root>
+
+					<div>
+						<Card.Root class="bg-primary flex-1">
+							<Card.Header class="pb-3">
+								<Card.Title class="flex items-center justify-between text-base">
+									<span class="flex items-center"><Pill class="mr-1" />Supplements</span>
+									<Button variant="save" onclick={() => (supplementDialogOpen = true)}
+										><Plus /></Button
+									>
+								</Card.Title>
+							</Card.Header>
+							<Card.Content class="space-y-2">
+								<div class="pt-2">
+									{#if assignedSupplements.length > 0}
+										{#each assignedSupplements as supplement}
+											{@const supplementData = allSupplements.find(
+												(s: SupplementData) => s.id === supplement.custom_supplementsId
+											)}
+											<div class="bg-muted mb-2 flex items-center justify-between rounded p-2">
+												<div class="flex-1">
+													<span class="text-sm font-medium">{supplementData?.name || ""}</span>
+													<span class="text-sm font-medium"
+														>{#if supplementData.type === "Gummy"}
+															<Gummy style="color: {supplementData.color}" />
+														{:else if supplementData.type === "Liquid"}
+															<Liquid style="color: {supplementData.color}" />
+														{:else}
+															<Pill style="color: {supplementData.color}" />
+														{/if}</span
+													>
+													<span class="text-muted-foreground text-xs"
+														>Qty: {supplement.quantity}</span
+													>
+												</div>
+												<Button
+													size="sm"
+													variant="ghost"
+													onclick={() => {
+														editingSupplementId = supplement.custom_supplementsId;
+														editQuantityInput = supplement.quantity;
+														editQuantityName = supplementData?.name;
+														supplementQuantityEdit = true;
+													}}
+													class="hover:bg-primary hover:text-foreground h-6 w-6 p-0"
+												>
+													<Pencil />
+												</Button>
+												<Button
+													size="sm"
+													variant="ghost"
+													onclick={() => removeSupplement(supplement.custom_supplementsId)}
+													class="hover:bg-destructive hover:text-destructive-foreground h-6 w-6 p-0"
+												>
+													×
+												</Button>
+											</div>
+										{/each}
+									{:else}
+										<p class="text-muted-foreground flex flex-row justify-center text-sm">
+								No supplements assigned
+							</p>
+									{/if}
+								</div>
+							</Card.Content>
+						</Card.Root>
+					</div>
 
 					<div>
 						<Card.Root class="bg-primary flex-1">
@@ -163,57 +321,6 @@
 										value={rowToEdit?.carbs || ""}
 										class="h-8"
 									/>
-								</div>
-							</Card.Content>
-						</Card.Root>
-
-						<Card.Root class="bg-primary flex-1">
-							<Card.Header class="pb-3">
-								<Card.Title class="flex text-base"><Pill class="mr-1" />Supplements</Card.Title>
-							</Card.Header>
-							<Card.Content>
-								<div class="flex flex-col space-y-1">
-									<div class="my-4 flex items-start space-x-2">
-										<Checkbox
-											id="vitamin"
-											name="vitamin"
-											checked={rowToEdit?.multiVitamin == "true" ? true : false}
-										/>
-										<Label for="vitamin" class="text-sm">Vitamin</Label>
-									</div>
-									<div class="my-4 flex items-start space-x-2">
-										<Checkbox
-											id="magnesium"
-											name="magnesium"
-											checked={rowToEdit?.magnesium == "true" ? true : false}
-										/>
-										<Label for="magnesium" class="text-sm">Magnesium</Label>
-									</div>
-									<div class="my-4 flex items-start space-x-2">
-										<Checkbox
-											id="zen"
-											name="zen"
-											checked={rowToEdit?.zen == "true" ? true : false}
-										/>
-										<Label for="zen" class="text-sm">Zen</Label>
-									</div>
-
-									<div class="my-4 flex items-start space-x-2">
-										<Checkbox
-											id="cla"
-											name="cla"
-											checked={rowToEdit?.cla == "true" ? true : false}
-										/>
-										<Label for="cla" class="text-sm">CLA</Label>
-									</div>
-									<div class="my-4 flex items-start space-x-2">
-										<Checkbox
-											id="fatBurner"
-											name="fatBurner"
-											checked={rowToEdit?.fatBurner == "true" ? true : false}
-										/>
-										<Label for="fatBurner" class="text-sm">Fat Burner</Label>
-									</div>
 								</div>
 							</Card.Content>
 						</Card.Root>
@@ -300,3 +407,100 @@
 		</Sheet.Header>
 	</Sheet.Content>
 </Sheet.Root>
+
+<Dialog.Root bind:open={supplementQuantityEdit}>
+	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="sm:max-w-[500px]">
+		<Dialog.Header>
+			<Dialog.Title>Edit {editQuantityName}</Dialog.Title>
+		</Dialog.Header>
+		<div class="space-y-4">
+			<div>
+				<Label for="editQuantity" class="text-sm">Quantity</Label>
+				<Input
+					id="editQuantity"
+					bind:value={editQuantityInput}
+					placeholder="Enter quantity"
+					type="text"
+					class="h-8"
+				/>
+			</div>
+			<div class="flex justify-end space-x-2">
+				<Button
+					variant="outline"
+					onclick={() => {
+						supplementQuantityEdit = false;
+						editingSupplementId = null;
+						editQuantityInput = "";
+					}}
+				>
+					Cancel
+				</Button>
+				<Button variant="save" onclick={updateSupplementQuantity}>Save</Button>
+			</div>
+		</div>
+	</Dialog.Content>
+</Dialog.Root>
+
+<Dialog.Root bind:open={supplementDialogOpen}>
+	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="sm:max-w-[500px]">
+		<Dialog.Header>
+			<Dialog.Title>Add Supplements</Dialog.Title>
+		</Dialog.Header>
+		<div class="space-y-4">
+			<div>
+				<Label for="quantity" class="text-sm">Quantity</Label>
+				<Input
+					id="quantity"
+					bind:value={quantityInput}
+					placeholder="Enter quantity"
+					type="text"
+					class="h-8"
+					oninput={(e) => {
+						const target = e.target as HTMLInputElement;
+						if (target) {
+							quantityInput = target.value;
+						}
+					}}
+				/>
+			</div>
+
+			<div class="max-h-60 space-y-2 overflow-y-auto rounded border p-2">
+				<p class="text-muted-foreground mb-2 text-sm">
+					Available Supplements: {allSupplements?.length || 0}
+				</p>
+				{#if allSupplements && allSupplements.length > 0}
+					{#each allSupplements as s}
+						{@const isAlreadyAssigned = assignedSupplements.some(
+							(assigned: Supplements) => assigned.custom_supplementsId === s.id
+						)}
+						<div
+							class="hover:bg-muted flex items-center justify-between rounded border p-2 {isAlreadyAssigned
+								? 'opacity-50'
+								: ''}"
+						>
+							<span class="text-sm">{s.name}</span>
+							{#if s.type === "Gummy"}
+								<Gummy style="color: {s.color}" />
+							{:else if s.type === "Liquid"}
+								<Liquid style="color: {s.color}" />
+							{:else}
+								<Pill style="color: {s.color}" />
+							{/if}
+							<Button
+								type="button"
+								size="sm"
+								onclick={() => assignSupplement(s.id, quantityInput)}
+								disabled={!quantityInput.trim() || isAlreadyAssigned}
+								variant={isAlreadyAssigned ? "success" : "default"}
+							>
+								{isAlreadyAssigned ? "Added" : "Add"}
+							</Button>
+						</div>
+					{/each}
+				{:else}
+					<p class="text-muted-foreground text-sm">No supplements available</p>
+				{/if}
+			</div>
+		</div>
+	</Dialog.Content>
+</Dialog.Root>
