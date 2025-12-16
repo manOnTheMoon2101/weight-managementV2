@@ -10,11 +10,13 @@
 	import * as Sheet from "$lib/components/ui/sheet/index.js";
 	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
 	import Health from "@lucide/svelte/icons/heart";
-	import Pencil from "@lucide/svelte/icons/pencil"
+	import Pencil from "@lucide/svelte/icons/pencil";
 	import Measurement from "@lucide/svelte/icons/ruler";
 	import Apple from "@lucide/svelte/icons/apple";
 	import Bed from "@lucide/svelte/icons/bed";
 	import Pill from "@lucide/svelte/icons/pill";
+	import Liquid from "@lucide/svelte/icons/milk";
+	import Gummy from "@lucide/svelte/icons/candy";
 
 	interface Supplements {
 		custom_supplementsId: number;
@@ -44,7 +46,7 @@
 	let updateLoading = $state(false);
 	let assignedSupplements = $state<Supplements[]>([]);
 	let supplementDialogOpen = $state(false);
-	let supplementQuantityEdit = $state(false)
+	let supplementQuantityEdit = $state(false);
 	let quantityInput = $state("");
 	let editingSupplementId = $state<number | null>(null);
 	let editQuantityInput = $state("");
@@ -82,7 +84,6 @@
 	}
 
 	function assignSupplement(supplementId: number, quantity: string) {
-
 		if (!quantity.trim()) {
 			console.log("No quantity provided, returning");
 			return;
@@ -100,7 +101,6 @@
 				quantity: quantity,
 			});
 		}
-
 
 		quantityInput = "";
 		// supplementDialogOpen = false;
@@ -124,7 +124,6 @@
 		if (existingIndex >= 0) {
 			assignedSupplements[existingIndex].quantity = editQuantityInput;
 		}
-
 
 		editingSupplementId = null;
 		editQuantityInput = "";
@@ -207,10 +206,15 @@
 											)}
 											<div class="bg-muted mb-2 flex items-center justify-between rounded p-2">
 												<div class="flex-1">
-													<span class="text-sm font-medium"
-														>{supplementData?.name || ""}</span
-													>
-													<span class="text-muted-foreground ml-2 text-xs"
+													<span class="text-sm font-medium">{supplementData?.name || ""}</span>
+													<span class="text-sm font-medium">{#if supplementData.type === "Gummy"}
+											<Gummy style="color: {supplementData.color}" />
+										{:else if supplementData.type === "Liquid"}
+											<Liquid style="color: {supplementData.color}" />
+										{:else}
+											<Pill style="color: {supplementData.color}" />
+										{/if}</span>
+													<span class="text-muted-foreground text-xs"
 														>Qty: {supplement.quantity}</span
 													>
 												</div>
@@ -225,7 +229,7 @@
 													}}
 													class="hover:bg-primary hover:text-foreground h-6 w-6 p-0"
 												>
-													<Pencil/>
+													<Pencil />
 												</Button>
 												<Button
 													size="sm"
@@ -314,8 +318,6 @@
 								</div>
 							</Card.Content>
 						</Card.Root>
-
-						
 					</div>
 
 					<Card.Root class="bg-primary">
@@ -400,12 +402,6 @@
 	</Sheet.Content>
 </Sheet.Root>
 
-
-
-
-
-
-
 <Dialog.Root bind:open={supplementQuantityEdit}>
 	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="sm:max-w-[500px]">
 		<Dialog.Header>
@@ -439,8 +435,6 @@
 	</Dialog.Content>
 </Dialog.Root>
 
-
-
 <Dialog.Root bind:open={supplementDialogOpen}>
 	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="sm:max-w-[500px]">
 		<Dialog.Header>
@@ -459,7 +453,6 @@
 						const target = e.target as HTMLInputElement;
 						if (target) {
 							quantityInput = target.value;
-							console.log("Input changed to:", quantityInput);
 						}
 					}}
 				/>
@@ -480,12 +473,19 @@
 								: ''}"
 						>
 							<span class="text-sm">{s.name}</span>
+							{#if s.type === "Gummy"}
+											<Gummy style="color: {s.color}" />
+										{:else if s.type === "Liquid"}
+											<Liquid style="color: {s.color}" />
+										{:else}
+											<Pill style="color: {s.color}" />
+										{/if}
 							<Button
 								type="button"
 								size="sm"
 								onclick={() => assignSupplement(s.id, quantityInput)}
 								disabled={!quantityInput.trim() || isAlreadyAssigned}
-								variant={isAlreadyAssigned ? "secondary" : "default"}
+								variant={isAlreadyAssigned ? "success" : "default"}
 							>
 								{isAlreadyAssigned ? "Added" : "Add"}
 							</Button>
