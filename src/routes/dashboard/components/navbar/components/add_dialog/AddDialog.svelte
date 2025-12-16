@@ -74,7 +74,7 @@
 			console.log("Added new supplement");
 		}
 		
-		console.log("Current assignedSupplements:", assignedSupplements);
+	
 		
 		// Reset input and close dialog
 		quantityInput = "";
@@ -254,11 +254,6 @@
 						}
 					}}
 				/>
-				<p class="text-xs text-muted-foreground">Current value: "{quantityInput}" (length: {quantityInput.length})</p>
-				<div class="flex gap-2">
-					<Button type="button" size="sm" onclick={() => console.log('quantityInput:', quantityInput)}>Debug Log</Button>
-					<Button type="button" size="sm" onclick={() => quantityInput = '5'}>Set to 5</Button>
-				</div>
 			</div>
 
 			<div class="space-y-2 max-h-60 overflow-y-auto border rounded p-2">
@@ -277,11 +272,11 @@
 							>
 								{isAlreadyAssigned ? 'Added' : 'Add'}
 							</Button>
-							{s.id}
+							
 						</div>
 					{/each}
 				{:else}
-					<p class="text-sm text-muted-foreground">No supplements available (allSupplements: {JSON.stringify(allSupplements)})</p>
+					<p class="text-sm text-muted-foreground">No supplements available</p>
 				{/if}
 			</div>
 		</div>

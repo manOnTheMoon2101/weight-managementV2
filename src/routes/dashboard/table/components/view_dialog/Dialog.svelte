@@ -29,12 +29,12 @@
 		name: string;
 	}
 
-	let { 
-		dialogOpen = $bindable(), 
+	let {
+		dialogOpen = $bindable(),
 		rowToEdit,
-		allSupplements = []
-	} = $props<{ 
-		dialogOpen: boolean; 
+		allSupplements = [],
+	} = $props<{
+		dialogOpen: boolean;
 		rowToEdit: any;
 		allSupplements: SupplementData[];
 	}>();
@@ -45,9 +45,9 @@
 	let supplementDialogOpen = $state(false);
 	let quantityInput = $state("");
 
-	$inspect(rowToEdit)
-	$inspect(assignedSupplements)
-	$inspect(allSupplements)
+	$inspect(rowToEdit);
+	$inspect(assignedSupplements);
+	$inspect(allSupplements);
 
 	$effect(() => {
 		if (rowToEdit?.allAssignedSupplements) {
@@ -58,17 +58,17 @@
 	function handleDeleteSubmit() {
 		deleteLoading = true;
 	}
-	
+
 	function handleUpdateSubmit(event: Event) {
 		updateLoading = true;
-		
+
 		// Add assigned supplements data to form
 		const form = event.target as HTMLFormElement;
 		const formData = new FormData(form);
-		
+
 		// Add the assigned supplements as JSON string
-		formData.set('assignedSupplements', JSON.stringify(assignedSupplements));
-		
+		formData.set("assignedSupplements", JSON.stringify(assignedSupplements));
+
 		// Submit the form with the updated data
 		return true;
 	}
@@ -85,15 +85,17 @@
 
 	function assignSupplement(supplementId: number, quantity: string) {
 		console.log("assignSupplement called with:", supplementId, quantity);
-		
+
 		if (!quantity.trim()) {
 			console.log("No quantity provided, returning");
 			return;
 		}
-		
+
 		// Check if supplement is already assigned
-		const existingIndex = assignedSupplements.findIndex(s => s.custom_supplementsId === supplementId);
-		
+		const existingIndex = assignedSupplements.findIndex(
+			(s) => s.custom_supplementsId === supplementId
+		);
+
 		if (existingIndex >= 0) {
 			// Update existing supplement quantity
 			assignedSupplements[existingIndex].quantity = quantity;
@@ -102,20 +104,22 @@
 			// Add new supplement
 			assignedSupplements.push({
 				custom_supplementsId: supplementId,
-				quantity: quantity
+				quantity: quantity,
 			});
 			console.log("Added new supplement");
 		}
-		
-		console.log("Current assignedSupplements:", assignedSupplements);
-		
+
+
+
 		// Reset input and close dialog
 		quantityInput = "";
 		supplementDialogOpen = false;
 	}
 
 	function removeSupplement(supplementId: number) {
-		assignedSupplements = assignedSupplements.filter(s => s.custom_supplementsId !== supplementId);
+		assignedSupplements = assignedSupplements.filter(
+			(s) => s.custom_supplementsId !== supplementId
+		);
 	}
 </script>
 
@@ -137,7 +141,11 @@
 				>
 					<input type="hidden" name="id" value={rowToEdit?.id || ""} />
 					<!-- Hidden input to store assigned supplements data -->
-					<input type="hidden" name="assignedSupplements" value={JSON.stringify(assignedSupplements)} />
+					<input
+						type="hidden"
+						name="assignedSupplements"
+						value={JSON.stringify(assignedSupplements)}
+					/>
 					<Card.Root class="bg-primary">
 						<Card.Header class="pb-3">
 							<Card.Title class="flex text-base"><Health class="mr-1" />Health</Card.Title>
@@ -247,35 +255,39 @@
 							<Card.Header class="pb-3">
 								<Card.Title class="flex items-center justify-between text-base">
 									<span class="flex items-center"><Pill class="mr-1" />Supplements</span>
-									<Button size="sm" onclick={() => supplementDialogOpen = true}>Add</Button>
+									<Button size="sm" onclick={() => (supplementDialogOpen = true)}>Add</Button>
 								</Card.Title>
 							</Card.Header>
 							<Card.Content class="space-y-2">
-								
-
 								<!-- Custom Supplements Section -->
 								<div class="border-t pt-2">
-									<h4 class="text-sm font-medium mb-2">Custom Supplements</h4>
+									<h4 class="mb-2 text-sm font-medium">Custom Supplements</h4>
 									{#if assignedSupplements.length > 0}
 										{#each assignedSupplements as supplement}
-											{@const supplementData = allSupplements.find((s: SupplementData) => s.id === supplement.custom_supplementsId)}
-											<div class="flex items-center justify-between bg-muted p-2 rounded mb-2">
+											{@const supplementData = allSupplements.find(
+												(s: SupplementData) => s.id === supplement.custom_supplementsId
+											)}
+											<div class="bg-muted mb-2 flex items-center justify-between rounded p-2">
 												<div class="flex-1">
-													<span class="text-sm font-medium">{supplement.custom_supplement?.name || ''}</span>
-													<span class="text-xs text-muted-foreground ml-2">Qty: {supplement.quantity}</span>
+													<span class="text-sm font-medium"
+														>{supplement.custom_supplement?.name || ""}</span
+													>
+													<span class="text-muted-foreground ml-2 text-xs"
+														>Qty: {supplement.quantity}</span
+													>
 												</div>
-												<Button 
-													size="sm" 
-													variant="ghost" 
+												<Button
+													size="sm"
+													variant="ghost"
 													onclick={() => removeSupplement(supplement.custom_supplementsId)}
-													class="h-6 w-6 p-0 hover:bg-destructive hover:text-destructive-foreground"
+													class="hover:bg-destructive hover:text-destructive-foreground h-6 w-6 p-0"
 												>
 													×
 												</Button>
 											</div>
 										{/each}
 									{:else}
-										<p class="text-sm text-muted-foreground">No custom supplements assigned</p>
+										<p class="text-muted-foreground text-sm">No custom supplements assigned</p>
 									{/if}
 								</div>
 							</Card.Content>
@@ -373,8 +385,8 @@
 		<div class="space-y-4">
 			<div>
 				<Label for="quantity" class="text-sm">Quantity</Label>
-				<Input 
-					id="quantity" 
+				<Input
+					id="quantity"
 					bind:value={quantityInput}
 					placeholder="Enter quantity"
 					type="text"
@@ -383,33 +395,40 @@
 						const target = e.target as HTMLInputElement;
 						if (target) {
 							quantityInput = target.value;
-							console.log('Input changed to:', quantityInput);
+							console.log("Input changed to:", quantityInput);
 						}
 					}}
 				/>
-				<p class="text-xs text-muted-foreground">Current value: "{quantityInput}" (length: {quantityInput.length})</p>
 			</div>
 
-			<div class="space-y-2 max-h-60 overflow-y-auto border rounded p-2">
-				<p class="text-sm text-muted-foreground mb-2">Available Supplements: {allSupplements?.length || 0}</p>
+			<div class="max-h-60 space-y-2 overflow-y-auto rounded border p-2">
+				<p class="text-muted-foreground mb-2 text-sm">
+					Available Supplements: {allSupplements?.length || 0}
+				</p>
 				{#if allSupplements && allSupplements.length > 0}
 					{#each allSupplements as s}
-						{@const isAlreadyAssigned = assignedSupplements.some((assigned: Supplements) => assigned.custom_supplementsId === s.id)}
-						<div class="flex items-center justify-between p-2 border rounded hover:bg-muted {isAlreadyAssigned ? 'opacity-50' : ''}">
+						{@const isAlreadyAssigned = assignedSupplements.some(
+							(assigned: Supplements) => assigned.custom_supplementsId === s.id
+						)}
+						<div
+							class="hover:bg-muted flex items-center justify-between rounded border p-2 {isAlreadyAssigned
+								? 'opacity-50'
+								: ''}"
+						>
 							<span class="text-sm">{s.name}</span>
-							<Button 
+							<Button
 								type="button"
-								size="sm" 
+								size="sm"
 								onclick={() => assignSupplement(s.id, quantityInput)}
 								disabled={!quantityInput.trim() || isAlreadyAssigned}
 								variant={isAlreadyAssigned ? "secondary" : "default"}
 							>
-								{isAlreadyAssigned ? 'Added' : 'Add'}
+								{isAlreadyAssigned ? "Added" : "Add"}
 							</Button>
 						</div>
 					{/each}
 				{:else}
-					<p class="text-sm text-muted-foreground">No supplements available</p>
+					<p class="text-muted-foreground text-sm">No supplements available</p>
 				{/if}
 			</div>
 		</div>
