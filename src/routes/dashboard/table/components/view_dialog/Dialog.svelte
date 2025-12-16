@@ -10,6 +10,7 @@
 	import * as Sheet from "$lib/components/ui/sheet/index.js";
 	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
 	import Health from "@lucide/svelte/icons/heart";
+	import Pencil from "@lucide/svelte/icons/pencil"
 	import Measurement from "@lucide/svelte/icons/ruler";
 	import Apple from "@lucide/svelte/icons/apple";
 	import Bed from "@lucide/svelte/icons/bed";
@@ -47,6 +48,7 @@
 	let quantityInput = $state("");
 	let editingSupplementId = $state<number | null>(null);
 	let editQuantityInput = $state("");
+	let editQuantityName = $state("");
 
 	$inspect(rowToEdit);
 	$effect(() => {
@@ -123,7 +125,7 @@
 			assignedSupplements[existingIndex].quantity = editQuantityInput;
 		}
 
-		// Reset edit state
+
 		editingSupplementId = null;
 		editQuantityInput = "";
 		supplementQuantityEdit = false;
@@ -218,11 +220,12 @@
 													onclick={() => {
 														editingSupplementId = supplement.custom_supplementsId;
 														editQuantityInput = supplement.quantity;
+														editQuantityName = supplementData?.name;
 														supplementQuantityEdit = true;
 													}}
-													class="hover:bg-destructive hover:text-destructive-foreground h-6 w-6 p-0"
+													class="hover:bg-primary hover:text-foreground h-6 w-6 p-0"
 												>
-													edit
+													<Pencil/>
 												</Button>
 												<Button
 													size="sm"
@@ -406,7 +409,7 @@
 <Dialog.Root bind:open={supplementQuantityEdit}>
 	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="sm:max-w-[500px]">
 		<Dialog.Header>
-			<Dialog.Title>Edit Quantity</Dialog.Title>
+			<Dialog.Title>Edit {editQuantityName}</Dialog.Title>
 		</Dialog.Header>
 		<div class="space-y-4">
 			<div>
@@ -430,7 +433,7 @@
 				>
 					Cancel
 				</Button>
-				<Button onclick={updateSupplementQuantity}>Save</Button>
+				<Button variant="save" onclick={updateSupplementQuantity}>Save</Button>
 			</div>
 		</div>
 	</Dialog.Content>
