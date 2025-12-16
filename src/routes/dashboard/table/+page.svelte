@@ -152,9 +152,6 @@
 			sortable: false,
 			minWidth: 150,
 			cellRenderer: makeSvelteCellRenderer(Supplements as any),
-			cellRendererParams: {
-				supplementFields: ["fatBurner", "zen", "multiVitamin", "magnesium", "cla"],
-			},
 		},
 		{ headerName: "Protein", field: "protein", filter: "agNumberColumnFilter" },
 		{

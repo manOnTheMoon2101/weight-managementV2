@@ -1,50 +1,37 @@
 <script lang="ts">
 	import type { ICellRendererParams } from "@ag-grid-community/core";
 	import Pill from "@lucide/svelte/icons/pill";
+	import Liquid from "@lucide/svelte/icons/milk";
+	import Gummy from "@lucide/svelte/icons/candy";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
-	let {
-		value,
-		data,
-		supplementFields,
-	}: ICellRendererParams & {
-		supplementFields: any[];
-	} = $props();
 
-	let supplements = $derived(
-		supplementFields?.map((field) => ({
-			name: field,
-			value: data[field],
-		})) || []
-	);
+	let { data }: ICellRendererParams = $props();
 
-	const supplementColors: any = {
-		fatBurner: "text-chart1",
-		zen: "text-chart2",
-		multiVitamin: "text-chart3",
-		magnesium: "text-chart4",
-		cla: "text-chart5",
-	};
+	let supplements = $derived(data.allAssignedSupplements || []);
 
-	const supplementDisplayNames: any = {
-		fatBurner: "L-Carnitine",
-		zen: "Zen",
-		multiVitamin: "Multi-Vitamin",
-		magnesium: "Magnesium",
-		cla: "CLA",
-	};
+	$inspect(supplements);
 </script>
 
 <div class="flex flex-row">
-    {#each supplements.filter(s => s.value == "true") as supplement}
-        <Tooltip.Provider delayDuration={100}>
-            <Tooltip.Root>
-                <Tooltip.Trigger>
-                    <Pill class={supplementColors[supplement.name]} />
-                </Tooltip.Trigger>
-                <Tooltip.Content>
-                    <p>{supplementDisplayNames[supplement.name] || supplement.name}</p>
-                </Tooltip.Content>
-            </Tooltip.Root>
-        </Tooltip.Provider>
-    {/each}
+	{#each supplements as supplement}
+		<Tooltip.Provider delayDuration={100}>
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#if supplement.custom_supplement?.type === "Gummy"}
+						<Gummy style="color: {supplement.custom_supplement?.color}" />
+					{:else if supplement.custom_supplement?.type === "Liquid"}
+						<Liquid style="color: {supplement.custom_supplement?.color}" />
+					{:else}
+						<Pill style="color: {supplement.custom_supplement?.color}" />
+					{/if}
+				</Tooltip.Trigger>
+				<Tooltip.Content>
+					<p>{supplement.custom_supplement?.name}</p>
+					{#if supplement.quantity}
+						<p class="text-muted-foreground text-sm">Quantity: {supplement.quantity}</p>
+					{/if}
+				</Tooltip.Content>
+			</Tooltip.Root>
+		</Tooltip.Provider>
+	{/each}
 </div>
