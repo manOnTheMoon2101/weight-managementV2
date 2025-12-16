@@ -4,7 +4,7 @@
 	import Input from "$lib/components/ui/input/input.svelte";
 	import Label from "$lib/components/ui/label/label.svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
-
+	import Plus from "@lucide/svelte/icons/circle-plus";
 	import SettingsIcon from "@lucide/svelte/icons/settings-2";
 	import X from "@lucide/svelte/icons/x";
 	import * as Sheet from "$lib/components/ui/sheet/index.js";
@@ -194,11 +194,13 @@
 							<Card.Header class="pb-3">
 								<Card.Title class="flex items-center justify-between text-base">
 									<span class="flex items-center"><Pill class="mr-1" />Supplements</span>
-									<Button size="sm" onclick={() => (supplementDialogOpen = true)}>Add</Button>
+									<Button variant="save" onclick={() => (supplementDialogOpen = true)}
+										><Plus /></Button
+									>
 								</Card.Title>
 							</Card.Header>
 							<Card.Content class="space-y-2">
-								<div class="border-t pt-2">
+								<div class="pt-2">
 									{#if assignedSupplements.length > 0}
 										{#each assignedSupplements as supplement}
 											{@const supplementData = allSupplements.find(
@@ -207,13 +209,15 @@
 											<div class="bg-muted mb-2 flex items-center justify-between rounded p-2">
 												<div class="flex-1">
 													<span class="text-sm font-medium">{supplementData?.name || ""}</span>
-													<span class="text-sm font-medium">{#if supplementData.type === "Gummy"}
-											<Gummy style="color: {supplementData.color}" />
-										{:else if supplementData.type === "Liquid"}
-											<Liquid style="color: {supplementData.color}" />
-										{:else}
-											<Pill style="color: {supplementData.color}" />
-										{/if}</span>
+													<span class="text-sm font-medium"
+														>{#if supplementData.type === "Gummy"}
+															<Gummy style="color: {supplementData.color}" />
+														{:else if supplementData.type === "Liquid"}
+															<Liquid style="color: {supplementData.color}" />
+														{:else}
+															<Pill style="color: {supplementData.color}" />
+														{/if}</span
+													>
 													<span class="text-muted-foreground text-xs"
 														>Qty: {supplement.quantity}</span
 													>
@@ -242,7 +246,7 @@
 											</div>
 										{/each}
 									{:else}
-										<p class="text-muted-foreground text-sm">No custom supplements assigned</p>
+										<p class="text-muted-foreground text-sm">No supplements assigned</p>
 									{/if}
 								</div>
 							</Card.Content>
@@ -474,12 +478,12 @@
 						>
 							<span class="text-sm">{s.name}</span>
 							{#if s.type === "Gummy"}
-											<Gummy style="color: {s.color}" />
-										{:else if s.type === "Liquid"}
-											<Liquid style="color: {s.color}" />
-										{:else}
-											<Pill style="color: {s.color}" />
-										{/if}
+								<Gummy style="color: {s.color}" />
+							{:else if s.type === "Liquid"}
+								<Liquid style="color: {s.color}" />
+							{:else}
+								<Pill style="color: {s.color}" />
+							{/if}
 							<Button
 								type="button"
 								size="sm"

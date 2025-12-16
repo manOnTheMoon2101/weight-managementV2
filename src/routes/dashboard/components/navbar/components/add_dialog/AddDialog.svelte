@@ -10,10 +10,9 @@
 	import Apple from "@lucide/svelte/icons/apple";
 	import Pill from "@lucide/svelte/icons/pill";
 	import Plus from "@lucide/svelte/icons/circle-plus";
-		import Liquid from "@lucide/svelte/icons/milk";
+	import Liquid from "@lucide/svelte/icons/milk";
 	import Gummy from "@lucide/svelte/icons/candy";
 	import * as Dialog from "$lib/components/ui/dialog/index.js";
-
 
 	interface Supplements {
 		custom_supplementsId: number;
@@ -25,66 +24,66 @@
 		name: string;
 	}
 
-
 	let {
 		dialogOpen = $bindable(),
 		latestWaist = {},
 		latestWeight = {},
-		allSupplements = {}
-	} = $props<{ dialogOpen: boolean; latestWaist: any; latestWeight: any; allSupplements: SupplementData[] }>();
+		allSupplements = {},
+	} = $props<{
+		dialogOpen: boolean;
+		latestWaist: any;
+		latestWeight: any;
+		allSupplements: SupplementData[];
+	}>();
 
 	let createLoading = $state(false);
-	let assignedSupplements = $state<Supplements[]>([])
+	let assignedSupplements = $state<Supplements[]>([]);
 	let supplementDialogOpen = $state(false);
 	let quantityInput = $state("");
 
 	function handleCreateSubmit(event: Event) {
 		createLoading = true;
-		
-		// Add assigned supplements data to form
+
 		const form = event.target as HTMLFormElement;
 		const formData = new FormData(form);
-		
-		// Add the assigned supplements as JSON string
-		formData.set('assignedSupplements', JSON.stringify(assignedSupplements));
-		
-		// Submit the form with the updated data
+
+		formData.set("assignedSupplements", JSON.stringify(assignedSupplements));
+
 		return true;
 	}
 
 	function assignSupplement(supplementId: number, quantity: string) {
 		console.log("assignSupplement called with:", supplementId, quantity);
-		
+
 		if (!quantity.trim()) {
 			console.log("No quantity provided, returning");
 			return;
 		}
-		
-		// Check if supplement is already assigned
-		const existingIndex = assignedSupplements.findIndex(s => s.custom_supplementsId === supplementId);
-		
+
+		const existingIndex = assignedSupplements.findIndex(
+			(s) => s.custom_supplementsId === supplementId
+		);
+
 		if (existingIndex >= 0) {
-			// Update existing supplement quantity
 			assignedSupplements[existingIndex].quantity = quantity;
 			console.log("Updated existing supplement");
 		} else {
-			// Add new supplement
 			assignedSupplements.push({
 				custom_supplementsId: supplementId,
-				quantity: quantity
+				quantity: quantity,
 			});
 			console.log("Added new supplement");
 		}
-		
-	
-		
+
 		// Reset input and close dialog
 		quantityInput = "";
 		supplementDialogOpen = false;
 	}
 
 	function removeSupplement(supplementId: number) {
-		assignedSupplements = assignedSupplements.filter(s => s.custom_supplementsId !== supplementId);
+		assignedSupplements = assignedSupplements.filter(
+			(s) => s.custom_supplementsId !== supplementId
+		);
 	}
 </script>
 
@@ -130,47 +129,54 @@
 				</Card.Content>
 			</Card.Root>
 
-
 			<div>
-	<Card.Root class="bg-primary flex-1">
+				<Card.Root class="bg-primary flex-1">
 					<Card.Header class="pb-3">
 						<Card.Title class="flex items-center justify-between text-base">
 							<span class="flex items-center"><Pill class="mr-1" />Supplements</span>
-							<Button size="sm" onclick={() => supplementDialogOpen = true}>Add</Button>
+							<Button variant="save" onclick={() => (supplementDialogOpen = true)}><Plus /></Button>
 						</Card.Title>
 					</Card.Header>
 					<Card.Content class="space-y-2">
 						{#if assignedSupplements.length > 0}
 							{#each assignedSupplements as supplement}
-								{@const supplementData = allSupplements.find((s: { id: number; }) => s.id === supplement.custom_supplementsId)}
-								<div class="flex items-center justify-between bg-muted p-2 rounded">
+								{@const supplementData = allSupplements.find(
+									(s: { id: number }) => s.id === supplement.custom_supplementsId
+								)}
+								<div class="bg-muted flex items-center justify-between rounded p-2">
 									<div class="flex-1">
-										<span class="text-sm font-medium">{supplementData?.name || 'Unknown'}</span>
-											<span class="text-sm font-medium">{#if supplementData.type === "Gummy"}
-											<Gummy style="color: {supplementData.color}" />
-										{:else if supplementData.type === "Liquid"}
-											<Liquid style="color: {supplementData.color}" />
-										{:else}
-											<Pill style="color: {supplementData.color}" />
-										{/if}</span>
-										<span class="text-xs text-muted-foreground ml-2">Qty: {supplement.quantity}</span>
+										<span class="text-sm font-medium">{supplementData?.name || "Unknown"}</span>
+										<span class="text-sm font-medium"
+											>{#if supplementData.type === "Gummy"}
+												<Gummy style="color: {supplementData.color}" />
+											{:else if supplementData.type === "Liquid"}
+												<Liquid style="color: {supplementData.color}" />
+											{:else}
+												<Pill style="color: {supplementData.color}" />
+											{/if}</span
+										>
+										<span class="text-muted-foreground ml-2 text-xs"
+											>Qty: {supplement.quantity}</span
+										>
 									</div>
-									<Button 
-										size="sm" 
-										variant="ghost" 
+									<Button
+										size="sm"
+										variant="ghost"
 										onclick={() => removeSupplement(supplement.custom_supplementsId)}
-										class="h-6 w-6 p-0 hover:bg-destructive hover:text-destructive-foreground"
+										class="hover:bg-destructive hover:text-destructive-foreground h-6 w-6 p-0"
 									>
 										×
 									</Button>
 								</div>
 							{/each}
 						{:else}
-							<p class="text-sm text-muted-foreground flex flex-row justify-center">No supplements assigned</p>
+							<p class="text-muted-foreground flex flex-row justify-center text-sm">
+								No supplements assigned
+							</p>
 						{/if}
 					</Card.Content>
 				</Card.Root>
-				</div>
+			</div>
 
 			<div>
 				<Card.Root class="bg-primary flex-1">
@@ -219,11 +225,8 @@
 						</div>
 					</Card.Content>
 				</Card.Root>
-
-			
 			</div>
 
-			
 			<div class="mt-4 flex gap-2">
 				{#if !createLoading}
 					<Button type="submit" class="w-full" variant="save">Create</Button>
@@ -240,12 +243,6 @@
 	</Sheet.Content>
 </Sheet.Root>
 
-
-
-
-
-
-
 <Dialog.Root bind:open={supplementDialogOpen}>
 	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="sm:max-w-[500px]">
 		<Dialog.Header>
@@ -254,8 +251,8 @@
 		<div class="space-y-4">
 			<div>
 				<Label for="quantity" class="text-sm">Quantity</Label>
-				<Input 
-					id="quantity" 
+				<Input
+					id="quantity"
 					bind:value={quantityInput}
 					placeholder="Enter quantity"
 					type="text"
@@ -269,34 +266,41 @@
 				/>
 			</div>
 
-			<div class="space-y-2 max-h-60 overflow-y-auto border rounded p-2">
-				<p class="text-sm text-muted-foreground mb-2">Available Supplements: {allSupplements?.length || 0}</p>
+			<div class="max-h-60 space-y-2 overflow-y-auto rounded border p-2">
+				<p class="text-muted-foreground mb-2 text-sm">
+					Available Supplements: {allSupplements?.length || 0}
+				</p>
 				{#if allSupplements && allSupplements.length > 0}
 					{#each allSupplements as s}
-						{@const isAlreadyAssigned = assignedSupplements.some(assigned => assigned.custom_supplementsId === s.id)}
-						<div class="flex items-center justify-between p-2 border rounded hover:bg-muted {isAlreadyAssigned ? 'opacity-50' : ''}">
+						{@const isAlreadyAssigned = assignedSupplements.some(
+							(assigned) => assigned.custom_supplementsId === s.id
+						)}
+						<div
+							class="hover:bg-muted flex items-center justify-between rounded border p-2 {isAlreadyAssigned
+								? 'opacity-50'
+								: ''}"
+						>
 							<span class="text-sm">{s.name}</span>
-								{#if s.type === "Gummy"}
-											<Gummy style="color: {s.color}" />
-										{:else if s.type === "Liquid"}
-											<Liquid style="color: {s.color}" />
-										{:else}
-											<Pill style="color: {s.color}" />
-										{/if}
-							<Button 
+							{#if s.type === "Gummy"}
+								<Gummy style="color: {s.color}" />
+							{:else if s.type === "Liquid"}
+								<Liquid style="color: {s.color}" />
+							{:else}
+								<Pill style="color: {s.color}" />
+							{/if}
+							<Button
 								type="button"
-								size="sm" 
+								size="sm"
 								onclick={() => assignSupplement(s.id, quantityInput)}
 								disabled={!quantityInput.trim() || isAlreadyAssigned}
 								variant={isAlreadyAssigned ? "success" : "default"}
 							>
-								{isAlreadyAssigned ? 'Added' : 'Add'}
+								{isAlreadyAssigned ? "Added" : "Add"}
 							</Button>
-							
 						</div>
 					{/each}
 				{:else}
-					<p class="text-sm text-muted-foreground">No supplements available</p>
+					<p class="text-muted-foreground text-sm">No supplements available</p>
 				{/if}
 			</div>
 		</div>
