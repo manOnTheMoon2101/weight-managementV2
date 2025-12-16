@@ -184,6 +184,58 @@
 					<div>
 						<Card.Root class="bg-primary flex-1">
 							<Card.Header class="pb-3">
+								<Card.Title class="flex items-center justify-between text-base">
+									<span class="flex items-center"><Pill class="mr-1" />Supplements</span>
+									<Button size="sm" onclick={() => (supplementDialogOpen = true)}>Add</Button>
+								</Card.Title>
+							</Card.Header>
+							<Card.Content class="space-y-2">
+								<!-- Custom Supplements Section -->
+								<div class="border-t pt-2">
+									<h4 class="mb-2 text-sm font-medium">Custom Supplements</h4>
+									{#if assignedSupplements.length > 0}
+										{#each assignedSupplements as supplement}
+											{@const supplementData = allSupplements.find(
+												(s: SupplementData) => s.id === supplement.custom_supplementsId
+											)}
+											<div class="bg-muted mb-2 flex items-center justify-between rounded p-2">
+												<div class="flex-1">
+													<span class="text-sm font-medium"
+														>{supplement.custom_supplement?.name || ""}</span
+													>
+													<span class="text-muted-foreground ml-2 text-xs"
+														>Qty: {supplement.quantity}</span
+													>
+												</div>
+												<Button
+													size="sm"
+													variant="ghost"
+													onclick={() => removeSupplement(supplement.custom_supplementsId)}
+													class="hover:bg-destructive hover:text-destructive-foreground h-6 w-6 p-0"
+												>
+													edit
+												</Button>
+												<Button
+													size="sm"
+													variant="ghost"
+													onclick={() => removeSupplement(supplement.custom_supplementsId)}
+													class="hover:bg-destructive hover:text-destructive-foreground h-6 w-6 p-0"
+												>
+													×
+												</Button>
+											</div>
+										{/each}
+									{:else}
+										<p class="text-muted-foreground text-sm">No custom supplements assigned</p>
+									{/if}
+								</div>
+							</Card.Content>
+						</Card.Root>
+					</div>
+
+					<div>
+						<Card.Root class="bg-primary flex-1">
+							<Card.Header class="pb-3">
 								<Card.Title class="flex text-base"
 									><Measurement class="mr-1" />Measurements</Card.Title
 								>
@@ -251,47 +303,7 @@
 							</Card.Content>
 						</Card.Root>
 
-						<Card.Root class="bg-primary flex-1">
-							<Card.Header class="pb-3">
-								<Card.Title class="flex items-center justify-between text-base">
-									<span class="flex items-center"><Pill class="mr-1" />Supplements</span>
-									<Button size="sm" onclick={() => (supplementDialogOpen = true)}>Add</Button>
-								</Card.Title>
-							</Card.Header>
-							<Card.Content class="space-y-2">
-								<!-- Custom Supplements Section -->
-								<div class="border-t pt-2">
-									<h4 class="mb-2 text-sm font-medium">Custom Supplements</h4>
-									{#if assignedSupplements.length > 0}
-										{#each assignedSupplements as supplement}
-											{@const supplementData = allSupplements.find(
-												(s: SupplementData) => s.id === supplement.custom_supplementsId
-											)}
-											<div class="bg-muted mb-2 flex items-center justify-between rounded p-2">
-												<div class="flex-1">
-													<span class="text-sm font-medium"
-														>{supplement.custom_supplement?.name || ""}</span
-													>
-													<span class="text-muted-foreground ml-2 text-xs"
-														>Qty: {supplement.quantity}</span
-													>
-												</div>
-												<Button
-													size="sm"
-													variant="ghost"
-													onclick={() => removeSupplement(supplement.custom_supplementsId)}
-													class="hover:bg-destructive hover:text-destructive-foreground h-6 w-6 p-0"
-												>
-													×
-												</Button>
-											</div>
-										{/each}
-									{:else}
-										<p class="text-muted-foreground text-sm">No custom supplements assigned</p>
-									{/if}
-								</div>
-							</Card.Content>
-						</Card.Root>
+						
 					</div>
 
 					<Card.Root class="bg-primary">

@@ -128,6 +128,41 @@
 				</Card.Content>
 			</Card.Root>
 
+
+			<div>
+	<Card.Root class="bg-primary flex-1">
+					<Card.Header class="pb-3">
+						<Card.Title class="flex items-center justify-between text-base">
+							<span class="flex items-center"><Pill class="mr-1" />Supplements</span>
+							<Button size="sm" onclick={() => supplementDialogOpen = true}>Add</Button>
+						</Card.Title>
+					</Card.Header>
+					<Card.Content class="space-y-2">
+						{#if assignedSupplements.length > 0}
+							{#each assignedSupplements as supplement}
+								{@const supplementData = allSupplements.find((s: { id: number; }) => s.id === supplement.custom_supplementsId)}
+								<div class="flex items-center justify-between bg-muted p-2 rounded">
+									<div class="flex-1">
+										<span class="text-sm font-medium">{supplementData?.name || 'Unknown'}</span>
+										<span class="text-xs text-muted-foreground ml-2">Qty: {supplement.quantity}</span>
+									</div>
+									<Button 
+										size="sm" 
+										variant="ghost" 
+										onclick={() => removeSupplement(supplement.custom_supplementsId)}
+										class="h-6 w-6 p-0 hover:bg-destructive hover:text-destructive-foreground"
+									>
+										×
+									</Button>
+								</div>
+							{/each}
+						{:else}
+							<p class="text-sm text-muted-foreground flex flex-row justify-center">No supplements assigned</p>
+						{/if}
+					</Card.Content>
+				</Card.Root>
+				</div>
+
 			<div>
 				<Card.Root class="bg-primary flex-1">
 					<Card.Header class="pb-3">
@@ -176,37 +211,7 @@
 					</Card.Content>
 				</Card.Root>
 
-				<Card.Root class="bg-primary flex-1">
-					<Card.Header class="pb-3">
-						<Card.Title class="flex items-center justify-between text-base">
-							<span class="flex items-center"><Pill class="mr-1" />Supplements</span>
-							<Button size="sm" onclick={() => supplementDialogOpen = true}>Add</Button>
-						</Card.Title>
-					</Card.Header>
-					<Card.Content class="space-y-2">
-						{#if assignedSupplements.length > 0}
-							{#each assignedSupplements as supplement}
-								{@const supplementData = allSupplements.find((s: { id: number; }) => s.id === supplement.custom_supplementsId)}
-								<div class="flex items-center justify-between bg-muted p-2 rounded">
-									<div class="flex-1">
-										<span class="text-sm font-medium">{supplementData?.name || 'Unknown'}</span>
-										<span class="text-xs text-muted-foreground ml-2">Qty: {supplement.quantity}</span>
-									</div>
-									<Button 
-										size="sm" 
-										variant="ghost" 
-										onclick={() => removeSupplement(supplement.custom_supplementsId)}
-										class="h-6 w-6 p-0 hover:bg-destructive hover:text-destructive-foreground"
-									>
-										×
-									</Button>
-								</div>
-							{/each}
-						{:else}
-							<p class="text-sm text-muted-foreground">No supplements assigned</p>
-						{/if}
-					</Card.Content>
-				</Card.Root>
+			
 			</div>
 
 			
@@ -250,7 +255,6 @@
 						const target = e.target as HTMLInputElement;
 						if (target) {
 							quantityInput = target.value;
-							console.log('Input changed to:', quantityInput);
 						}
 					}}
 				/>
