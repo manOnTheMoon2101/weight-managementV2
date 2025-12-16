@@ -10,6 +10,8 @@
 	import Apple from "@lucide/svelte/icons/apple";
 	import Pill from "@lucide/svelte/icons/pill";
 	import Plus from "@lucide/svelte/icons/circle-plus";
+		import Liquid from "@lucide/svelte/icons/milk";
+	import Gummy from "@lucide/svelte/icons/candy";
 	import * as Dialog from "$lib/components/ui/dialog/index.js";
 
 
@@ -144,6 +146,13 @@
 								<div class="flex items-center justify-between bg-muted p-2 rounded">
 									<div class="flex-1">
 										<span class="text-sm font-medium">{supplementData?.name || 'Unknown'}</span>
+											<span class="text-sm font-medium">{#if supplementData.type === "Gummy"}
+											<Gummy style="color: {supplementData.color}" />
+										{:else if supplementData.type === "Liquid"}
+											<Liquid style="color: {supplementData.color}" />
+										{:else}
+											<Pill style="color: {supplementData.color}" />
+										{/if}</span>
 										<span class="text-xs text-muted-foreground ml-2">Qty: {supplement.quantity}</span>
 									</div>
 									<Button 
@@ -267,12 +276,19 @@
 						{@const isAlreadyAssigned = assignedSupplements.some(assigned => assigned.custom_supplementsId === s.id)}
 						<div class="flex items-center justify-between p-2 border rounded hover:bg-muted {isAlreadyAssigned ? 'opacity-50' : ''}">
 							<span class="text-sm">{s.name}</span>
+								{#if s.type === "Gummy"}
+											<Gummy style="color: {s.color}" />
+										{:else if s.type === "Liquid"}
+											<Liquid style="color: {s.color}" />
+										{:else}
+											<Pill style="color: {s.color}" />
+										{/if}
 							<Button 
 								type="button"
 								size="sm" 
 								onclick={() => assignSupplement(s.id, quantityInput)}
 								disabled={!quantityInput.trim() || isAlreadyAssigned}
-								variant={isAlreadyAssigned ? "secondary" : "default"}
+								variant={isAlreadyAssigned ? "success" : "default"}
 							>
 								{isAlreadyAssigned ? 'Added' : 'Add'}
 							</Button>
