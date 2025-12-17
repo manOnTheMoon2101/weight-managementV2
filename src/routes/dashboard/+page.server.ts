@@ -9,6 +9,7 @@ import {
 	sleep_schedule,
 	supplements,
 	user,
+	assignedSupplements
 } from "$lib/server/schema/index";
 import { redirect } from "@sveltejs/kit";
 import { put } from "@vercel/blob";
@@ -246,6 +247,52 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 		});
 
+
+
+
+
+
+
+			const SupplementsMonthAgo = await db.query.assignedSupplements.findMany({
+			where: and(
+				eq(assignedSupplements.userId, session.user.id),
+				eq(assignedSupplements.isActive, true),
+				eq(assignedSupplements.isDeleted, false),
+				// gte(assignedSupplements.waistMeasurement, 1),
+				gte(assignedSupplements.quantity, 1),
+				sql`${assignedSupplements.createdAt} >= ${oneMonthAgo.toISOString()}`
+			),
+			columns: {
+				quantity: true,
+				createdAt: true,
+			},
+			with:{
+				custom_supplement : true
+			}
+		});
+
+		const SupplementsWeekAgo = await db.query.assignedSupplements.findMany({
+			where: and(
+				eq(assignedSupplements.userId, session.user.id),
+				eq(assignedSupplements.isActive, true),
+				eq(assignedSupplements.isDeleted, false),
+				// gte(assignedSupplements.waistMeasurement, 1),
+				gte(assignedSupplements.quantity, 1),
+				sql`${assignedSupplements.createdAt} >= ${sevenDaysAgo.toISOString()}`
+			),
+		columns: {
+				quantity: true,
+				createdAt: true,
+			},
+			with:{
+				custom_supplement : true
+			}
+		});
+
+
+		
+
+
 		const stepLimit = await db.query.limits.findFirst({
 			where: and(
 				eq(limits.userId, session.user.id),
@@ -356,6 +403,31 @@ export const load: PageServerLoad = async ({ request }) => {
 			waist: entry.waistMeasurement,
 			createdAt: new Date(entry.createdAt),
 		}));
+
+
+
+
+
+		const formattedMonthSupplementsEntries = SupplementsMonthAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+			quantity: entry.quantity,
+			waist: entry.custom_supplement?.name,
+			type : entry.custom_supplement?.type,
+			color : entry.custom_supplement?.color,
+			createdAt: new Date(entry.createdAt),
+		}));
+
+		const formattedWeekSupplementsEntries = SupplementsWeekAgo.sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		).map((entry) => ({
+		quantity: entry.quantity,
+			waist: entry.custom_supplement?.name,
+			type : entry.custom_supplement?.type,
+			color : entry.custom_supplement?.color,
+			createdAt: new Date(entry.createdAt),
+		}));
+
 
 		const formattedMonthStepsEntries = StepsMonthAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -503,6 +575,8 @@ export const load: PageServerLoad = async ({ request }) => {
 		const stepsMonthChart = formattedMonthStepsEntries || null;
 		const measurementMonthChart = formattedMonthMeasurementsEntries || null;
 		const measurementWeekChart = formattedWeekMeasurementsEntries || null;
+		const supplementsMonthAgo = formattedMonthSupplementsEntries || null;
+		const supplementsWeekAgo = formattedWeekSupplementsEntries || null;
 		const stepsWeekChart = formattedWeekStepsEntries || null;
 		const waterMonthChart = formattedMonthWaterEntries || null;
 		const waterWeekChart = formattedWeekWaterEntries || null;
@@ -576,6 +650,8 @@ export const load: PageServerLoad = async ({ request }) => {
 			stepsMonthChart: stepsMonthChart,
 			measurementMonthChart: measurementMonthChart,
 			measurementWeekChart: measurementWeekChart,
+			supplementsWeekAgo : supplementsWeekAgo,
+			supplementsMonthAgo : supplementsMonthAgo,
 			stepsWeekChart: stepsWeekChart,
 			waterMonthChart: waterMonthChart,
 			waterWeekChart: waterWeekChart,

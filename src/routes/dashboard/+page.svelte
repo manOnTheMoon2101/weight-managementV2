@@ -62,7 +62,13 @@
 	let lastMonthWater = $derived(data.lastMonthWater);
 	let waterLimit = $derived(data.waterLimit);
 
+
+	let supplementsWeekAgo = $derived(data.supplementsWeekAgo)
+	let supplementsMonthAgo = $derived(data.supplementsMonthAgo)
 	let viewMode = $state("7days");
+
+	$inspect('week',supplementsWeekAgo)
+	$inspect('month',supplementsMonthAgo)
 	let isFullscreen = $state(false);
 
 	function greet(): string {
@@ -300,7 +306,7 @@
 			<div class="flex w-full md:w-3/5  flex-col justify-around md:flex-row my-2">
 				<Protein dateSeriesData={proteinCharts} bind:viewMode={proteinViewMode} />
 
-				<Supplements weekData={supplementCharts} monthData={supplementCountsMonthChart} />
+				<Supplements weekData={supplementsWeekAgo} monthData={supplementsMonthAgo} />
 			</div>
 
 			<div class="flex w-full md:w-2/5  flex-col justify-around md:flex-row my-2">
