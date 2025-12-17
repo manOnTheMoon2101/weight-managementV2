@@ -42,7 +42,7 @@
 			: 0
 	);
 
-	$inspect(dateSeriesData);
+
 
 	const chartConfig = {
 		desktop: { label: "Protein", color: "var(--accent)" },

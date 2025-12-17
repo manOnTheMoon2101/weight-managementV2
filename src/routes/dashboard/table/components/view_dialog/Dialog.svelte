@@ -52,7 +52,6 @@
 	let editQuantityInput = $state("");
 	let editQuantityName = $state("");
 
-	$inspect(rowToEdit);
 	$effect(() => {
 		if (rowToEdit?.allAssignedSupplements) {
 			assignedSupplements = [...rowToEdit.allAssignedSupplements];

@@ -44,7 +44,7 @@
 			: 0
 	);
 
-	$inspect(dateSeriesData);
+	
 
 	const chartConfig = {
 		desktop: { label: "Calories", color: "var(--accent)" },
