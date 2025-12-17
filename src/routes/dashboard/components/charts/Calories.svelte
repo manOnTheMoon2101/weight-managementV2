@@ -5,13 +5,11 @@
 	import * as Chart from "$lib/components/ui/chart/index.js";
 	import * as Card from "$lib/components/ui/card/index.js";
 	import { cubicInOut } from "svelte/easing";
-	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import Zap from "@lucide/svelte/icons/zap";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import Badge from "$lib/components/ui/badge/badge.svelte";
-
+	import Filter from "@lucide/svelte/icons/list-filter";
 	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
-
 
 	$effect(() => {
 		const savedViewMode = localStorage.getItem("caloriesChart");
@@ -27,7 +25,8 @@
 	let averageCalories = $derived(
 		dateSeriesData && dateSeriesData.length > 0
 			? Math.round(
-					dateSeriesData.reduce((sum: number, x: any) => sum + x.calories, 0) / dateSeriesData.length
+					dateSeriesData.reduce((sum: number, x: any) => sum + x.calories, 0) /
+						dateSeriesData.length
 				)
 			: 0
 	);
@@ -44,8 +43,6 @@
 			: 0
 	);
 
-	
-
 	const chartConfig = {
 		desktop: { label: "Calories", color: "var(--accent)" },
 	} satisfies Chart.ChartConfig;
@@ -57,7 +54,7 @@
 	<Card.Header>
 		<div class="flex flex-row justify-between">
 			<div>
-				<Card.Title><Zap/></Card.Title>
+				<Card.Title><Zap /></Card.Title>
 				<Card.Description>Calories</Card.Description>
 			</div>
 
@@ -65,7 +62,7 @@
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger class="cursor-pointer">
 						<Badge
-							>{viewMode == "7days" ? "Last 7 Days" : "Last Month"}
+							><Filter class="mr-2 h-4 w-4" />{viewMode == "7days" ? "Last 7 Days" : "Last Month"}
 						</Badge>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
@@ -97,11 +94,7 @@
 				x="createdAt"
 				axis={false}
 				grid={false}
-				series={
-        [
-          { key: "calories", label: "Calories", color: chartConfig.desktop.color }
-          ]
-          }
+				series={[{ key: "calories", label: "Calories", color: chartConfig.desktop.color }]}
 				props={{
 					bars: {
 						stroke: "none",
@@ -134,7 +127,6 @@
 			<div class="grid">
 				<div class="flex items-center gap-2 leading-none font-medium">
 					{averageCalories} avg protein for last {viewMode == "7days" ? "7 days" : "30 days"}
-					
 				</div>
 				<div class="text-muted-foreground flex items-center gap-2 leading-none">
 					Range: {minCalories.toLocaleString()} - {maxCalories.toLocaleString()} protein

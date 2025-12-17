@@ -69,10 +69,10 @@
 	<div>
 		<div class="flex flex-col items-center justify-between md:flex-row">
 			<div
-				class="bg-primary my-2 flex h-[300px] w-full flex-col justify-between rounded-lg md:w-3/5"
+				class="bg-primary shadow-lg shadow-secondary my-2 flex h-[300px] w-full flex-col justify-between rounded-lg md:w-3/5"
 			>
 				{#if user}
-					<div class="flex flex-row items-center justify-between">
+					<div class="flex flex-row items-center justify-between ">
 						<div>
 							<div class="flex flex-row items-center">
 								<div class="flex flex-col">
