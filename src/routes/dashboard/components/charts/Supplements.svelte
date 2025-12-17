@@ -8,21 +8,17 @@
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import Badge from "$lib/components/ui/badge/badge.svelte";
 
+	interface SupplementEntry {
+		quantity: number | null;
+		waist: string;
+		type: string;
+		color: string;
+		createdAt: Date;
+	}
+
 	interface Props {
-		weekData?: Array<{
-			fatburnerCount: number;
-			multiVitaminCount: number;
-			magnesiumCount: number;
-			claCount: number;
-			zenCount: number;
-		}> | null;
-		monthData?: Array<{
-			fatburnerCount: number;
-			multiVitaminCount: number;
-			magnesiumCount: number;
-			claCount: number;
-			zenCount: number;
-		}> | null;
+		weekData?: SupplementEntry[] | null;
+		monthData?: SupplementEntry[] | null;
 	}
 
 	let { weekData = null, monthData = null }: Props = $props();
@@ -49,48 +45,53 @@
 		"var(--chart5)",
 	];
 
-	const currentData = $derived(viewMode === "week" ? weekData?.[0] : monthData?.[0]);
+	const currentData = $derived(viewMode === "week" ? weekData : monthData);
 
 	const chartData = $derived(() => {
-		if (!currentData) return [];
+		if (!currentData || currentData.length === 0) return [];
 
-		return [
-			{
-				supplement: "fatburner",
-				count: Number(currentData.fatburnerCount) || 0,
-				color: colors[0],
-			},
-			{
-				supplement: "multiVitamin",
-				count: Number(currentData.multiVitaminCount) || 0,
-				color: colors[1],
-			},
-			{
-				supplement: "magnesium",
-				count: Number(currentData.magnesiumCount) || 0,
-				color: colors[2],
-			},
-			{
-				supplement: "cla",
-				count: Number(currentData.claCount) || 0,
-				color: colors[3],
-			},
-			{
-				supplement: "zen",
-				count: Number(currentData.zenCount) || 0,
-				color: colors[4],
-			},
-		].filter((item) => item.count > 0);
+		// Group supplements by name and sum quantities
+		const supplementMap = new Map<string, { count: number; color: string; type: string }>();
+		
+		currentData.forEach((entry, index) => {
+			const name = entry.waist || 'Unknown';
+			const quantity = entry.quantity || 0;
+			const existing = supplementMap.get(name);
+			
+			if (existing) {
+				existing.count += quantity;
+			} else {
+				supplementMap.set(name, {
+					count: quantity,
+					color: entry.color || colors[index % colors.length],
+					type: entry.type || 'supplement'
+				});
+			}
+		});
+
+		// Convert map to array format for chart
+		return Array.from(supplementMap.entries()).map(([name, data]) => ({
+			supplement: name,
+			count: data.count,
+			color: data.color,
+			type: data.type
+		})).filter((item) => item.count > 0);
 	});
 
-	const chartConfig = {
-		count: { label: "Count" },
-		fatburner: { label: "Fat Burner", color: colors[0] },
-		multiVitamin: { label: "Multi Vitamin", color: colors[1] },
-		magnesium: { label: "Magnesium", color: colors[2] },
-		cla: { label: "CLA", color: colors[3] },
-		zen: { label: "Zen", color: colors[4] },
-	} satisfies Chart.ChartConfig;
+	const chartConfig = $derived(() => {
+		const config: Record<string, { label: string; color?: string }> = {
+			count: { label: "Count" }
+		};
+		
+		chartData().forEach((item) => {
+			config[item.supplement] = {
+				label: item.supplement,
+				color: item.color
+			};
+		});
+		
+		return config;
+	});
 
 	const totalCount = $derived(chartData().reduce((sum, item) => sum + item.count, 0));
 </script>
@@ -132,16 +133,12 @@
 	</Card.Header>
 	<Card.Content class="flex-1">
 		{#if chartData().length > 0}
-			<Chart.Container config={chartConfig}>
+			<Chart.Container config={chartConfig()}>
 				<PieChart
 					data={chartData()}
 					key="supplement"
 					value="count"
-					label={(d) =>
-						d.supplement
-							.split("")
-							.map((c, i) => (i === 0 ? c.toUpperCase() : c))
-							.join("")}
+					label={(d) => d.supplement}
 					cRange={chartData().map((d) => d.color)}
 					props={{
 						pie: {
