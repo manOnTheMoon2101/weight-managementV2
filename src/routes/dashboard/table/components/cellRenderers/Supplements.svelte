@@ -3,6 +3,7 @@
 	import Pill from "@lucide/svelte/icons/pill";
 	import Liquid from "@lucide/svelte/icons/milk";
 	import Gummy from "@lucide/svelte/icons/candy";
+	import Powder from "@lucide/svelte/icons/wand-sparkles";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 
 	let { data }: ICellRendererParams = $props();
@@ -19,6 +20,8 @@
 						<Gummy style="color: {supplement.custom_supplement?.color}" />
 					{:else if supplement.custom_supplement?.type === "Liquid"}
 						<Liquid style="color: {supplement.custom_supplement?.color}" />
+						{:else if supplement.custom_supplement?.type === "Powder"}
+						<Powder style="color: {supplement.custom_supplement?.color}" />
 					{:else}
 						<Pill style="color: {supplement.custom_supplement?.color}" />
 					{/if}

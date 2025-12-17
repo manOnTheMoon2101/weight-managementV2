@@ -10,6 +10,7 @@
 	import Pill from "@lucide/svelte/icons/pill";
 	import Liquid from "@lucide/svelte/icons/milk";
 	import Gummy from "@lucide/svelte/icons/candy";
+	import Powder from "@lucide/svelte/icons/wand-sparkles";
 	import Plus from "@lucide/svelte/icons/circle-plus";
 	import Minus from "@lucide/svelte/icons/minus";
 	import Up from "@lucide/svelte/icons/corner-right-up";
@@ -36,7 +37,7 @@
 		{ value: "Weight_Gain", name: "Bulk" },
 	];
 
-	let supplementTypes = [{ value: "Capsule" }, { value: "Liquid" }, { value: "Gummy" }];
+	let supplementTypes = [{ value: "Capsule" }, { value: "Liquid" }, { value: "Gummy" },{ value: "Powder" }];
 
 	let value = $derived(userJourney || "");
 
@@ -174,6 +175,8 @@
 											<Gummy style="color: {s.color}" />
 										{:else if s.type === "Liquid"}
 											<Liquid style="color: {s.color}" />
+										{:else if s.type === "Powder"}
+											<Powder style="color: {s.color}" />
 										{:else}
 											<Pill style="color: {s.color}" />
 										{/if}

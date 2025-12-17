@@ -18,6 +18,7 @@
 	import Liquid from "@lucide/svelte/icons/milk";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import Gummy from "@lucide/svelte/icons/candy";
+	import Powder from "@lucide/svelte/icons/wand-sparkles";
 	import Save from "@lucide/svelte/icons/save";
 	import Delete from "@lucide/svelte/icons/trash";
 	import { Separator } from "$lib/components/ui/separator/index.js";
@@ -226,6 +227,8 @@
 															<Gummy style="color: {supplementData.color}" />
 														{:else if supplementData.type === "Liquid"}
 															<Liquid style="color: {supplementData.color}" />
+														{:else if supplementData.type === "Powder"}
+															<Powder style="color: {supplementData.color}" />
 														{:else}
 															<Pill style="color: {supplementData.color}" />
 														{/if}</span
@@ -500,6 +503,8 @@
 								<Gummy style="color: {s.color}" />
 							{:else if s.type === "Liquid"}
 								<Liquid style="color: {s.color}" />
+								{:else if s.type === "Powder"}
+								<Powder style="color: {s.color}" />
 							{:else}
 								<Pill style="color: {s.color}" />
 							{/if}
