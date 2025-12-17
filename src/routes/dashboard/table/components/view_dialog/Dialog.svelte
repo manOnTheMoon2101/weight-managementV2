@@ -17,6 +17,9 @@
 	import Pill from "@lucide/svelte/icons/pill";
 	import Liquid from "@lucide/svelte/icons/milk";
 	import Gummy from "@lucide/svelte/icons/candy";
+	import Save from "@lucide/svelte/icons/save";
+	import Delete from "@lucide/svelte/icons/trash";
+	import { Separator } from "$lib/components/ui/separator/index.js";
 
 	interface Supplements {
 		custom_supplementsId: number;
@@ -155,6 +158,7 @@
 					<Card.Root class="bg-primary">
 						<Card.Header class="pb-3">
 							<Card.Title class="flex text-base"><Health class="mr-1" />Health</Card.Title>
+							<Separator class="my-2" />
 						</Card.Header>
 						<Card.Content class="space-y-2">
 							<div>
@@ -196,6 +200,7 @@
 										><Plus /></Button
 									>
 								</Card.Title>
+								<Separator class="my-2" />
 							</Card.Header>
 							<Card.Content class="space-y-2">
 								<div class="pt-2">
@@ -259,6 +264,7 @@
 								<Card.Title class="flex text-base"
 									><Measurement class="mr-1" />Measurements</Card.Title
 								>
+								<Separator class="my-2" />
 							</Card.Header>
 							<Card.Content class="space-y-2">
 								<div>
@@ -278,6 +284,7 @@
 						<Card.Root class="bg-primary flex-1">
 							<Card.Header class="pb-3">
 								<Card.Title class="flex text-base"><Apple class="mr-1" />Nutrients</Card.Title>
+								<Separator class="my-2" />
 							</Card.Header>
 							<Card.Content class="space-y-2">
 								<div>
@@ -327,6 +334,7 @@
 					<Card.Root class="bg-primary">
 						<Card.Header class="pb-3">
 							<Card.Title class="flex text-base"><Bed class="mr-1" />Sleep</Card.Title>
+							<Separator class="my-2" />
 						</Card.Header>
 						<Card.Content>
 							<!-- <div>
@@ -353,7 +361,7 @@
 					</Card.Root>
 
 					{#if !updateLoading}
-						<Button class="mt-4 w-full" variant="save" type="submit">Update</Button>
+						<Button class="mt-4 w-full" variant="save" type="submit"><Save/>Update</Button>
 					{:else}
 						<Button class="mt-4  w-full" variant="save" type="button" disabled>
 							<div class="flex items-center justify-center space-x-2">
@@ -366,7 +374,7 @@
 					<div>
 						<AlertDialog.Root>
 							<AlertDialog.Trigger class="w-full">
-								<Button class="text-destructive mt-4 w-full" variant="save">Delete</Button>
+								<Button class="text-destructive mt-4 w-full" variant="delete"><Delete/>Delete</Button>
 							</AlertDialog.Trigger>
 							<AlertDialog.Content>
 								<AlertDialog.Header>

@@ -5,6 +5,7 @@
 	import Button from "$lib/components/ui/button/button.svelte";
 
 	import * as Sheet from "$lib/components/ui/sheet/index.js";
+	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import Health from "@lucide/svelte/icons/heart";
 	import Measurement from "@lucide/svelte/icons/ruler";
 	import Apple from "@lucide/svelte/icons/apple";
@@ -13,6 +14,8 @@
 	import Liquid from "@lucide/svelte/icons/milk";
 	import Gummy from "@lucide/svelte/icons/candy";
 	import * as Dialog from "$lib/components/ui/dialog/index.js";
+	import { Separator } from "$lib/components/ui/separator/index.js";
+	import Save from "@lucide/svelte/icons/save";
 
 	interface Supplements {
 		custom_supplementsId: number;
@@ -36,9 +39,9 @@
 		allSupplements: SupplementData[];
 	}>();
 
-	let createLoading = $state(false);
+	let createLoading = $state<boolean>(false);
 	let assignedSupplements = $state<Supplements[]>([]);
-	let supplementDialogOpen = $state(false);
+	let supplementDialogOpen = $state<boolean>(false);
 	let quantityInput = $state("");
 
 	function handleCreateSubmit(event: Event) {
@@ -53,7 +56,6 @@
 	}
 
 	function assignSupplement(supplementId: number, quantity: string) {
-
 		if (!quantity.trim()) {
 			console.log("No quantity provided, returning");
 			return;
@@ -101,7 +103,8 @@
 			<input type="hidden" name="assignedSupplements" value={JSON.stringify(assignedSupplements)} />
 			<Card.Root class="bg-primary">
 				<Card.Header class="pb-3">
-					<Card.Title class="flex text-base"><Health class="mr-1" />Health</Card.Title>
+					<Card.Title class="flex items-center text-base"><Health class="mr-1" />Health</Card.Title>
+					<Separator class="my-2" />
 				</Card.Header>
 				<Card.Content class="space-y-2">
 					<div>
@@ -130,8 +133,19 @@
 					<Card.Header class="pb-3">
 						<Card.Title class="flex items-center justify-between text-base">
 							<span class="flex items-center"><Pill class="mr-1" />Supplements</span>
-							<Button variant="save" onclick={() => (supplementDialogOpen = true)}><Plus /></Button>
+
+							<Tooltip.Provider delayDuration={100}>
+								<Tooltip.Root>
+									<Tooltip.Trigger>
+										<Button variant="save" onclick={() => (supplementDialogOpen = true)}
+											><Plus /></Button
+										>
+									</Tooltip.Trigger>
+									<Tooltip.Content>Add Supplements</Tooltip.Content>
+								</Tooltip.Root>
+							</Tooltip.Provider>
 						</Card.Title>
+						<Separator class="my-2" />
 					</Card.Header>
 					<Card.Content class="space-y-2">
 						{#if assignedSupplements.length > 0}
@@ -178,6 +192,7 @@
 				<Card.Root class="bg-primary flex-1">
 					<Card.Header class="pb-3">
 						<Card.Title class="flex text-base"><Measurement class="mr-1" />Measurements</Card.Title>
+						<Separator class="my-2" />
 					</Card.Header>
 					<Card.Content class="space-y-2">
 						<div>
@@ -197,6 +212,7 @@
 				<Card.Root class="bg-primary flex-1">
 					<Card.Header class="pb-3">
 						<Card.Title class="flex text-base"><Apple class="mr-1" />Nutrients</Card.Title>
+						<Separator class="my-2" />
 					</Card.Header>
 					<Card.Content class="space-y-2">
 						<div>
@@ -225,7 +241,7 @@
 
 			<div class="mt-4 flex gap-2">
 				{#if !createLoading}
-					<Button type="submit" class="w-full" variant="save">Create</Button>
+					<Button type="submit" class="w-full" variant="save"><Save />Create</Button>
 				{:else}
 					<Button type="submit" class="w-full" variant="save" disabled>
 						<div class="flex items-center justify-center space-x-2">
