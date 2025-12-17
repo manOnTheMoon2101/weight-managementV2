@@ -6,9 +6,15 @@
 </script>
 
 <div class="flex flex-col gap-4 p-4">
-	<Navbar user={data.user} limits={data.limits} userColour={data.userColour.colour} userJourney={data.userJourney.journey} userSupplements={data.userSupplements}/>
-	
+	<Navbar
+		user={data.user}
+		limits={data.limits}
+		userColour={data.userColour.colour}
+		userJourney={data.userJourney.journey}
+		userSupplements={data.userSupplements}
+	/>
+
 	{@render children()}
 
-	<Footer/>
+	<Footer />
 </div>

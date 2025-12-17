@@ -16,10 +16,12 @@
 <div class="flex flex-col gap-4 p-6">
 	{#if $session.data}
 		<div class="flex min-h-screen items-center justify-center">
-			<div class="flex flex-col gap-4 items-center">
+			<div class="flex flex-col items-center gap-4">
 				<p>Welcome back, {$session?.data.user.name}!</p>
 
-				<Button href="/dashboard" variant='secondary' class="w-fit" size="lg">Go to Dashboard</Button>
+				<Button href="/dashboard" variant="secondary" class="w-fit" size="lg"
+					>Go to Dashboard</Button
+				>
 
 				<Button
 					type="button"

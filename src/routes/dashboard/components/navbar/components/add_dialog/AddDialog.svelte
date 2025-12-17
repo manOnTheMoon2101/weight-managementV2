@@ -53,7 +53,6 @@
 	}
 
 	function assignSupplement(supplementId: number, quantity: string) {
-		console.log("assignSupplement called with:", supplementId, quantity);
 
 		if (!quantity.trim()) {
 			console.log("No quantity provided, returning");
@@ -66,13 +65,11 @@
 
 		if (existingIndex >= 0) {
 			assignedSupplements[existingIndex].quantity = quantity;
-			console.log("Updated existing supplement");
 		} else {
 			assignedSupplements.push({
 				custom_supplementsId: supplementId,
 				quantity: quantity,
 			});
-			console.log("Added new supplement");
 		}
 
 		// Reset input and close dialog

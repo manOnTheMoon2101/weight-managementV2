@@ -13,9 +13,6 @@
 	let { data }: { data: PageData } = $props();
 
 	let user = $derived(data.user);
-	$inspect(user)
-	let weightMonthChart = $derived(data.weightMonthChart);
-	let weightWeekChart = $derived(data.weightWeekChart);
 	let stepsMonthChart = $derived(data.stepsMonthChart);
 	let stepsWeekChart = $derived(data.stepsWeekChart);
 	let measurementMonthChart = $derived(data.measurementMonthChart);
@@ -28,14 +25,12 @@
 	let caloriesWeekChart = $derived(data.caloriesWeekChart);
 	let sleepMonthChart = $derived(data.sleepMonthChart);
 	let sleepWeekChart = $derived(data.sleepWeekChart);
-	let weightViewMode = $state("7days");
 	let stepsViewMode = $state("7days");
 	let waterViewMode = $state("7days");
 	let sleepViewMode = $state("7days");
 	let proteinViewMode = $state("7days");
 	let caloriesViewMode = $state("7days");
 	let measurementViewMode = $state("7days");
-	let weightCharts = $derived(weightViewMode === "7days" ? weightWeekChart : weightMonthChart);
 	let stepsCharts = $derived(stepsViewMode === "7days" ? stepsWeekChart : stepsMonthChart);
 	let sleepCharts = $derived(sleepViewMode === "7days" ? sleepWeekChart : sleepMonthChart);
 	let waterCharts = $derived(waterViewMode === "7days" ? waterWeekChart : waterMonthChart);
@@ -46,30 +41,14 @@
 	let measurementCharts = $derived(
 		measurementViewMode === "7days" ? measurementWeekChart : measurementMonthChart
 	);
-	let waistChart = $derived(data.waistChart);
-	let supplementCharts = $derived(data.supplementCountsWeekChart);
-	let supplementCountsMonthChart = $derived(data.supplementCountsMonthChart);
 	let currentWeight = $derived(data.currentWeight?.weight);
 	let currentWeightDate = $derived(data.currentWeight?.createdAt);
 	let previousWeight = $derived(data.previousWeight?.weight);
 	let previousWeightDate = $derived(data.previousWeight?.createdAt);
-	let last7DaysSteps = $derived(data.last7DaysSteps);
-	let lastMonthSteps = $derived(data.lastMonthSteps);
-	let userStepLimit = $derived(data.userStepLimit);
 	let userJourney = $derived(data.userJourney);
 
-	let last7DaysWater = $derived(data.last7DaysWater);
-	let lastMonthWater = $derived(data.lastMonthWater);
-	let waterLimit = $derived(data.waterLimit);
-
-
-	let supplementsWeekAgo = $derived(data.supplementsWeekAgo)
-	let supplementsMonthAgo = $derived(data.supplementsMonthAgo)
-	let viewMode = $state("7days");
-
-	$inspect('week',supplementsWeekAgo)
-	$inspect('month',supplementsMonthAgo)
-	let isFullscreen = $state(false);
+	let supplementsWeekAgo = $derived(data.supplementsWeekAgo);
+	let supplementsMonthAgo = $derived(data.supplementsMonthAgo);
 
 	function greet(): string {
 		const hour = new Date().getHours();
@@ -85,83 +64,24 @@
 	const df = new DateFormatter("en-US", {
 		dateStyle: "medium",
 	});
-
-	function toggleFullscreen() {
-		if (isFullscreen) {
-			const doc = document as Document & {
-				webkitExitFullscreen?: () => Promise<void> | void;
-				msExitFullscreen?: () => Promise<void> | void;
-			};
-			if (doc.exitFullscreen) {
-				doc.exitFullscreen();
-			} else if (doc.webkitExitFullscreen) {
-				doc.webkitExitFullscreen();
-			} else if (doc.msExitFullscreen) {
-				doc.msExitFullscreen();
-			}
-		} else {
-			const element = document.documentElement as HTMLElement & {
-				webkitRequestFullscreen?: () => Promise<void> | void;
-				msRequestFullscreen?: () => Promise<void> | void;
-			};
-			if (element.requestFullscreen) {
-				element.requestFullscreen();
-			} else if (element.webkitRequestFullscreen) {
-				element.webkitRequestFullscreen();
-			} else if (element.msRequestFullscreen) {
-				element.msRequestFullscreen();
-			}
-		}
-	}
-	if (typeof document !== "undefined") {
-		document.addEventListener("fullscreenchange", () => {
-			isFullscreen = !!document.fullscreenElement;
-		});
-		document.addEventListener("webkitfullscreenchange", () => {
-			isFullscreen = !!(document as any).webkitFullscreenElement;
-		});
-		document.addEventListener("msfullscreenchange", () => {
-			isFullscreen = !!(document as any).msFullscreenElement;
-		});
-	}
-	const firstLetter = $derived(user?.name?.charAt(0));
 </script>
 
 <div class="flex flex-col gap-1">
 	<div>
-		<!-- <div class="mb-4 md:hidden">
-			<div
-				class="flex items-center gap-2 rounded-md border border-yellow-300 bg-yellow-100 p-3 text-yellow-900 dark:border-yellow-700 dark:bg-yellow-950 dark:text-yellow-200"
-			>
-				<span>⚠️</span>
-				<span
-					>This site doesn't support mobile yet. Please use a larger screen. Mobile support is
-					coming soon :)</span
-				>
-			</div>
-		</div> -->
-
 		<div class="flex flex-col items-center justify-between md:flex-row">
-			<div class="bg-primary flex h-[300px] w-full md:w-3/5 flex-col justify-between rounded-lg my-2">
+			<div
+				class="bg-primary my-2 flex h-[300px] w-full flex-col justify-between rounded-lg md:w-3/5"
+			>
 				{#if user}
 					<div class="flex flex-row items-center justify-between">
 						<div>
 							<div class="flex flex-row items-center">
-								<!-- <div class="my-1 flex flex-row items-center rounded-lg p-1">
-									<Avatar.Root class="mr-2">
-										<Avatar.Image src={user.image} alt="User Image" />
-										<Avatar.Fallback>{firstLetter ?? "?"}</Avatar.Fallback>
-									</Avatar.Root>
-								</div> -->
-
 								<div class="flex flex-col">
 									<h1 class="text-muted-foreground text-lg font-bold">{greet()}</h1>
 									<h2 class="text-4xl font-bold">{user.name}</h2>
 								</div>
 							</div>
 						</div>
-
-						<!-- <div><span>{df.format(new Date())}</span></div> -->
 					</div>
 				{/if}
 
@@ -170,11 +90,21 @@
 						{#if currentWeight && previousWeight}
 							{#if Number(currentWeight) > Number(previousWeight)}
 								<span>
-									Gained <span class={userJourney?.journey === 'Weight_Gain' ? 'text-green-500' : 'text-red-500'}>{(Number(currentWeight) - Number(previousWeight)).toFixed(1)}kg</span>
+									Gained <span
+										class={userJourney?.journey === "Weight_Gain"
+											? "text-green-500"
+											: "text-red-500"}
+										>{(Number(currentWeight) - Number(previousWeight)).toFixed(1)}kg</span
+									>
 								</span>
 							{:else if Number(currentWeight) < Number(previousWeight)}
-								<span >
-									Lost <span class={userJourney?.journey === 'Weight_Loss' ? 'text-green-500' : 'text-red-500'}>{(Number(previousWeight) - Number(currentWeight)).toFixed(1)}kg</span>
+								<span>
+									Lost <span
+										class={userJourney?.journey === "Weight_Loss"
+											? "text-green-500"
+											: "text-red-500"}
+										>{(Number(previousWeight) - Number(currentWeight)).toFixed(1)}kg</span
+									>
 								</span>
 							{:else}
 								<span class="text-gray-500">No change</span>
@@ -292,7 +222,7 @@
 				</div> -->
 				</div>
 			</div>
-			<div class="flex w-full md:w-2/5  flex-col justify-around md:flex-row my-2">
+			<div class="my-2 flex w-full flex-col justify-around md:w-2/5 md:flex-row">
 				<Steps dateSeriesData={stepsCharts} bind:viewMode={stepsViewMode} />
 				<Water
 					dateSeriesData={waterCharts}
@@ -302,14 +232,14 @@
 			</div>
 		</div>
 
-		<div class="flex flex-col my-4 items-center justify-between md:flex-row">
-			<div class="flex w-full md:w-3/5  flex-col justify-around md:flex-row my-2">
+		<div class="my-4 flex flex-col items-center justify-between md:flex-row">
+			<div class="my-2 flex w-full flex-col justify-around md:w-3/5 md:flex-row">
 				<Protein dateSeriesData={proteinCharts} bind:viewMode={proteinViewMode} />
 
 				<Supplements weekData={supplementsWeekAgo} monthData={supplementsMonthAgo} />
 			</div>
 
-			<div class="flex w-full md:w-2/5  flex-col justify-around md:flex-row my-2">
+			<div class="my-2 flex w-full flex-col justify-around md:w-2/5 md:flex-row">
 				<Sleep dateSeriesData={sleepCharts} bind:viewMode={sleepViewMode} />
 				<Calories dateSeriesData={caloriesCharts} bind:viewMode={caloriesViewMode} />
 			</div>
@@ -322,5 +252,4 @@
 </div>
 
 <style>
-
 </style>

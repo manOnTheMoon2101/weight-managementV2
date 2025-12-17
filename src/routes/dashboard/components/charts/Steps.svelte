@@ -5,7 +5,6 @@
 	import * as Chart from "$lib/components/ui/chart/index.js";
 	import * as Card from "$lib/components/ui/card/index.js";
 	import Footprints from "@lucide/svelte/icons/footprints";
-	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import Badge from "$lib/components/ui/badge/badge.svelte";
 

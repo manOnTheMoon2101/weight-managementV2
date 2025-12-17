@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { PieChart } from "layerchart";
-	import TrendingUpIcon from "@lucide/svelte/icons/trending-up";
 	import * as Chart from "$lib/components/ui/chart/index.js";
 	import * as Card from "$lib/components/ui/card/index.js";
-	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import Pill from "@lucide/svelte/icons/pill";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import Badge from "$lib/components/ui/badge/badge.svelte";
@@ -25,8 +23,6 @@
 
 	let viewMode = $state<"week" | "month">("week");
 
-
-
 	$effect(() => {
 		const savedViewMode = localStorage.getItem("supplementsChart");
 		if (savedViewMode) {
@@ -37,66 +33,57 @@
 	$effect(() => {
 		localStorage.setItem("supplementsChart", viewMode);
 	});
-	const colors = [
-		"var(--chart1)",
-		"var(--chart2)",
-		"var(--chart3)",
-		"var(--chart4)",
-		"var(--chart5)",
-	];
 
 	const currentData = $derived(viewMode === "week" ? weekData : monthData);
 
 	const chartData = $derived(() => {
 		if (!currentData || currentData.length === 0) return [];
-
-		// Group supplements by name and sum quantities
 		const supplementMap = new Map<string, { count: number; color: string; type: string }>();
-		
+
 		currentData.forEach((entry, index) => {
-			const name = entry.waist || 'Unknown';
+			const name = entry.waist || "Unknown";
 			const quantity = entry.quantity || 0;
 			const existing = supplementMap.get(name);
-			
+
 			if (existing) {
 				existing.count += quantity;
 			} else {
 				supplementMap.set(name, {
 					count: quantity,
-					color: entry.color || colors[index % colors.length],
-					type: entry.type || 'supplement'
+					color: entry.color || "white",
+					type: entry.type || "supplement",
 				});
 			}
 		});
-
-		// Convert map to array format for chart
-		return Array.from(supplementMap.entries()).map(([name, data]) => ({
-			supplement: name,
-			count: data.count,
-			color: data.color,
-			type: data.type
-		})).filter((item) => item.count > 0);
+		return Array.from(supplementMap.entries())
+			.map(([name, data]) => ({
+				supplement: name,
+				count: data.count,
+				color: data.color,
+				type: data.type,
+			}))
+			.filter((item) => item.count > 0);
 	});
 
 	const chartConfig = $derived(() => {
 		const config: Record<string, { label: string; color?: string }> = {
-			count: { label: "Count" }
+			count: { label: "Count" },
 		};
-		
+
 		chartData().forEach((item) => {
 			config[item.supplement] = {
 				label: item.supplement,
-				color: item.color
+				color: item.color,
 			};
 		});
-		
+
 		return config;
 	});
 
 	const totalCount = $derived(chartData().reduce((sum, item) => sum + item.count, 0));
 </script>
 
-<Card.Root class="bg-primary flex flex-col my-2">
+<Card.Root class="bg-primary my-2 flex flex-col">
 	<Card.Header>
 		<div class="flex flex-row justify-between">
 			<div>
@@ -107,9 +94,7 @@
 			<div>
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger class="cursor-pointer">
-						<Badge
-							>{viewMode == "week" ? "Last 7 Days" : "Last Month"}
-						</Badge>
+						<Badge>{viewMode == "week" ? "Last 7 Days" : "Last Month"}</Badge>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
 						<DropdownMenu.Group>
@@ -162,7 +147,6 @@
 			<div class="grid">
 				<div class="flex items-center gap-2 leading-none font-medium">
 					Total {totalCount} supplements used for last {viewMode === "week" ? "7 days" : "month"}
-					
 				</div>
 			</div>
 		</div>

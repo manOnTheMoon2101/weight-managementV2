@@ -85,7 +85,6 @@
 
 	function assignSupplement(supplementId: number, quantity: string) {
 		if (!quantity.trim()) {
-			console.log("No quantity provided, returning");
 			return;
 		}
 

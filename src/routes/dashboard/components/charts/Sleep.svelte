@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { LineChart } from "layerchart";
-	import TrendingUpIcon from "@lucide/svelte/icons/trending-up";
 	import { curveNatural } from "d3-shape";
 	import { scaleUtc } from "d3-scale";
 	import * as Chart from "$lib/components/ui/chart/index.js";
 	import * as Card from "$lib/components/ui/card/index.js";
-	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import Bed from "@lucide/svelte/icons/bed";
 	import Badge from "$lib/components/ui/badge/badge.svelte";

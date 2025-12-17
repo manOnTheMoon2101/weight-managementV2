@@ -10,7 +10,6 @@
 	import CalendarIcon from "@lucide/svelte/icons/calendar";
 	import Mail from "@lucide/svelte/icons/mail";
 	import ArrowDownToLine from "@lucide/svelte/icons/arrow-down-to-line";
-	// import Refresh from "@lucide/svelte/icons/refresh-cw";
 	import { page } from "$app/state";
 	import { toast } from "svelte-sonner";
 	import { browser } from "$app/environment";
@@ -361,10 +360,6 @@
 			<Mail class="mr-2 size-4" />
 			<span>{isSendingEmail ? 'Sending...' : 'Send Email'}</span>
 		</Button>
-		<!-- <Button variant="save" class="flex-1 md:flex-none">
-			<Refresh class="mr-2 size-4" />
-			<span class="hidden sm:inline">Refresh</span>
-		</Button> -->
 	</div>
 </div>
 

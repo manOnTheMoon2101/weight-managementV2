@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { LineChart } from "layerchart";
-	import TrendingUpIcon from "@lucide/svelte/icons/trending-up";
 	import { scaleUtc } from "d3-scale";
 	import { curveNatural } from "d3-shape";
 	import Scale from "@lucide/svelte/icons/scale";

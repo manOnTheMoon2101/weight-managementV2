@@ -31,7 +31,6 @@
 				imageSrc = e.target?.result as string;
 				showCropper = true;
 			};
-			console.log(file);
 			reader.readAsDataURL(file);
 		}
 	}
