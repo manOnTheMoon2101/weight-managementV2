@@ -99,7 +99,6 @@
 			class="space-y-3 overflow-y-auto"
 			onsubmit={handleCreateSubmit}
 		>
-			<!-- Hidden input to store assigned supplements data -->
 			<input type="hidden" name="assignedSupplements" value={JSON.stringify(assignedSupplements)} />
 			<Card.Root class="bg-primary">
 				<Card.Header class="pb-3">
@@ -108,7 +107,7 @@
 				</Card.Header>
 				<Card.Content class="space-y-2">
 					<div>
-						<Label for="weight" class="text-sm">Weight</Label>
+						<Label for="weight" class="text-sm">Weight(kg)</Label>
 						<Input
 							id="weight"
 							value={latestWeight ? latestWeight.weight : 0}
@@ -122,7 +121,7 @@
 						<Input id="steps" name="steps" placeholder="Steps" class="h-8" />
 					</div>
 					<div>
-						<Label for="water" class="text-sm">Water</Label>
+						<Label for="water" class="text-sm">Water(ml)</Label>
 						<Input id="water" name="water" placeholder="Water" class="h-8" />
 					</div>
 				</Card.Content>
@@ -196,7 +195,7 @@
 					</Card.Header>
 					<Card.Content class="space-y-2">
 						<div>
-							<Label for="waist" class="text-sm">Waist</Label>
+							<Label for="waist" class="text-sm">Waist(cm)</Label>
 							<Input
 								id="waist"
 								value={latestWaist ? latestWaist.waistMeasurement : 0}
@@ -220,19 +219,19 @@
 							<Input id="calories" name="calories" placeholder="Calories" class="h-8" />
 						</div>
 						<div>
-							<Label for="protein" class="text-sm">Protein</Label>
+							<Label for="protein" class="text-sm">Protein(g)</Label>
 							<Input id="protein" name="protein" placeholder="Protein" class="h-8" />
 						</div>
 						<div>
-							<Label for="fat" class="text-sm">Fat</Label>
+							<Label for="fat" class="text-sm">Fat(g)</Label>
 							<Input id="fat" name="fat" placeholder="Fat" class="h-8" />
 						</div>
 						<div>
-							<Label for="sugar" class="text-sm">Sugar</Label>
+							<Label for="sugar" class="text-sm">Sugar(g)</Label>
 							<Input id="sugar" name="sugar" placeholder="Sugar" class="h-8" />
 						</div>
 						<div>
-							<Label for="carbs" class="text-sm">Carbs</Label>
+							<Label for="carbs" class="text-sm">Carbs(g)</Label>
 							<Input id="carbs" name="carbs" placeholder="Carbs" class="h-8" />
 						</div>
 					</Card.Content>

@@ -163,7 +163,7 @@
 						</Card.Header>
 						<Card.Content class="space-y-2">
 							<div>
-								<Label for="weight" class="text-sm">Weight</Label>
+								<Label for="weight" class="text-sm">Weight(kg)</Label>
 								<Input
 									name="weight"
 									placeholder="Weight"
@@ -181,7 +181,7 @@
 								/>
 							</div>
 							<div>
-								<Label for="water" class="text-sm">Water</Label>
+								<Label for="water" class="text-sm">Water(ml)</Label>
 								<Input
 									name="water"
 									placeholder="Water"
@@ -198,17 +198,16 @@
 								<Card.Title class="flex items-center justify-between text-base">
 									<span class="flex items-center"><Pill class="mr-1" />Supplements</span>
 
-
 									<Tooltip.Provider delayDuration={100}>
-								<Tooltip.Root>
-									<Tooltip.Trigger>
-																			<Button variant="save" onclick={() => (supplementDialogOpen = true)}
-										><Plus /></Button
-									>
-									</Tooltip.Trigger>
-									<Tooltip.Content>Add Supplements</Tooltip.Content>
-								</Tooltip.Root>
-							</Tooltip.Provider>
+										<Tooltip.Root>
+											<Tooltip.Trigger>
+												<Button variant="save" onclick={() => (supplementDialogOpen = true)}
+													><Plus /></Button
+												>
+											</Tooltip.Trigger>
+											<Tooltip.Content>Add Supplements</Tooltip.Content>
+										</Tooltip.Root>
+									</Tooltip.Provider>
 								</Card.Title>
 								<Separator class="my-2" />
 							</Card.Header>
@@ -260,8 +259,8 @@
 										{/each}
 									{:else}
 										<p class="text-muted-foreground flex flex-row justify-center text-sm">
-								No supplements assigned
-							</p>
+											No supplements assigned
+										</p>
 									{/if}
 								</div>
 							</Card.Content>
@@ -278,7 +277,7 @@
 							</Card.Header>
 							<Card.Content class="space-y-2">
 								<div>
-									<Label for="waist" class="text-sm">Waist</Label>
+									<Label for="waist" class="text-sm">Waist(cm)</Label>
 									<Input
 										value={rowToEdit?.waistMeasurement || ""}
 										name="waist"
@@ -307,7 +306,7 @@
 									/>
 								</div>
 								<div>
-									<Label for="protein" class="text-sm">Protein</Label>
+									<Label for="protein" class="text-sm">Protein(g)</Label>
 									<Input
 										name="protein"
 										placeholder="Protein"
@@ -316,11 +315,11 @@
 									/>
 								</div>
 								<div>
-									<Label for="fat" class="text-sm">Fat</Label>
+									<Label for="fat" class="text-sm">Fat(g)</Label>
 									<Input name="fat" placeholder="Fat" value={rowToEdit?.fat || ""} class="h-8" />
 								</div>
 								<div>
-									<Label for="sugar" class="text-sm">Sugar</Label>
+									<Label for="sugar" class="text-sm">Sugar(g)</Label>
 									<Input
 										name="sugar"
 										placeholder="Sugar"
@@ -329,7 +328,7 @@
 									/>
 								</div>
 								<div>
-									<Label for="carbs" class="text-sm">Carbs</Label>
+									<Label for="carbs" class="text-sm">Carbs(g)</Label>
 									<Input
 										name="carbs"
 										placeholder="Carbs"
@@ -371,7 +370,7 @@
 					</Card.Root>
 
 					{#if !updateLoading}
-						<Button class="mt-4 w-full" variant="save" type="submit"><Save/>Update</Button>
+						<Button class="mt-4 w-full" variant="save" type="submit"><Save />Update</Button>
 					{:else}
 						<Button class="mt-4  w-full" variant="save" type="button" disabled>
 							<div class="flex items-center justify-center space-x-2">
@@ -384,7 +383,9 @@
 					<div>
 						<AlertDialog.Root>
 							<AlertDialog.Trigger class="w-full">
-								<Button class="text-destructive mt-4 w-full" variant="delete"><Delete/>Delete</Button>
+								<Button class="text-destructive mt-4 w-full" variant="delete"
+									><Delete />Delete</Button
+								>
 							</AlertDialog.Trigger>
 							<AlertDialog.Content>
 								<AlertDialog.Header>
