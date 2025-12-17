@@ -88,7 +88,7 @@
 		<Button variant={"add"}><Plus class="mr-1" />Add</Button>
 	</Sheet.Trigger>
 	<Sheet.Content class="max-h-[100vh] overflow-y-auto" side="right">
-		<Sheet.Header>
+		<Sheet.Header class="flex flex-row justify-center">
 			<Sheet.Title>Add New</Sheet.Title>
 		</Sheet.Header>
 		<form
