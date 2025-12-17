@@ -16,6 +16,7 @@
 	import Bed from "@lucide/svelte/icons/bed";
 	import Pill from "@lucide/svelte/icons/pill";
 	import Liquid from "@lucide/svelte/icons/milk";
+	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import Gummy from "@lucide/svelte/icons/candy";
 	import Save from "@lucide/svelte/icons/save";
 	import Delete from "@lucide/svelte/icons/trash";
@@ -196,9 +197,18 @@
 							<Card.Header class="pb-3">
 								<Card.Title class="flex items-center justify-between text-base">
 									<span class="flex items-center"><Pill class="mr-1" />Supplements</span>
-									<Button variant="save" onclick={() => (supplementDialogOpen = true)}
+
+
+									<Tooltip.Provider delayDuration={100}>
+								<Tooltip.Root>
+									<Tooltip.Trigger>
+																			<Button variant="save" onclick={() => (supplementDialogOpen = true)}
 										><Plus /></Button
 									>
+									</Tooltip.Trigger>
+									<Tooltip.Content>Add Supplements</Tooltip.Content>
+								</Tooltip.Root>
+							</Tooltip.Provider>
 								</Card.Title>
 								<Separator class="my-2" />
 							</Card.Header>
