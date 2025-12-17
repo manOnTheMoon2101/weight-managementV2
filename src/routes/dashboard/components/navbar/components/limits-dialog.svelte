@@ -71,17 +71,17 @@
 								>
 							</Card.Header>
 							<Card.Content class="space-y-2">
-								<Label for="caloriesLimit">Calories</Label>
+								<Label for="caloriesLimit">Calories(g)</Label>
 								<Input
 									name="caloriesLimit"
 									placeholder="Calories"
 									type={"number"}
 									value={limits?.caloriesLimit}
 								/>
-								<Label for="fatLimit">Fat</Label>
+								<Label for="fatLimit">Fat(g)</Label>
 								<Input name="fatLimit" placeholder="Fat" type={"number"} value={limits?.fatLimit} />
 
-								<Label for="carbsLimit">Carbs</Label>
+								<Label for="carbsLimit">Carbs(g)</Label>
 								<Input
 									name="carbsLimit"
 									placeholder="Carbs"
@@ -89,7 +89,7 @@
 									value={limits?.carbsLimit}
 								/>
 
-								<Label for="proteinLimit">Protein</Label>
+								<Label for="proteinLimit">Protein(g)</Label>
 								<Input
 									name="proteinLimit"
 									placeholder="Protein"
@@ -97,7 +97,7 @@
 									value={limits?.proteinLimit}
 								/>
 
-								<Label for="sugarLimit">Sugar</Label>
+								<Label for="sugarLimit">Sugar(g)</Label>
 								<Input
 									name="sugarLimit"
 									placeholder="Sugar"
@@ -112,7 +112,7 @@
 								<Card.Title class="flex flex-row"><Goal class="text-save mx-1" />Goals</Card.Title>
 							</Card.Header>
 							<Card.Content>
-								<Label for="waterLimit">Water</Label>
+								<Label for="waterLimit">Water(ml)</Label>
 								<Input
 									name="waterLimit"
 									placeholder="Water"

@@ -101,6 +101,6 @@
 
 </script>
 
-<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-4 shadow-lg shadow-secondary">
 	<div bind:this={gridDiv} class="ag-theme-quartz-dark w-full overflow-x-auto" style="height: 80vh;"></div>
 </div>

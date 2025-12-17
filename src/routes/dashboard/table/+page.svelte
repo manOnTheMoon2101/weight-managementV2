@@ -13,6 +13,7 @@
 	import { page } from "$app/state";
 	import { toast } from "svelte-sonner";
 	import { browser } from "$app/environment";
+	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import Measurement from "./components/cellRenderers/Measurement.svelte";
 	import Weight from "./components/cellRenderers/Weight.svelte";
 	import Date from "./components/cellRenderers/Date.svelte";
@@ -53,11 +54,11 @@
 		sleep_schedule?: SleepSchedule[];
 		[key: string]: any;
 	};
-	
 
-	const latestWaistEntry = $derived(data.latestWaistEntry)
-	const latestWeightEntry = $derived(data.latestWeightEntry)
-	const allSupplements = $derived(data.allSupplements)
+	const latestWaistEntry = $derived(data.latestWaistEntry);
+	const latestWeightEntry = $derived(data.latestWeightEntry);
+	const allSupplements = $derived(data.allSupplements);
+	const userEmail = $derived<string>(data.userEmail || "");
 	const nutrients = $derived.by(() =>
 		data.nutrients.map((row: NutrientRow) => ({
 			...row,
@@ -73,7 +74,7 @@
 			waistMeasurement: row.health_tracker?.[0].waistMeasurement,
 			userEmail: data.userEmail,
 			allAssignedSupplements: row.assignedSupplements || [],
-			allSupplements : allSupplements || []
+			allSupplements: allSupplements || [],
 		}))
 	);
 
@@ -90,12 +91,18 @@
 			cellRendererParams: (params: any) => ({
 				dialogOpen: false,
 				rowToEdit: params.data,
-				allSupplements : allSupplements
+				allSupplements: allSupplements,
 			}),
 			minWidth: 100,
 			maxWidth: 120,
 		},
-		{ headerName: "Date", field: "createdAt", cellRenderer: makeSvelteCellRenderer(Date as any), minWidth: 140, maxWidth: 200 },
+		{
+			headerName: "Date",
+			field: "createdAt",
+			cellRenderer: makeSvelteCellRenderer(Date as any),
+			minWidth: 140,
+			maxWidth: 200,
+		},
 		{
 			headerName: "Weight",
 			field: "weight",
@@ -247,15 +254,14 @@
 	async function sendEmail() {
 		isSendingEmail = true;
 		try {
-			await axios.post('/api/send-email',nutrients);
-			
-			toast.success("Succesfully Sent Email")
+			await axios.post("/api/send-email", nutrients);
+
+			toast.success("Succesfully Sent Email");
 		} catch (error) {
 			if (axios.isAxiosError(error) && error.response) {
 				toast.error(`Failed to send email: ${error.response.data.error}`);
 			} else {
-				
-				toast.error('Error sending email')
+				toast.error("Error sending email");
 			}
 			console.error(error);
 		} finally {
@@ -322,14 +328,19 @@
 				class={cn(
 					buttonVariants({
 						variant: "outline",
-						class: "border-accent mx-2 w-full md:w-[300px] justify-start border text-left font-normal",
+						class:
+							"border-accent mx-2 w-full justify-start border text-left font-normal md:w-[300px]",
 					}),
 					!value && "text-foreground"
 				)}
 			>
 				<CalendarIcon class="mr-2 size-4 flex-shrink-0" />
 				<span class="truncate">
-					{value && (value.start || value.end) ? valueString : storedDateLabel ? selectedPreset : "Select date range"}
+					{value && (value.start || value.end)
+						? valueString
+						: storedDateLabel
+							? selectedPreset
+							: "Select date range"}
 				</span>
 			</Popover.Trigger>
 			<Popover.Content class="flex w-auto flex-col space-y-2 p-2">
@@ -350,16 +361,40 @@
 		</Popover.Root>
 	</div>
 	<div class="flex flex-wrap gap-2 px-2 md:px-0">
-		<AddDialog dialogOpen latestWaist={latestWaistEntry}  latestWeight={latestWeightEntry} allSupplements={allSupplements}/>
-		<Button variant="save" onclick={() => tableComponent?.exportToCsv()} class="flex-1 md:flex-none">
+		<AddDialog
+			dialogOpen
+			latestWaist={latestWaistEntry}
+			latestWeight={latestWeightEntry}
+			{allSupplements}
+		/>
+		<Button
+			variant="save"
+			onclick={() => tableComponent?.exportToCsv()}
+			class="flex-1 md:flex-none"
+		>
 			<ArrowDownToLine class="mr-2 size-4" />
 			<span class="hidden sm:inline">Export to CSV</span>
 			<span class="sm:hidden">CSV</span>
 		</Button>
-		<Button variant="save" onclick={sendEmail} disabled={isSendingEmail} class="flex-1 md:flex-none">
-			<Mail class="mr-2 size-4" />
-			<span>{isSendingEmail ? 'Sending...' : 'Send Email'}</span>
-		</Button>
+
+		<Tooltip.Provider delayDuration={100}>
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					<Button
+						variant="save"
+						onclick={sendEmail}
+						disabled={isSendingEmail}
+						class="flex-1 md:flex-none"
+					>
+						<Mail class="mr-2 size-4" />
+						<span>{isSendingEmail ? "Sending..." : "Export to Email"}</span>
+					</Button>
+				</Tooltip.Trigger>
+				<Tooltip.Content>
+					Send to {userEmail}
+				</Tooltip.Content>
+			</Tooltip.Root>
+		</Tooltip.Provider>
 	</div>
 </div>
 

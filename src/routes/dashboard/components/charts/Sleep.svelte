@@ -7,7 +7,7 @@
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import Bed from "@lucide/svelte/icons/bed";
 	import Badge from "$lib/components/ui/badge/badge.svelte";
-
+import Filter from "@lucide/svelte/icons/list-filter";
 	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
 
 
@@ -74,7 +74,7 @@
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger class="cursor-pointer">
 						<Badge
-							>{viewMode == "7days" ? "Last 7 Days" : "Last Month"}
+							><Filter class="h-4 w-4 mr-2"/>{viewMode == "7days" ? "Last 7 Days" : "Last Month"}
 						</Badge>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>

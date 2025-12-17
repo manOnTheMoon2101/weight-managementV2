@@ -5,7 +5,7 @@
 	import Pill from "@lucide/svelte/icons/pill";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import Badge from "$lib/components/ui/badge/badge.svelte";
-
+import Filter from "@lucide/svelte/icons/list-filter";
 	interface SupplementEntry {
 		quantity: number | null;
 		waist: string;
@@ -94,7 +94,7 @@
 			<div>
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger class="cursor-pointer">
-						<Badge>{viewMode == "week" ? "Last 7 Days" : "Last Month"}</Badge>
+						<Badge><Filter class="h-4 w-4 mr-2"/>{viewMode == "week" ? "Last 7 Days" : "Last Month"}</Badge>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
 						<DropdownMenu.Group>

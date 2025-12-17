@@ -5,6 +5,7 @@
 	import * as Chart from "$lib/components/ui/chart/index.js";
 	import * as Card from "$lib/components/ui/card/index.js";
 	import Footprints from "@lucide/svelte/icons/footprints";
+	import Filter from "@lucide/svelte/icons/list-filter";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import Badge from "$lib/components/ui/badge/badge.svelte";
 
@@ -58,7 +59,7 @@
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger class="cursor-pointer">
 						<Badge 
-							>{viewMode == "7days" ? "Last 7 Days" : "Last Month"}
+							><Filter class="h-4 w-4 mr-2"/>{viewMode == "7days" ? "Last 7 Days" : "Last Month"}
 						</Badge>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
