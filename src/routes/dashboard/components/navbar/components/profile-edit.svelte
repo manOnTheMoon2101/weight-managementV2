@@ -19,7 +19,6 @@
 	let showCropper = $state(false);
 	let originalFileName = $state<string>("cropped-avatar.png");
 
-		$inspect(user)
 
 	function handleFileSelect(event: Event) {
 		const input = event.target as HTMLInputElement;
@@ -31,7 +30,6 @@
 				imageSrc = e.target?.result as string;
 				showCropper = true;
 			};
-			console.log(file);
 			reader.readAsDataURL(file);
 		}
 	}

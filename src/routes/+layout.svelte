@@ -3,8 +3,8 @@
 	let { children } = $props();
 	import { ModeWatcher } from "mode-watcher";
 	import { dev } from "$app/environment";
-	import { injectAnalytics } from '@vercel/analytics/sveltekit';
-	 import { Toaster } from "$lib/components/ui/sonner/index.js";
+	import { injectAnalytics } from "@vercel/analytics/sveltekit";
+	import { Toaster } from "$lib/components/ui/sonner/index.js";
 	injectAnalytics({ mode: dev ? "development" : "production" });
 </script>
 

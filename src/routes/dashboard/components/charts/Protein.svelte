@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { scaleBand } from "d3-scale";
 	import { BarChart, type ChartContextValue } from "layerchart";
-	import TrendingUpIcon from "@lucide/svelte/icons/trending-up";
 	import * as Chart from "$lib/components/ui/chart/index.js";
 	import * as Card from "$lib/components/ui/card/index.js";
 	import { cubicInOut } from "svelte/easing";
-	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import Beef from "@lucide/svelte/icons/beef";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import Badge from "$lib/components/ui/badge/badge.svelte";
@@ -44,7 +42,7 @@
 			: 0
 	);
 
-	$inspect(dateSeriesData);
+
 
 	const chartConfig = {
 		desktop: { label: "Protein", color: "var(--accent)" },

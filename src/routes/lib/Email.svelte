@@ -13,8 +13,7 @@
 
 	let { nutrients } = $props();
 
-	$inspect(nutrients)
-	
+
 	// Helper function to format date
 	function formatDate(dateString: string) {
 		return new Date(dateString).toLocaleDateString('en-US', { 

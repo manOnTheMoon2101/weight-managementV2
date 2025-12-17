@@ -258,7 +258,6 @@ export const load: PageServerLoad = async ({ request }) => {
 				eq(assignedSupplements.userId, session.user.id),
 				eq(assignedSupplements.isActive, true),
 				eq(assignedSupplements.isDeleted, false),
-				// gte(assignedSupplements.waistMeasurement, 1),
 				gte(assignedSupplements.quantity, 1),
 				sql`${assignedSupplements.createdAt} >= ${oneMonthAgo.toISOString()}`
 			),
@@ -276,7 +275,6 @@ export const load: PageServerLoad = async ({ request }) => {
 				eq(assignedSupplements.userId, session.user.id),
 				eq(assignedSupplements.isActive, true),
 				eq(assignedSupplements.isDeleted, false),
-				// gte(assignedSupplements.waistMeasurement, 1),
 				gte(assignedSupplements.quantity, 1),
 				sql`${assignedSupplements.createdAt} >= ${sevenDaysAgo.toISOString()}`
 			),

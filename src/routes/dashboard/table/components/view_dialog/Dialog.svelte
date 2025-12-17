@@ -52,7 +52,6 @@
 	let editQuantityInput = $state("");
 	let editQuantityName = $state("");
 
-	$inspect(rowToEdit);
 	$effect(() => {
 		if (rowToEdit?.allAssignedSupplements) {
 			assignedSupplements = [...rowToEdit.allAssignedSupplements];
@@ -85,7 +84,6 @@
 
 	function assignSupplement(supplementId: number, quantity: string) {
 		if (!quantity.trim()) {
-			console.log("No quantity provided, returning");
 			return;
 		}
 

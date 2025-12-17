@@ -2,8 +2,6 @@
 	import * as Card from "$lib/components/ui/card/index.js";
 	import * as Chart from "$lib/components/ui/chart/index.js";
 	import { ArcChart, Text } from "layerchart";
-	import TrendingUpIcon from "@lucide/svelte/icons/trending-up";
-	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import Droplet from "@lucide/svelte/icons/droplet";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import Badge from "$lib/components/ui/badge/badge.svelte";

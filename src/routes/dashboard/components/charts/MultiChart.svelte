@@ -1,13 +1,11 @@
 <script lang="ts">
 	import { LineChart } from "layerchart";
-	import TrendingUpIcon from "@lucide/svelte/icons/trending-up";
 	import { scaleUtc } from "d3-scale";
 	import { curveNatural } from "d3-shape";
 	import Scale from "@lucide/svelte/icons/scale";
 	import * as Chart from "$lib/components/ui/chart/index.js";
 	import * as Card from "$lib/components/ui/card/index.js";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-	import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
 	import Badge from "$lib/components/ui/badge/badge.svelte";
 
 	let { dateSeriesData, viewMode = $bindable("7days") } = $props();
