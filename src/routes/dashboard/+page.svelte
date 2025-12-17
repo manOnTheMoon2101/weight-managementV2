@@ -2,7 +2,6 @@
 	import type { PageData } from "./$types";
 	import { DateFormatter } from "@internationalized/date";
 	import Supplements from "./components/charts/Supplements.svelte";
-	import "@fontsource/balsamiq-sans";
 	import Steps from "./components/charts/Steps.svelte";
 	import Water from "./components/charts/Water.svelte";
 	import Protein from "./components/charts/Protein.svelte";
