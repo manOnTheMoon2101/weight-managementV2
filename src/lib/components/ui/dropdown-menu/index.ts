@@ -10,19 +10,11 @@ import Shortcut from "./dropdown-menu-shortcut.svelte";
 import SubContent from "./dropdown-menu-sub-content.svelte";
 import SubTrigger from "./dropdown-menu-sub-trigger.svelte";
 
-
-const Root = DropdownMenuPrimitive?.Root;
-const Trigger = DropdownMenuPrimitive?.Trigger;
-const Group = DropdownMenuPrimitive?.Group;
-const RadioGroup = DropdownMenuPrimitive?.RadioGroup;
-
-
-let Sub: any;
-try {
-	Sub = DropdownMenuPrimitive?.Sub || Root;
-} catch {
-	Sub = Root;
-}
+const Root = DropdownMenuPrimitive.Root;
+const Trigger = DropdownMenuPrimitive.Trigger;
+const Group = DropdownMenuPrimitive.Group;
+const RadioGroup = DropdownMenuPrimitive.RadioGroup;
+const Sub = DropdownMenuPrimitive.Sub;
 
 export {
 	CheckboxItem,
