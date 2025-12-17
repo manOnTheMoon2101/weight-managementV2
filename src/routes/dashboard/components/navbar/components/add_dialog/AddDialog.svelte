@@ -72,7 +72,6 @@
 			});
 		}
 
-		// Reset input and close dialog
 		quantityInput = "";
 		supplementDialogOpen = false;
 	}
@@ -86,7 +85,7 @@
 
 <Sheet.Root>
 	<Sheet.Trigger>
-		<Button variant={"save"}><Plus class="mr-1" />Add</Button>
+		<Button variant={"add"}><Plus class="mr-1" />Add</Button>
 	</Sheet.Trigger>
 	<Sheet.Content class="max-h-[100vh] overflow-y-auto" side="right">
 		<Sheet.Header>
