@@ -1,0 +1,1 @@
+ALTER TABLE "custom_supplements" ADD COLUMN "description" text;
