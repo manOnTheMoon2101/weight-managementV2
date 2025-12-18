@@ -56,6 +56,12 @@ export const load: LayoutServerLoad = async ({ request }) => {
           eq(custom_supplements.isActive, true),
           eq(custom_supplements.isDeleted, false)
         ),
+        columns:{
+            id: true,
+            name: true,
+            type : true,
+            color: true
+        }
     });
 
     return {

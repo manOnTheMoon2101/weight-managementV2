@@ -22,6 +22,14 @@
 		proteinLimit: number | null;
 	}
 
+
+	interface Supplements {
+		name: string;
+		color: string;
+		type: string;
+		id: number;
+	}
+
 	let {
 		user,
 		userColour,
@@ -31,7 +39,7 @@
 	}: {
 		user: any[];
 		userColour: any;
-		userSupplements: any;
+		userSupplements: Supplements;
 		userJourney: any;
 		limits: Limits;
 	} = $props();
