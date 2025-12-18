@@ -12,6 +12,7 @@
 	import Gummy from "@lucide/svelte/icons/candy";
 	import Powder from "@lucide/svelte/icons/wand-sparkles";
 	import Plus from "@lucide/svelte/icons/circle-plus";
+	import Save from "@lucide/svelte/icons/save";
 	import Minus from "@lucide/svelte/icons/minus";
 	import Up from "@lucide/svelte/icons/corner-right-up";
 	import Pencil from "@lucide/svelte/icons/pencil";
@@ -196,7 +197,7 @@
 					</Card.Root>
 					<div class="mt-4 flex flex-row justify-end">
 						{#if !updateLoading}
-							<Button type="submit" variant="save">Save</Button>
+							<Button type="submit" variant="save"><Save/>Save</Button>
 						{:else}
 							<Button type="submit" variant="save" disabled>
 								<div class="flex items-center justify-center space-x-2">
