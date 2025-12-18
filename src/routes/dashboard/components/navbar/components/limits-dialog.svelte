@@ -5,6 +5,7 @@
 	import Button from "$lib/components/ui/button/button.svelte";
 	import * as Card from "$lib/components/ui/card/index.js";
 	import * as Select from "$lib/components/ui/select/index.js";
+	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import Goal from "@lucide/svelte/icons/goal";
 	import Journey from "@lucide/svelte/icons/footprints";
 	import Pill from "@lucide/svelte/icons/pill";
@@ -12,32 +13,55 @@
 	import Gummy from "@lucide/svelte/icons/candy";
 	import Powder from "@lucide/svelte/icons/wand-sparkles";
 	import Plus from "@lucide/svelte/icons/circle-plus";
+	import Save from "@lucide/svelte/icons/save";
 	import Minus from "@lucide/svelte/icons/minus";
 	import Up from "@lucide/svelte/icons/corner-right-up";
 	import Pencil from "@lucide/svelte/icons/pencil";
 	import Down from "@lucide/svelte/icons/corner-right-down";
 	import ColorPicker, { ChromeVariant } from "svelte-awesome-color-picker";
+
+	interface Limits {
+		caloriesLimit: number | null;
+		carbsLimit: number | null;
+		stepsLimit: number | null;
+		waterLimit: number | null;
+		sugarLimit: number | null;
+		proteinLimit: number | null;
+	}
+
+	interface Supplements {
+		name: string;
+		color: string;
+		type: string;
+		id: number;
+	}
+
 	let { limits, userJourney, userSupplements } = $props<{
-		limits: any;
-		userJourney: any;
-		userSupplements: any;
+		limits: Limits;
+		userJourney: string;
+		userSupplements: Supplements;
 	}>();
 
-	let updateLoading = $state(false);
-	let supplementDialogOpen = $state(false);
-	let supplementEditDialogOpen = $state(false);
-	let selectedColor = $state("#FFFFFF");
-	let editColor = $state("#FFFFFF");
-	let editName = $state("");
-	let editType = $state("");
-	let editId = $state("");
+	let updateLoading = $state<boolean>(false);
+	let supplementDialogOpen = $state<boolean>(false);
+	let supplementEditDialogOpen = $state<boolean>(false);
+	let selectedColor = $state<string>("#FFFFFF");
+	let editColor = $state<string>("#FFFFFF");
+	let editName = $state<string>("");
+	let editType = $state<string>("");
+	let editId = $state<string>("");
 
 	let journeys = [
 		{ value: "Weight_Loss", name: "Weight Loss" },
 		{ value: "Weight_Gain", name: "Bulk" },
 	];
 
-	let supplementTypes = [{ value: "Capsule" }, { value: "Liquid" }, { value: "Gummy" },{ value: "Powder" }];
+	let supplementTypes = [
+		{ value: "Capsule" },
+		{ value: "Liquid" },
+		{ value: "Gummy" },
+		{ value: "Powder" },
+	];
 
 	let value = $derived(userJourney || "");
 
@@ -161,7 +185,17 @@
 						<Card.Header>
 							<Card.Title class="flex items-center justify-between"
 								>Supplements
-								<Button variant="save" onclick={() => (supplementDialogOpen = true)}><Plus /></Button>
+
+								<Tooltip.Provider delayDuration={100}>
+									<Tooltip.Root>
+										<Tooltip.Trigger>
+											<Button variant="save" onclick={() => (supplementDialogOpen = true)}
+												><Plus /></Button
+											>
+										</Tooltip.Trigger>
+										<Tooltip.Content side="top">Add New Supplement</Tooltip.Content>
+									</Tooltip.Root>
+								</Tooltip.Provider>
 							</Card.Title>
 						</Card.Header>
 
@@ -181,22 +215,30 @@
 											<Pill style="color: {s.color}" />
 										{/if}
 									</div>
-									<Button
-										onclick={() => (
-											(supplementEditDialogOpen = true),
-											(editColor = s.color),
-											(editType = s.type),
-											(editName = s.name),
-											(editId = s.id)
-										)}><Pencil /></Button
-									>
+
+									<Tooltip.Provider delayDuration={100}>
+										<Tooltip.Root>
+											<Tooltip.Trigger>
+												<Button
+													onclick={() => (
+														(supplementEditDialogOpen = true),
+														(editColor = s.color),
+														(editType = s.type),
+														(editName = s.name),
+														(editId = s.id)
+													)}><Pencil /></Button
+												>
+											</Tooltip.Trigger>
+											<Tooltip.Content side="top">Edit Supplement</Tooltip.Content>
+										</Tooltip.Root>
+									</Tooltip.Provider>
 								</div>
 							{/each}
 						</Card.Content>
 					</Card.Root>
 					<div class="mt-4 flex flex-row justify-end">
 						{#if !updateLoading}
-							<Button type="submit" variant="save">Save</Button>
+							<Button type="submit" variant="save"><Save />Save</Button>
 						{:else}
 							<Button type="submit" variant="save" disabled>
 								<div class="flex items-center justify-center space-x-2">

@@ -20,14 +20,19 @@
 						<Gummy style="color: {supplement.custom_supplement?.color}" />
 					{:else if supplement.custom_supplement?.type === "Liquid"}
 						<Liquid style="color: {supplement.custom_supplement?.color}" />
-						{:else if supplement.custom_supplement?.type === "Powder"}
+					{:else if supplement.custom_supplement?.type === "Powder"}
 						<Powder style="color: {supplement.custom_supplement?.color}" />
 					{:else}
 						<Pill style="color: {supplement.custom_supplement?.color}" />
 					{/if}
 				</Tooltip.Trigger>
 				<Tooltip.Content>
-					<p>{supplement.custom_supplement?.name}</p>
+					<p>
+						{supplement.custom_supplement?.name}<span class="text-muted-foreground"
+							>({supplement.custom_supplement?.type})</span
+						>
+					</p>
+
 					{#if supplement.quantity}
 						<p class="text-muted-foreground text-sm">Quantity: {supplement.quantity}</p>
 					{/if}

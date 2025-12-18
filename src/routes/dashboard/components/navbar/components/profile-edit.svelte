@@ -3,7 +3,7 @@
 	import { Input } from "$lib/components/ui/input/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
 	import Button from "$lib/components/ui/button/button.svelte";
-
+import Save from "@lucide/svelte/icons/save";
 	import Crop from "@lucide/svelte/icons/crop";
 	import * as Avatar from "$lib/components/ui/avatar/index.js";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
@@ -176,7 +176,7 @@
 								<Label for="name">Surname</Label>
 								<Input class="my-0" name="surname" placeholder="Surname" value={user.surname} />
 								<Label class="my-0" for="email">Email</Label>
-								<Input name="email" placeholder="Email" type="email" value={user.email} />
+								<Input disabled name="email" placeholder="Email" type="email" value={user.email} />
 							</div>
 
 
@@ -187,7 +187,7 @@
 						{#if !updateLoading}
 							<Button type="submit" variant={"save"}
 								>{#if !showCropper}
-									Save
+									<Save/>Save
 								{/if}</Button
 							>
 						{:else}

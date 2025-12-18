@@ -12,6 +12,24 @@
 	import Calculator from "@lucide/svelte/icons/calculator";
 	import Menu from "@lucide/svelte/icons/menu";
 	import Toggler from "../navbar/components/toggler.svelte";
+
+	interface Limits {
+		caloriesLimit: number | null;
+		carbsLimit: number | null;
+		stepsLimit: number | null;
+		waterLimit: number | null;
+		sugarLimit: number | null;
+		proteinLimit: number | null;
+	}
+
+
+	interface Supplements {
+		name: string;
+		color: string;
+		type: string;
+		id: number;
+	}
+
 	let {
 		user,
 		userColour,
@@ -21,9 +39,9 @@
 	}: {
 		user: any[];
 		userColour: any;
-		userSupplements: any;
+		userSupplements: Supplements;
 		userJourney: any;
-		limits: any[];
+		limits: Limits;
 	} = $props();
 
 	const parsedUser = $derived(typeof user === "string" ? JSON.parse(user) : user);

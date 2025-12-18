@@ -39,6 +39,15 @@ export const load: LayoutServerLoad = async ({ request }) => {
           eq(limits.isActive, true),
           eq(limits.isDeleted, false)
         ),
+        columns:{
+            caloriesLimit: true,
+            carbsLimit: true,
+            stepsLimit: true,
+            waterLimit: true,
+            fatLimit: true,
+            sugarLimit: true,
+            proteinLimit : true
+        }
     });
 
     const userSupplements = await db.query.custom_supplements.findMany({
@@ -47,6 +56,12 @@ export const load: LayoutServerLoad = async ({ request }) => {
           eq(custom_supplements.isActive, true),
           eq(custom_supplements.isDeleted, false)
         ),
+        columns:{
+            id: true,
+            name: true,
+            type : true,
+            color: true
+        }
     });
 
     return {
