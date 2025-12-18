@@ -4,6 +4,7 @@ import { user } from "./auth.schema";
 export const custom_supplements = pgTable("custom_supplements", {
 	id: serial("id").primaryKey(),
 	name: text("name").notNull(),
+	description : text("description"),
 	color: text("color").default("#FFFFFF").notNull(),
 	type: text("type").notNull().default("Capsule"),
     createdAt: timestamp("created_at").notNull().defaultNow(),

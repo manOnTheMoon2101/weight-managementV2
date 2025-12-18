@@ -18,6 +18,7 @@
 	import Up from "@lucide/svelte/icons/corner-right-up";
 	import Pencil from "@lucide/svelte/icons/pencil";
 	import Down from "@lucide/svelte/icons/corner-right-down";
+	import { Textarea } from "$lib/components/ui/textarea/index.js";
 	import ColorPicker, { ChromeVariant } from "svelte-awesome-color-picker";
 
 	interface Limits {
@@ -46,6 +47,7 @@
 	let supplementDialogOpen = $state<boolean>(false);
 	let supplementEditDialogOpen = $state<boolean>(false);
 	let selectedColor = $state<string>("#FFFFFF");
+	let supplementName = $state<string>("");
 	let editColor = $state<string>("#FFFFFF");
 	let editName = $state<string>("");
 	let editType = $state<string>("");
@@ -267,7 +269,10 @@
 				onsubmit={handleUpdateSubmit}
 			>
 				<Label for="name">Supplement Name</Label>
-				<Input name="name" placeholder="Enter supplement name" type="text" />
+				<Input name="name" placeholder="Name" type="text" bind:value={supplementName} />
+
+				<Label for="description">Description</Label>
+				<Textarea name="description" placeholder="Description"  />
 
 				<div>
 					<Label for="color">Colour</Label>
@@ -295,7 +300,7 @@
 						</Select.Content>
 					</Select.Root>
 				</div>
-				<Button type="submit" variant="save" disabled={updateLoading}>
+				<Button type="submit" variant="save" disabled={updateLoading || !supplementName.trim()}>
 					{updateLoading ? "Adding..." : "Add Supplement"}
 				</Button>
 			</form>
@@ -318,6 +323,10 @@
 				<input type="hidden" name="id" value={editId || ""} />
 				<Label for="name">Supplement Name</Label>
 				<Input name="name" placeholder="Enter supplement name" type="text" value={editName} />
+
+
+				<Label for="description">Description</Label>
+				<Textarea name="description" placeholder="Description"  />
 
 				<div>
 					<Label>Colour</Label>

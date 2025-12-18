@@ -814,12 +814,14 @@ export const actions = {
 		const name = form.get("name") as unknown as string;
 		const color = form.get("color") as unknown as string;
 		const type = form.get("type") as unknown as string;
+		const description = form.get("description") as unknown as string;
 
 		await db.insert(custom_supplements).values({
 			userId: session.user.id,
 			name,
 			color,
-			type
+			type,
+			description
 		});
 	},
 
@@ -834,11 +836,14 @@ export const actions = {
 		const name = form.get("name") as unknown as string;
 		const color = form.get("color") as unknown as string;
 		const type = form.get("type") as unknown as string;
+		const description = form.get("description") as unknown as string;
 
 		await db.update(custom_supplements).set({
 			name,
 			color,
-			type
+			type,
+			description,
+			updatedAt : new Date()
 		}).where(eq(custom_supplements.id, id));
 	},
 
