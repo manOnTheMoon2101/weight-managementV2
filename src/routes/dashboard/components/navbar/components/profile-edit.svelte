@@ -176,7 +176,7 @@
 								<Label for="name">Surname</Label>
 								<Input class="my-0" name="surname" placeholder="Surname" value={user.surname} />
 								<Label class="my-0" for="email">Email</Label>
-								<Input name="email" placeholder="Email" type="email" value={user.email} />
+								<Input disabled name="email" placeholder="Email" type="email" value={user.email} />
 							</div>
 
 
