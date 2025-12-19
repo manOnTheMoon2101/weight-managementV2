@@ -3,12 +3,14 @@
 	import { Input } from "$lib/components/ui/input/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
 	import Button from "$lib/components/ui/button/button.svelte";
-import Save from "@lucide/svelte/icons/save";
+	import Save from "@lucide/svelte/icons/save";
 	import Crop from "@lucide/svelte/icons/crop";
 	import * as Avatar from "$lib/components/ui/avatar/index.js";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import type { CropperSelection } from "@cropper/elements";
 	import * as Cropper from "@eslym/svelte-cropperjs";
+	import { toast } from "svelte-sonner";
+	import { enhance } from "$app/forms";
 
 	let { user, userColour }: { user: any; userColour: string } = $props();
 	let updateLoading = $state(false);
@@ -18,7 +20,7 @@ import Save from "@lucide/svelte/icons/save";
 	let croppedImageUrl = $state<string | null>(null);
 	let showCropper = $state(false);
 	let originalFileName = $state<string>("cropped-avatar.png");
-
+	let formResult = $state<{ success?: boolean; error?: string } | null>(null);
 
 	function handleFileSelect(event: Event) {
 		const input = event.target as HTMLInputElement;
@@ -62,10 +64,6 @@ import Save from "@lucide/svelte/icons/save";
 		imageSrc = null;
 		fileInput.value = "";
 	}
-
-	function handleUpdateSubmit() {
-		updateLoading = true;
-	}
 </script>
 
 <Dialog.Root>
@@ -79,128 +77,142 @@ import Save from "@lucide/svelte/icons/save";
 					Manage Account
 				{/if}
 			</Dialog.Title>
-			</Dialog.Header>
-			<Dialog.Description>
-				<form
-					method="POST"
-					action="/dashboard?/updateUser"
-					enctype="multipart/form-data"
-					onsubmit={handleUpdateSubmit}
-				>
-					<!-- <div>
+		</Dialog.Header>
+		<Dialog.Description>
+			<form
+				method="POST"
+				action="/dashboard?/updateUser"
+				enctype="multipart/form-data"
+				use:enhance={() => {
+					updateLoading = true;
+					return async ({ result, update }) => {
+						if (result.type === "success" && result.data) {
+							formResult = result.data as { success?: boolean; error?: string };
+							if (formResult.success) {
+								toast.success("Succesfully Updated");
+								await update();
+								updateLoading = false;
+							}
+						}
+					};
+				}}
+			>
+				<!-- <div>
                         <Label for="color">Colour</Label>
 						{hex}
                         <ColorPicker bind:hex components={ChromeVariant} sliderDirection="horizontal" />
                         <input type="hidden" name="userColour" bind:value={hex} />
                     </div> -->
-
-					{#if showCropper && imageSrc}
-						<div class="mb-4">
-							<div class="grid grid-cols-[1fr_auto] gap-4">
-								<Cropper.Canvas background class="h-96 w-full">
-									<Cropper.Image
-										src={imageSrc}
-										alt="Selected Image"
-										rotatable
-										scalable
-										translatable
-									/>
-									<Cropper.Shade />
-									<Cropper.Handle action="move" plain />
-									<Cropper.Selection
-										id="selection"
-										bind:element={cropper}
-										aspect-ratio={1}
-										initial-aspect-ratio={1}
-										initial-coverage={0.8}
-										movable
-										resizable
-									>
-										<Cropper.Grid bordered covered />
-										<Cropper.Crosshair centered themeColor="#0000FF80" />
-										<Cropper.Handle action="move" plain />
-										<Cropper.Handle action="n-resize" />
-										<Cropper.Handle action="e-resize" />
-										<Cropper.Handle action="s-resize" />
-										<Cropper.Handle action="w-resize" />
-										<Cropper.Handle action="ne-resize" />
-										<Cropper.Handle action="nw-resize" />
-										<Cropper.Handle action="se-resize" />
-										<Cropper.Handle action="sw-resize" />
-									</Cropper.Selection>
-								</Cropper.Canvas>
-								<div class="flex flex-col gap-2">
-									<Cropper.Viewer selection="#selection" class="h-32 w-32 rounded-full border" />
-								</div>
-							</div>
-							<div class="mt-4 flex gap-2">
-								<Button type="button" onclick={handleCrop}><Crop />Apply Crop</Button>
-								<Button type="button" variant="outline" onclick={cancelCrop}>Cancel</Button>
-							</div>
-						</div>
-					{:else}
-						<div class="flex flex-row items-center justify-between">
-							<div
-								class="flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-transparent"
-							>
-								<input
-									type="file"
-									name="file"
-									bind:this={fileInput}
-									class="hidden"
-									accept="image/*"
-									onchange={handleFileSelect}
+				{#if showCropper && imageSrc}
+					<div class="mb-4">
+						<div class="grid grid-cols-[1fr_auto] gap-4">
+							<Cropper.Canvas background class="h-96 w-full">
+								<Cropper.Image
+									src={imageSrc}
+									alt="Selected Image"
+									rotatable
+									scalable
+									translatable
 								/>
-
-								<Tooltip.Provider delayDuration={100}>
-									<Tooltip.Root>
-										<Tooltip.Trigger>
-											<Avatar.Root
-												class="h-24 w-24 cursor-pointer"
-												onclick={() => fileInput?.click()}
-											>
-												<Avatar.Image src={croppedImageUrl || user.image} alt={user.name} />
-												<Avatar.Fallback>CN</Avatar.Fallback>
-											</Avatar.Root>
-										</Tooltip.Trigger>
-										<Tooltip.Content side="top">
-											<span>Change Image</span>
-										</Tooltip.Content>
-									</Tooltip.Root>
-								</Tooltip.Provider>
+								<Cropper.Shade />
+								<Cropper.Handle action="move" plain />
+								<Cropper.Selection
+									id="selection"
+									bind:element={cropper}
+									aspect-ratio={1}
+									initial-aspect-ratio={1}
+									initial-coverage={0.8}
+									movable
+									resizable
+								>
+									<Cropper.Grid bordered covered />
+									<Cropper.Crosshair centered themeColor="#0000FF80" />
+									<Cropper.Handle action="move" plain />
+									<Cropper.Handle action="n-resize" />
+									<Cropper.Handle action="e-resize" />
+									<Cropper.Handle action="s-resize" />
+									<Cropper.Handle action="w-resize" />
+									<Cropper.Handle action="ne-resize" />
+									<Cropper.Handle action="nw-resize" />
+									<Cropper.Handle action="se-resize" />
+									<Cropper.Handle action="sw-resize" />
+								</Cropper.Selection>
+							</Cropper.Canvas>
+							<div class="flex flex-col gap-2">
+								<Cropper.Viewer selection="#selection" class="h-32 w-32 rounded-full border" />
 							</div>
-
-							<div class="w-full rounded-lg p-1">
-								<Label for="name">Name</Label>
-								<Input class="my-0" name="name" placeholder="Name" value={user.name} />
-								<Label for="name">Surname</Label>
-								<Input class="my-0" name="surname" placeholder="Surname" value={user.surname} />
-								<Label class="my-0" for="email">Email</Label>
-								<Input disabled name="email" placeholder="Email" type="email" value={user.email} />
-							</div>
-
-
 						</div>
-					{/if}
-
-					<div class="mt-4 flex flex-row justify-end">
-						{#if !updateLoading}
-							<Button type="submit" variant={"save"}
-								>{#if !showCropper}
-									<Save/>Save
-								{/if}</Button
-							>
-						{:else}
-							<Button type="submit" variant={"save"} disabled>
-								<div class="flex items-center justify-center space-x-2">
-									<div class="border-accent h-4 w-4 animate-spin rounded-full border-b-2"></div>
-									<span>Saving...</span>
-								</div>
-							</Button>
-						{/if}
+						<div class="mt-4 flex gap-2">
+							<Button type="button" onclick={handleCrop}><Crop />Apply Crop</Button>
+							<Button type="button" variant="outline" onclick={cancelCrop}>Cancel</Button>
+						</div>
 					</div>
-				</form>
-			</Dialog.Description>
+				{:else}
+					<div class="flex flex-row items-center justify-between">
+						<div
+							class="flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-transparent"
+						>
+							<input
+								type="file"
+								name="file"
+								bind:this={fileInput}
+								class="hidden"
+								accept="image/*"
+								onchange={handleFileSelect}
+							/>
 
+							<Tooltip.Provider delayDuration={100}>
+								<Tooltip.Root>
+									<Tooltip.Trigger>
+										<Avatar.Root
+											class="h-24 w-24 cursor-pointer"
+											onclick={() => fileInput?.click()}
+										>
+											<Avatar.Image src={croppedImageUrl || user.image} alt={user.name} />
+											<Avatar.Fallback>CN</Avatar.Fallback>
+										</Avatar.Root>
+									</Tooltip.Trigger>
+									<Tooltip.Content side="top">
+										<span>Change Image</span>
+									</Tooltip.Content>
+								</Tooltip.Root>
+							</Tooltip.Provider>
+						</div>
+
+						<div class="w-full rounded-lg p-1">
+							<Label for="name">Name</Label>
+							<Input class="my-0" name="name" placeholder="Name" value={user.name} />
+							<Label for="name">Surname</Label>
+							<Input class="my-0" name="surname" placeholder="Surname" value={user.surname} />
+							<Label class="my-0" for="email">Email</Label>
+							<Input name="email" placeholder="Email" type="email" value={user.email} />
+							<!-- <Label for="userColour">Color</Label>
+							<Input
+								name="userColour"
+								type="color"
+								value={userColour || user.colour || "#fbbf24"}
+							/> -->
+						</div>
+					</div>
+				{/if}
+
+				<div class="mt-4 flex flex-row justify-end">
+					{#if !updateLoading}
+						<Button type="submit" variant={"save"}
+							>{#if !showCropper}
+								<Save />Save
+							{/if}</Button
+						>
+					{:else}
+						<Button type="submit" variant={"save"} disabled>
+							<div class="flex items-center justify-center space-x-2">
+								<div class="border-accent h-4 w-4 animate-spin rounded-full border-b-2"></div>
+								<span>Saving...</span>
+							</div>
+						</Button>
+					{/if}
+				</div>
+			</form>
+		</Dialog.Description>
 	</Dialog.Content>
 </Dialog.Root>
