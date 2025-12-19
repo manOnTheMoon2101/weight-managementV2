@@ -2,6 +2,7 @@ import { env } from "$env/dynamic/private";
 import { auth } from "$lib/server/auth";
 import { db } from "$lib/server/db";
 import {
+	assignedSupplements,
 	custom_supplements,
 	health_tracker,
 	limits,
@@ -9,7 +10,6 @@ import {
 	sleep_schedule,
 	supplements,
 	user,
-	assignedSupplements
 } from "$lib/server/schema/index";
 import { redirect } from "@sveltejs/kit";
 import { put } from "@vercel/blob";
@@ -247,13 +247,7 @@ export const load: PageServerLoad = async ({ request }) => {
 			},
 		});
 
-
-
-
-
-
-
-			const SupplementsMonthAgo = await db.query.assignedSupplements.findMany({
+		const SupplementsMonthAgo = await db.query.assignedSupplements.findMany({
 			where: and(
 				eq(assignedSupplements.userId, session.user.id),
 				eq(assignedSupplements.isActive, true),
@@ -265,9 +259,9 @@ export const load: PageServerLoad = async ({ request }) => {
 				quantity: true,
 				createdAt: true,
 			},
-			with:{
-				custom_supplement : true
-			}
+			with: {
+				custom_supplement: true,
+			},
 		});
 
 		const SupplementsWeekAgo = await db.query.assignedSupplements.findMany({
@@ -278,18 +272,14 @@ export const load: PageServerLoad = async ({ request }) => {
 				gte(assignedSupplements.quantity, 1),
 				sql`${assignedSupplements.createdAt} >= ${sevenDaysAgo.toISOString()}`
 			),
-		columns: {
+			columns: {
 				quantity: true,
 				createdAt: true,
 			},
-			with:{
-				custom_supplement : true
-			}
+			with: {
+				custom_supplement: true,
+			},
 		});
-
-
-		
-
 
 		const stepLimit = await db.query.limits.findFirst({
 			where: and(
@@ -402,30 +392,25 @@ export const load: PageServerLoad = async ({ request }) => {
 			createdAt: new Date(entry.createdAt),
 		}));
 
-
-
-
-
 		const formattedMonthSupplementsEntries = SupplementsMonthAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
 		).map((entry) => ({
 			quantity: entry.quantity,
 			waist: entry.custom_supplement?.name,
-			type : entry.custom_supplement?.type,
-			color : entry.custom_supplement?.color,
+			type: entry.custom_supplement?.type,
+			color: entry.custom_supplement?.color,
 			createdAt: new Date(entry.createdAt),
 		}));
 
 		const formattedWeekSupplementsEntries = SupplementsWeekAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
 		).map((entry) => ({
-		quantity: entry.quantity,
+			quantity: entry.quantity,
 			waist: entry.custom_supplement?.name,
-			type : entry.custom_supplement?.type,
-			color : entry.custom_supplement?.color,
+			type: entry.custom_supplement?.type,
+			color: entry.custom_supplement?.color,
 			createdAt: new Date(entry.createdAt),
 		}));
-
 
 		const formattedMonthStepsEntries = StepsMonthAgo.sort(
 			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -648,8 +633,8 @@ export const load: PageServerLoad = async ({ request }) => {
 			stepsMonthChart: stepsMonthChart,
 			measurementMonthChart: measurementMonthChart,
 			measurementWeekChart: measurementWeekChart,
-			supplementsWeekAgo : supplementsWeekAgo,
-			supplementsMonthAgo : supplementsMonthAgo,
+			supplementsWeekAgo: supplementsWeekAgo,
+			supplementsMonthAgo: supplementsMonthAgo,
 			stepsWeekChart: stepsWeekChart,
 			waterMonthChart: waterMonthChart,
 			waterWeekChart: waterWeekChart,
@@ -688,42 +673,54 @@ export const load: PageServerLoad = async ({ request }) => {
 
 export const actions = {
 	updateUser: async ({ request }: { request: Request }) => {
-		const session = await auth.api.getSession({ headers: request.headers });
-		if (!session) {
-			redirect(302, "/signin");
-		}
-		const form = await request.formData();
-		const name = form.get("name") as string;
-		const surname = form.get("surname") as string;
-		const email = form.get("email") as string;
-		const colour = form.get("userColour") as string;
-		const file = form.get("file") as File | null;
+		try {
+			const session = await auth.api.getSession({ headers: request.headers });
+			if (!session) {
+				redirect(302, "/signin");
+			}
+			const form = await request.formData();
+			const name = form.get("name") as string;
+			const surname = form.get("surname") as string;
+			const email = form.get("email") as string;
+			const colour = form.get("userColour") as string;
+			const file = form.get("file") as File | null;
 
-		if (!name || !email) {
-			return { success: false, error: "Name and email are required." };
-		}
+			if (!name || !email) {
+				return { success: false, error: "Name and email are required." };
+			}
 
-		let imageUrl: string | null = null;
-		if (file && typeof file.name === "string" && file.size > 0) {
-			const { url } = await put(file.name, file, {
-				access: "public",
-				token: env.MERDA_READ_WRITE_TOKEN,
-				allowOverwrite: true,
-			});
-			imageUrl = url;
-		}
+			let imageUrl: string | null = null;
+			if (file && typeof file.name === "string" && file.size > 0) {
+				const { url } = await put(file.name, file, {
+					access: "public",
+					token: env.MERDA_READ_WRITE_TOKEN,
+					allowOverwrite: true,
+				});
+				imageUrl = url;
+			}
 
-		await db
-			.update(user)
-			.set({
+			const updateData = {
 				name,
 				surname,
 				email,
 				colour: colour || "#fbbf24",
+				updatedAt: new Date(),
 				...(imageUrl ? { image: imageUrl } : {}),
-			})
-			.where(eq(user.id, session.user.id));
-		return { success: true };
+			};
+
+			const result = await db
+				.update(user)
+				.set(updateData)
+				.where(eq(user.id, session.user.id))
+				.returning();
+
+			console.log("Update result:", result);
+
+			return { success: true };
+		} catch (error) {
+			console.error("Error updating user:", error);
+			return { success: false, error: "Failed to update user profile." };
+		}
 	},
 
 	updateLimits: async ({ request }: { request: Request }) => {
@@ -821,7 +818,7 @@ export const actions = {
 			name,
 			color,
 			type,
-			description
+			description,
 		});
 	},
 
@@ -838,15 +835,17 @@ export const actions = {
 		const type = form.get("type") as unknown as string;
 		const description = form.get("description") as unknown as string;
 
-		await db.update(custom_supplements).set({
-			name,
-			color,
-			type,
-			description,
-			updatedAt : new Date()
-		}).where(eq(custom_supplements.id, id));
+		await db
+			.update(custom_supplements)
+			.set({
+				name,
+				color,
+				type,
+				description,
+				updatedAt: new Date(),
+			})
+			.where(eq(custom_supplements.id, id));
 	},
-
 
 	deleteSupplements: async ({ request }: { request: Request }) => {
 		const session = await auth.api.getSession({ headers: request.headers });
@@ -856,10 +855,13 @@ export const actions = {
 
 		const form = await request.formData();
 		const id = form.get("id") as unknown as number;
-		
-		await db.update(custom_supplements).set({
-			isActive:false,
-			isDeleted:true
-		}).where(eq(custom_supplements.id, id));
+
+		await db
+			.update(custom_supplements)
+			.set({
+				isActive: false,
+				isDeleted: true,
+			})
+			.where(eq(custom_supplements.id, id));
 	},
 };
