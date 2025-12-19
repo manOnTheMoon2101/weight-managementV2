@@ -85,13 +85,14 @@
 				enctype="multipart/form-data"
 				use:enhance={() => {
 					updateLoading = true;
-					return async ({ result, update }) => {
+					return async ({ result }) => {
+						updateLoading = false;
 						if (result.type === "success" && result.data) {
 							formResult = result.data as { success?: boolean; error?: string };
 							if (formResult.success) {
-								toast.success("Succesfully Updated");
-								await update();
-								updateLoading = false;
+								toast.success("Successfully Updated");
+							} else if (formResult.error) {
+								toast.error(formResult.error);
 							}
 						}
 					};
