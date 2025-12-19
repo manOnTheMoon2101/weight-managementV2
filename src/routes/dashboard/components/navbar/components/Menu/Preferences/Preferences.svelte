@@ -20,6 +20,8 @@
 	import Down from "@lucide/svelte/icons/corner-right-down";
 	import { Textarea } from "$lib/components/ui/textarea/index.js";
 	import ColorPicker, { ChromeVariant } from "svelte-awesome-color-picker";
+	import { toast } from "svelte-sonner";
+	import { enhance } from "$app/forms";
 
 	interface Limits {
 		caloriesLimit: number | null;
@@ -52,6 +54,7 @@
 	let editName = $state<string>("");
 	let editType = $state<string>("");
 	let editId = $state<string>("");
+	let formResult = $state<{ success?: boolean; error?: string } | null>(null);
 
 	let journeys = [
 		{ value: "Weight_Loss", name: "Weight Loss" },
@@ -73,8 +76,8 @@
 
 	const triggerType = $derived(supplementTypes.find((f) => f.value === value)?.value ?? "Capsule");
 
-	function handleUpdateSubmit() {
-		updateLoading = true;
+	function handleUpdateSubmit(){
+		updateLoading = true
 	}
 </script>
 
@@ -88,7 +91,20 @@
 					method="POST"
 					class="space-y-3 overflow-y-auto"
 					action="/dashboard?/updateLimits"
-					onsubmit={handleUpdateSubmit}
+					use:enhance={() => {
+					updateLoading = true;
+					return async ({ result }) => {
+						updateLoading = false;
+						if (result.type === "success" && result.data) {
+							formResult = result.data as { success?: boolean; error?: string };
+							if (formResult.success) {
+								toast.success("Successfully Updated");
+							} else if (formResult.error) {
+								toast.error(formResult.error);
+							}
+						}
+					};
+				}}
 				>
 					<div class="flex flex-row">
 						<Card.Root class="mx-2">

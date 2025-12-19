@@ -20,7 +20,7 @@
 	import Supplements from "./components/cellRenderers/Supplements.svelte";
 	import Dialog from "./components/view_dialog/Dialog.svelte";
 	import { makeSvelteCellRenderer } from "ag-grid-svelte5-extended";
-	import AddDialog from "../components/navbar/components/add_dialog/AddDialog.svelte";
+	import AddDialog from "./components/add_dialog/AddDialog.svelte";
 	import Limits from "./components/cellRenderers/Limits.svelte";
 
 	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
