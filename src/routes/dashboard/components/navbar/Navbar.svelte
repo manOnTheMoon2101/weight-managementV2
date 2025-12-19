@@ -1,17 +1,17 @@
 <script lang="ts">
 	import * as Avatar from "$lib/components/ui/avatar/index.js";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-	import LogoutDialog from "./components/logout-dialog.svelte";
-	import EditDialog from "./components/profile-edit.svelte";
+	import LogoutDialog from "./components/Menu/Logout/logout-dialog.svelte";
+	import EditDialog from "./components/Menu/Manage_Account/ManageAccount.svelte";
 	import { Button } from "$lib/components/ui/button";
-	import LimitsDialog from "./components/limits-dialog.svelte";
+	import LimitsDialog from "./components/Menu/Preferences/Preferences.svelte";
 	import { page } from "$app/state";
 	import Manage from "@lucide/svelte/icons/chart-no-axes-column";
 	import TableProperties from "@lucide/svelte/icons/table-properties";
 	import LayoutDashboard from "@lucide/svelte/icons/layout-dashboard";
 	import Calculator from "@lucide/svelte/icons/calculator";
 	import Menu from "@lucide/svelte/icons/menu";
-	import Toggler from "../navbar/components/toggler.svelte";
+	import Toggler from "./components/Theme_Toggler/Toggler.svelte";
 
 	interface Limits {
 		caloriesLimit: number | null;
@@ -22,6 +22,12 @@
 		proteinLimit: number | null;
 	}
 
+	interface User {
+		name: string;
+		surname: string;
+		email: string;
+		image: string;
+	}
 
 	interface Supplements {
 		name: string;
@@ -37,8 +43,8 @@
 		userJourney,
 		limits,
 	}: {
-		user: any[];
-		userColour: any;
+		user: User;
+		userColour: string;
 		userSupplements: Supplements;
 		userJourney: any;
 		limits: Limits;
@@ -75,9 +81,7 @@
 							><Manage class="mr-1" />Manage</DropdownMenu.Label
 						>
 						<DropdownMenu.Separator />
-						<DropdownMenu.Item closeOnSelect={false}
-							><EditDialog {user} {userColour} /></DropdownMenu.Item
-						>
+						<DropdownMenu.Item closeOnSelect={false}><EditDialog {user} /></DropdownMenu.Item>
 						<DropdownMenu.Item closeOnSelect={false}
 							><LimitsDialog {limits} {userJourney} {userSupplements} /></DropdownMenu.Item
 						>

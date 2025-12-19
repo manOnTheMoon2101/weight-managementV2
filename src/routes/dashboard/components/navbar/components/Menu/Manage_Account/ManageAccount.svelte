@@ -12,13 +12,20 @@
 	import { toast } from "svelte-sonner";
 	import { enhance } from "$app/forms";
 
-	let { user, userColour }: { user: any; userColour: string } = $props();
+	interface User {
+		name: string;
+		surname: string;
+		email: string;
+		image: string;
+	}
+
+	let { user }: { user: User } = $props();
 	let updateLoading = $state(false);
 	let fileInput = $state<HTMLInputElement>(null!);
 	let cropper: CropperSelection = $state(null!);
 	let imageSrc = $state<string | null>(null);
 	let croppedImageUrl = $state<string | null>(null);
-	let showCropper = $state(false);
+	let showCropper = $state<boolean>(false);
 	let originalFileName = $state<string>("cropped-avatar.png");
 	let formResult = $state<{ success?: boolean; error?: string } | null>(null);
 
@@ -98,12 +105,6 @@
 					};
 				}}
 			>
-				<!-- <div>
-                        <Label for="color">Colour</Label>
-						{hex}
-                        <ColorPicker bind:hex components={ChromeVariant} sliderDirection="horizontal" />
-                        <input type="hidden" name="userColour" bind:value={hex} />
-                    </div> -->
 				{#if showCropper && imageSrc}
 					<div class="mb-4">
 						<div class="grid grid-cols-[1fr_auto] gap-4">
@@ -187,12 +188,6 @@
 							<Input class="my-0" name="surname" placeholder="Surname" value={user.surname} />
 							<Label class="my-0" for="email">Email</Label>
 							<Input name="email" placeholder="Email" type="email" value={user.email} />
-							<!-- <Label for="userColour">Color</Label>
-							<Input
-								name="userColour"
-								type="color"
-								value={userColour || user.colour || "#fbbf24"}
-							/> -->
 						</div>
 					</div>
 				{/if}
