@@ -22,7 +22,7 @@ import Filter from "@lucide/svelte/icons/list-filter";
 	});
 	const chartConfig = {
 		waist: { label: "Waist", color: "var(--accent)" },
-		weight: { label: "Weights", color: "var(--secondary)" },
+		weight: { label: "Weight", color: "var(--secondary)" },
 	} satisfies Chart.ChartConfig;
 </script>
 
