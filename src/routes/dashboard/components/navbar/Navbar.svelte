@@ -6,7 +6,7 @@
 	import { Button } from "$lib/components/ui/button";
 	import LimitsDialog from "./components/Menu/Preferences/Preferences.svelte";
 	import { page } from "$app/state";
-	import Manage from "@lucide/svelte/icons/chart-no-axes-column";
+	import Manage from "@lucide/svelte/icons/settings";
 	import TableProperties from "@lucide/svelte/icons/table-properties";
 	import LayoutDashboard from "@lucide/svelte/icons/layout-dashboard";
 	import Calculator from "@lucide/svelte/icons/calculator";
@@ -78,7 +78,7 @@
 				<DropdownMenu.Content>
 					<DropdownMenu.Group>
 						<DropdownMenu.Label class="flex items-center"
-							><Manage class="mr-1" />Manage</DropdownMenu.Label
+							><Manage class="mr-1" />Settings</DropdownMenu.Label
 						>
 						<DropdownMenu.Separator />
 						<DropdownMenu.Item closeOnSelect={false}><EditDialog {user} /></DropdownMenu.Item>
