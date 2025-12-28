@@ -187,7 +187,7 @@
 							<Label for="name">Surname</Label>
 							<Input class="my-0" name="surname" placeholder="Surname" value={user.surname} />
 							<Label class="my-0" for="email">Email</Label>
-							<Input name="email" placeholder="Email" type="email" value={user.email} />
+							<Input name="email" disabled={user.email === 'test@test.com'} placeholder="Email" type="email" value={user.email} />
 						</div>
 					</div>
 				{/if}
