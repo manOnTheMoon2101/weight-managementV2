@@ -2,11 +2,14 @@
 	import { authClient } from "$lib/auth-client";
 	import { Button } from "$lib/components/ui/button";
 	import { Input } from "$lib/components/ui/input";
+	import Eye from "@lucide/svelte/icons/eye";
+	import Off from "@lucide/svelte/icons/eye-off";
 	import { goto } from "$app/navigation";
 	let email = "";
 	let password = "";
 	let error = "";
 	let loading = false;
+	let showPassword = false;
 
 	async function handleSignIn() {
 		loading = true;
@@ -55,14 +58,27 @@
 
 				<div class="space-y-2">
 					<label for="password" class="text-sm font-medium ">Password</label>
-					<Input
-						id="password"
-						type="password"
-						placeholder="Enter your password"
-						bind:value={password}
-						required
-						class="w-full"
-					/>
+					<div class="relative">
+						<Input
+							id="password"
+							type={showPassword ? "text" : "password"}
+							placeholder="Enter your password"
+							bind:value={password}
+							required
+							class="w-full pr-10"
+						/>
+						<button
+							type="button"
+							class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
+							on:click={() => showPassword = !showPassword}
+						>
+							{#if showPassword}
+							<Eye/>
+							{:else}
+							<Off/>
+							{/if}
+						</button>
+					</div>
 				</div>
 			</div>
 
