@@ -83,11 +83,11 @@ export const load: PageServerLoad = async ({ request }) => {
 
 		const ProteinMonthAgo = await db.query.nutrients.findMany({
 			where: and(
-				eq(health_tracker.userId, session.user.id),
-				eq(health_tracker.isActive, true),
-				eq(health_tracker.isDeleted, false),
+				eq(nutrients.userId, session.user.id),
+				eq(nutrients.isActive, true),
+				eq(nutrients.isDeleted, false),
 				gte(nutrients.protein, 1),
-				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
+				sql`${nutrients.createdAt} >= ${oneMonthAgo.toISOString()}`
 			),
 			columns: {
 				protein: true,
@@ -97,11 +97,11 @@ export const load: PageServerLoad = async ({ request }) => {
 
 		const ProteinWeekAgo = await db.query.nutrients.findMany({
 			where: and(
-				eq(health_tracker.userId, session.user.id),
-				eq(health_tracker.isActive, true),
-				eq(health_tracker.isDeleted, false),
+				eq(nutrients.userId, session.user.id),
+				eq(nutrients.isActive, true),
+				eq(nutrients.isDeleted, false),
 				gte(nutrients.protein, 1),
-				sql`${health_tracker.createdAt} >= ${sevenDaysAgo.toISOString()}`
+				sql`${nutrients.createdAt} >= ${sevenDaysAgo.toISOString()}`
 			),
 			columns: {
 				protein: true,
@@ -111,11 +111,11 @@ export const load: PageServerLoad = async ({ request }) => {
 
 		const CaloriesMonthAgo = await db.query.nutrients.findMany({
 			where: and(
-				eq(health_tracker.userId, session.user.id),
-				eq(health_tracker.isActive, true),
-				eq(health_tracker.isDeleted, false),
+				eq(nutrients.userId, session.user.id),
+				eq(nutrients.isActive, true),
+				eq(nutrients.isDeleted, false),
 				gte(nutrients.protein, 1),
-				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
+				sql`${nutrients.createdAt} >= ${oneMonthAgo.toISOString()}`
 			),
 			columns: {
 				calories: true,
@@ -125,11 +125,11 @@ export const load: PageServerLoad = async ({ request }) => {
 
 		const CaloriesWeekAgo = await db.query.nutrients.findMany({
 			where: and(
-				eq(health_tracker.userId, session.user.id),
-				eq(health_tracker.isActive, true),
-				eq(health_tracker.isDeleted, false),
+				eq(nutrients.userId, session.user.id),
+				eq(nutrients.isActive, true),
+				eq(nutrients.isDeleted, false),
 				gte(nutrients.protein, 1),
-				sql`${health_tracker.createdAt} >= ${sevenDaysAgo.toISOString()}`
+				sql`${nutrients.createdAt} >= ${sevenDaysAgo.toISOString()}`
 			),
 			columns: {
 				calories: true,
@@ -139,10 +139,10 @@ export const load: PageServerLoad = async ({ request }) => {
 
 		const sleepMonthAgo = await db.query.sleep_schedule.findMany({
 			where: and(
-				eq(health_tracker.userId, session.user.id),
-				eq(health_tracker.isActive, true),
-				eq(health_tracker.isDeleted, false),
-				sql`${health_tracker.createdAt} >= ${oneMonthAgo.toISOString()}`
+				eq(sleep_schedule.userId, session.user.id),
+				eq(sleep_schedule.isActive, true),
+				eq(sleep_schedule.isDeleted, false),
+				sql`${sleep_schedule.createdAt} >= ${oneMonthAgo.toISOString()}`
 			),
 			columns: {
 				time: true,
@@ -152,10 +152,10 @@ export const load: PageServerLoad = async ({ request }) => {
 
 		const sleepWeekAgo = await db.query.sleep_schedule.findMany({
 			where: and(
-				eq(health_tracker.userId, session.user.id),
-				eq(health_tracker.isActive, true),
-				eq(health_tracker.isDeleted, false),
-				sql`${health_tracker.createdAt} >= ${sevenDaysAgo.toISOString()}`
+				eq(sleep_schedule.userId, session.user.id),
+				eq(sleep_schedule.isActive, true),
+				eq(sleep_schedule.isDeleted, false),
+				sql`${sleep_schedule.createdAt} >= ${sevenDaysAgo.toISOString()}`
 			),
 			columns: {
 				time: true,
