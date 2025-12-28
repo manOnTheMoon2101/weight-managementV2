@@ -681,12 +681,12 @@ export const actions = {
 			const form = await request.formData();
 			const name = form.get("name") as string;
 			const surname = form.get("surname") as string;
-			const email = form.get("email") as string;
+			const email = form.get("email") as string | null;
 			const colour = form.get("userColour") as string;
 			const file = form.get("file") as File | null;
 
-			if (!name || !email) {
-				return { success: false, error: "Name and email are required." };
+			if (!name) {
+				return { success: false, error: "Name required." };
 			}
 
 			let imageUrl: string | null = null;
@@ -702,7 +702,7 @@ export const actions = {
 			const updateData = {
 				name,
 				surname,
-				email,
+				email : email || session.user.email,
 				colour: colour || "#fbbf24",
 				updatedAt: new Date(),
 				...(imageUrl ? { image: imageUrl } : {}),
