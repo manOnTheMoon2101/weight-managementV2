@@ -383,7 +383,7 @@
 					<Button
 						variant="save"
 						onclick={sendEmail}
-						disabled={isSendingEmail}
+						disabled={isSendingEmail || userEmail === 'test@test.com'}
 						class="flex-1 md:flex-none"
 					>
 						<Mail class="mr-2 size-4" />
@@ -391,7 +391,7 @@
 					</Button>
 				</Tooltip.Trigger>
 				<Tooltip.Content>
-					Send to {userEmail}
+					{userEmail === 'test@test.com' ? 'This is a dummy email account!' : `Send to ${userEmail}`}
 				</Tooltip.Content>
 			</Tooltip.Root>
 		</Tooltip.Provider>
