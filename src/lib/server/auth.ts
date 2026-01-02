@@ -13,7 +13,7 @@ export const auth = betterAuth({
         additionalFields: {
             surname: {
                 type: "string",
-                required: true,
+                required: false,
             },
         }
     }
