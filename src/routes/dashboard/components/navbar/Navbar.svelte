@@ -62,7 +62,7 @@
 				<DropdownMenu.Trigger class="cursor-pointer">
 					<div class="my-1 flex flex-row items-center rounded-lg p-1">
 						<Avatar.Root class="mr-2">
-							<Avatar.Image src={user.image} alt="User Image" />
+							<Avatar.Image src={assignedUser.image} alt="User Image" />
 							<Avatar.Fallback style="background-color: {userColour}"
 								>{firstLetter ?? "?"}</Avatar.Fallback
 							>
