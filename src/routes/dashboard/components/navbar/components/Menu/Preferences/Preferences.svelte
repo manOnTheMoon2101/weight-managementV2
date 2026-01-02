@@ -20,6 +20,7 @@
 	import Down from "@lucide/svelte/icons/corner-right-down";
 	import { Textarea } from "$lib/components/ui/textarea/index.js";
 	import ColorPicker, { ChromeVariant } from "svelte-awesome-color-picker";
+			import Flag from "@lucide/svelte/icons/flag";
 	import { toast } from "svelte-sonner";
 	import { enhance } from "$app/forms";
 
@@ -82,7 +83,7 @@
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger class="cursor-pointer">Preferences</Dialog.Trigger>
+	<Dialog.Trigger class="cursor-pointer  w-full flex flex-row gap-1"><Flag/>Preferences</Dialog.Trigger>
 	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="max-h-[90vh] overflow-y-auto">
 		<Dialog.Header>
 			<Dialog.Title>Preferences</Dialog.Title>
@@ -183,7 +184,7 @@
 								<Select.Trigger class=" w-[180px]">
 									{#if triggerContent === "Weight Loss"}
 										<Down class="text-save" />
-									{:else}
+									{:else if triggerContent === "Bulk"}
 										<Up class="text-destructive" />
 									{/if}
 									{triggerContent}</Select.Trigger
