@@ -30,6 +30,16 @@
 	let originalFileName = $state<string>("cropped-avatar.png");
 	let formResult = $state<{ success?: boolean; error?: string } | null>(null);
 
+	let formName = $state(assignedUser.name);
+	let formSurname = $state(assignedUser.surname);
+	let formEmail = $state(assignedUser.email);
+
+	$effect(() => {
+		formName = assignedUser.name;
+		formSurname = assignedUser.surname;
+		formEmail = assignedUser.email;
+	});
+
 	function handleFileSelect(event: Event) {
 		const input = event.target as HTMLInputElement;
 		const file = input.files?.[0];
@@ -98,6 +108,9 @@
 						if (result.type === "success" && result.data) {
 							formResult = result.data as { success?: boolean; error?: string };
 							if (formResult.success) {
+								assignedUser.name = formName;
+								assignedUser.surname = formSurname;
+								assignedUser.email = formEmail;
 								toast.success("Successfully Updated");
 							} else if (formResult.error) {
 								toast.error(formResult.error);
@@ -184,11 +197,11 @@
 
 						<div class="w-full rounded-lg p-1">
 							<Label for="name">Name</Label>
-							<Input class="my-0" name="name" placeholder="Name" bind:value={assignedUser.name} />
+							<Input class="my-0" name="name" placeholder="Name" bind:value={formName} />
 							<Label for="name">Surname</Label>
-							<Input class="my-0" name="surname" placeholder="Surname" bind:value={assignedUser.surname} />
+							<Input class="my-0" name="surname" placeholder="Surname" bind:value={formSurname} />
 							<Label class="my-0" for="email">Email</Label>
-							<Input name="email" disabled={assignedUser.email === 'test@test.com'} placeholder="Email" type="email" bind:value={assignedUser.email} />
+							<Input name="email" disabled={assignedUser.email === 'test@test.com'} placeholder="Email" type="email" bind:value={formEmail} />
 						</div>
 					</div>
 				{/if}
