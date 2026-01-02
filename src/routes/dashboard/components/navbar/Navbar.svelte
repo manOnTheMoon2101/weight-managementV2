@@ -50,11 +50,11 @@
 		limits: Limits;
 	} = $props();
 
-	const parsedUser = $derived(typeof user === "string" ? JSON.parse(user) : user);
-	const firstLetter = $derived(parsedUser?.name?.charAt(0));
-	const fullName = $derived(
-		parsedUser.name + " " + (parsedUser?.surname ? parsedUser?.surname : null)
-	);
+	$inspect(user);
+
+	const userName = $derived(user.name);
+	const userSurname = $derived(user.surname);
+	const firstLetter = $derived(user?.name?.charAt(0));
 </script>
 
 <div class="border-b-accent border-b">
@@ -64,14 +64,14 @@
 				<DropdownMenu.Trigger class="cursor-pointer">
 					<div class="my-1 flex flex-row items-center rounded-lg p-1">
 						<Avatar.Root class="mr-2">
-							<Avatar.Image src={parsedUser.image} alt="User Image" />
+							<Avatar.Image src={user.image} alt="User Image" />
 							<Avatar.Fallback style="background-color: {userColour}"
 								>{firstLetter ?? "?"}</Avatar.Fallback
 							>
 						</Avatar.Root>
 						<div class="flex flex-col items-start justify-center">
-							<h3 class="text-lg">{fullName}</h3>
-							<h4 class="text-sm text-slate-600">{parsedUser.email}</h4>
+							<h3 class="text-lg">{userName} {userSurname ?? ""}</h3>
+							<h4 class="text-sm text-slate-600">{user.email}</h4>
 						</div>
 					</div></DropdownMenu.Trigger
 				>
