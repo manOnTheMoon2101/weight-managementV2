@@ -330,6 +330,11 @@ export const actions = {
 			.set({ isActive: false, isDeleted: true })
 			.where(and(eq(sleep_schedule.userId, session.user.id), eq(sleep_schedule.nutrientsId, id)));
 
+				await db
+			.update(assignedSupplements)
+			.set({ isActive: false, isDeleted: true })
+			.where(and(eq(assignedSupplements.userId, session.user.id), eq(assignedSupplements.nutrientsId, id)));
+
 		return { success: true };
 	},
 
