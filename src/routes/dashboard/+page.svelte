@@ -71,7 +71,7 @@
 			<div
 				class="bg-primary shadow-lg shadow-secondary my-2 flex h-[300px] w-full flex-col justify-between rounded-lg md:w-3/5"
 			>
-				{#if user}
+				<!-- {#if user}
 					<div class="flex flex-row items-center justify-between ">
 						<div>
 							<div class="flex flex-row items-center">
@@ -82,7 +82,7 @@
 							</div>
 						</div>
 					</div>
-				{/if}
+				{/if} -->
 
 				<div>
 					<span class="flex items-center justify-center text-lg font-semibold">

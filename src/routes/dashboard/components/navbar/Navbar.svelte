@@ -50,10 +50,9 @@
 		limits: Limits;
 	} = $props();
 
-	$inspect(user);
+	// svelte-ignore state_referenced_locally
+	let assignedUser = $state(user);
 
-	const userName = $derived(user.name);
-	const userSurname = $derived(user.surname);
 	const firstLetter = $derived(user?.name?.charAt(0));
 </script>
 
@@ -70,8 +69,8 @@
 							>
 						</Avatar.Root>
 						<div class="flex flex-col items-start justify-center">
-							<h3 class="text-lg">{userName} {userSurname ?? ""}</h3>
-							<h4 class="text-sm text-slate-600">{user.email}</h4>
+							<h3 class="text-lg">{assignedUser.name}</h3>
+							<h4 class="text-sm text-slate-600">{assignedUser.email}</h4>
 						</div>
 					</div></DropdownMenu.Trigger
 				>
@@ -81,7 +80,9 @@
 							><Manage class="mr-1" />Settings</DropdownMenu.Label
 						>
 						<DropdownMenu.Separator />
-						<DropdownMenu.Item closeOnSelect={false}><EditDialog {user} /></DropdownMenu.Item>
+						<DropdownMenu.Item closeOnSelect={false}
+							><EditDialog bind:assignedUser /></DropdownMenu.Item
+						>
 						<DropdownMenu.Item closeOnSelect={false}
 							><LimitsDialog {limits} {userJourney} {userSupplements} /></DropdownMenu.Item
 						>
