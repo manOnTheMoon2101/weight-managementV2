@@ -73,19 +73,19 @@
 						</div>
 					</div></DropdownMenu.Trigger
 				>
-				<DropdownMenu.Content >
+				<DropdownMenu.Content>
 					<DropdownMenu.Group>
 						<!-- <DropdownMenu.Label class="flex items-center"
 							><Manage class="mr-1" />Settings</DropdownMenu.Label
 						>
 						<DropdownMenu.Separator /> -->
-						<DropdownMenu.Item  closeOnSelect={false}
+						<DropdownMenu.Item closeOnSelect={false}
 							><EditDialog bind:assignedUser /></DropdownMenu.Item
 						>
 						<DropdownMenu.Item closeOnSelect={false}
 							><LimitsDialog {limits} {userJourney} {userSupplements} /></DropdownMenu.Item
 						>
-<DropdownMenu.Separator /> 
+						<DropdownMenu.Separator />
 						<DropdownMenu.Item closeOnSelect={false}><LogoutDialog /></DropdownMenu.Item>
 					</DropdownMenu.Group>
 				</DropdownMenu.Content>

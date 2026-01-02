@@ -184,7 +184,7 @@
 								<Select.Trigger class=" w-[180px]">
 									{#if triggerContent === "Weight Loss"}
 										<Down class="text-save" />
-									{:else}
+									{:else if triggerContent === "Bulk"}
 										<Up class="text-destructive" />
 									{/if}
 									{triggerContent}</Select.Trigger
