@@ -5,7 +5,7 @@
 	import Button from "$lib/components/ui/button/button.svelte";
 	import Save from "@lucide/svelte/icons/save";
 	import Crop from "@lucide/svelte/icons/crop";
-		import UserIcon from "@lucide/svelte/icons/circle-user";
+	import UserIcon from "@lucide/svelte/icons/circle-user";
 	import * as Avatar from "$lib/components/ui/avatar/index.js";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import type { CropperSelection } from "@cropper/elements";
@@ -33,11 +33,13 @@
 	let formName = $state(assignedUser.name);
 	let formSurname = $state(assignedUser.surname);
 	let formEmail = $state(assignedUser.email);
+	let formImage = $state(assignedUser.image);
 
 	$effect(() => {
 		formName = assignedUser.name;
 		formSurname = assignedUser.surname;
 		formEmail = assignedUser.email;
+		formImage = assignedUser.image;
 	});
 
 	function handleFileSelect(event: Event) {
@@ -64,6 +66,9 @@
 
 		croppedImageUrl = URL.createObjectURL(blob);
 
+		assignedUser.image = croppedImageUrl;
+		formImage = croppedImageUrl;
+
 		const file = new File([blob], originalFileName, { type: "image/png" });
 		const dataTransfer = new DataTransfer();
 		dataTransfer.items.add(file);
@@ -85,7 +90,9 @@
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger class="cursor-pointer  w-full flex flex-row gap-1"><UserIcon/>Account</Dialog.Trigger>
+	<Dialog.Trigger class="flex  w-full cursor-pointer flex-row gap-1"
+		><UserIcon />Account</Dialog.Trigger
+	>
 	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="sm:max-w-[700px]">
 		<Dialog.Header>
 			<Dialog.Title>
@@ -111,6 +118,7 @@
 								assignedUser.name = formName;
 								assignedUser.surname = formSurname;
 								assignedUser.email = formEmail;
+								assignedUser.image = formImage;
 								toast.success("Successfully Updated");
 							} else if (formResult.error) {
 								toast.error(formResult.error);
@@ -184,7 +192,10 @@
 											class="h-24 w-24 cursor-pointer"
 											onclick={() => fileInput?.click()}
 										>
-											<Avatar.Image src={croppedImageUrl || assignedUser.image} alt={assignedUser.name} />
+											<Avatar.Image
+												src={croppedImageUrl || assignedUser.image}
+												alt={assignedUser.name}
+											/>
 											<Avatar.Fallback>CN</Avatar.Fallback>
 										</Avatar.Root>
 									</Tooltip.Trigger>
@@ -201,7 +212,13 @@
 							<Label for="name">Surname</Label>
 							<Input class="my-0" name="surname" placeholder="Surname" bind:value={formSurname} />
 							<Label class="my-0" for="email">Email</Label>
-							<Input name="email" disabled={assignedUser.email === 'test@test.com'} placeholder="Email" type="email" bind:value={formEmail} />
+							<Input
+								name="email"
+								disabled={assignedUser.email === "test@test.com"}
+								placeholder="Email"
+								type="email"
+								bind:value={formEmail}
+							/>
 						</div>
 					</div>
 				{/if}
