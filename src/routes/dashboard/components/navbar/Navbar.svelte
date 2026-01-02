@@ -46,7 +46,7 @@
 		user: User;
 		userColour: string;
 		userSupplements: Supplements;
-		userJourney: any;
+		userJourney: string;
 		limits: Limits;
 	} = $props();
 
