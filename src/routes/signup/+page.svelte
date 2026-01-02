@@ -20,7 +20,9 @@
 				password,
 				
 			});
-			await goto("/dashboard");
+			if(result?.data){
+				await goto("/dashboard");
+			}
 			if (result?.error) {
 				error = result.error.message || "Sign up failed. Please try again.";
 				return;
