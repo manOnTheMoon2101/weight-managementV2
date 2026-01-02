@@ -383,7 +383,10 @@
 						</Button>
 					{/if}
 
-					<div>
+					
+				</form>
+
+				<div>
 						<AlertDialog.Root>
 							<AlertDialog.Trigger class="w-full">
 								<Button class="text-destructive mt-4 w-full" variant="delete"
@@ -422,7 +425,6 @@
 							</AlertDialog.Content>
 						</AlertDialog.Root>
 					</div>
-				</form>
 			</Sheet.Description>
 		</Sheet.Header>
 	</Sheet.Content>
