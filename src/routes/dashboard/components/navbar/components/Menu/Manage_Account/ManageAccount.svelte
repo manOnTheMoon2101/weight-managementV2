@@ -19,7 +19,7 @@
 		image: string;
 	}
 
-	let { user }: { user: User } = $props();
+	let { assignedUser = $bindable() }: { assignedUser: User } = $props();
 	let updateLoading = $state(false);
 	let fileInput = $state<HTMLInputElement>(null!);
 	let cropper: CropperSelection = $state(null!);
@@ -170,7 +170,7 @@
 											class="h-24 w-24 cursor-pointer"
 											onclick={() => fileInput?.click()}
 										>
-											<Avatar.Image src={croppedImageUrl || user.image} alt={user.name} />
+											<Avatar.Image src={croppedImageUrl || assignedUser.image} alt={assignedUser.name} />
 											<Avatar.Fallback>CN</Avatar.Fallback>
 										</Avatar.Root>
 									</Tooltip.Trigger>
@@ -183,11 +183,11 @@
 
 						<div class="w-full rounded-lg p-1">
 							<Label for="name">Name</Label>
-							<Input class="my-0" name="name" placeholder="Name" value={user.name} />
+							<Input class="my-0" name="name" placeholder="Name" bind:value={assignedUser.name} />
 							<Label for="name">Surname</Label>
-							<Input class="my-0" name="surname" placeholder="Surname" value={user.surname} />
+							<Input class="my-0" name="surname" placeholder="Surname" bind:value={assignedUser.surname} />
 							<Label class="my-0" for="email">Email</Label>
-							<Input name="email" disabled={user.email === 'test@test.com'} placeholder="Email" type="email" value={user.email} />
+							<Input name="email" disabled={assignedUser.email === 'test@test.com'} placeholder="Email" type="email" bind:value={assignedUser.email} />
 						</div>
 					</div>
 				{/if}
