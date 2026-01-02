@@ -12,7 +12,6 @@
 	import Calculator from "@lucide/svelte/icons/calculator";
 	import Menu from "@lucide/svelte/icons/menu";
 	import Toggler from "./components/Theme_Toggler/Toggler.svelte";
-
 	interface Limits {
 		caloriesLimit: number | null;
 		carbsLimit: number | null;
@@ -74,19 +73,19 @@
 						</div>
 					</div></DropdownMenu.Trigger
 				>
-				<DropdownMenu.Content>
+				<DropdownMenu.Content >
 					<DropdownMenu.Group>
-						<DropdownMenu.Label class="flex items-center"
+						<!-- <DropdownMenu.Label class="flex items-center"
 							><Manage class="mr-1" />Settings</DropdownMenu.Label
 						>
-						<DropdownMenu.Separator />
-						<DropdownMenu.Item closeOnSelect={false}
+						<DropdownMenu.Separator /> -->
+						<DropdownMenu.Item  closeOnSelect={false}
 							><EditDialog bind:assignedUser /></DropdownMenu.Item
 						>
 						<DropdownMenu.Item closeOnSelect={false}
 							><LimitsDialog {limits} {userJourney} {userSupplements} /></DropdownMenu.Item
 						>
-
+<DropdownMenu.Separator /> 
 						<DropdownMenu.Item closeOnSelect={false}><LogoutDialog /></DropdownMenu.Item>
 					</DropdownMenu.Group>
 				</DropdownMenu.Content>

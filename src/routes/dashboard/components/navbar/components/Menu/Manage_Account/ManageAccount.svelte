@@ -5,6 +5,7 @@
 	import Button from "$lib/components/ui/button/button.svelte";
 	import Save from "@lucide/svelte/icons/save";
 	import Crop from "@lucide/svelte/icons/crop";
+		import UserIcon from "@lucide/svelte/icons/circle-user";
 	import * as Avatar from "$lib/components/ui/avatar/index.js";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import type { CropperSelection } from "@cropper/elements";
@@ -74,7 +75,7 @@
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger class="cursor-pointer">Account</Dialog.Trigger>
+	<Dialog.Trigger class="cursor-pointer  w-full flex flex-row gap-1"><UserIcon/>Account</Dialog.Trigger>
 	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="sm:max-w-[700px]">
 		<Dialog.Header>
 			<Dialog.Title>
