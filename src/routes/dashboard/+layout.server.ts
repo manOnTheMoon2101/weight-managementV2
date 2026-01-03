@@ -60,7 +60,8 @@ export const load: LayoutServerLoad = async ({ request }) => {
             id: true,
             name: true,
             type : true,
-            color: true
+            color: true,
+            description:true
         }
     });
 

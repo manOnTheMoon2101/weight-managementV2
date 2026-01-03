@@ -20,7 +20,7 @@
 	import Down from "@lucide/svelte/icons/corner-right-down";
 	import { Textarea } from "$lib/components/ui/textarea/index.js";
 	import ColorPicker, { ChromeVariant } from "svelte-awesome-color-picker";
-			import Flag from "@lucide/svelte/icons/flag";
+	import Flag from "@lucide/svelte/icons/flag";
 	import { toast } from "svelte-sonner";
 	import { enhance } from "$app/forms";
 
@@ -37,6 +37,7 @@
 		name: string;
 		color: string;
 		type: string;
+		description:string;
 		id: number;
 	}
 
@@ -53,6 +54,7 @@
 	let supplementName = $state<string>("");
 	let editColor = $state<string>("#FFFFFF");
 	let editName = $state<string>("");
+		let editDescription = $state<string>("");
 	let editType = $state<string>("");
 	let editId = $state<string>("");
 	let formResult = $state<{ success?: boolean; error?: string } | null>(null);
@@ -77,13 +79,15 @@
 
 	const triggerType = $derived(supplementTypes.find((f) => f.value === value)?.value ?? "Capsule");
 
-	function handleUpdateSubmit(){
-		updateLoading = true
+	function handleUpdateSubmit() {
+		updateLoading = true;
 	}
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger class="cursor-pointer  w-full flex flex-row gap-1"><Flag/>Preferences</Dialog.Trigger>
+	<Dialog.Trigger class="flex  w-full cursor-pointer flex-row gap-1"
+		><Flag />Preferences</Dialog.Trigger
+	>
 	<Dialog.Content onOpenAutoFocus={(e) => e.preventDefault()} class="max-h-[90vh] overflow-y-auto">
 		<Dialog.Header>
 			<Dialog.Title>Preferences</Dialog.Title>
@@ -93,19 +97,19 @@
 					class="space-y-3 overflow-y-auto"
 					action="/dashboard?/updateLimits"
 					use:enhance={() => {
-					updateLoading = true;
-					return async ({ result }) => {
-						updateLoading = false;
-						if (result.type === "success" && result.data) {
-							formResult = result.data as { success?: boolean; error?: string };
-							if (formResult.success) {
-								toast.success("Successfully Updated");
-							} else if (formResult.error) {
-								toast.error(formResult.error);
+						updateLoading = true;
+						return async ({ result }) => {
+							updateLoading = false;
+							if (result.type === "success" && result.data) {
+								formResult = result.data as { success?: boolean; error?: string };
+								if (formResult.success) {
+									toast.success("Successfully Updated");
+								} else if (formResult.error) {
+									toast.error(formResult.error);
+								}
 							}
-						}
-					};
-				}}
+						};
+					}}
 				>
 					<div class="flex flex-row">
 						<Card.Root class="mx-2">
@@ -244,6 +248,7 @@
 														(editColor = s.color),
 														(editType = s.type),
 														(editName = s.name),
+														(editDescription = s.description),
 														(editId = s.id)
 													)}><Pencil /></Button
 												>
@@ -289,7 +294,7 @@
 				<Input name="name" placeholder="Name" type="text" bind:value={supplementName} />
 
 				<Label for="description">Description</Label>
-				<Textarea name="description" placeholder="Description"  />
+				<Textarea name="description" placeholder="Description" />
 
 				<div>
 					<Label for="color">Colour</Label>
@@ -341,9 +346,8 @@
 				<Label for="name">Supplement Name</Label>
 				<Input name="name" placeholder="Enter supplement name" type="text" value={editName} />
 
-
 				<Label for="description">Description</Label>
-				<Textarea name="description" placeholder="Description"  />
+				<Textarea name="description" placeholder="Description" value={editDescription}/>
 
 				<div>
 					<Label>Colour</Label>
