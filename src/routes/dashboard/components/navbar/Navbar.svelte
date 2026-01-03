@@ -59,7 +59,7 @@
 	<div class="flex flex-row items-center justify-between">
 		<div>
 			<DropdownMenu.Root>
-				<DropdownMenu.Trigger class="cursor-pointer">
+				<DropdownMenu.Trigger class="cursor-pointer  rounded hover:bg-primary/50">
 					<div class="my-1 flex flex-row items-center rounded-lg p-1">
 						<Avatar.Root class="mr-2">
 							<Avatar.Image src={assignedUser.image} alt="User Image" />

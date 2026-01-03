@@ -26,15 +26,8 @@
 	import { DateFormatter, type DateValue, getLocalTimeZone, today } from "@internationalized/date";
 	import axios from "axios";
 
-	const { data } = $props<{ data: PageData }>();
+	const { data = $bindable() } = $props<{ data: PageData }>();
 
-	type Supplement = {
-		cla?: number;
-		fatburner?: number;
-		zen?: number;
-		multiVitamin?: number;
-		magnesium?: number;
-	};
 
 	type HealthTracker = {
 		weight?: number;
@@ -49,7 +42,6 @@
 	};
 
 	type NutrientRow = {
-		supplements?: Supplement[];
 		health_tracker?: HealthTracker[];
 		sleep_schedule?: SleepSchedule[];
 		[key: string]: any;
@@ -62,11 +54,6 @@
 	const nutrients = $derived.by(() =>
 		data.nutrients.map((row: NutrientRow) => ({
 			...row,
-			cla: row.supplements?.map((x: Supplement) => x.cla),
-			fatBurner: row.supplements?.map((x: Supplement) => x.fatburner),
-			zen: row.supplements?.map((x: Supplement) => x.zen),
-			multiVitamin: row.supplements?.map((x: Supplement) => x.multiVitamin),
-			magnesium: row.supplements?.map((x: Supplement) => x.magnesium),
 			sleepTime: row?.sleep_schedule?.[0]?.time,
 			weight: row.health_tracker?.[0]?.weight,
 			water: row.health_tracker?.[0]?.water,
@@ -86,7 +73,7 @@
 			filter: false,
 			sortable: false,
 			suppressMovable: true,
-			headerClass: "bg-background",
+			headerClass: "bg-primary",
 			cellRenderer: makeSvelteCellRenderer(Dialog as any),
 			cellRendererParams: (params: any) => ({
 				dialogOpen: false,
@@ -247,9 +234,9 @@
 		}
 	}
 
-	let selectedPreset = $state("");
+	let selectedPreset = $state<string>("");
 	let tableComponent: any = $state();
-	let isSendingEmail = $state(false);
+	let isSendingEmail = $state<boolean>(false);
 
 	async function sendEmail() {
 		isSendingEmail = true;
@@ -309,9 +296,7 @@
 
 	function handleCalendarChange(newValue: typeof value) {
 		value = newValue;
-		// Clear preset selection when manually changing dates
 		selectedPreset = "";
-		// Clear localStorage when manually selecting dates
 		if (browser) {
 			localStorage.removeItem("dates");
 		}
@@ -383,7 +368,7 @@
 					<Button
 						variant="save"
 						onclick={sendEmail}
-						disabled={isSendingEmail || userEmail === 'test@test.com'}
+						disabled={isSendingEmail || userEmail === "test@test.com"}
 						class="flex-1 md:flex-none"
 					>
 						<Mail class="mr-2 size-4" />
@@ -391,7 +376,9 @@
 					</Button>
 				</Tooltip.Trigger>
 				<Tooltip.Content>
-					{userEmail === 'test@test.com' ? 'This is a dummy email account!' : `Send to ${userEmail}`}
+					{userEmail === "test@test.com"
+						? "This is a dummy email account!"
+						: `Send to ${userEmail}`}
 				</Tooltip.Content>
 			</Tooltip.Root>
 		</Tooltip.Provider>

@@ -748,16 +748,16 @@ export const actions = {
 				.where(eq(user.id, session.user.id));
 		}
 
-		if (
-			!caloriesLimit ||
-			!carbsLimit ||
-			!proteinLimit ||
-			!sugarLimit ||
-			!stepsLimit ||
-			!waterLimit
-		) {
-			return { success: false, error: "All Limits Required." };
-		}
+		// if (
+		// 	!caloriesLimit ||
+		// 	!carbsLimit ||
+		// 	!proteinLimit ||
+		// 	!sugarLimit ||
+		// 	!stepsLimit ||
+		// 	!waterLimit
+		// ) {
+		// 	return { success: false, error: "All Limits Required." };
+		// }
 
 		const existingLimits = await db.query.limits.findFirst({
 			where: and(
