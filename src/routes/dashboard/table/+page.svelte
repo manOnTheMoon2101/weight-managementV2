@@ -296,9 +296,7 @@
 
 	function handleCalendarChange(newValue: typeof value) {
 		value = newValue;
-		// Clear preset selection when manually changing dates
 		selectedPreset = "";
-		// Clear localStorage when manually selecting dates
 		if (browser) {
 			localStorage.removeItem("dates");
 		}

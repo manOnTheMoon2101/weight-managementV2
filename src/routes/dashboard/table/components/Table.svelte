@@ -29,7 +29,7 @@
 		backgroundColor: `var(--primary)`,
 		foregroundColor: `var(--foreground)`,
 		headerBackgroundColor: `var(--secondary)`,
-		headerTextColor: "white",
+		headerTextColor: "var(--foreground)",
 		oddRowBackgroundColor: "var(--background)",
 		rowHoverColor: "var(--secondary)",
 		headerFontSize: 14,
@@ -37,17 +37,6 @@
 	});
 
 	let gridDiv: HTMLDivElement;
-	let filterValue = $state("");
-
-	function onFilterTextBoxChanged(
-		event: Event & { currentTarget: EventTarget & HTMLInputElement }
-	) {
-		filterValue = event.currentTarget.value;
-
-		if (gridApi) {
-			gridApi.setGridOption("quickFilterText", filterValue);
-		}
-	}
 
 	function exportToCsv() {
 		if (gridApi) {
