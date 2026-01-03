@@ -26,11 +26,11 @@
 	let gridApi: GridApi | null = null;
 
 	const darkTheme = themeQuartz.withPart(colorSchemeDarkBlue).withParams({
-		backgroundColor: `var(--background)`,
+		backgroundColor: `var(--primary)`,
 		foregroundColor: `var(--foreground)`,
 		headerBackgroundColor: `var(--secondary)`,
 		headerTextColor: "white",
-		oddRowBackgroundColor: "var(--primary)",
+		oddRowBackgroundColor: "var(--background)",
 		rowHoverColor: "var(--secondary)",
 		headerFontSize: 14,
 		fontSize: 13,

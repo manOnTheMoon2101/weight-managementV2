@@ -73,7 +73,7 @@
 			filter: false,
 			sortable: false,
 			suppressMovable: true,
-			headerClass: "bg-background",
+			headerClass: "bg-primary",
 			cellRenderer: makeSvelteCellRenderer(Dialog as any),
 			cellRendererParams: (params: any) => ({
 				dialogOpen: false,
