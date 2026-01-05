@@ -10,8 +10,10 @@
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import type { CropperSelection } from "@cropper/elements";
 	import * as Cropper from "@eslym/svelte-cropperjs";
+	import Delete from "@lucide/svelte/icons/trash";
 	import { toast } from "svelte-sonner";
 	import { enhance } from "$app/forms";
+	import axios from "axios";
 
 	interface User {
 		name: string;
@@ -22,6 +24,7 @@
 
 	let { assignedUser = $bindable() }: { assignedUser: User } = $props();
 	let updateLoading = $state(false);
+	let removeImageLoading = $state(false);
 	let fileInput = $state<HTMLInputElement>(null!);
 	let cropper: CropperSelection = $state(null!);
 	let imageSrc = $state<string | null>(null);
@@ -185,25 +188,73 @@
 								onchange={handleFileSelect}
 							/>
 
-							<Tooltip.Provider delayDuration={100}>
-								<Tooltip.Root>
-									<Tooltip.Trigger>
-										<Avatar.Root
-											class="h-24 w-24 cursor-pointer"
-											onclick={() => fileInput?.click()}
-										>
-											<Avatar.Image
-												src={croppedImageUrl || assignedUser.image}
-												alt={assignedUser.name}
-											/>
-											<Avatar.Fallback>CN</Avatar.Fallback>
-										</Avatar.Root>
-									</Tooltip.Trigger>
-									<Tooltip.Content side="top">
-										<span>Change Image</span>
-									</Tooltip.Content>
-								</Tooltip.Root>
-							</Tooltip.Provider>
+							<div class="flex flex-col items-center justify-center">
+								<div class="my-2">
+									<Tooltip.Provider delayDuration={100}>
+										<Tooltip.Root>
+											<Tooltip.Trigger>
+												<Avatar.Root
+													class="h-24 w-24 cursor-pointer"
+													onclick={() => fileInput?.click()}
+												>
+													<Avatar.Image
+														src={croppedImageUrl || assignedUser.image}
+														alt={assignedUser.name}
+													/>
+													<Avatar.Fallback>CN</Avatar.Fallback>
+												</Avatar.Root>
+											</Tooltip.Trigger>
+											<Tooltip.Content side="top">
+												<span>Change Image</span>
+											</Tooltip.Content>
+										</Tooltip.Root>
+									</Tooltip.Provider>
+								</div>
+
+								{#if assignedUser.image}
+									<div class="my-2">
+										<Tooltip.Provider delayDuration={100}>
+											<Tooltip.Root>
+												<Tooltip.Trigger>
+													<button
+														type="button"
+														class="cursor-pointer"
+														onclick={async () => {
+															removeImageLoading = true;
+															try {
+																await axios.post(
+																	"/dashboard?/removeImage",
+																	{},
+																	{
+																		headers: {
+																			"Content-Type": "application/x-www-form-urlencoded",
+																		},
+																	}
+																);
+																assignedUser.image = "";
+																formImage = "";
+																removeImageLoading = false;
+																toast.success("Image removed successfully");
+															} catch (error) {
+																toast.error("Failed to remove image");
+															}
+														}}
+													>
+														{#if removeImageLoading}
+															Deleting...
+														{:else}
+															<Delete class="text-destructive" />
+														{/if}
+													</button>
+												</Tooltip.Trigger>
+												<Tooltip.Content side="top">
+													<span>Remove Image</span>
+												</Tooltip.Content>
+											</Tooltip.Root>
+										</Tooltip.Provider>
+									</div>
+								{/if}
+							</div>
 						</div>
 
 						<div class="w-full rounded-lg p-1">

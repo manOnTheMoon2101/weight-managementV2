@@ -864,4 +864,28 @@ export const actions = {
 			})
 			.where(eq(custom_supplements.id, id));
 	},
+
+
+
+	removeImage: async ({ request }: { request: Request }) => {
+		try {
+			const session = await auth.api.getSession({ headers: request.headers });
+			if (!session) {
+				redirect(302, "/signin");
+			}
+			const result = await db
+				.update(user)
+				.set({
+					image: null
+				})
+				.where(eq(user.id, session.user.id))
+				.returning();
+
+
+			return { success: true };
+		} catch (error) {
+			console.error("Error updating user:", error);
+			return { success: false, error: "Failed to update user profile." };
+		}
+	},
 };
