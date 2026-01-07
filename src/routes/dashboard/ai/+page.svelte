@@ -66,7 +66,7 @@
 
 <div class="grid w-full gap-2">
 	<Textarea
-		placeholder="Enter Foods Here (e.g., '1 apple, 2 slices of bread, 100g chicken breast')"
+		placeholder="Enter Foods Here"
 		bind:value={query}
 		disabled={loading}
 	/>

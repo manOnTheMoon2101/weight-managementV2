@@ -33,6 +33,7 @@
 		color: string;
 		type: string;
 		id: number;
+		description: string;
 	}
 
 	let {
@@ -111,7 +112,7 @@
 					href="/dashboard/ai"
 					variant={"navbar"}
 					class={page.url.pathname !== "/dashboard/ai" ? "bg-secondary mx-2" : "mx-2"}
-					><Calculator />Nutrition AI(Coming 2026)</Button
+					><Calculator />Nutrition AI(BETA)</Button
 				>
 			</div>
 			<!-- Mobile Navigation Dropdown -->
@@ -143,7 +144,7 @@
 								onclick={() => (window.location.href = "/dashboard/ai")}
 							>
 								<Calculator class="mr-2 h-4 w-4" />
-								Nutrition AI (Soon)
+								Nutrition AI(BETA)
 							</DropdownMenu.Item>
 						</DropdownMenu.Group>
 					</DropdownMenu.Content>
