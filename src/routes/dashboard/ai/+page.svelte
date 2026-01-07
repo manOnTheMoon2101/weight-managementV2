@@ -3,7 +3,6 @@
 	import { Textarea } from "$lib/components/ui/textarea/index.js";
 	import { Badge } from "$lib/components/ui/badge/index";
 
-
 	interface NutritionData {
 		name: string;
 		calories: string;
@@ -85,8 +84,7 @@
 {#if nutritionData}
 	<div class="mt-4 space-y-4">
 		<div class="flex items-center justify-between">
-			<h3 class="text-lg font-semibold">Nutrition Analysis</h3>
-			<Button variant="outline" onclick={clearResults}>Clear</Button>
+			<Button variant="outline" class="bg-destructive" onclick={clearResults}>Clear</Button>
 		</div>
 
 		{#if Array.isArray(nutritionData) && nutritionData.length > 0}
